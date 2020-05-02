@@ -1,0 +1,52 @@
+
+{#
+ * This file is part of the ZimbruCode package.
+ *
+ * (c) Junjulini
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ #}
+
+{#
+ * Control TWIG : Radio
+ *
+ * @author  Junjulini
+ * @package ZimbruCode
+ * @since   ZimbruCode 1.0.0
+ #}
+ 
+{% extends '@blocks/content/control.twig' %}
+
+{% block content %}
+
+    <div class="zc-panel-control-radio">
+        <ul class="zc-panel-control-radio__list">
+            {% for d1, d2 in control.settings.options %}
+                {% if d2.title %}
+                    {% set active = d2.value == control.option ? 'zc-panel-control-radio__item-element_active' %}
+
+                    <li class="zc-panel-control-radio__item zc-panel-control-radio__item_type_advanced">
+                        <div class="zc-panel-control-radio__item-element {{ active }}" data-value="{{ d2.value }}"></div>
+                        <div class="zc-panel-control-radio__item-desc-container">
+                            <span class="zc-panel-control-radio__item-title">{{ d2.title|default('Title') }}</span>
+                            <p class="zc-panel-control-radio__item-desc">{{ d2.desc|raw }}</p>
+                        </div>
+                    </li>
+                {% else %}
+                    {% set active = d1 == control.option ? 'zc-panel-control-radio__item-element_active' %}
+
+                    <li class="zc-panel-control-radio__item zc-panel-control-radio__item_type_{{ control.settings.mode|default('simple') }}">
+                        <div class="zc-panel-control-radio__item-element {{ active }}" data-value="{{ d1 }}"></div>
+                        <div class="zc-panel-control-radio__item-desc-container">
+                            <span class="zc-panel-control-radio__item-title">{{ d2|default('Title') }}</span>
+                        </div>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+
+        <input type="hidden" name="{{ control.ID }}" value="{{ control.option }}" id="{{ control.ID }}" {{ control.ignore }} data-control="option" autocomplete="off">
+    </div>
+
+{% endblock %}

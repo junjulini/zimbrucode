@@ -1,0 +1,239 @@
+
+/*
+ * This file is part of the ZimbruCode package.
+ *
+ * (c) Junjulini
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+/*
+ * Control LESS : Select
+ *
+ * @author  Junjulini
+ * @package ZimbruCode
+ * @since   ZimbruCode 1.0.0
+ */
+
+.zc-panel-control-select {
+    width: 100%;
+    border-color: @bg-color__border__1 !important;
+    background: #ffffff !important;
+    border-radius: 3px !important;
+    box-shadow: inset 0 1px 1px 0 @bg-color__box-shadow__1;
+    padding: 0 7px !important;
+    color: @text-color__all;
+    font-size: 13px !important;
+    height: 33px !important;
+    min-height: 33px !important;
+    line-height: normal !important;
+    .appearance(none);
+
+    &:focus {
+        outline: none !important;
+        border-color: @accent-color__2 !important;
+        box-shadow: 0 0 5px 0 rgba(44, 151, 222, 0.2) !important;
+    }
+    
+    + .chosen-container {
+        width: 100%;
+
+        .chosen-single {
+            border-color: @bg-color__border__1;
+            background: #ffffff;
+            border-radius: 3px;
+            box-shadow: inset 0 1px 1px 0 @bg-color__box-shadow__1;
+            padding: 0 7px;
+            color: @text-color__all;
+            font-size: 13px;
+            height: 33px;
+
+            span {
+                height: 33px;
+                line-height: 32px;
+            }
+        }
+
+        .chosen-drop {
+            border-color: @bg-color__border__1;
+            box-shadow: 0 3px 4px -1px @bg-color__box-shadow__1;
+            border-radius: 0 0 3px 3px;
+
+            .chosen-search {
+                input {
+                    border-color: @bg-color__border__1;
+                    background: #ffffff;
+                    box-shadow: inset 0 1px 1px 0 @bg-color__box-shadow__1;
+
+                    &:focus {
+                        outline: none;
+                        border-color: @accent-color__2;
+                        box-shadow: 0 0 5px 0 rgba(44, 151, 222, 0.2);
+                    }
+
+                    .placeholder-color(@text-color__placeholder);
+                }
+            }
+
+            .chosen-results {
+                &::-webkit-scrollbar {
+                    width: 11px;
+                    height: 10px;
+                }
+            
+                &::-webkit-scrollbar-track {
+                    display: none;
+                }
+            
+                &::-webkit-scrollbar-thumb, &::-webkit-scrollbar-thumb:hover {
+                    background: @bg-color__scroll-bar;
+                    border-right: 1px solid rgba(0, 0, 0, 0);
+                    border-left: 3px solid rgba(0, 0, 0, 0);
+                    background-clip: padding-box;
+                }
+            
+                &:hover {
+                    &::-webkit-scrollbar-thumb {
+                        background-color: @bg-color__scroll-bar__hover;
+                    }
+                }
+            
+                &::-webkit-scrollbar-thumb:hover {
+                    background-color: @bg-color__scroll-bar__draggable;
+                }
+
+                > li {
+                    color: @text-color__all;
+    
+                    &.group-result {
+                        color: @text-color__title;
+                        font-weight: 500;
+                    }
+
+                    &.highlighted {
+                        background-image: none;
+                        background: @accent-color__1;
+                        color: #ffffff;
+                    }
+                }
+            }
+        }
+
+        &.chosen-container-single {
+            .chosen-single {
+                > div {
+                    .center-flex();
+
+                    > b {
+                        width: 0;
+                        height: 0;
+                        border-style: solid;
+                        border-width: 5px 3.5px 0 3.5px;
+                        border-color: @text-color__alt transparent transparent transparent;
+                    }
+                }
+            }
+
+            .chosen-drop {
+                margin-top: -2px;
+            }
+
+            .chosen-search {
+                &:after {
+                    position: absolute;
+                    right: 10px;
+                    top: 12px;
+                    font-size: 14px;
+                    .icon(zc_icon_search);
+                }
+            }
+
+            &.chosen-with-drop {
+                .chosen-single {
+                    > div > b {
+                        border-width: 0 3.5px 5px 3.5px;
+                        border-color: transparent transparent @text-color__alt transparent;
+                    }
+                }
+            }
+        }
+
+        &.chosen-container-multi {
+            .chosen-results {
+                margin: 4px 0;
+                margin-right: 4px;
+
+                > li {
+                    margin-left: 4px;
+
+                    &.result-selected {
+                        color: #ccc;
+                    }
+                }
+            }
+
+            .chosen-choices {
+                border-color: @bg-color__border__1;
+
+                li.search-choice {
+                    background-image: none;
+                    background-color: #F7F7F7;
+                    border-color: rgba(0, 0, 0, 0.12);
+                    box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04);
+                    color: @text-color__all;
+                    height: 23px;
+
+                    .search-choice-close {
+                        position: absolute;
+                        font-size: 13px;
+                        top: 4px;
+                        color: @accent-color__2;
+                        .def-transition(color);
+                        background: none;
+
+                        &:after {
+                            .icon(zc_icon_close);
+                        }
+
+                        &:hover {
+                            color: @accent-color__4;
+                        }
+                    }
+                }
+
+                li.search-field {
+                    input[type=text] {
+                        font-family: inherit;
+                        font-size: 13px;
+                    }
+                }
+            }
+
+            &.chosen-container-active {
+                .chosen-choices {
+                    border-color: @accent-color__2;
+                    box-shadow: 0 0 5px 0 rgba(44, 151, 222, 0.2);
+                }
+            }
+        }
+    }
+}
+
+._zc-panel-controls_mobile {
+    position: relative;
+
+    &:after {
+        content: '';
+        display: inline-block;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 5px 3.5px 0 3.5px;
+        border-color: @text-color__alt transparent transparent transparent;
+        vertical-align: sub;
+        position: absolute;
+        right: 10px;
+        top: 16px;
+    }
+}

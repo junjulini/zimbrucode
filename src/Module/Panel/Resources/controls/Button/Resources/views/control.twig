@@ -1,0 +1,29 @@
+
+{#
+ * This file is part of the ZimbruCode package.
+ *
+ * (c) Junjulini
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ #}
+
+{#
+ * Control TWIG : Button
+ *
+ * @author  Junjulini
+ * @package ZimbruCode
+ * @since   ZimbruCode 1.0.0
+ #}
+ 
+{% extends '@blocks/content/control.twig' %}
+{% import "@macros/control.twig" as html %}
+
+{% block content %}
+    {{ html.button(
+        control.ID,
+        control.content,
+        'button',
+        control.settings.active ? 'zc-panel-control-button zc-panel-control-button_active' : 'zc-panel-control-button'
+    )}}
+{% endblock %}

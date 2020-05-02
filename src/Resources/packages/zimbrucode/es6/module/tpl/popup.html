@@ -1,0 +1,36 @@
+
+<!--
+* This file is part of the ZimbruCode package.
+*
+* (c) Junjulini
+*
+* For the full copyright and license information, please view the LICENSE
+* file that was distributed with this source code.
+-->
+
+<!--
+* Script : ZimbruCode/Module/TPL : PopUp HTML
+*
+* @author  Junjulini
+* @package ZimbruCode
+* @since   ZimbruCode 1.0.0
+-->
+
+<div id="{{id}}" class="zc-popup {{class}}">
+    <div class="zc-popup__window">
+        <header class="zc-popup__header">
+            <span class="zc-popup__title">{{title}}</span>
+            <i class="zc-popup__close zc-icon-clear"></i>
+        </header>
+        <div class="zc-scrollbar zc-popup__overflow-hidden">
+            <div class="zc-popup__loading">
+                <div class="zc-loading-spinner zc-popup__loading-spinner">
+                    <div class="zc-loading-spinner__bounce zc-loading-spinner__bounce_mode_1"></div>
+                    <div class="zc-loading-spinner__bounce zc-loading-spinner__bounce_mode_2"></div>
+                    <div class="zc-loading-spinner__bounce zc-loading-spinner__bounce_mode_3"></div>
+                </div>
+            </div>
+            <div class="zc-popup__content"></div>
+        </div>
+    </div>
+</div>

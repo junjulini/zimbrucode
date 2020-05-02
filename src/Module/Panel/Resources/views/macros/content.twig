@@ -1,0 +1,54 @@
+
+{#
+ * This file is part of the ZimbruCode package.
+ *
+ * (c) Junjulini
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ #}
+
+{#
+ * TWIG : Panel/Macros : Content
+ *
+ * @author  Junjulini
+ * @package ZimbruCode
+ * @since   ZimbruCode 1.0.0
+ #}
+
+{# Macro : HTML comments #}
+{% macro com(comment, end = false) %}
+    {% if end %}
+        <!-- END {{ comment }} -->
+    {% else %}
+        <!-- START {{ comment }} -->
+    {% endif %}
+{% endmacro %}
+
+{# Macro : Attribute condition #}
+{% macro condition(condition, operator) %}
+{% spaceless %}
+    {% set condition = condition ? ' data-condition="' ~ condition ~ '"' %}
+    {% set operator  = operator  ? ' data-operator="' ~ operator ~ '"' %}
+    {% set data = 'data-control="condition"' ~ condition ~ operator %}
+    {{ data|raw }}
+{% endspaceless %}
+{% endmacro %}
+
+{# Macro : Help content #}
+{% macro help(help) %}
+    {% set type = help.type == 'tooltip' ? 'help-tooltip' : 'help' %}
+
+    {% if help.content %}
+        <div class="zc-panel-help">
+            {% if help.type == 'tooltip' %}
+                <span class="zc-panel-help__starter zc-panel-help__starter_type_tooltip" data-tooltip="{{ help.content }}">
+                    <i class="zc-panel-help__icon zc-icon-help"></i>
+                </span>
+            {% else %}
+                <i title="{{ help.title|default(__('Help', 'zc')) }}" class="zc-panel-help__starter zc-panel-help__starter_type_simple zc-icon-help" data-settings="{{ help.settings|json_encode() }}"></i>
+                <div class="zc-panel-help__content">{{ help.content|raw }}</div>
+            {% endif %}
+        </div>
+    {% endif %}
+{% endmacro %}

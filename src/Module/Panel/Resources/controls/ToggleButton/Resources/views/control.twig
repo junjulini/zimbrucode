@@ -1,0 +1,31 @@
+
+{#
+ * This file is part of the ZimbruCode package.
+ *
+ * (c) Junjulini
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ #}
+
+{#
+ * Control TWIG : Toggle button
+ *
+ * @author  Junjulini
+ * @package ZimbruCode
+ * @since   ZimbruCode 1.0.0
+ #}
+ 
+{% extends '@blocks/content/control.twig' %}
+
+{% block content %}
+    <div class="zc-panel-control-toggle-button">
+        {% set value   = control.option|default('off') %}
+        {% set checked = (value == 'on') ? 'checked' %}
+
+        <input type="checkbox" {{ checked }} class="zc-panel-control-toggle-button__checkbox">
+        <input type="hidden" name="{{ control.ID }}" value="{{ value }}" id="{{ control.ID }}" {{ control.ignore }} data-control="option" autocomplete="off">
+        <b class="zc-panel-control-toggle-button__b zc-panel-control-toggle-button__b_type_switch"></b>
+        <b class="zc-panel-control-toggle-button__b zc-panel-control-toggle-button__b_type_track"></b>
+    </div>
+{% endblock %}

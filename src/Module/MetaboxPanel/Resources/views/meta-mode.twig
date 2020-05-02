@@ -1,0 +1,50 @@
+
+{#
+ * This file is part of the ZimbruCode package.
+ *
+ * (c) Junjulini
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ #}
+
+{#
+ * TWIG : MetaboxPanel : Meta mode
+ * 
+ * @author  Junjulini
+ * @package ZimbruCode
+ * @since   ZimbruCode 1.0.0
+ #}
+
+{% import "@macros/content.twig" as macros %}
+
+<section class="zc-panel-template zc-panel-template_wid" data-post-id="{{id}}">
+    <div class="zc-panel-template__panel-loading">
+        <div class="zc-loading-spinner zc-panel-template__loading-spinner">
+            <div class="zc-loading-spinner__bounce zc-loading-spinner__bounce_mode_1"></div>
+            <div class="zc-loading-spinner__bounce zc-loading-spinner__bounce_mode_2"></div>
+            <div class="zc-loading-spinner__bounce zc-loading-spinner__bounce_mode_3"></div>
+        </div>
+    </div>
+
+    {% embed '@blocks/panel.twig' %}
+
+        {% block header_controllers %}
+            {% if panel.getModuleSetting('panel-backup-button') %}
+                <button title="{{ __('Backup', 'zc') }}" class="zc-panel-header__controller-button zc-panel-header__controller-button_position_right zc-metabox-panel-backup-button">
+                    <i class="zc-panel-header__controller-button-icon zc-icon-archive"></i>
+                    <span class="zc-panel-header__controller-button-title">{{ __('Backup', 'zc') }}</span>
+                </button>
+            {% endif %}
+
+            {% if panel.getModuleSetting('panel-reset-button') %}
+                <button title="{{ __('Reset meta options', 'zc') }}" class="zc-panel-header__controller-button zc-panel-header__controller-button_position_right zc-panel-header__controller-button_position_last zc-metabox-panel-reset-button zc-icon-delete"></button>
+            {% endif %}
+        {% endblock %}
+
+        {% block footer %}{% endblock %}
+        
+    {% endembed %}
+
+    <input type="hidden" name="zc-panel-meta-mode-nonce" value="{{ nonce }}" />
+</section>

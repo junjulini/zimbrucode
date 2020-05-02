@@ -1,0 +1,57 @@
+
+{#
+ * This file is part of the ZimbruCode package.
+ *
+ * (c) Junjulini
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ #}
+
+{#
+ * Control TWIG : Measurement
+ *
+ * @author  Junjulini
+ * @package ZimbruCode
+ * @since   ZimbruCode 1.0.0
+ #}
+
+{% extends '@blocks/content/control.twig' %}
+
+{% block content %}
+
+    {% set main_class       = control.settings.only ? 'zc-panel-control-measurement_only' %}
+    {% set no_inherit_class = control.settings['no-inherit'] ? 'zc-panel-control-measurement_no-inherit' %}
+    {% set container_class  = control.settings.only ? 'zc-panel-control-measurement__container_only' %}
+
+    <div class="zc-panel-control-measurement {{ main_class }} {{ no_inherit_class }}" data-default="{{ control.settings['default-unit']|default('0px') }}">
+        <div class="zc-panel-control-measurement__container {{ container_class }}">
+            <div title="{{ __('Inherit', 'zc') }}" class="zc-panel-control-measurement__inherit-type zc-icon-flag"></div>
+            <div class="zc-panel-control-measurement__inherit-container">
+                <span class="zc-panel-control-measurement__inherit-msg">{{ __('Inherit', 'zc') }}</span>
+            </div>
+            <input type="text" value="" class="zc-panel-control-measurement__input" data-min="{{ control.settings.min|default(0) }}" data-max="{{ control.settings.max|default('infinity') }}" data-step="{{ control.settings.step|default(1) }}">
+            <div class="zc-panel-control-measurement__spinners">
+                <div class="zc-panel-control-measurement__spinner-button zc-panel-control-measurement__spinner-button_inc"></div>
+                <div class="zc-panel-control-measurement__spinner-button zc-panel-control-measurement__spinner-button_dec"></div>
+            </div>
+        </div>
+
+        {% if control.settings.only %}
+            <div class="zc-panel-control-measurement__only-unit">
+                <span class="zc-panel-control-measurement__unit"></span>
+            </div>
+        {% else %}
+            <select class="zc-panel-control-measurement__select" autocomplete="off">
+                {% set options = control.settings.options ? control.settings.options : {'px': 'px', '%': '%'} %}
+
+                {% for option in options %}
+                    <option value="{{ option }}">{{ option }}</option>
+                {% endfor %}
+            </select>
+        {% endif %}
+        
+        <input type="hidden" name="{{ control.ID }}" id="{{ control.ID }}" value="{{ control.option }}" {{ control.ignore }} data-control="option" autocomplete="off">
+    </div>
+
+{% endblock %}

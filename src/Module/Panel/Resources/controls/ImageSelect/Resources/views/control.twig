@@ -1,0 +1,40 @@
+
+{#
+ * This file is part of the ZimbruCode package.
+ *
+ * (c) Junjulini
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ #}
+
+{#
+ * Control TWIG : Image select
+ *
+ * @author  Junjulini
+ * @package ZimbruCode
+ * @since   ZimbruCode 1.0.0
+ #}
+ 
+{% extends '@blocks/content/control.twig' %}
+
+{% set value = control.option %}
+
+{% block content %}
+    <div class="zc-panel-control-image-select">
+        <ul class="zc-panel-control-image-select__list" style="grid-template-columns: repeat(auto-fit, minmax(60px, {{ control.settings.width|default('60px') }}))">
+            {% for option in control.settings.options %}
+                {% set active = value == option.value ? 'zc-panel-control-image-select__item_active' %}
+
+                <li class="zc-panel-control-image-select__item {{ active }}" data-value="{{ option.value }}">
+                    <div class="zc-panel-control-image-select__item-image-container">
+                        <img src="{{ option.src }}" alt="{{ option.title }}" title="{{ option.title }}" class="zc-panel-control-image-select__item-image">
+                    </div>
+                    <span class="zc-panel-control-image-select__item-title">{{ option.title }}</span>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <input type="hidden" name="{{ control.ID }}" value="{{ value }}" id="{{ control.ID }}" {{ control.ignore }} data-control="option" autocomplete="off">
+    </div>
+{% endblock %}

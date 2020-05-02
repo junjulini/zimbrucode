@@ -1,0 +1,134 @@
+
+/*
+ * This file is part of the ZimbruCode package.
+ *
+ * (c) Junjulini
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+/*
+ * LESS : Panel/Blocks/Header : Popup notification
+ *
+ * @author  Junjulini
+ * @package ZimbruCode
+ * @since   ZimbruCode 1.0.0
+ */
+
+.zc-panel-popup-notification {
+    position: absolute;
+    top: 0;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    background: @accent-color__4;
+    color: #ffffff;
+    overflow: hidden;
+    display: flex;
+
+    // Info Notification
+    &_type_info {
+        background: #6FC3DA;
+
+        .zc-panel-popup-notification__icon:before {
+            .icon(zc_icon_info);
+        }
+    }
+
+    // Success Notification
+    &_type_success {
+        background: @accent-color__3;
+
+        .zc-panel-popup-notification__icon:before {
+            .icon(zc_icon_check);
+        }
+
+        .zc-panel-popup-notification__close-controller {
+            display: none;
+        }
+    }
+
+    // Success Notification
+    &_type_error {
+        background: @accent-color__4;
+
+        .zc-panel-popup-notification__icon:before {
+            .icon(zc_icon_cancel);
+        }
+    }
+
+    *::selection {
+        background: #ffffff;
+        color: @alt-color__bg-1;
+    }
+
+    &__icon-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-right: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    &__icon {
+        font-size: 30px;
+        padding: 0px 10px;
+        color: rgba(255, 255, 255, 0.9);
+    }
+
+    &__content-container {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 100%;
+    }
+
+    &__title {
+        display: block;
+        font-weight: 500;
+        font-size: 14px;
+        color: #ffffff;
+        padding: 0 5px 0 10px;
+    }
+
+    &__text {
+        display: block;
+        padding: 5px 5px 0 10px;
+        margin: 0;
+        color: rgba(255, 255, 255, 0.8);
+    }
+
+    &__close-controller {
+        width: 100%;
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 5px 0;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    &__close-button {
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        background: rgba(255, 255, 255, 0.15);
+        color: #ffffff;
+        padding: 4px 30px;
+        height: 28px;
+        cursor: pointer;
+        .def-transition(background);
+        margin-right: 5px;
+
+        &:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        &:focus {
+            outline: none;
+        }
+    }
+}

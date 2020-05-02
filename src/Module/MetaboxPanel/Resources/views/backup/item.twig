@@ -1,0 +1,23 @@
+
+{#
+ * This file is part of the ZimbruCode package.
+ *
+ * (c) Junjulini
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ #}
+
+{#
+ * TWIG : MetaboxPanel/Backup : Backup item
+ *
+ * @author  Junjulini
+ * @package ZimbruCode
+ * @since   ZimbruCode 1.0.0
+ #}
+
+<li id="{{ id }}" class="zc-popup-backup__item">
+    <span class="zc-popup-backup__item-title">{{ name }}</span>
+    <i title="{{ __('Restore', 'zc') }}" class="zc-popup-backup__item-button zc-popup-backup__item-button_restore zc-icon-undo"></i>
+    <i title="{{ __('Delete', 'zc') }}" class="zc-popup-backup__item-button zc-popup-backup__item-button_delete zc-icon-clear"></i>
+</li>

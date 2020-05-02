@@ -1,0 +1,27 @@
+
+{#
+ * This file is part of the ZimbruCode package.
+ *
+ * (c) Junjulini
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ #}
+
+{#
+ * TWIG : Panel/Blocks : Quick links
+ *
+ * @author  Junjulini
+ * @package ZimbruCode
+ * @since   ZimbruCode 1.0.0
+ #}
+
+<div class="zc-panel-quick-links">
+    <ul class="zc-panel-quick-links__list">
+        {% for item in panel.getModuleSetting('quick-links') %}
+            <li class="zc-panel-quick-links__item">
+                <a href="{{ item.link|default('#tab1') }}" class="zc-panel-quick-links__item-link"><i class="zc-panel-quick-links__item-icon {{item.icon|default('zc-icon-chevron-right')}}"></i>{{ item.title|default('Link') }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>

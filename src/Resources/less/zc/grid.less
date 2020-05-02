@@ -1,0 +1,143 @@
+
+/*
+ * This file is part of the ZimbruCode package.
+ *
+ * (c) Junjulini
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+.zc-grid {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(12, 1fr);
+
+    &__col-1,
+    &__col-2,
+    &__col-3,
+    &__col-4,
+    &__col-5,
+    &__col-6,
+    &__col-7,
+    &__col-8,
+    &__col-9,
+    &__col-10,
+    &__col-11,
+    &__col-12 {
+        grid-column-end: span 12;
+    }
+
+    &__rwo-2 { 
+        grid-row-end: span 2;
+    }
+    &__rwo-3 {
+        grid-row-end: span 3;
+    }
+    &__rwo-4 {
+        grid-row-end: span 4;
+    }
+    &__rwo-5 {
+        grid-row-end: span 5;
+    }
+    &__rwo-6 {
+        grid-row-end: span 6;
+    }
+
+    // Direct
+    &-1 {
+        grid-template-columns: repeat(1, 1fr);
+        display: grid;
+    }
+
+    &-2 {
+        grid-template-columns: repeat(2, 1fr);
+        display: grid;
+    }
+
+    &-3 {
+        grid-template-columns: repeat(3, 1fr);
+        display: grid;
+    }
+
+    &-4 {
+        grid-template-columns: repeat(4, 1fr);
+        display: grid;
+    }
+
+    &-5 {
+        grid-template-columns: repeat(5, 1fr);
+        display: grid;
+    }
+
+    &-6 {
+        grid-template-columns: repeat(6, 1fr);
+        display: grid;
+    }
+
+    &-7 {
+        grid-template-columns: repeat(7, 1fr);
+        display: grid;
+    }
+
+    &-8 {
+        grid-template-columns: repeat(8, 1fr);
+        display: grid;
+    }
+
+    &-9 {
+        grid-template-columns: repeat(9, 1fr);
+        display: grid;
+    }
+
+    &-10 {
+        grid-template-columns: repeat(10, 1fr);
+        display: grid;
+    }
+
+    &-11 {
+        grid-template-columns: repeat(11, 1fr);
+        display: grid;
+    }
+
+    &-12 {
+        grid-template-columns: repeat(12, 1fr);
+        display: grid;
+    }
+}
+
+@media only screen and (min-width: 481px) {
+    .zc-grid__col-1 {
+        grid-column-end: span 1
+    }
+    .zc-grid__col-2 {
+        grid-column-end: span 2
+    }
+    .zc-grid__col-3 {
+        grid-column-end: span 3
+    }
+    .zc-grid__col-4 {
+        grid-column-end: span 4
+    }
+    .zc-grid__col-5 {
+        grid-column-end: span 5
+    }
+    .zc-grid__col-6 {
+        grid-column-end: span 6
+    }
+    .zc-grid__col-7 {
+        grid-column-end: span 7
+    }
+    .zc-grid__col-8 {
+        grid-column-end: span 8
+    }
+    .zc-grid__col-9 {
+        grid-column-end: span 9
+    }
+    .zc-grid__col-10 {
+        grid-column-end: span 10
+    }
+    .zc-grid__col-11 {
+        grid-column-end: span 11
+    }
+}

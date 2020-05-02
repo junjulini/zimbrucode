@@ -1,0 +1,40 @@
+
+{#
+ * This file is part of the ZimbruCode package.
+ *
+ * (c) Junjulini
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ #}
+
+{#
+ * Control TWIG : Tab
+ *
+ * @author  Junjulini
+ * @package ZimbruCode
+ * @since   ZimbruCode 1.0.0
+ #}
+
+{% extends '@blocks/content/control.twig' %}
+
+{% block control %}
+    <div class="zc-panel-control-tab">
+        <ul class="zc-panel-control-tab__elements-list">
+            {% for item in control.content %}
+                {% set class = item == control.content|first ? 'zc-panel-control-tab__element_active' %}
+                <li class="zc-panel-control-tab__element {{ class }}" data-id="{{ item.id }}">{{ item.title }}</li>
+            {% endfor %}
+        </ul>
+        <ul class="zc-panel-control-tab__sections-list">
+            {% for item in control.content %}
+                {% set class = item == control.content|first ? 'zc-panel-control-tab__section_active' %}
+                <li class="zc-panel-control-tab__section {{ class }}" data-id="{{ item.id }}">
+                    <ul class="zc-panel-controls__list">
+                        {{ render(item.content) }}
+                    </ul>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

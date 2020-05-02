@@ -1,0 +1,51 @@
+
+{#
+ * This file is part of the Junjulini package.
+ *
+ * (c) Junjulini
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ #}
+
+{#
+ * TWIG : ThemeAdaptor : Test layout
+ *
+ * @author  Junjulini
+ * @package ZimbruCode
+ * @since   ZimbruCode 1.0.0
+ #}
+
+<style type="text/css" media="screen">
+    body {
+        margin: 0;
+        padding: 0;
+        background: #fdf5ce;
+    }
+    .zc-test-layout__title {
+        margin: 0 auto;
+        display: table;
+        font-size: 24px;
+        margin-top: 100px;
+        font-family: monospace;
+        color: #4c4c4c;
+        padding-bottom: 5px; 
+    }
+    .zc-test-layout__desc {
+        display: table;
+        margin: 0 auto;
+        border-top: 1px solid #e8e2c0;
+        padding: 5px 15px;
+        font-size: 15px;
+        font-family: monospace;
+        color: #a29f8d;
+    }
+    *::selection {
+        background: #fff;
+        color: #4c4c4c;
+    }
+</style>
+<section class="zc-test-layout">
+    <span class="zc-test-layout__title">{{ __('Welcome to the', 'zc') }} {{ glob.get('app/name') }}</span>
+    <span class="zc-test-layout__desc">{{ glob.get('core/name') }} : {{ glob.get('core/version') }}</span>
+</section>

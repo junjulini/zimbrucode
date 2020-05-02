@@ -1,0 +1,134 @@
+<?php
+
+/*
+ * This file is part of the ZimbruCode package.
+ *
+ * (c) Junjulini
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace ZimbruCode\Component\Core;
+
+use ZimbruCode\Component\Core\ModuleLoader;
+use ZimbruCode\Component\Developer\DeveloperMode;
+use ZimbruCode\Component\Handler\Traits\HooksHandlerTrait;
+use ZimbruCode\Component\Handler\Traits\GlobalCacheHandlerTrait;
+use ZimbruCode\Component\Handler\Traits\RequestHandlerTrait;
+use ZimbruCode\Component\Handler\Traits\SessionHandlerTrait;
+
+/**
+ * Class : Kernel
+ *
+ * @author  Junjulini
+ * @package ZimbruCode
+ * @since   ZimbruCode 1.0.0
+ */
+abstract class Kernel extends GlobalDataOperator
+{
+    use HooksHandlerTrait,
+        GlobalCacheHandlerTrait,
+        RequestHandlerTrait,
+        SessionHandlerTrait;
+
+    /**
+     * Get environment
+     * 
+     * @return string  Environment
+     * @since 1.0.0
+     */
+    final public static function getEnvironment()
+    {
+        return self::getGlobal('core/dev-config/environment', 'prod');
+    }
+
+    /**
+     * For developers
+     * 
+     * @return object  DeveloperMode
+     * @since 1.0.0
+     */
+    final public static function dev($type = '', $title = 'Title', $msg = ' ... ')
+    {
+        return (self::getGlobal('core/dev')) ? new DeveloperMode($type, $title, $msg) : false;
+    }
+
+    /**
+     * Module loader
+     * 
+     * @return object  ModuleLoader
+     * @since 1.0.0
+     */
+    final public function module(array $config = [])
+    {
+        if ($loader = self::getGlobalCache('module-instance')) {
+            if (!($loader instanceof ModuleLoader)) {
+                $loader = new ModuleLoader;
+                self::setGlobalCache('module-instance', $loader);
+            }
+
+            return $loader->flush()->setConfig($config);
+        } else {
+            $loader = new ModuleLoader;
+            self::setGlobalCache('module-instance', $loader);
+
+            return $loader->setConfig($config);
+        }
+    }
+
+    /**
+     * Get service ( or set )
+     * 
+     * @param  string  $service   Service name
+     * @param  object  $handler   Service object ( for setter )
+     * @return object             Service object
+     * @since 1.0.0
+     */
+    final public static function service($service, $handler = false)
+    {
+        if ($service && is_string($service)) {
+            if ($handler && is_object($handler)) {
+                if (!self::getGlobalCache("services/{$service}")) {
+                    self::setGlobalCache("services/{$service}", $handler);
+                } else {
+                    throw new \RuntimeException(sprintf(esc_html__('This service exist : %s', 'zc'), $service));
+                }
+            } else {
+
+                // WP Services
+                switch ($service) {
+                    case 'wpdb':
+                        if (isset($GLOBALS['wpdb'])) {
+                            return $GLOBALS['wpdb'];
+                        } else {
+                            throw new \RuntimeException('Error : WPDB');
+                        }
+                        break;
+                }
+
+                // Local services
+                if ($object = self::getGlobalCache("services/{$service}")) {
+                    return $object;
+                } else {
+                    throw new \RuntimeException(sprintf(esc_html__('This service don\'t exist : %s', 'zc'), $service));
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Development or Production value
+     *
+     * @param  mix $value1
+     * @param  mix $value2
+     * @return mix
+     * @since 1.0.0
+     */
+    final public static function dop($value1, $value2)
+    {
+        return (self::dev()) ? $value1 : $value2;
+    }
+}

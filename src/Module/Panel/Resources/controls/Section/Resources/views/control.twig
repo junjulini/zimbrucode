@@ -1,0 +1,163 @@
+
+{#
+ * This file is part of the ZimbruCode package.
+ *
+ * (c) Junjulini
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ #}
+
+{#
+ * Control TWIG : Section
+ *
+ * @author  Junjulini
+ * @package ZimbruCode
+ * @since   ZimbruCode 1.0.0
+ #}
+
+{% import "@macros/content.twig" as macros %}
+{% set data  = macros.condition(control.condition, control.operator) %}
+
+{% set class = control.fullWidth ? 'zc-panel-controls__item_full ' %}
+{% set class = not control.settings.kind ? class ~ 'zc-panel-controls__item_hide-border-line ' : class %}
+{% set class = control.settings.separator ? class ~ 'zc-panel-control-section_separator ' : class %}
+
+{% if control.borderLine == 'hide' %}
+    {% set class = class ~ 'zc-panel-controls__item_hide-border-line ' %}
+{% elseif control.borderLine == 'hide-last' %}
+    {% set class = class ~ 'zc-panel-controls__item_hide-border-line-last ' %}
+{% elseif control.borderLine == 'show-last' %}
+    {% set class = class ~ 'zc-panel-controls__item_show-border-line-last ' %}
+{% elseif control.borderLine == 'accent' %}
+    {% set class = class ~ 'zc-panel-controls__item_accent-border ' %}
+{% endif %}
+
+{% set class = class ~ control.classes %}
+{% set item_style = control.style.item ? 'style="' ~ control.style.item ~ '"' %}
+
+{{ macros.com('Control - ' ~ control.type) }}
+<li class="zc-panel-controls__item {{ class }}" {{ item_style|raw }} {{ data }} data-type="{{ control.type }}">
+
+    {# Column kind #}
+    {% if control.settings.kind == 'column' %}
+
+        {# Big/Little/Clean mode #}
+        {% if control.settings.mode == 'big' or control.settings.mode == 'little' or control.settings.mode == 'clean' %}
+
+            <div class="zc-panel-control-section zc-panel-control-section_type_column zc-panel-control-section_mode_{{ control.settings.mode }}">
+                <div class="zc-grid">
+                    {% for section in control.content %}
+                        <div class="zc-grid__col-{{ section.column|default(12) }}">
+                            <ul class="zc-panel-controls__list">
+                                {{ render(section.content) }}
+                            </ul>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+        {# Big-desc/Little-desc/Clean-desc mode #}
+        {% else %}
+
+            {% set desc_ratio = control.ratio.desc ? 'width:' ~ control.ratio.desc ~ '%' %}
+            {% set desc_style = 'style="' ~ control.style.desc ~ ' ' ~ desc_ratio ~ '"' %}
+
+            {% set content_ratio = control.ratio.content ? 'width:' ~ control.ratio.content ~ '%' %}
+            {% set content_style = 'style="' ~ control.style.content ~ ' ' ~ content_ratio ~ '"' %}
+
+            {% if control.title or control.desc %}
+                <div class="zc-panel-controls__item-section zc-panel-controls__item-section_type_description" {{ desc_style|raw }}>
+
+                    {# Help content #}
+                    {{ macros.help(control.help) }}
+                    {# END Help content #}
+
+                    {# Description block #}
+                    {% block description %}
+                        {% if control.title %}
+                            <h4 class="zc-panel-controls__item-title">{{ control.title }}</h4>
+                        {% endif %}
+
+                        {% if control.desc %}
+                            <label for="{{ control.ID }}" class="zc-panel-controls__item-description">{{ control.desc|raw }}</label>
+                        {% endif %}
+                    {% endblock %}
+                    {# END Description block #}
+
+                </div>
+            {% endif %}
+
+            <div class="zc-panel-controls__item-section zc-panel-controls__item-section_type_content" {{ content_style|raw }}>
+                <div class="zc-panel-control-section zc-panel-control-section_type_column zc-panel-control-section_mode_{{ control.settings.mode|default('little-desc') }}">
+                    <div class="zc-grid">
+                        {% for section in control.content %}
+                            <div class="zc-grid__col-{{ section.column|default(12) }}">
+                                <ul class="zc-panel-controls__list">
+                                    {{ render(section.content) }}
+                                </ul>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+        {% endif %}
+
+    {# Block kind #}
+    {% elseif control.settings.kind == 'block' %}
+
+        <div class="zc-panel-control-section zc-panel-control-section_type_block">
+            <ul class="zc-panel-controls__list">
+                {{ render(control.content) }}
+            </ul>
+        </div>
+    
+    {# Group kind #}
+    {% elseif control.settings.kind == 'group' %}
+
+        <div class="zc-panel-control-section zc-panel-control-section_type_group">
+            {% if control.title %}
+                <div class="zc-panel-control-section__title-container">
+                    <span class="zc-panel-control-section__title">{{ control.title }}</span>
+                </div>
+            {% endif %}
+            
+            <section class="zc-panel-control-section__container">
+                <ul class="zc-panel-controls__list zc-panel-control-section__controls-list">
+                    {{ render(control.content) }}
+                </ul>
+            </section>
+        </div>
+
+    {# Accent group kind #}
+    {% elseif control.settings.kind == 'accent-group' %}
+
+        <div class="zc-panel-control-section zc-panel-control-section_type_accent-group">
+            <section class="zc-panel-control-section__container">
+                <ul class="zc-panel-controls__list zc-panel-control-section__controls-list">
+                    {{ render(control.content) }}
+                </ul>
+            </section>
+        </div>
+
+    {# Simple kind #}
+    {% else %}
+
+        {% set style = control.settings.background.src ? ' style="background-image:url(' ~ control.settings.background.src ~ ');background-position:' ~ control.settings.background.position|default('top right') ~ '"' %}
+
+        <div class="zc-panel-control-section zc-panel-control-section_type_simple">
+            {% if control.title %}
+                <span class="zc-panel-control-section__title">{{ control.title }}</span>
+            {% endif %}
+            
+            <button title="{{ __('Close/Open this section', 'zc') }}" class="zc-panel-control-section__close"></button>
+
+            <section class="zc-panel-control-section__container" {{ style|raw }}>
+                <ul class="zc-panel-controls__list zc-panel-control-section__controls-list">
+                    {{ render(control.content) }}
+                </ul>
+            </section>
+        </div>
+    {% endif %}
+</li>

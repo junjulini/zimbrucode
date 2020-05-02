@@ -1,0 +1,231 @@
+
+/*
+ * This file is part of the ZimbruCode package.
+ *
+ * (c) Junjulini
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+/*
+ * LESS : Panel/Blocks/Menu : Mobile menu
+ *
+ * @author  Junjulini
+ * @package ZimbruCode
+ * @since   ZimbruCode 1.0.0
+ */
+
+.zc-panel-header {
+    &__controller-button {
+        &_type_mobile-menu {
+            display: none !important;
+
+            &_active {
+                background: @panel_header__button-hover-color !important;
+
+                .zc-panel-header__controller-button_type_mobile-menu-icon {
+                    &:after, &:before, span {
+                        background-color: @panel_header__button-hover-text-color !important;
+                    }
+
+                    &:before {
+                        transform: translateY(5px) rotate(135deg);
+                    }
+                    &:after {
+                        transform: translateY(-5px) rotate(-135deg);
+                    }
+                    span {
+                        .scale(0);
+                    }
+                }
+
+                .zc-panel-header__controller-button_type_mobile-menu-title {
+                    color: @panel_header__button-hover-text-color;
+                }
+            }
+
+            &:hover:not(.zc-panel-header__controller-button_type_mobile-menu_active) {
+                background: @alt-color__bg-2 !important;
+            }
+        }
+
+        &_type_mobile-menu-icon {
+            transition: all .2s 0s ease-in-out;
+
+            &:after, &:before, span {
+                display: block;
+                transition: all .2s 0s ease-in-out;
+                content: '';
+                margin: 3px auto;
+                height: 2px;
+                border-radius: 3px;
+                background-color: @panel_header__button-text-color;
+                width: 16px;
+            }
+        }
+    }
+}
+
+.zc-panel[data-width|="mode-1"], .zc-panel[data-width|="mode-2"] {
+    height: 100% !important;
+    overflow: hidden;
+
+    .zc-panel-menu {
+        overflow: hidden;
+        width: @panel_menu__width;
+        background: @alt-color__bg-1;
+
+        &_submenu-active {
+            .zc-panel-menu__container {
+                .translateX(-@panel_menu__width);
+            }
+        }
+
+        &__container {
+            .def-transition(transform);
+            box-shadow: none !important;
+            display: table;
+        }
+    }
+
+    .zc-panel-submenu {
+        &__container {
+            border-right: none !important;
+            background: @alt-color__bg-1 !important;
+        }
+
+        &__header-section {
+            &_mode_desktop {
+                display: none;
+            }
+
+            &_mode_mobile {
+                display: flex !important;
+                background: @alt-color__bg-1 !important;
+                border-bottom: 1px solid @panel_menu__border-color;
+                cursor: pointer;
+                box-sizing: border-box;
+
+                .zc-panel-submenu__header-icon {
+                    color: @alt-color__text !important;
+                }
+
+                .zc-panel-submenu__header-section-title {
+                    color: @alt-color__text !important;
+                    margin-right: 0 !important;
+                    margin-left: 5px !important;
+                    cursor: pointer;
+                    .def-transition(color);
+
+                    &:hover {
+                        color: @alt-color__text !important;
+                    }
+                }
+            }
+        }
+
+        &__item {
+            &_type_simple {
+                .zc-panel-submenu__item-icon,
+                .zc-panel-submenu__item-title {
+                    color: @alt-color__text !important;
+                }
+            }
+
+            &.zc-panel-menu__item_active, &_type_simple:hover {
+                background: @alt-color__bg-2 !important;
+
+                .zc-panel-submenu__item-icon,
+                .zc-panel-submenu__item-title {
+                    color: @panel_menu__text-active-color !important;
+                }
+            }
+
+            &_type_delimiter {
+                border-bottom: 1px solid @panel_menu__border-color !important;
+            }
+
+            &_type_text .zc-panel-submenu__item-text {
+                color: @alt-color__text !important;
+            }
+
+            // Modifying : Type - Title
+            &_type_title .zc-panel-submenu__item-only-title {
+                color: @alt-color__text;
+            }
+
+            // Modifying : Type - Text
+            &_type_text .zc-panel-submenu__item-text {
+                > b, > strong {
+                    color: @panel_menu__text-active-color;
+                }
+            }
+        }
+    }
+
+    .zc-panel-content {
+        width: 100% !important;
+        height: 100% !important;
+        position: relative;
+        box-shadow: -10px 0 17px -5px @panel_menu__shadow-color;
+        .def-transition(transform);
+
+        &_mobile-menu-visible {
+            .translateX(@panel_menu__width);
+        }
+    }
+
+    .zc-panel-header {
+        &__section-title {
+            padding-left: 20px !important;
+        }
+
+        &__controller-button {
+            &_type_mobile-menu {
+                display: flex !important;
+            }
+        }
+    }
+}
+
+.zc-panel[data-width|="mode-1"],
+.zc-panel[data-width*="mode-2-40"],
+.zc-panel[data-width*="mode-2-41"],
+.zc-panel[data-width*="mode-2-42"],
+.zc-panel[data-width*="mode-2-43"],
+.zc-panel[data-width*="mode-2-44"],
+.zc-panel[data-width*="mode-2-45"],
+.zc-panel[data-width*="mode-2-46"],
+.zc-panel[data-width*="mode-2-47"],
+.zc-panel[data-width*="mode-2-48"],
+.zc-panel[data-width*="mode-2-49"],
+.zc-panel[data-width*="mode-2-50"],
+.zc-panel[data-width*="mode-2-51"],
+.zc-panel[data-width*="mode-2-52"],
+.zc-panel[data-width*="mode-2-53"],
+.zc-panel[data-width*="mode-2-54"],
+.zc-panel[data-width*="mode-2-55"],
+.zc-panel[data-width*="mode-2-56"],
+.zc-panel[data-width*="mode-2-57"] {
+    .zc-panel-header {
+        &__section-title {
+            visibility: hidden;
+        }
+    }
+}
+
+.zc-panel[data-width|="mode-1"] {
+    .zc-panel-header {
+        &__controller-button {
+            &_type_mobile-menu-icon {
+                display: block !important;
+                top: 0 !important;
+            }
+
+            &_type_mobile-menu-title {
+                display: none;
+            }
+        }
+    }
+}

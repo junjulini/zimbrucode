@@ -1,0 +1,239 @@
+
+/*
+ * This file is part of the ZimbruCode package.
+ *
+ * (c) Junjulini
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+/*
+ * Control LESS : Input range
+ *
+ * @author  Junjulini
+ * @package ZimbruCode
+ * @since   ZimbruCode 1.0.0
+ */
+
+.zc-panel-control-range {
+    display: flex;
+
+    &__container {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 70%;
+        min-height: 72px;
+    }
+
+    &__indicators {
+        display: flex;
+        width: 100%;
+        min-height: 15px;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        position: relative;
+    }
+
+    &__indicator {
+        font-size: 10px;
+        color: @text-color__title;
+        background: @bg-color__1;
+        border-radius: 3px;
+        padding: 1px 5px;
+        line-height: 1.333;
+        margin: 0;
+        
+        &_left {
+            margin-right: auto;
+        }
+
+        &_current {
+            position: absolute;
+            left: 0;
+            font-weight: 500;
+            color: #ffffff;
+            background: @accent-color__2;
+            white-space: nowrap;
+        }
+
+        &_right {
+            margin-left: auto
+        }
+    }
+
+    .thumb() {
+        .appearance(none);
+        background: @accent-color__1;
+        width: 16px;
+        height: 16px;
+        transition: transform .4s cubic-bezier(.25, .8, .25, 1);
+        border-radius: 100%;
+        cursor: pointer;
+        border: none;
+
+        &:hover {
+            .scale(1.2);
+        }
+
+        &:active {
+            box-shadow: 0px 0px 0px 4px rgba(95,193,164,0.3);
+        }
+    }
+
+    &__input {
+        .appearance(none);
+        width: 100%;
+        height: 3px;
+        background: linear-gradient(to right, @accent-color__1, @accent-color__1), @bg-color__border__2;
+        background-size: 0% 100%;
+        background-repeat: no-repeat;
+
+        &:focus {
+            outline: none;
+        }
+
+        &::-webkit-slider-thumb {
+            .thumb();
+        }
+
+        &::-moz-range-thumb {
+            .thumb();
+        }
+    }
+
+    .thumbBig() {
+        width: 17px;
+        height: 17px;
+        background: #ffffff;
+        box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
+    }
+
+    &__container_lb &__input {
+        height: 6px;
+        border-radius: 5px;
+        background-size: 100%;
+
+        &::-webkit-slider-thumb {
+            .thumbBig();
+        }
+
+        &::-moz-range-thumb {
+            .thumbBig();
+        }
+    }
+
+    &__grid {
+        display: flex;
+        min-height: 21px;
+        margin-top: 10px;
+    }
+
+    &__grid-mark {
+        display: flex;
+        position: relative;
+        width: 4.76%;
+        margin: 0;
+
+        &:before {
+            content: '';
+            position: absolute;
+            height: 4px;
+            width: 1px;
+            background: @text-color__placeholder;
+            left: 0;
+            right: 0;
+            margin: auto;
+        }
+
+        &_wn {
+            justify-content: center;
+
+            &:before {
+                height: 8px;
+                background: @accent-color__2;
+            }
+        }
+    }
+
+    &__grid-mark-text {
+        font-size: 9px;
+        margin-top: 12px;
+        line-height: 1;
+    }
+
+    &__manual-range {
+        width: 30%;
+        margin-top: 17px;
+        position: relative;
+
+        &_type_text {
+            display: block;
+            margin: 0;
+            width: 90% !important;
+            margin-left: 10% !important;
+            border: 1px solid @bg-color__border__1 !important;
+            background-color: #ffffff !important;
+            border-radius: 3px !important;
+            box-shadow: inset 0 1px 1px 0 @bg-color__box-shadow__1 !important;
+            padding: 7px !important;
+            padding-right: 23px !important;
+            color: @text-color__all !important;
+            font-size: 13px;
+            line-height: normal !important;
+            outline: none;
+            height: 33px !important;
+            min-height: 33px !important;
+            .appearance(none) !important;
+
+            &:focus {
+                outline: none !important;
+                border-color: @accent-color__2 !important;
+                box-shadow: 0 0 5px 0 rgba(44, 151, 222, 0.2) !important;
+            }
+
+            .placeholder-color(@text-color__placeholder);
+        }
+
+        &_bad-value, &_bad-value:focus {
+            border-color: @accent-color__6 !important;
+        }
+    }
+
+    &__manual-range-spinners {
+        position: absolute;
+        background: @bg-color__1;
+        height: 31px;
+        width: 15px;
+        top: 1px;
+        right: 1px;
+        border-top-right-radius: 3px;
+        border-bottom-right-radius: 3px;
+        border-left: 1px solid @bg-color__border__1;
+    }
+
+    &__manual-range-spinner-button {
+        position: absolute;
+        width: 15px;
+        height: 15px;
+        cursor: pointer;
+        text-align: center;
+        font-size: 13px;
+        .def-transition(all);
+
+        &_inc {
+            top: 0;
+            border-bottom: 1px solid @bg-color__border__1;
+        }
+
+        &_dec {
+            bottom: 0;
+        }
+
+        &:hover {
+            background: #ffffff;
+            color: @accent-color__2;
+        }
+    }
+}

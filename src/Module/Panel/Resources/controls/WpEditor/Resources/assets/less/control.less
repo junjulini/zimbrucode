@@ -1,0 +1,37 @@
+
+/*
+ * This file is part of the ZimbruCode package.
+ *
+ * (c) Junjulini
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+/*
+ * Control LESS : wpEditor
+ *
+ * @author  Junjulini
+ * @package ZimbruCode
+ * @since   ZimbruCode 1.0.0
+ */
+ 
+.zc-panel-control-wp-editor {
+    .mce-top-part:before {
+        box-shadow: none !important;
+    }
+
+    .wp-editor-container {
+        border-color: @bg-color__border__2 !important;
+    }
+
+    .mce-tinymce {
+        box-shadow: none !important;
+    }
+}
+
+body.mce-fullscreen {
+    #wpadminbar, #adminmenuwrap, .wp-editor-expand #wp-content-editor-tools {
+        z-index: -1;
+    }
+}

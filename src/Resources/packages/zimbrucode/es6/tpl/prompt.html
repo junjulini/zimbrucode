@@ -1,0 +1,28 @@
+
+<!--
+* This file is part of the ZimbruCode package.
+*
+* (c) Junjulini
+*
+* For the full copyright and license information, please view the LICENSE
+* file that was distributed with this source code.
+-->
+
+<!--
+* Script : ZimbruCode/TPL : Prompt HTML
+*
+* @author  Junjulini
+* @package ZimbruCode
+* @since   ZimbruCode 1.0.0
+-->
+
+<div class="zc-prompt">
+    <div class="zc-prompt__container">
+        <p class="zc-prompt__text">{{subject}}</p>
+        <input placeholder="{{placeholder}}" value="{{default}}" class="zc-prompt__input">
+    </div>
+    <footer class="zc-prompt__footer">
+        <button class="zc-prompt__button zc-prompt__button_type_ok zc-prompt__button_active" type="button">{{title_ok}}</button>
+        <button class="zc-prompt__button zc-prompt__button_type_cancel" type="button">{{title_cancel}}</button>
+    </footer>
+</div>

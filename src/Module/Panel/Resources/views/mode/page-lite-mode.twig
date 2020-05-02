@@ -1,0 +1,103 @@
+
+{#
+ * This file is part of the ZimbruCode package.
+ *
+ * (c) Junjulini
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ #}
+
+{#
+ * TWIG : Panel/Mode : Page lite mode
+ *
+ * @author  Junjulini
+ * @package ZimbruCode
+ * @since   ZimbruCode 1.0.0
+ #}
+
+<section class="zc-panel-template">
+    <div class="zc-panel-template__panel-loading">
+        <div class="zc-loading-spinner zc-panel-template__loading-spinner">
+            <div class="zc-loading-spinner__bounce zc-loading-spinner__bounce_mode_1"></div>
+            <div class="zc-loading-spinner__bounce zc-loading-spinner__bounce_mode_2"></div>
+            <div class="zc-loading-spinner__bounce zc-loading-spinner__bounce_mode_3"></div>
+        </div>
+    </div>
+
+    {% embed '@blocks/panel.twig' with {'panel_class': 'ajax-load'} %}
+
+        {% block menu %}{% endblock %}
+        {% block footer %}{% endblock %}
+
+        {% block header %}
+            <header class="zc-panel-header">
+
+                {# Header before block #}
+                {% block header_before %}{% endblock %}
+                {# END Header before block #}
+
+                <div class="zc-panel-header__section-title">
+                    <i class="zc-panel-header__title-icon {{ panel.getModuleSetting('panel-title-icon')|default('zc-icon-pets') }}"></i>
+                    <span class="zc-panel-header__title">{{ panel.getModuleSetting('panel-title')|default(__('Section name', 'zc')) }}</span>
+                </div>
+                <div class="zc-panel-header__controllers zc-panel-header__controllers_right">
+
+                    {# Header controllers before block #}
+                    {% block header_controllers_before %}{% endblock %}
+                    {# END Header controllers before block #}
+
+                    {# Save button #}
+                    {% if panel.getModuleSetting('panel-save-button') %}
+                        <button title="{{ __('Save options', 'zc') }}" class="zc-panel-header__controller-button zc-panel-save-starter-button">
+                            <i class="zc-panel-header__controller-button-icon zc-icon-check"></i>
+                            <span class="zc-panel-header__controller-button-title">{{ __('Save', 'zc') }}</span>
+                        </button>
+                        <button title="{{ __('In process ...', 'zc') }}" disabled class="zc-panel-header__controller-button zc-panel-loading-starter-button">
+                            <div class="zc-loading-spinner zc-panel-loading-starter-button__loading-spinner">
+                                <div class="zc-loading-spinner__bounce zc-loading-spinner__bounce_mode_1"></div>
+                                <div class="zc-loading-spinner__bounce zc-loading-spinner__bounce_mode_2"></div>
+                                <div class="zc-loading-spinner__bounce zc-loading-spinner__bounce_mode_3"></div>
+                            </div>
+                        </button>
+                    {% endif %}
+
+                    {# Reset button #}
+                    {% if panel.getModuleSetting('panel-reset-button') %}
+                        <button title="{{ __('Reset options', 'zc') }}" class="zc-panel-header__controller-button zc-panel-reset-starter-button zc-icon-delete"></button>
+                    {% endif %}
+
+                    {# Quick-links button #}
+                    {% if panel.getModuleSetting('panel-quick-links') %}
+                        <button title="{{ __('Quick links', 'zc') }}" class="zc-panel-header__controller-button zc-panel-quick-links-starter-button zc-icon-more-vert"></button>
+                    {% endif %}
+
+                    {# Header controllers after block #}
+                    {% block header_controllers_after %}{% endblock %}
+                    {# END Header controllers after block #}
+
+                </div>
+
+            </header>
+        {% endblock %}
+
+        {% block content_middle_before %}
+            {% include '@blocks/header/quick-links.twig' %}
+        {% endblock %}
+
+        {% block controls %}
+            <section class="zc-panel-controls">
+                <div class="zc-panel-controls__close-block"></div>
+                <ul class="zc-panel-controls__sections">
+                    <li class="zc-panel-controls__section zc-panel-controls__section_active">
+                        <ul class="zc-panel-controls__list">
+                            {{ render(panel.getBuildSettings) }}
+                        </ul>
+                    </li>
+                </ul>
+            </section>
+        {% endblock %}
+        
+    {% endembed %}
+
+</section>

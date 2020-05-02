@@ -1,0 +1,143 @@
+
+{#
+ * This file is part of the ZimbruCode package.
+ *
+ * (c) Junjulini
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ #}
+
+{#
+ * TWIG : Panel/Macros : Control
+ *
+ * @author  Junjulini
+ * @package ZimbruCode
+ * @since   ZimbruCode 1.0.0
+ #}
+
+{# Macro : HTML Input #}
+{% macro input(id, value, placeholder, type = 'text', class = 'zc-panel-control-input', ignore) %}
+    <input type="{{ type }}" name="{{ id }}" value="{{ value }}" placeholder="{{ placeholder }}" id="{{ id }}" class="{{ class }}" {{ ignore|raw }} data-control="option" autocomplete="off">
+{% endmacro %}
+
+{# Macro : HTML Textarea #}
+{% macro textarea(id, value, placeholder, class = 'zc-panel-control-textarea', ignore) %}
+    <textarea name="{{ id }}" placeholder="{{ placeholder }}" id="{{ id }}" class="{{ class }}" {{ ignore|raw }} data-control="option" autocomplete="off">{{ value }}</textarea>
+{% endmacro %}
+
+{# Macro : Button #}
+{% macro button(id, content, type = 'button', class = 'zc-panel-control-button') %}
+    {% set id = id ? 'id="' ~ id ~ '"' %}
+    <button type="{{ type }}" {{ id|raw }} class="{{ class }}">{{ content }}</button>
+{% endmacro %}
+
+{# Macro : HTML Select #}
+{% macro select(id, value, options, settings, type = 'single', class = 'zc-panel-control-select', ignore) %}
+
+    {# Multiple select #}
+    {% if type == 'multiple' %}
+        <select name="{{ id }}" multiple id="{{ id }}" class="{{ class }}" {{ ignore|raw }} data-control="option" data-configs="{{ settings|json_encode() }}" autocomplete="off">
+            {% if is_assoc(options) %}
+                {% for key, option in options %}
+                    {% if option.disable %}
+                        <option disabled value="{{ option.disable }}">{{ option.disable }}</option>
+                    {% else %}
+                        {% set selected = key in value ? 'selected="selected"' %}
+                        <option {{ selected }} value="{{ key }}">{{ option }}</option>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                {% for option in options %}
+                    {% if option.disable %}
+                        <option disabled value="{{ option.disable }}">{{ option.disable }}</option>
+                    {% else %}
+                        {% set selected = option in value ? 'selected="selected"' %}
+                        <option {{ selected }} value="{{ option }}">{{ option }}</option>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </select>
+
+    {# Group select #}
+    {% elseif type == 'group' %}
+        <select name="{{ id }}" id="{{ id }}" class="{{ class }}" {{ ignore|raw }} data-control="option" data-configs="{{ settings|json_encode() }}" autocomplete="off">
+            {% for group in options %}
+                <optgroup label="{{ group.title }}">
+                    {% if is_assoc(group.options) %}
+                        {% for key, option in group.options %}
+                            {% if option.disable %}
+                                <option disabled value="{{ option.disable }}">{{ option.disable }}</option>
+                            {% else %}
+                                {% set selected = to_string(key) == to_string(value) ? 'selected="selected"' %}
+                                <option {{ selected }} value="{{ key }}">{{ option }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        {% for option in group.options %}
+                            {% if option.disable %}
+                                <option disabled value="{{ option.disable }}">{{ option.disable }}</option>
+                            {% else %}
+                                {% set selected = to_string(option) == to_string(value) ? 'selected="selected"' %}
+                                <option {{ selected }} value="{{ option }}">{{ option }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </optgroup>
+            {% endfor %}
+        </select>
+
+    {# Multiple Group select #}
+    {% elseif type == 'multiple-group' %}
+        <select name="{{ id }}" multiple id="{{ id }}" class="{{ class }}" {{ ignore|raw }} data-control="option" data-configs="{{ settings|json_encode() }}" autocomplete="off">
+            {% for group in options %}
+                <optgroup label="{{ group.title }}">
+                    {% if is_assoc(group.options) %}
+                        {% for key, option in group.options %}
+                            {% if option.disable %}
+                                <option disabled value="{{ option.disable }}">{{ option.disable }}</option>
+                            {% else %}
+                                {% set selected = key in value ? 'selected="selected"' %}
+                                <option {{ selected }} value="{{ key }}">{{ option }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        {% for option in group.options %}
+                            {% if option.disable %}
+                                <option disabled value="{{ option.disable }}">{{ option.disable }}</option>
+                            {% else %}
+                                {% set selected = option in value ? 'selected="selected"' %}
+                                <option {{ selected }} value="{{ option }}">{{ option }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </optgroup>
+            {% endfor %}
+        </select>
+
+    {# Single select #}
+    {% else %}
+        <select name="{{ id }}" id="{{ id }}" class="{{ class }}" {{ ignore|raw }} data-control="option" data-configs="{{ settings|json_encode() }}" autocomplete="off">
+            {% if is_assoc(options) %}
+                {% for key, option in options %}
+                    {% if option.disable %}
+                        <option disabled value="{{ option.disable }}">{{ option.disable }}</option>
+                    {% else %}
+                        {% set selected = to_string(key) == to_string(value) ? 'selected="selected"' %}
+                        <option {{ selected }} value="{{ key }}">{{ option }}</option>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                {% for option in options %}
+                    {% if option.disable %}
+                        <option disabled value="{{ option.disable }}">{{ option.disable }}</option>
+                    {% else %}
+                        {% set selected = to_string(option) == to_string(value) ? 'selected="selected"' %}
+                        <option {{ selected }} value="{{ option }}">{{ option }}</option>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </select>
+    {% endif %}
+    
+{% endmacro %}

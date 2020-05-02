@@ -1,0 +1,66 @@
+
+/*
+ * This file is part of the ZimbruCode package.
+ *
+ * (c) Junjulini
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+/*
+ * Control LESS : Image select
+ *
+ * @author  Junjulini
+ * @package ZimbruCode
+ * @since   ZimbruCode 1.0.0
+ */
+
+.zc-panel-control-image-select {
+    &__list {
+        display: grid;
+        grid-gap: 10px;
+    }
+
+    .zc-panel[data-width|="mode-1"] &__list {
+        grid-template-columns: repeat(2, minmax(60px, 1fr)) !important;
+    }
+
+    &__item {
+        display: block;
+        margin: 0;
+    }
+
+    &__item-image-container {
+        .center-flex();
+        padding: 5px;
+        border: 3px solid @bg-color__border__1;
+        cursor: pointer;
+        .def-transition(border-color);
+
+        &:hover {
+            border-color: @accent-color__2;
+        }
+    }
+
+    &__item_active &__item-image-container {
+        border-color: @accent-color__1;
+
+        &:hover {
+            border-color: @accent-color__1;
+        }
+    }
+
+    &__item-image {
+        max-width: 100%;
+    }
+
+    &__item-title {
+        display: block;
+        text-align: center;
+        background: @bg-color__1;
+        border-radius: 3px;
+        padding: 4px;
+        margin-top: 5px;
+    }
+}

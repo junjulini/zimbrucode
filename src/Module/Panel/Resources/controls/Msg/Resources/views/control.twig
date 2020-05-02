@@ -1,0 +1,31 @@
+
+{#
+ * This file is part of the ZimbruCode package.
+ *
+ * (c) Junjulini
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ #}
+
+{#
+ * Control TWIG : Msg
+ *
+ * @author  Junjulini
+ * @package ZimbruCode
+ * @since   ZimbruCode 1.0.0
+ #}
+
+{% extends '@blocks/content/control.twig' %}
+
+{% block control %}
+    <div class="zc-panel-control-msg zc-panel-control-msg_mode_{{ control.settings.mode|default('info') }}">
+        <div class="zc-panel-control-msg__icon-container">
+            <i class="zc-panel-control-msg__icon {{ control.settings.icon }}"></i>
+        </div>
+        <div class="zc-panel-control-msg__content">
+            <h3 class="zc-panel-control-msg__title">{{ control.title('Title') }}</h3>
+            <p class="zc-panel-control-msg__text">{{ control.content|raw }}</p>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,88 @@
+
+{#
+ * This file is part of the ZimbruCode package.
+ *
+ * (c) Junjulini
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ #}
+
+{#
+ * TWIG : Panel/Blocks : Control
+ *
+ * @author  Junjulini
+ * @package ZimbruCode
+ * @since   ZimbruCode 1.0.0
+ #}
+
+{% import "@macros/content.twig" as macros %}
+{% set data = macros.condition(control.condition, control.operator) %}
+
+{% set class = control.fullWidth ? 'zc-panel-controls__item_full ' %}
+
+{% if control.borderLine == 'hide' %}
+    {% set class = class ~ 'zc-panel-controls__item_hide-border-line ' %}
+{% elseif control.borderLine == 'hide-last' %}
+    {% set class = class ~ 'zc-panel-controls__item_hide-border-line-last ' %}
+{% elseif control.borderLine == 'show-last' %}
+    {% set class = class ~ 'zc-panel-controls__item_show-border-line-last ' %}
+{% elseif control.borderLine == 'accent' %}
+    {% set class = class ~ 'zc-panel-controls__item_accent-border ' %}
+{% endif %}
+
+{% set class = class ~ control.classes %}
+{% set item_style = control.style.item ? 'style="' ~ control.style.item ~ '"' %}
+
+{{ macros.com('Control - ' ~ control.type) }}
+<li class="zc-panel-controls__item {{ class }}" {{ item_style|raw }} {{ data }} data-type="{{ control.type }}">
+    
+    {# Control block #}
+    {% block control %}
+
+        {% set desc_ratio = control.ratio.desc ? 'width:' ~ control.ratio.desc ~ '%' %}
+        {% set desc_style = 'style="' ~ control.style.desc ~ ' ' ~ desc_ratio ~ '"' %}
+
+        {% set content_ratio = control.ratio.content ? 'width:' ~ control.ratio.content ~ '%' %}
+        {% set content_style = 'style="' ~ control.style.content ~ ' ' ~ content_ratio ~ '"' %}
+
+        {# Description #}
+        {% if control.title or control.desc %}
+            <div class="zc-panel-controls__item-section zc-panel-controls__item-section_type_description" {{ desc_style|raw }}>
+
+                {# Help content #}
+                {{ macros.help(control.help) }}
+                {# END Help content #}
+
+                {# Description block #}
+                {% block description %}
+                    {% if control.title %}
+                        <h4 class="zc-panel-controls__item-title">{{ control.title }}</h4>
+                    {% endif %}
+
+                    {% if control.desc %}
+                        <label for="{{ control.ID }}" class="zc-panel-controls__item-description">{{ control.desc|raw }}</label>
+                    {% endif %}
+                {% endblock %}
+                {# END Description block #}
+
+            </div>
+        {% endif %}
+        {# END Description #}
+
+        {# Content #}
+        <div class="zc-panel-controls__item-section zc-panel-controls__item-section_type_content" {{ content_style|raw }}>
+
+            {{ panel.debug }}
+
+            {# Content block #}
+            {% block content %}{% endblock %}
+            {# END Content block #}
+
+        </div>
+        {# END Content #}
+
+    {% endblock %}
+    {# END Control block #}
+
+</li>

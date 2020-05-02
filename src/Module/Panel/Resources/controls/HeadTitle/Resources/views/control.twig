@@ -1,0 +1,25 @@
+
+{#
+ * This file is part of the ZimbruCode package.
+ *
+ * (c) Junjulini
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ #}
+
+{#
+ * Control TWIG : Head Title
+ *
+ * @author  Junjulini
+ * @package ZimbruCode
+ * @since   ZimbruCode 1.0.0
+ #}
+
+{% extends '@blocks/content/control.twig' %}
+
+{% block control %}
+    <div class="zc-panel-control-head-title">
+        <span class="zc-panel-control-head-title__title">{{ control.content }}</span>
+    </div>
+{% endblock %}

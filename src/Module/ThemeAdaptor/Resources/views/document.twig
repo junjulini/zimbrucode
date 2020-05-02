@@ -1,0 +1,41 @@
+
+{#
+ * This file is part of the Junjulini package.
+ *
+ * (c) Junjulini
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ #}
+
+{#
+ * TWIG : ThemeAdaptor : Document
+ *
+ * @author  Junjulini
+ * @package ZimbruCode
+ * @since   ZimbruCode 1.0.0
+ #}
+
+<!DOCTYPE html>
+<html {{ glob.language_attributes|raw }}>
+    <head>
+        {% block startHead %}
+            <meta charset="{{ glob.bloginfo('charset') }}">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <link rel="profile" href="http://gmpg.org/xfn/11">
+
+            {% block head %}{% endblock %}
+        {% endblock %}
+
+        {{ glob.wp_head|raw }}
+
+        {% block endHead %}{% endblock %}
+    </head>
+
+    <body {{ glob.body_class|raw }}>
+        {{ glob.wp_body_open|raw }}
+        {% block body %}{% endblock %}
+        {{ glob.wp_footer|raw }}
+    </body>
+</html>

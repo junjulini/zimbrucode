@@ -1,0 +1,136 @@
+
+/*
+ * This file is part of the ZimbruCode package.
+ *
+ * (c) Junjulini
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+/*
+ * Control LESS : Radio
+ *
+ * @author  Junjulini
+ * @package ZimbruCode
+ * @since   ZimbruCode 1.0.0
+ */
+
+.zc-panel-control-radio {
+    &__item {
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+
+        &_type_advanced {
+            .zc-panel-control-radio__item-title {
+                font-weight: 500;
+                color: @text-color__title;
+            }
+        }
+
+        &_type_simple {
+            margin-bottom: 5px;
+        }
+
+        &_type_inline {
+            display: inline-flex;
+            flex-direction: column;
+            margin-right: 10px;
+            margin-bottom: 0;
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    }
+
+    &__item-element {
+        position: relative;
+        cursor: pointer;
+        width: 20px;
+        height: 20px;
+
+        @media screen and (max-width: 782px) {
+            width: 25px;
+            height: 25px;
+        }
+
+        &:before {
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            content: '';
+            border: 2px solid @bg-color__border__1;
+            box-sizing: border-box;
+            border-radius: 100%;
+
+            @media screen and (max-width: 782px) {
+                width: 25px;
+                height: 25px;
+            }
+        }
+
+        &:after {
+            position: absolute;
+            content: '';
+            top: 6px;
+            left: 6px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: @accent-color__1;
+            .def-transition(transform);
+            .scale(0);
+
+            @media screen and (max-width: 782px) {
+                width: 13px;
+                height: 13px;
+            }
+        }
+
+        &_active {
+            &:after {
+                .scale(1);
+            }
+        }
+    }
+
+    &__item-desc-container {
+        margin-left: 10px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__item_type_inline &__item-desc-container {
+        margin-top: 5px;
+        margin-left: 0;
+    }
+
+    &__item-title {
+        cursor: pointer;
+    }
+
+    &__item-desc {
+        display: block;
+        color: @text-color__all;
+        margin: 0;
+        font-style: italic;
+
+        > b, > strong {
+            background: @bg-color__1;
+            padding: 1px 5px;
+        }
+
+        @media screen and (max-width: 782px) {
+            padding-left: 33px;
+        }
+    }
+}

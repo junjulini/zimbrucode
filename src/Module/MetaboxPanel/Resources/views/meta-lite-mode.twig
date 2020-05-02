@@ -1,0 +1,49 @@
+
+{#
+ * This file is part of the ZimbruCode package.
+ *
+ * (c) Junjulini
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ #}
+
+{#
+ * TWIG : MetaboxPanel : Meta lite mode
+ * 
+ * @author  Junjulini
+ * @package ZimbruCode
+ * @since   ZimbruCode 1.0.0
+ #}
+
+{% import "@macros/content.twig" as macros %}
+
+<section class="zc-panel-template" data-post-id="{{id}}">
+    <div class="zc-panel-template__panel-loading">
+        <div class="zc-loading-spinner zc-panel-template__loading-spinner">
+            <div class="zc-loading-spinner__bounce zc-loading-spinner__bounce_mode_1"></div>
+            <div class="zc-loading-spinner__bounce zc-loading-spinner__bounce_mode_2"></div>
+            <div class="zc-loading-spinner__bounce zc-loading-spinner__bounce_mode_3"></div>
+        </div>
+    </div>
+
+    {% embed '@blocks/panel.twig' %}
+
+        {% block menu %}{% endblock %}
+        {% block header %}{% endblock %}
+        {% block footer %}{% endblock %}
+
+        {% block controls_list %}
+            <ul class="zc-panel-controls__sections">
+                <li class="zc-panel-controls__section zc-panel-controls__section_active">
+                    <ul class="zc-panel-controls__list">
+                        {{ render(panel.getBuildSettings) }}
+                    </ul>
+                </li>
+            </ul>
+        {% endblock %}
+        
+    {% endembed %}
+
+    <input type="hidden" name="zc-panel-meta-mode-nonce" value="{{ nonce }}" />
+</section>

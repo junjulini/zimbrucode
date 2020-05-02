@@ -1,0 +1,33 @@
+
+{#
+ * This file is part of the ZimbruCode package.
+ *
+ * (c) Junjulini
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ #}
+
+{#
+ * Control TWIG : Code editor
+ *
+ * @author  Junjulini
+ * @package ZimbruCode
+ * @since   ZimbruCode 1.0.0
+ #}
+ 
+{% extends '@blocks/content/control.twig' %}
+
+{% block content %}
+    <textarea
+        name="{{ control.ID }}"
+        id="{{ control.ID }}"
+        class="ace-editor hide"
+        data-control="option"
+        data-editor="{{ control.ID }}-editor"
+        data-mode="{{ control.settings.mode|default('css') }}"
+        data-theme="{{ control.settings.theme|default('chrome') }}"
+        {{ control.ignore }}
+        autocomplete="off">{{ control.option }}</textarea>
+    <pre id="{{ control.ID }}-editor" class="ace-editor-area">{{ control.option }}</pre>
+{% endblock %}

@@ -1,0 +1,56 @@
+
+/*
+ * This file is part of the ZimbruCode package.
+ *
+ * (c) Junjulini
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+/*
+ * Control LESS : Button
+ *
+ * @author  Junjulini
+ * @package ZimbruCode
+ * @since   ZimbruCode 1.0.0
+ */
+
+.zc-panel-control-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+    min-width: 100px;
+    height: 32px;
+    padding: 0 6px;
+    margin: 0;
+    border: 1px solid @bg-color__border__1;
+    border-radius: 3px;
+    background: @bg-color__1;
+    color: @text-color__all;
+    font-weight: 500;
+    cursor: pointer;
+    text-transform: uppercase;
+    .def-transition(all);
+
+    &:hover {
+        background: #ffffff;
+        color: @accent-color__2;
+    }
+
+    &:focus {
+        outline: none;
+    }
+
+    &_active {
+        background: @accent-color__1;
+        color: #ffffff;
+        border: 1px solid rgba(0 ,0, 0, 0.04);
+
+        &:hover {
+            background: #69D4B4;
+            color: #ffffff;
+        }
+    }
+}

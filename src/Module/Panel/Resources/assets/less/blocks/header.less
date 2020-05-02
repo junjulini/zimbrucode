@@ -1,0 +1,117 @@
+
+/*
+ * This file is part of the ZimbruCode package.
+ *
+ * (c) Junjulini
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+/*
+ * LESS : Panel/Blocks : Header
+ *
+ * @author  Junjulini
+ * @package ZimbruCode
+ * @since   ZimbruCode 1.0.0
+ */
+
+.zc-panel-header {
+    width: 100%;
+    height: @panel_header__height;
+    background: @alt-color__bg-1;
+    overflow: hidden;
+    position: relative;
+    top: 0;
+    z-index: 150;
+    box-sizing: border-box;
+    padding: 0 20px;
+    display: flex;
+
+    .zc-panel[data-width|="mode-3"] & {
+        position: absolute;
+    }
+
+    .zc-panel[data-width|="mode-3"] .zc-panel-content_submenu-active & {
+        border-left: 1px solid @panel_menu__border-color;
+    }
+
+    &__section-title {
+        text-align: left;
+        height: @panel_header__height;
+        display: flex;
+        align-items: center;
+    }
+
+    &__title {
+        color: @alt-color__text;
+        font-size: 15px;
+        font-weight: 600;
+        margin-left: 10px;
+        cursor: default;
+    }
+
+    &__title-icon {
+        font-size: 21px;
+        color: @alt-color__text;
+    }
+
+    &__controllers {
+        position: relative;
+        display: flex;
+        align-items: center;
+
+        &_left {
+            margin-right: auto;
+        }
+
+        &_right {
+            margin-left: auto;
+        }
+    }
+
+    &__controller-button {
+        min-width: 32px;
+        height: 32px;
+        margin-right: 10px;
+        padding: 0 6px;
+        border: none;
+        background: @alt-color__bg-2;
+        border-radius: 5px;
+        cursor: pointer;
+        outline: none;
+        font-size: 20px;
+        color: @panel_header__button-text-color;
+        .def-transition(all);
+        .center-flex();
+
+        &:hover {
+            background: @panel_header__button-hover-color;
+            color: @panel_header__button-hover-text-color;
+        }
+
+        &:last-child {
+            margin-right: 0;
+        }
+
+        &_space {
+            margin-right: 20px;
+        }
+
+        &_disabled {
+            cursor: not-allowed;
+            background: @alt-color__bg-2 !important;
+            color: @panel_header__button-text-color !important;
+        }
+    }
+
+    &__controller-button-title {
+        font-size: 15px;
+        padding: 0 5px;
+        font-weight: 500;
+
+        .zc-panel[data-width|="mode-1"] & {
+            display: none;
+        }
+    }
+}

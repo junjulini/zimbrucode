@@ -1,0 +1,32 @@
+
+<!--
+* This file is part of the ZimbruCode package.
+*
+* (c) Junjulini
+*
+* For the full copyright and license information, please view the LICENSE
+* file that was distributed with this source code.
+-->
+
+<!--
+* Script : MetaboxPanel/Module/Header/TPL : Reset popup notification HTML
+*
+* @author  Junjulini
+* @package ZimbruCode
+* @since   ZimbruCode 1.0.0
+-->
+
+<div class="zc-panel-popup-notification zc-panel-popup-notification_type_{{type}}">
+    <div class="zc-panel-popup-notification__icon-container">
+        <i class="zc-panel-popup-notification__icon"></i>
+    </div>
+    <div class="zc-panel-popup-notification__content-container">
+        <div class="zc-panel-popup-notification__content">
+            <span class="zc-panel-popup-notification__title">{{title}}</span>
+            <p class="zc-panel-popup-notification__text">{{content}}</p>
+        </div>
+        <div class="zc-panel-popup-notification__close-controller">
+            <button class="zc-panel-popup-notification__close-button" type="button">{{var_exit}}</button>
+        </div>
+    </div>
+</div>

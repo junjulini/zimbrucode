@@ -1,0 +1,54 @@
+
+{#
+ * This file is part of the ZimbruCode package.
+ *
+ * (c) Junjulini
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ #}
+
+{#
+ * TWIG : Panel/Mode : Page mode
+ *
+ * @author  Junjulini
+ * @package ZimbruCode
+ * @since   ZimbruCode 1.0.0
+ #}
+
+{% extends '@blocks/panel.twig' %}
+
+{% set panel_class = 'zc-panel_ajax-load' %}
+
+{% block header_controllers %}
+
+    {# Save button #}
+    {% if panel.getModuleSetting('panel-save-button') %}
+        <button title="{{ __('Save options', 'zc') }}" class="zc-panel-header__controller-button zc-panel-save-starter-button">
+            <i class="zc-panel-header__controller-button-icon zc-icon-check"></i>
+            <span class="zc-panel-header__controller-button-title">{{ __('Save', 'zc') }}</span>
+        </button>
+        <button title="{{ __('In process ...', 'zc') }}" disabled class="zc-panel-header__controller-button zc-panel-loading-starter-button">
+            <div class="zc-loading-spinner zc-panel-loading-starter-button__loading-spinner">
+                <div class="zc-loading-spinner__bounce zc-loading-spinner__bounce_mode_1"></div>
+                <div class="zc-loading-spinner__bounce zc-loading-spinner__bounce_mode_2"></div>
+                <div class="zc-loading-spinner__bounce zc-loading-spinner__bounce_mode_3"></div>
+            </div>
+        </button>
+    {% endif %}
+
+    {# Reset button #}
+    {% if panel.getModuleSetting('panel-reset-button') %}
+        <button title="{{ __('Reset options', 'zc') }}" class="zc-panel-header__controller-button zc-panel-reset-starter-button zc-icon-delete"></button>
+    {% endif %}
+
+    {# Quick-links button #}
+    {% if panel.getModuleSetting('panel-quick-links') %}
+        <button title="{{ __('Quick links', 'zc') }}" class="zc-panel-header__controller-button zc-panel-quick-links-starter-button zc-icon-more-vert"></button>
+    {% endif %}
+
+{% endblock %}
+
+{% block content_middle_before %}
+    {% include '@blocks/header/quick-links.twig' %}
+{% endblock %}

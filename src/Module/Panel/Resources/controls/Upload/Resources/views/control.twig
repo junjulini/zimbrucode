@@ -1,0 +1,45 @@
+
+{#
+ * This file is part of the ZimbruCode package.
+ *
+ * (c) Junjulini
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ #}
+
+{#
+ * Control TWIG : Upload
+ *
+ * @author  Junjulini
+ * @package ZimbruCode
+ * @since   ZimbruCode 1.0.0
+ #}
+ 
+{% extends '@blocks/content/control.twig' %}
+{% import "@macros/control.twig" as html %}
+
+{% set value = control.option %}
+
+{% block content %}
+    <div class="zc-panel-control-upload">
+        {{ html.button(control.ID, __('Upload', 'zc'), 'button', 'zc-panel-control-upload__button') }}
+
+        <input type="hidden" name="{{ control.ID }}" value="{{ value|e('_url') }}" {{ control.ignore }} data-control="option" autocomplete="off">
+        <input type="hidden" name="{{ control.ID }}--large_image" value="{{ control.option(control.ID ~ '--large_image') }}" autocomplete="off">
+        <input type="hidden" name="{{ control.ID }}--id" value="{{ control.option(control.ID ~ '--id') }}" autocomplete="off">
+
+        {# Display image #}
+        {% if value %}
+            <div class="zc-panel-control-upload__image-container">
+                <i title="{{ __('Remove', 'zc') }}" class="zc-panel-control-upload__icon-close zc-icon-clear"></i>
+
+                {% if control.option(control.ID ~ '--id') %}
+                    <img src="{{ glob.wp_get_attachment_image_url(control.option(control.ID ~ '--id'), 'large')|e('_url') }}" class="zc-panel-control-upload__image" />
+                {% else %}
+                    <img src="{{ value|e('_url') }}" class="zc-panel-control-upload__image zc-panel-control-upload__image_direct" />
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

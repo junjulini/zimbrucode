@@ -1,0 +1,181 @@
+
+/*
+ * This file is part of the ZimbruCode package.
+ *
+ * (c) Junjulini
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+/*
+ * LESS : Panel/Blocks/Header : Direct notification
+ *
+ * @author  Junjulini
+ * @package ZimbruCode
+ * @since   ZimbruCode 1.0.0
+ */
+
+.zc-panel-direct-notification {
+    position: absolute;
+    width: 100%;
+    min-height: @panel_header__height;
+    background: @accent-color__4;
+    z-index: 101;
+    color: #ffffff;
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.4);
+    animation: zc-panel-direct-notification-active .3s 1;
+    display: flex;
+    align-items: center;
+
+    &_close {
+        animation: zc-panel-direct-notification-close .3s 1;
+    }
+
+    // Error Notification
+    &_type_error {
+        background: @accent-color__4 !important;
+
+        .zc-panel-direct-notification__icon-container {
+            border-right-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .zc-panel-direct-notification__icon:before {
+            .icon(zc_icon_cancel);
+        }
+
+        .zc-panel-direct-notification__close-controller {
+            border-left-color: rgba(255, 255, 255, 0.1);
+        }
+    }
+
+    // Info Notification
+    &_type_info {
+        background: #6FC3DA;
+
+        .zc-panel-direct-notification__icon:before {
+            .icon(zc_icon_check);
+        }
+    }
+
+    // Success Notification
+    &_type_success {
+        background: @accent-color__3;
+
+        .zc-panel-direct-notification__icon:before {
+            .icon(zc_icon_check);
+        }
+    }
+
+    // Warning Notification
+    &_type_warning {
+        background: #EDF1A5;
+        color: #545454;
+        box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.3);
+
+        .zc-panel-direct-notification__icon-container {
+            border-right-color: rgba(84, 84, 84, 0.2);
+        }
+
+        .zc-panel-direct-notification__icon {
+            color: #D4C202;
+
+            &:before {
+                .icon(zc_icon_warning);
+            }
+        }
+
+        .zc-panel-direct-notification__text {
+            color: rgba(84, 84, 84, 0.8);
+        }
+
+        .zc-panel-direct-notification__close-controller {
+            border-left-color: rgba(84, 84, 84, 0.2);
+
+            &:hover {
+                background: rgba(255, 255, 255, 0.3);
+            }
+        }
+    }
+
+    *::selection {
+        background: #ffffff;
+        color: @alt-color__bg-1;
+    }
+
+    &__icon-container {
+        width: 50px;
+        height: 56px;
+        border-right: 1px solid rgba(255, 255, 255, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &__icon {
+        font-size: 30px;
+        color: rgba(255, 255, 255, 0.9);
+    }
+
+    &__content {
+        height: 56px;
+        display: flex;
+        flex-direction: column;
+        margin-left: 20px;
+        justify-content: center;
+    }
+
+    &__title {
+        display: block;
+        font-weight: 500;
+        font-size: 15px;
+        margin-bottom: 5px;
+    }
+
+    &__text {
+        color: rgba(255, 255, 255, 0.9);
+        font-weight: 500;
+    }
+
+    &__close-controller {
+        width: 30px;
+        height: 56px;
+        border-left: 1px solid rgba(255, 255, 255, 0.2);
+        cursor: pointer;
+        .def-transition(background);
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+    }
+
+    &__close-icon {
+        font-size: 17px;
+    }
+
+    @keyframes zc-panel-direct-notification-active {
+        0% {
+            .translateY(-@panel_header__height);
+            opacity: 0;
+        }
+        100% {
+            .translateY(0);
+            opacity: 1;
+        }
+    }
+
+    @keyframes zc-panel-direct-notification-close {
+        0% {
+            .translateY(0);
+            opacity: 1;
+        }
+        100% {
+            .translateY(-@panel_header__height);
+            opacity: 0;
+        }
+    }
+}

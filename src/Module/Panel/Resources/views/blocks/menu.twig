@@ -1,0 +1,134 @@
+
+{#
+ * This file is part of the ZimbruCode package.
+ *
+ * (c) Junjulini
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ #}
+
+{#
+ * TWIG : Panel/Blocks : Menu
+ *
+ * @author  Junjulini
+ * @package ZimbruCode
+ * @since   ZimbruCode 1.0.0
+ #}
+
+<nav class="zc-panel-menu">
+    <div class="zc-panel-menu__container">
+
+        {# Menu title #}
+        <div class="zc-panel-menu__title-container">
+            <i class="zc-panel-menu__icon {{ panel.getModuleSetting('panel-title-icon') }}"></i>
+            <span class="zc-panel-menu__title">{{ panel.getModuleSetting('panel-title') }}</span>
+        </div>
+        {# END Menu title #}
+
+        <div class="zc-panel-menu__scrollbar-container">
+            <div class="zc-scrollbar">
+                <ul class="zc-panel-menu__list">
+                    {% for menu in panel.getBuildSettings %}
+
+                        {# If is simple type #}
+                        {% if menu.type == 'menuTab' and menu.id %}
+
+                            <li class="zc-panel-menu__item zc-panel-menu__item_type_simple" data-menu-item-id="section_{{ menu.id }}">
+                                {% if menu.ico %}
+                                    <i class="zc-panel-menu__item-icon {{ menu.ico }}"></i>
+                                {% endif %}
+                                <span class="zc-panel-menu__item-title">{{ menu.title }}</span>
+                            </li>
+
+                        {# If is parent type #}
+                        {% elseif menu.type == 'menuParentTab' and menu.id %}
+                            <li class="zc-panel-menu__item zc-panel-menu__item_type_parent zc-panel-menu__item_type_simple" data-menu-container-id="{{ menu.id }}">
+                                {% if menu.ico %}
+                                    <i class="zc-panel-menu__item-icon {{ menu.ico }}"></i>
+                                {% endif %}
+                                <span class="zc-panel-menu__item-title">{{ menu.title }}</span>
+                                <i class="zc-panel-menu__item-icon zc-panel-menu__item-icon_pointer zc-icon-chevron-right"></i>
+                            </li>
+
+                        {# If is title type #}
+                        {% elseif menu.type == 'menuTitleTab' %}
+
+                            <li class="zc-panel-menu__item zc-panel-menu__item_type_title">
+                                <span class="zc-panel-menu__item-only-title">{{ menu.title }}</span>
+                            </li>
+
+                        {# If is delimiter type #}
+                        {% elseif menu.type == 'menuDelimiterTab' %}
+
+                            <li class="zc-panel-menu__item zc-panel-menu__item_type_delimiter"></li>
+
+                        {% endif %}
+
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <ul class="zc-panel-submenu">
+            {% for menu in panel.getBuildSettings %}
+                {% if menu.type == 'menuParentTab' and menu.id %}
+                    <li class="zc-panel-submenu__container" data-menu-container-id="{{ menu.id }}">
+                        <header class="zc-panel-submenu__header-section zc-panel-submenu__header-section_mode_desktop">
+                            {% if menu.ico %}
+                                <i class="zc-panel-submenu__header-icon {{ menu.ico }}"></i>
+                            {% endif %}
+                            <span class="zc-panel-submenu__header-section-title">{{ menu.title }}</span>
+                        </header>
+                        
+                        <header class="zc-panel-submenu__header-section zc-panel-submenu__header-section_mode_mobile">
+                            <i class="zc-panel-submenu__header-icon zc-icon-keyboard-arrow-left"></i>
+                            <span class="zc-panel-submenu__header-section-title">{{ __('Go back', 'zc') }}</span>
+                        </header>
+
+                        <div class="zc-panel-submenu__scrollbar-container">
+                            <div class="zc-scrollbar">
+                                <ul class="zc-panel-submenu__list">
+
+                                    {% for sub_menu in menu.content %}
+
+                                        {# If is simple type #}
+                                        {% if sub_menu.type == 'menuTab' and sub_menu.id %}
+                                            
+                                            <li class="zc-panel-submenu__item zc-panel-submenu__item_type_simple" data-menu-item-id="section_{{ sub_menu.id }}">
+                                                {% if sub_menu.ico %}
+                                                    <i class="zc-panel-submenu__item-icon {{ sub_menu.ico }}"></i>
+                                                {% endif %}
+                                                <span class="zc-panel-submenu__item-title">{{ sub_menu.title }}</span>
+                                            </li>
+
+                                        {# If is title type #}
+                                        {% elseif sub_menu.type == 'menuTitleTab' %}
+                                            
+                                            <li class="zc-panel-submenu__item zc-panel-submenu__item_type_title">
+                                                <span class="zc-panel-submenu__item-only-title">{{ sub_menu.title }}</span>
+                                            </li>
+
+                                        {# If is delimiter type #}
+                                        {% elseif sub_menu.type == 'menuDelimiterTab' %}
+                                            
+                                            <li class="zc-panel-submenu__item zc-panel-submenu__item_type_delimiter"></li>
+
+                                        {# If is text type #}
+                                        {% elseif sub_menu.type == 'menuTextTab' %}
+                                            <li class="zc-panel-submenu__item zc-panel-submenu__item_type_text">
+                                                <p class="zc-panel-submenu__item-text">{{ sub_menu.content|raw }}</p>
+                                            </li>
+                                        {% endif %}
+                                        
+                                    {% endfor %}
+
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+</nav>
