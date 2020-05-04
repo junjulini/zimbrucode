@@ -26,15 +26,26 @@ zc.setModule('panel', ($) => {
     
     // After loading page
     $(() => {
-        if (panel.mode === undefined) {
-            throw new Error('panel.mode is undefined');
-        }
+        try {
+            if (panel.mode === undefined) {
+                throw 'panel.mode is undefined';
+            }
+    
+            if (!$.isFunction(panel.mode)) {
+                throw 'panel.mode is not function';
+            }
 
-        if (!$.isFunction(panel.mode)) {
-            throw new Error('panel.mode is not function');
-        }
+            panel.checkBrowserCompatibility();
 
-        new panel.mode($, panel);
+            new panel.mode($, panel);
+        } catch (error) {
+            if ($('.zc-panel-template').length > 0) {
+                $('.zc-panel-template').empty().append(`<div class="error notice"><p><b>${panel.getVar('browser-error-title')}</b> : ${error}</p></div>`);
+            } else {
+                $('#wpbody-content').prepend(`<div class="error notice"><p><b>${panel.getVar('browser-error-title')}</b> : ${error}</p></div>`);
+                alert(`${panel.getVar('browser-error-title')} : ${error}`);
+            }
+        }
     });
 
     // ############# PUBLIC METHODS #############

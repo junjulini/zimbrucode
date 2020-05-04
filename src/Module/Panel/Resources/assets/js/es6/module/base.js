@@ -67,6 +67,15 @@ export default class Base extends Kernel {
         this.service('callback', new Callback);
     }
 
+    checkBrowserCompatibility() {
+        try {
+            new IntersectionObserver(a => {});
+            new ResizeObserver(a => {});
+        } catch (error) {
+            throw this.getVar('browser-error-subject');
+        }
+    }
+
     /**
      * Panel menu
      * 

@@ -92,16 +92,18 @@ class LiteMode extends Mode
             self::dop('jquery.panel-lite-mode.js', 'jquery.panel-lite-mode.min.js'),
             'mode/lite-mode.less'
         )->enroll()->localize(self::dop('jquery.panel.js', 'jquery.panel.min.js'), 'zcPanelVars', $this->mergeControlsLocalizeVars([
-            'slug'                 => $this->getModuleSetting('slug'),
-            'mode'                 => $this->getMode(),
-            'nonce'                => AjaxHandler::getNonce($this->getModuleSetting('nonce')),
-            'exit'                 => esc_html__('Exit', 'zc'),
-            'reset-pop-up-title'   => esc_html__('Confirm', 'zc'),
-            'reset-pop-up-subject' => esc_html__('Options will be removed, ok?', 'zc'),
-            'reset-pop-up-ok'      => esc_html__('OK', 'zc'),
-            'reset-pop-up-cancel'  => esc_html__('Cancel', 'zc'),
-            'if-changed'           => esc_html__('Are you sure you want to leave ?', 'zc'),
-            'prefix-slug'          => self::getGlobal('core/module/panel/prefix-slug')
+            'slug'                  => $this->getModuleSetting('slug'),
+            'mode'                  => $this->getMode(),
+            'nonce'                 => AjaxHandler::getNonce($this->getModuleSetting('nonce')),
+            'browser-error-title'   => esc_html__('Panel error', 'zc'),
+            'browser-error-subject' => esc_html__('Your browser is old. Please update your browser or download Chrome / Opera / Firefox', 'zc'),
+            'exit'                  => esc_html__('Exit', 'zc'),
+            'reset-pop-up-title'    => esc_html__('Confirm', 'zc'),
+            'reset-pop-up-subject'  => esc_html__('Options will be removed, ok?', 'zc'),
+            'reset-pop-up-ok'       => esc_html__('OK', 'zc'),
+            'reset-pop-up-cancel'   => esc_html__('Cancel', 'zc'),
+            'if-changed'            => esc_html__('Are you sure you want to leave ?', 'zc'),
+            'prefix-slug'           => self::getGlobal('core/module/panel/prefix-slug')
         ]));
 
         $this->callback()->run('panel-enqueue--after');

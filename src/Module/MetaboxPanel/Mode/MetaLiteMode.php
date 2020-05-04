@@ -115,7 +115,9 @@ class MetaLiteMode extends Mode
         // Assets enroll
         if (!$result) {
             $this->asset()->enroll()->localize($handle, 'zcPanelVars', $this->mergeControlsLocalizeVars([
-                'prefix-slug' => self::getGlobal('core/module/panel/prefix-slug'),
+                'browser-error-title'   => esc_html__('MetaboxPanel error', 'zc'),
+                'browser-error-subject' => esc_html__('Your browser is old. Please update your browser or download Chrome / Opera / Firefox', 'zc'),
+                'prefix-slug'           => self::getGlobal('core/module/panel/prefix-slug'),
             ]));
         } else {
             $this->asset()->enroll();
