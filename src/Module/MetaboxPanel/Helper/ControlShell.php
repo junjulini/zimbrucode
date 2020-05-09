@@ -12,7 +12,7 @@
 namespace ZimbruCode\Module\MetaboxPanel\Helper;
 
 use ZimbruCode\Component\Core\Kernel;
-use ZimbruCode\Module\Panel\Library\Shell\ControlShell;
+use ZimbruCode\Module\Panel\Library\Shell\ControlShell as PanelControlShell;
 
 /**
  * Class : Meta control shell
@@ -21,7 +21,7 @@ use ZimbruCode\Module\Panel\Library\Shell\ControlShell;
  * @package ZimbruCode
  * @since   ZimbruCode 1.0.0
  */
-class MetaControlShell extends ControlShell
+class ControlShell extends PanelControlShell
 {
     /**
      * Get control option

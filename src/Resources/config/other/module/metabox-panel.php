@@ -37,7 +37,7 @@ return [
             'key' => 'module.metabox_panel.backup',
         ],
 
-        'custom-control-shell' => 'ZimbruCode\\Module\\MetaboxPanel\\Helper\\MetaControlShell',
+        'custom-control-shell' => 'ZimbruCode\\Module\\MetaboxPanel\\Helper\\ControlShell',
         'hide-header'          => false,
 
         'events'               => [
