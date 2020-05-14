@@ -51,7 +51,7 @@ trait OptionHandlerTrait
     public static function getOption($option, $default = '', $ao = false)
     {
         if (!$ao) {
-            $value = Kernel::service('db')->get(self::__prepOption($option));
+            $value = Kernel::service('db')->get(self::__prepOption($option), null);
             return ($value !== '' && $value !== null) ? $value : $default;
         } else {
             return get_option($ao, $default);
