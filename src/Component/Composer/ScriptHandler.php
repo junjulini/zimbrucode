@@ -12,9 +12,9 @@
 namespace ZimbruCode\Component\Composer;
 
 use Composer\Script\Event;
-use Symfony\Component\Finder\Finder;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Finder\Finder;
 use ZimbruCode\Component\Asset\Utility\RemoteMinify;
 
 /**
@@ -28,7 +28,7 @@ class ScriptHandler
 {
     /**
      * Install theme script
-     * 
+     *
      * @param  Event  $event
      * @return void   This function does not return a value
      * @since 1.0.0
@@ -40,22 +40,22 @@ class ScriptHandler
         $config = [];
         $root   = dirname($event->getComposer()->getConfig()->get('vendor-dir'));
 
-        $config = [];
-        $config['app-name']         = $event->getIO()->ask('Theme name. Default - ZC_Theme : ', 'ZC_Theme');
-        $config['app-slug']         = $event->getIO()->ask('Theme slug. Default - zc_theme : ', 'zc_theme');
-        $config['app-class']        = $event->getIO()->ask("Theme class. Default - {$config['app-name']} : ", $config['app-name']);
-        $config['app-class-alias']  = $event->getIO()->ask('Theme class alias. Default - zc : ', 'zc');
-        $config['app-uri']          = $event->getIO()->ask('Theme URI (DEMO / HOME) : ', 'https://junjulini.com');
-        $config['app-desc']         = $event->getIO()->ask('Theme description : ', 'ZC theme');
-        $config['app-author']       = $event->getIO()->ask('Theme author : ', 'Junjulini');
-        $config['app-author-uri']   = $event->getIO()->ask('Theme author URI : ', 'https://junjulini.com');
-        $config['app-version']      = $event->getIO()->ask('Theme version : ', '1.0.0');
-        $config['app-tags']         = $event->getIO()->ask('Theme tags : ', 'theme, zimbrucode');
-        $config['app-domain']       = $event->getIO()->ask('Theme domain : ', 'zimbrucode-app');
+        $config                    = [];
+        $config['app-name']        = $event->getIO()->ask('Theme name. Default - ZC_Theme : ', 'ZC_Theme');
+        $config['app-slug']        = $event->getIO()->ask('Theme slug. Default - zc_theme : ', 'zc_theme');
+        $config['app-class']       = $event->getIO()->ask("Theme class. Default - {$config['app-name']} : ", $config['app-name']);
+        $config['app-class-alias'] = $event->getIO()->ask('Theme class alias. Default - zc : ', 'zc');
+        $config['app-uri']         = $event->getIO()->ask('Theme URI (DEMO / HOME) : ', 'https://junjulini.com');
+        $config['app-desc']        = $event->getIO()->ask('Theme description : ', 'ZC theme');
+        $config['app-author']      = $event->getIO()->ask('Theme author : ', 'Junjulini');
+        $config['app-author-uri']  = $event->getIO()->ask('Theme author URI : ', 'https://junjulini.com');
+        $config['app-version']     = $event->getIO()->ask('Theme version : ', '1.0.0');
+        $config['app-tags']        = $event->getIO()->ask('Theme tags : ', 'theme, zimbrucode');
+        $config['app-domain']      = $event->getIO()->ask('Theme domain : ', 'zimbrucode-app');
 
         // Create app config
         file_put_contents("{$root}/config.json", json_encode($config, JSON_PRETTY_PRINT));
-        
+
         $search = [
             '{APP-NAME}',
             '{APP-SLUG}',
@@ -85,22 +85,23 @@ class ScriptHandler
         ];
 
         $files = [
-            '/composer.json',
-            '/bootstrap.php',
-            '/functions.php',
-            '/index.php',
-            '/style.css',
-            '/app/Application.php',
-            '/app/Resources/config/app.php',
-            '/app/Resources/config/core.php',
-            '/app/Resources/config/modules.php',
-            '/app/Resources/views/index.twig',
-            '/app/Resources/assets/js/script.js',
-            '/app/Resources/assets/less/style.less',
+            'composer.json',
+            'bootstrap.php',
+            'functions.php',
+            'index.php',
+            'style.css',
+            'app/Application.php',
+            'app/Resources/config/app.php',
+            'app/Resources/config/core.php',
+            'app/Resources/config/modules.php',
+            'app/Resources/views/index.twig',
+            'app/Resources/assets/js/script.js',
+            'app/Resources/assets/less/style.less',
         ];
 
         foreach ($files as $file) {
-            $file = $root . $file;
+            $file = "{$root}/{$file}";
+
             if (file_exists($file)) {
                 file_put_contents($file, str_replace($search, $replace, file_get_contents($file)));
             }
@@ -111,7 +112,7 @@ class ScriptHandler
 
     /**
      * Install plugin script
-     * 
+     *
      * @param  Event  $event
      * @return void   This function does not return a value
      * @since 1.0.0
@@ -123,21 +124,21 @@ class ScriptHandler
         $config = [];
         $root   = dirname($event->getComposer()->getConfig()->get('vendor-dir'));
 
-        $config = [];
-        $config['app-name']         = $event->getIO()->ask('Plugin name. Default - ZC_Plugin : ', 'ZC_Plugin');
-        $config['app-slug']         = $event->getIO()->ask('Plugin slug. Default - zc_plugin : ', 'zc_plugin');
-        $config['app-class']        = $event->getIO()->ask("Plugin class. Default - {$config['app-name']} : ", $config['app-name']);
-        $config['app-class-alias']  = $event->getIO()->ask('Plugin class alias. Default - zc : ', 'zc');
-        $config['app-uri']          = $event->getIO()->ask('Plugin URI (DEMO / HOME) : ', 'https://junjulini.com');
-        $config['app-desc']         = $event->getIO()->ask('Plugin description : ', 'ZC plugin');
-        $config['app-author']       = $event->getIO()->ask('Plugin author : ', 'Junjulini');
-        $config['app-author-uri']   = $event->getIO()->ask('Plugin author URI : ', 'https://junjulini.com');
-        $config['app-version']      = $event->getIO()->ask('Plugin version : ', '1.0.0');
-        $config['app-domain']       = $event->getIO()->ask('Plugin domain : ', 'zimbrucode-app');
+        $config                    = [];
+        $config['app-name']        = $event->getIO()->ask('Plugin name. Default - ZC_Plugin : ', 'ZC_Plugin');
+        $config['app-slug']        = $event->getIO()->ask('Plugin slug. Default - zc_plugin : ', 'zc_plugin');
+        $config['app-class']       = $event->getIO()->ask("Plugin class. Default - {$config['app-name']} : ", $config['app-name']);
+        $config['app-class-alias'] = $event->getIO()->ask('Plugin class alias. Default - zc : ', 'zc');
+        $config['app-uri']         = $event->getIO()->ask('Plugin URI (DEMO / HOME) : ', 'https://junjulini.com');
+        $config['app-desc']        = $event->getIO()->ask('Plugin description : ', 'ZC plugin');
+        $config['app-author']      = $event->getIO()->ask('Plugin author : ', 'Junjulini');
+        $config['app-author-uri']  = $event->getIO()->ask('Plugin author URI : ', 'https://junjulini.com');
+        $config['app-version']     = $event->getIO()->ask('Plugin version : ', '1.0.0');
+        $config['app-domain']      = $event->getIO()->ask('Plugin domain : ', 'zimbrucode-app');
 
         // Create app config
         file_put_contents("{$root}/config.json", json_encode($config, JSON_PRETTY_PRINT));
-        
+
         $search = [
             '{APP-NAME}',
             '{APP-SLUG}',
@@ -165,19 +166,20 @@ class ScriptHandler
         ];
 
         $files = [
-            '/composer.json',
-            '/bootstrap.php',
-            '/index.php',
-            '/app/Application.php',
-            '/app/Resources/config/app.php',
-            '/app/Resources/config/core.php',
-            '/app/Resources/config/modules.php',
-            '/app/Resources/assets/js/script.js',
-            '/app/Resources/assets/less/style.less',
+            'composer.json',
+            'bootstrap.php',
+            'index.php',
+            'app/Application.php',
+            'app/Resources/config/app.php',
+            'app/Resources/config/core.php',
+            'app/Resources/config/modules.php',
+            'app/Resources/assets/js/script.js',
+            'app/Resources/assets/less/style.less',
         ];
 
         foreach ($files as $file) {
-            $file = $root . $file;
+            $file = "{$root}/{$file}";
+
             if (file_exists($file)) {
                 file_put_contents($file, str_replace($search, $replace, file_get_contents($file)));
             }
@@ -188,18 +190,18 @@ class ScriptHandler
 
     /**
      * Clear cache script
-     * 
+     *
      * @param  Event  $event
      * @return void   This function does not return a value
      * @since 1.0.0
      */
     public static function clearCache(Event $event)
     {
-        $root = dirname($event->getComposer()->getConfig()->get('vendor-dir'));
+        $root     = dirname($event->getComposer()->getConfig()->get('vendor-dir'));
         $cacheDir = "{$root}/app/Resources/var/cache";
 
         $finder = new Finder;
-        $fs = new Filesystem();
+        $fs     = new Filesystem();
 
         foreach ($finder->in($cacheDir)->depth('== 0') as $item) {
             try {
@@ -212,18 +214,18 @@ class ScriptHandler
 
     /**
      * Clear var script
-     * 
+     *
      * @param  Event  $event
      * @return void   This function does not return a value
      * @since 1.0.0
      */
     public static function clearVar(Event $event)
     {
-        $root = dirname($event->getComposer()->getConfig()->get('vendor-dir'));
+        $root     = dirname($event->getComposer()->getConfig()->get('vendor-dir'));
         $cacheDir = "{$root}/app/Resources/var";
 
         $finder = new Finder;
-        $fs = new Filesystem();
+        $fs     = new Filesystem();
 
         foreach ($finder->in($cacheDir)->depth('== 0') as $item) {
             try {
@@ -236,14 +238,14 @@ class ScriptHandler
 
     /**
      * New module script
-     * 
+     *
      * @param  Event  $event
      * @return void   This function does not return a value
      * @since 1.0.0
      */
     public static function newModule(Event $event)
     {
-        $root = dirname($event->getComposer()->getConfig()->get('vendor-dir'));
+        $root      = dirname($event->getComposer()->getConfig()->get('vendor-dir'));
         $moduleDir = "{$root}/app/Module";
 
         $config = false;
@@ -258,7 +260,7 @@ class ScriptHandler
             $event->getIO()->writeError('App config file don\'t exist.');
             return false;
         }
-        
+
         if ($module = self::checkModuleName($event, $moduleDir)) {
             $fs = new Filesystem;
 
@@ -296,11 +298,12 @@ class ScriptHandler
                 ];
 
                 $files = [
-                    '/Module.php',
+                    'Module.php',
                 ];
 
                 foreach ($files as $file) {
-                    $file = "{$moduleDir}/{$module}" . $file;
+                    $file = "{$moduleDir}/{$module}/{$file}";
+
                     if (file_exists($file)) {
                         file_put_contents($file, str_replace($search, $replace, file_get_contents($file)));
                     }
@@ -313,7 +316,7 @@ class ScriptHandler
 
     /**
      * Check module name
-     * 
+     *
      * @param  Event  $event
      * @param  string $moduleDir   App modules dir
      * @return string              Module name
@@ -322,7 +325,10 @@ class ScriptHandler
     {
         $args = $event->getArguments();
         $name = (!empty($args[0])) ? $args[0] : false;
-        if (!$name) return false;
+
+        if (!$name) {
+            return false;
+        }
 
         if (file_exists("{$moduleDir}/{$name}")) {
             $event->getIO()->writeError("This module exist : {$name}");
@@ -334,14 +340,14 @@ class ScriptHandler
 
     /**
      * New control script
-     * 
+     *
      * @param  Event  $event
      * @return void   This function does not return a value
      * @since 1.0.0
      */
     public static function newControl(Event $event)
     {
-        $root = dirname($event->getComposer()->getConfig()->get('vendor-dir'));
+        $root      = dirname($event->getComposer()->getConfig()->get('vendor-dir'));
         $moduleDir = "{$root}/app/Module";
 
         $config = false;
@@ -363,8 +369,8 @@ class ScriptHandler
             try {
                 $fs->copy(realpath(__DIR__ . '/../../Resources/skeleton/control/Control.php'), "{$moduleDir}/{$data['module']}/Resources/controls/{$data['control']}/Control.php");
                 $fs->copy(realpath(__DIR__ . '/../../Resources/skeleton/control/Resources/views/control.twig'), "{$moduleDir}/{$data['module']}/Resources/controls/{$data['control']}/Resources/views/control.twig");
-                $fs->copy(realpath(__DIR__ . '/../../Resources/skeleton/control/Resources/assets/control.js'), "{$moduleDir}/{$data['module']}/Resources/controls/{$data['control']}/Resources/assets/control.js");
-                $fs->copy(realpath(__DIR__ . '/../../Resources/skeleton/control/Resources/assets/control.less'), "{$moduleDir}/{$data['module']}/Resources/controls/{$data['control']}/Resources/assets/control.less");
+                $fs->copy(realpath(__DIR__ . '/../../Resources/skeleton/control/Resources/assets/js/control.js'), "{$moduleDir}/{$data['module']}/Resources/controls/{$data['control']}/Resources/assets/js/control.js");
+                $fs->copy(realpath(__DIR__ . '/../../Resources/skeleton/control/Resources/assets/less/control.less'), "{$moduleDir}/{$data['module']}/Resources/controls/{$data['control']}/Resources/assets/less/control.less");
 
                 $search = [
                     '{APP-NAME}',
@@ -399,14 +405,15 @@ class ScriptHandler
                 ];
 
                 $files = [
-                    '/Control.php',
-                    '/Resources/views/control.twig',
-                    '/Resources/assets/control.js',
-                    '/Resources/assets/control.less',
+                    'Control.php',
+                    'Resources/views/control.twig',
+                    'Resources/assets/js/control.js',
+                    'Resources/assets/less/control.less',
                 ];
 
                 foreach ($files as $file) {
-                    $file = "{$moduleDir}/{$data['module']}/Resources/controls/{$data['control']}" . $file;
+                    $file = "{$moduleDir}/{$data['module']}/Resources/controls/{$data['control']}/{$file}";
+
                     if (file_exists($file)) {
                         file_put_contents($file, str_replace($search, $replace, file_get_contents($file)));
                     }
@@ -419,19 +426,24 @@ class ScriptHandler
 
     /**
      * Check control data
-     * 
+     *
      * @param  Event  $event
      * @param  string $moduleDir   App modules dir
      * @return string              Control data ( name, module location )
      */
     protected static function checkControlData(Event $event, $moduleDir)
     {
-        $args = $event->getArguments();
+        $args    = $event->getArguments();
         $control = (!empty($args[0])) ? $args[0] : false;
-        if (!$control) return false;
+
+        if (!$control) {
+            return false;
+        }
 
         $module = (!empty($args[1])) ? $args[1] : false;
-        if (!$module) return false;
+        if (!$module) {
+            return false;
+        }
 
         if (file_exists("{$moduleDir}/{$module}/Resources/controls/{$control}")) {
             $event->getIO()->writeError("This control exist : {$control}");
@@ -439,14 +451,14 @@ class ScriptHandler
         }
 
         return [
-            'control'  => $control,
-            'module' => $module,
+            'control' => $control,
+            'module'  => $module,
         ];
     }
 
     /**
      * Minify script
-     * 
+     *
      * @param  Event  $event
      * @return void   This function does not return a value
      * @since 1.0.0
@@ -457,12 +469,17 @@ class ScriptHandler
 
         $args = $event->getArguments();
         $name = (!empty($args[0])) ? $args[0] : false;
-        if (!$name) return false;
+
+        if (!$name) {
+            return false;
+        }
 
         $path = (!empty($args[1])) ? $args[1] : false;
-        if (!$path) return false;
+        if (!$path) {
+            return false;
+        }
 
-        $path = $root . '/' . $path;
+        $path = "{$root}/{$path}";
 
         if (!file_exists($path) || !is_file($path)) {
             $event->getIO()->writeError("File don't exist or is not valid : {$path}");
