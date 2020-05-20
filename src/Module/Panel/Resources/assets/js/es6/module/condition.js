@@ -51,7 +51,7 @@ export default class Condition extends Kernel {
     }
 
     onChange() {
-        $('.zc-panel .zc-panel-controls [data-control=condition]').on('change', '[data-control=option]', (event) => {
+        $('.zc-panel .zc-panel-controls [data-control=condition]').on('change', '[data-control=option]:not([data-i="i"])', (event) => {
             event.preventDefault();
             event.stopPropagation();
             /* Act on the event */
