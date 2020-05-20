@@ -23,8 +23,6 @@ zc.module.panel.setControl(function($, panel) {
 
     control.initColorPicker = function(el) {
         var settings = el.data('settings') || {};
-        var timer    = false;
-        var interval = 100;
 
         var defaults = {
             size: 2,
@@ -43,16 +41,7 @@ zc.module.panel.setControl(function($, panel) {
             ],
             renderEC: function(colors, mode, options, color) {
                 $(options.patch).parent().find('.zc-panel-control-colorpicker__live-color').css('background', color);
-                $(options.patch).val(color);
-
-                clearTimeout(timer);
-                
-                // Check after {interval} 
-                timer = setTimeout(function() {
-                    clearTimeout(timer);
-
-                    $(options.patch).change();
-                }, interval);
+                $(options.patch).val(color).change();
             }
         };
         
