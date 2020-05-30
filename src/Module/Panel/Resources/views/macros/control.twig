@@ -34,10 +34,12 @@
 
 {# Macro : HTML Select #}
 {% macro select(id, value, options, settings, type = 'single', class = 'zc-panel-control-select', ignore) %}
+    {% set id = id ? 'name="' ~ id ~'" id="' ~ id ~ '"' %}
+    {% set settings = settings ? 'data-configs="' ~ settings|json_encode ~ '"' %}
 
     {# Multiple select #}
     {% if type == 'multiple' %}
-        <select name="{{ id }}" multiple id="{{ id }}" class="{{ class }}" {{ ignore|raw }} data-control="option" data-configs="{{ settings|json_encode() }}" autocomplete="off">
+        <select {{ id|raw }} multiple class="{{ class }}" {{ ignore|raw }} data-control="option" {{ settings|raw }} autocomplete="off">
             {% if is_assoc(options) %}
                 {% for key, option in options %}
                     {% if option.disable %}
@@ -61,7 +63,7 @@
 
     {# Group select #}
     {% elseif type == 'group' %}
-        <select name="{{ id }}" id="{{ id }}" class="{{ class }}" {{ ignore|raw }} data-control="option" data-configs="{{ settings|json_encode() }}" autocomplete="off">
+        <select {{ id|raw }} class="{{ class }}" {{ ignore|raw }} data-control="option" {{ settings|raw }} autocomplete="off">
             {% for group in options %}
                 <optgroup label="{{ group.title }}">
                     {% if is_assoc(group.options) %}
@@ -89,7 +91,7 @@
 
     {# Multiple Group select #}
     {% elseif type == 'multiple-group' %}
-        <select name="{{ id }}" multiple id="{{ id }}" class="{{ class }}" {{ ignore|raw }} data-control="option" data-configs="{{ settings|json_encode() }}" autocomplete="off">
+        <select {{ id|raw }} multiple class="{{ class }}" {{ ignore|raw }} data-control="option" {{ settings|raw }} autocomplete="off">
             {% for group in options %}
                 <optgroup label="{{ group.title }}">
                     {% if is_assoc(group.options) %}
@@ -117,7 +119,7 @@
 
     {# Single select #}
     {% else %}
-        <select name="{{ id }}" id="{{ id }}" class="{{ class }}" {{ ignore|raw }} data-control="option" data-configs="{{ settings|json_encode() }}" autocomplete="off">
+        <select {{ id|raw }} class="{{ class }}" {{ ignore|raw }} data-control="option" {{ settings|raw }} autocomplete="off">
             {% if is_assoc(options) %}
                 {% for key, option in options %}
                     {% if option.disable %}
