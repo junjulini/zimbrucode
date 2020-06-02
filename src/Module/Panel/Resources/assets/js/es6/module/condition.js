@@ -51,21 +51,24 @@ export default class Condition extends Kernel {
     }
 
     onChange() {
-        $('.zc-panel .zc-panel-controls [data-control=condition]').on('change', '[data-control=option]:not([data-i="i"])', (event) => {
+        $('.zc-panel .zc-panel-controls [data-control=condition]').on('change', '[data-control=option]', (event) => {
             event.preventDefault();
             event.stopPropagation();
             /* Act on the event */
 
-            const name = $(event.currentTarget).attr('name');
+            const $this = $(event.currentTarget);
+            const name  = $this.attr('name');
 
             if (this.cache[name] !== undefined) {
                 $.each(this.cache[name], (index, el) => {
                     this.parse(el);
                 });
             }
-    
-            this.setCache('changed', true);
-            $(window).trigger('zc/panel/if-changed');
+
+            if ($this.data('i') === undefined) {
+                this.setCache('changed', true);
+                $(window).trigger('zc/panel/if-changed');
+            }
 
             return false;
         });
