@@ -288,16 +288,6 @@ zc.module.panel.setControl(function($, panel, global) {
             }
         });
 
-        el.on('input paste', '.zc-panel-control-measurement__input', function(event) {
-            if (el.hasClass('zc-panel-control-measurement_only')) {
-                var unit = el.find('.zc-panel-control-measurement__unit').text();
-            } else {
-                var unit = el.find('select').val();
-            }
-
-            el.find('input[type=hidden]').val($(this).val() + unit).change();
-        });
-
         el.on('change', 'select', function(event) {
             event.preventDefault();
             /* Act on the event */
