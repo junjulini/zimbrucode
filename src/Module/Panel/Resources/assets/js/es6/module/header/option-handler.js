@@ -54,7 +54,7 @@ export default class OptionHandler extends Kernel {
             priv.prepOptions = () => {
                 const options = {};
 
-                $('.zc-panel .zc-panel-controls [data-control=option]').each((index, el) => {
+                $('.zc-panel .zc-panel-controls [data-option]').each((index, el) => {
                     if ($(el).data('i') == 'i') return;
 
                     const value    = $(el).val();

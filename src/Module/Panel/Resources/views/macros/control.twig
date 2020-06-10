@@ -18,12 +18,12 @@
 
 {# Macro : HTML Input #}
 {% macro input(id, value, placeholder, type = 'text', class = 'zc-panel-control-input', ignore) %}
-    <input type="{{ type }}" name="{{ id }}" value="{{ value }}" placeholder="{{ placeholder }}" id="{{ id }}" class="{{ class }}" {{ ignore|raw }} data-control="option" autocomplete="off">
+    <input type="{{ type }}" name="{{ id }}" value="{{ value }}" placeholder="{{ placeholder }}" id="{{ id }}" class="{{ class }}" {{ ignore|raw }} data-option autocomplete="off">
 {% endmacro %}
 
 {# Macro : HTML Textarea #}
 {% macro textarea(id, value, placeholder, class = 'zc-panel-control-textarea', ignore) %}
-    <textarea name="{{ id }}" placeholder="{{ placeholder }}" id="{{ id }}" class="{{ class }}" {{ ignore|raw }} data-control="option" autocomplete="off">{{ value }}</textarea>
+    <textarea name="{{ id }}" placeholder="{{ placeholder }}" id="{{ id }}" class="{{ class }}" {{ ignore|raw }} data-option autocomplete="off">{{ value }}</textarea>
 {% endmacro %}
 
 {# Macro : Button #}
@@ -39,7 +39,7 @@
 
     {# Multiple select #}
     {% if type == 'multiple' %}
-        <select {{ id|raw }} multiple class="{{ class }}" {{ ignore|raw }} data-control="option" {{ settings|raw }} autocomplete="off">
+        <select {{ id|raw }} multiple class="{{ class }}" {{ ignore|raw }} data-option {{ settings|raw }} autocomplete="off">
             {% if is_assoc(options) %}
                 {% for key, option in options %}
                     {% if option.disable %}
@@ -63,7 +63,7 @@
 
     {# Group select #}
     {% elseif type == 'group' %}
-        <select {{ id|raw }} class="{{ class }}" {{ ignore|raw }} data-control="option" {{ settings|raw }} autocomplete="off">
+        <select {{ id|raw }} class="{{ class }}" {{ ignore|raw }} data-option {{ settings|raw }} autocomplete="off">
             {% for group in options %}
                 <optgroup label="{{ group.title }}">
                     {% if is_assoc(group.options) %}
@@ -91,7 +91,7 @@
 
     {# Multiple Group select #}
     {% elseif type == 'multiple-group' %}
-        <select {{ id|raw }} multiple class="{{ class }}" {{ ignore|raw }} data-control="option" {{ settings|raw }} autocomplete="off">
+        <select {{ id|raw }} multiple class="{{ class }}" {{ ignore|raw }} data-option {{ settings|raw }} autocomplete="off">
             {% for group in options %}
                 <optgroup label="{{ group.title }}">
                     {% if is_assoc(group.options) %}
@@ -119,7 +119,7 @@
 
     {# Single select #}
     {% else %}
-        <select {{ id|raw }} class="{{ class }}" {{ ignore|raw }} data-control="option" {{ settings|raw }} autocomplete="off">
+        <select {{ id|raw }} class="{{ class }}" {{ ignore|raw }} data-option {{ settings|raw }} autocomplete="off">
             {% if is_assoc(options) %}
                 {% for key, option in options %}
                     {% if option.disable %}

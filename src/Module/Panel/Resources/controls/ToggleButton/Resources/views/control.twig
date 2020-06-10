@@ -24,7 +24,7 @@
         {% set checked = (value == 'on') ? 'checked' %}
 
         <input type="checkbox" {{ checked }} class="zc-panel-control-toggle-button__checkbox">
-        <input type="hidden" name="{{ control.ID }}" value="{{ value }}" id="{{ control.ID }}" {{ control.ignore }} data-control="option" autocomplete="off">
+        <input type="hidden" name="{{ control.ID }}" value="{{ value }}" id="{{ control.ID }}" {{ control.ignore }} data-option autocomplete="off">
         <b class="zc-panel-control-toggle-button__b zc-panel-control-toggle-button__b_type_switch"></b>
         <b class="zc-panel-control-toggle-button__b zc-panel-control-toggle-button__b_type_track"></b>
     </div>

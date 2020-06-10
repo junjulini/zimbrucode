@@ -43,7 +43,7 @@ export default class Condition extends Kernel {
     firstStart() {
         $(window).on('zc/panel/menu/item-change-ICP', (event, section) => {
             if (section) {
-                section.find('[data-control=condition][data-condition]').each((index, el) => {
+                section.find('[data-condition]').each((index, el) => {
                     this.parse($(el), true);
                 });
             }
@@ -51,7 +51,7 @@ export default class Condition extends Kernel {
     }
 
     onChange() {
-        $('.zc-panel .zc-panel-controls [data-control=condition]').on('change', '[data-control=option]', (event) => {
+        $('.zc-panel .zc-panel-controls').on('change', '[data-option]', (event) => {
             event.preventDefault();
             event.stopPropagation();
             /* Act on the event */
@@ -81,7 +81,7 @@ export default class Condition extends Kernel {
      * @since 1.0.0
      */
     dataCaching() {
-        $('.zc-panel .zc-panel-controls [data-control=condition][data-condition]').each((index, el) => {
+        $('.zc-panel .zc-panel-controls [data-condition]').each((index, el) => {
             let match;
 
             while (match = this.regex.exec($(el).data('condition'))) {
@@ -105,12 +105,12 @@ export default class Condition extends Kernel {
     parse(control, direct) {
         let passed,
             conditions = this.prepConditions(control.data('condition')),
-            operator   = (control.data('operator') || 'and').toLowerCase();
+            operator   = (control.data('condition-operator') || 'and').toLowerCase();
 
         $.each(conditions, (index, condition) => {
             const target = $(`.zc-panel .zc-panel-controls [name=${this.getVar('prefix-slug')}${condition.check}]`);
 
-            if (target.length > 0 && target.is('[data-control=option]')) {
+            if (target.length > 0 && target.is('[data-option]')) {
                 const v1 = target.val() !== null ? target.val().toString() : '';
                 const v2 = condition.value.toString();
                 let result;
