@@ -84,9 +84,6 @@ export default class Base extends Kernel {
      */
     menu() {
         this.service('menu', new Menu);
-
-        this.service('menu').itemSwitch(); // Initialization of menu
-        this.service('menu').mobile();     // Initialization of mobile menu
     }
 
     /**
