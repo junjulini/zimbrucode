@@ -28,8 +28,8 @@ class LESS extends Filter
 {
     protected $less;
 
+    protected $appPath;
     protected $rootPath;
-    protected $loadPath;
     protected $varPath;
 
     protected $searchPoint;
@@ -51,8 +51,8 @@ class LESS extends Filter
 
         $env = Kernel::getEnvironment();
 
-        $this->rootPath = Kernel::service('app-locator')->getPath();
-        $this->loadPath = Kernel::service('app-locator')->getLoadPath();
+        $this->appPath  = Kernel::service('app-locator')->getPath();
+        $this->rootPath = Kernel::service('app-locator')->getRootPath();
         $this->varPath  = Kernel::service('app-locator')->getVarPath("/assets/{$env}");
 
         $this->searchPoint   = Kernel::getGlobal('core/component/asset/filter/less/search-point');
@@ -172,15 +172,15 @@ class LESS extends Filter
 
         if (false !== strpos($assetDir, $this->varPath)) {
             $output = $asset->getPath();
-        } elseif (false !== strpos($assetDir, $this->rootPath)) {
-            $output = strtolower(str_replace($this->loadPath, '', $asset->getPath()));
+        } elseif (false !== strpos($assetDir, $this->appPath)) {
+            $output = strtolower(str_replace($this->rootPath, '', $asset->getPath()));
             $output = str_replace($this->searchPoint, '', $output);
 
             $file = basename($output);
             $dir  = str_replace('/', '.', dirname(ltrim($output, '/')));
 
             $output = "{$this->varPath}/{$dir}/{$file}";
-        } elseif (false !== strpos($assetDir, $this->loadPath)) {
+        } elseif (false !== strpos($assetDir, $this->rootPath)) {
             preg_match("/{$this->fwSP}(.*)/i", $asset->getPath(), $output);
 
             $output = strtolower($output[1]);

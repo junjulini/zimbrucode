@@ -26,7 +26,7 @@ class AppLocatorHandler
 {
     protected $app;
 
-    public function __construct(AppKernel $app, $appLoadPath)
+    public function __construct(AppKernel $app, $rootPath)
     {
         $this->app = $app;
 
@@ -40,11 +40,11 @@ class AppLocatorHandler
         $url = Tools::getURL($path);
         Kernel::setGlobal('app/url', $url);
 
-        // Load locations
-        $appLoadPath = wp_normalize_path($appLoadPath);
-        Kernel::setGlobal('app/load-file', $appLoadPath);
-        Kernel::setGlobal('app/load-path', dirname($appLoadPath));
-        Kernel::setGlobal('app/load-url', Tools::getURL(dirname($appLoadPath)));
+        // Root locations
+        $rootPath = wp_normalize_path($rootPath);
+        Kernel::setGlobal('app/root-file', $rootPath);
+        Kernel::setGlobal('app/root-path', dirname($rootPath));
+        Kernel::setGlobal('app/root-url', Tools::getURL(dirname($rootPath)));
 
         // Resource
         $resource = Kernel::getGlobal('app/resource-dir');
@@ -133,38 +133,38 @@ class AppLocatorHandler
     }
 
     /**
-     * Get load file path
+     * Get root file path
      * 
-     * @return string   Load file path
+     * @return string   Root file path
      * @since 1.0.0
      */
-    public function getLoadFilePath()
+    public function getRootFilePath()
     {
-        return wp_normalize_path(Kernel::getGlobal('app/load-file'));
+        return wp_normalize_path(Kernel::getGlobal('app/root-file'));
     }
 
     /**
-     * Get load path
+     * Get root path
      * 
      * @param  string $path   Additional part of path
-     * @return string         Load path
+     * @return string         Root path
      * @since 1.0.0
      */
-    public function getLoadPath($path = '')
+    public function getRootPath($path = '')
     {
-        return wp_normalize_path(Kernel::getGlobal('app/load-path') . $path);
+        return wp_normalize_path(Kernel::getGlobal('app/root-path') . $path);
     }
 
     /**
-     * Get load URL
+     * Get root URL
      * 
      * @param  string $url   Additional part of URL
-     * @return string        Load URL
+     * @return string        Root URL
      * @since 1.0.0
      */
-    public function getLoadURL($url = '')
+    public function getRootURL($url = '')
     {
-        return esc_url(Kernel::getGlobal('app/load-url') . $url);
+        return esc_url(Kernel::getGlobal('app/root-url') . $url);
     }
 
     /**

@@ -37,15 +37,15 @@ abstract class AppKernel extends Kernel
      * @param  string      $slug           Slug name of global var
      * @param  string      $mode           Mode of app ( theme / plugin )
      * @param  boolean     $dev            Dev environment
-     * @param  string      $fileLoadPath   ( Only for plugin mode ) plugin file path
+     * @param  string      $rootPath       ( Only for plugin mode ) plugin file path
      * @param  boolean     $session        Disable or enable "session_start()"
      * @param  ClassLoader $composer       Instance of ClassLoader
      * @return void                        This function does not return a value
      * @since 1.0.0
      */
-    final public function __construct($slug, $mode = 'theme', $dev = false, $fileLoadPath = '', $session = false, ClassLoader $composer)
+    final public function __construct($slug, $mode = 'theme', $dev = false, $rootPath = '', $session = false, ClassLoader $composer)
     {
-        if (!is_string($slug) || !is_string($mode) || !is_bool($dev) || !is_string($fileLoadPath)) {
+        if (!is_string($slug) || !is_string($mode) || !is_bool($dev) || !is_string($rootPath)) {
             throw new \InvalidArgumentException(esc_html__('Error init app : Invalid arguments.', 'zc'));
         }
 
@@ -55,7 +55,7 @@ abstract class AppKernel extends Kernel
         $this->__setEnvironment($dev);                             // Set DEV environment
         $this->__setChmod();                                       // Set file/dir chmod from WP constants
         self::setGlobalCache('app-instance', $this);               // Application instance
-        $this->__initServices('before', $composer, $fileLoadPath); // Init Services
+        $this->__initServices('before', $composer, $rootPath); // Init Services
         $this->__appConfig($mode);                                 // App configs
 
         // Other services
@@ -155,15 +155,15 @@ abstract class AppKernel extends Kernel
      *
      * @param string      $mode           Mode of loading services
      * @param ClassLoader $composer       Instance of Composer ClassLoader
-     * @param string      $fileLoadPath   File path where was initialized app class
+     * @param string      $rootPath   File path where was initialized app class
      * @return void                       This function does not return a value
      * @since 1.0.0
      */
-    private function __initServices($mode = 'before', ClassLoader $composer = null, $fileLoadPath = null)
+    private function __initServices($mode = 'before', ClassLoader $composer = null, $rootPath = null)
     {
         if ($mode === 'before') {
             self::service('composer', $composer);
-            self::service('app-locator', new AppLocatorHandler($this, $fileLoadPath));
+            self::service('app-locator', new AppLocatorHandler($this, $rootPath));
         } elseif ($mode === 'after') {
             self::service('db', new DBHandler);
             self::service('fast-cache', new FastCache);
@@ -393,14 +393,14 @@ abstract class AppKernel extends Kernel
     }
 
     /**
-     * Get load file path ( only for plugin mode )
+     * Get root file path ( only for plugin mode )
      *
      * @return string   Plugin file path
      * @since 1.0.0
      */
-    final public function getLoadFilePath()
+    final public function getRootFilePath()
     {
-        return self::service('app-locator')->getLoadFilePath();
+        return self::service('app-locator')->getRootFilePath();
     }
 
     /**

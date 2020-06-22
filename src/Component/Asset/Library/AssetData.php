@@ -329,9 +329,9 @@ class AssetData
             
             return ($withCoreSlug) ? Kernel::getGlobal('core/slug') .'/'. $output : $output;
         } else {
-            $loadURL = Kernel::service('app-locator')->getLoadURL();
+            $rootURL = Kernel::service('app-locator')->getRootURL();
 
-            if (0 === strpos($fileURL, $loadURL)) {
+            if (0 === strpos($fileURL, $rootURL)) {
                 $fwSP = Kernel::getGlobal('core/component/asset/fw-search-point');
                 $fwSP = str_replace('/', '\/', $fwSP);
 
