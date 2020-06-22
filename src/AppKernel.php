@@ -305,7 +305,7 @@ abstract class AppKernel extends Kernel
     private function __initThemeAdaptor()
     {
         if (self::getGlobal('app/mode') === 'theme') {
-            self::module()->ThemeAdaptor;
+            self::module()->setAsService('theme')->ThemeAdaptor;
         }
     }
 

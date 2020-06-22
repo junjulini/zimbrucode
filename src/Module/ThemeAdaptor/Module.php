@@ -90,6 +90,11 @@ class Module extends ModuleKernel
         }
     }
 
+    public function advancedRender($template, $locationPath, $directRender = true, $directMode = false, $flush = true)
+    {
+        return new Render($template, $locationPath, $directRender, $directMode, $flush);
+    }
+
     public function __filter_register_templates($templates)
     {
         if (!empty($this->templates)) {
@@ -185,7 +190,7 @@ class Module extends ModuleKernel
         $template = apply_filters('zc/module/theme_adaptor/template', $template);
 
         if ($template) {
-            new Render($template, $this->getModuleResourcePath('views'));
+            $this->advancedRender($template, $this->getModuleResourcePath('views'));
             return false;
         } else {
             return $wpTemplate;

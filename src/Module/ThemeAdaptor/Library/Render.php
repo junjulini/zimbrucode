@@ -46,7 +46,7 @@ class Render
 
     protected $__eflush;
 
-    public function __construct($template, $rvc, $directRender = true, $directMode = false, $flush = true)
+    public function __construct($template, $locationPath, $directRender = true, $directMode = false, $flush = true)
     {
         if (!$template || !is_string($template)) {
             throw new \InvalidArgumentException('Template is empty or not string.');
@@ -59,7 +59,7 @@ class Render
         if ($directMode === false) {
 
             // Set core views path
-            $this->addLoadPath($rvc, 'core');
+            $this->addLoadPath($locationPath, 'core');
 
             if (Tools::isChildTheme()) {
 
@@ -95,7 +95,7 @@ class Render
                 }
             }
         } else {
-            $this->addLoadPath($rvc);
+            $this->addLoadPath($locationPath);
         }
 
         if (Kernel::getGlobal('core/module/theme-adaptor/cache')) {
@@ -138,7 +138,7 @@ class Render
         apply_filters('zc/module/theme_adaptor/twig/shell/general', $this->gen);
 
         // Action
-        do_action('zc/module/theme_adaptor/twig', $this->__ttb, $this->__data['template'], $rvc);
+        do_action('zc/module/theme_adaptor/twig', $this->__ttb, $this->__data['template'], $locationPath);
 
         // Run loader & environment
         $this->__ttb->setLoader();
