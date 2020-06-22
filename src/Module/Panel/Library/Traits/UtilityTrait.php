@@ -65,7 +65,7 @@ trait UtilityTrait
             $ttb->addLocationPath($this->getModuleResourcePath('views/blocks'), 'blocks');
             $ttb->addLocationPath($this->getModuleResourcePath('views/mode'));
 
-            $ttb->setCachePath(self::service('app-locator')->getCachePath('/twig'));
+            $ttb->setCachePath(self::service('app-locator')->getCachePath('twig'));
 
             // Custom vars
             if (!empty($vars)) {

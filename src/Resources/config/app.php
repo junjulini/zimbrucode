@@ -44,14 +44,14 @@ return [
     'view-url'               => false,
 
     # app resource dir & other
-    'resource-dir'           => '/Resources/',
-    'var-dir'                => '/Resources/var/',
+    'resource-dir'           => 'Resources/',
+    'var-dir'                => 'Resources/var/',
     'cache-dir'              => 'cache/',
     'log-dir'                => 'logs/',
-    'asset-dir'              => '/Resources/assets/',
-    'config-dir'             => '/Resources/config/',
-    'model-dir'              => '/Resources/models/',
-    'view-dir'               => '/Resources/views/',
+    'asset-dir'              => 'Resources/assets/',
+    'config-dir'             => 'Resources/config/',
+    'model-dir'              => 'Resources/models/',
+    'view-dir'               => 'Resources/views/',
 
     # app network site delimiter
     'network-site-delimiter' => 'network-site-',

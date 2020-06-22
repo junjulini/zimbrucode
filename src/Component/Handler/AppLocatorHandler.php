@@ -31,7 +31,7 @@ class AppLocatorHandler
         $this->app = $app;
 
         $mid = ($id = Tools::getMultiSiteID()) ? "{$id}/" : '';
-        $env = Kernel::getEnvironment();
+        $env = Kernel::getEnvironment() . '/';
 
         $reflected = new \ReflectionObject($app);
         $path = dirname(wp_normalize_path($reflected->getFileName()));
@@ -118,7 +118,7 @@ class AppLocatorHandler
      */
     public function getPath($path = '')
     {
-        return wp_normalize_path(Kernel::getGlobal('app/path') . $path);
+        return wp_normalize_path(Kernel::getGlobal('app/path') .'/'. $path);
     }
 
     /**

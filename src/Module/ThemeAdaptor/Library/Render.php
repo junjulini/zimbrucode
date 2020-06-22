@@ -78,7 +78,7 @@ class Render
                 // Load model if exist
                 if (file_exists($model = wp_normalize_path(get_stylesheet_directory()) . '/models/' . str_replace('.twig', '.php', $this->__data['template']))) {
                     require $model;
-                } elseif (file_exists($model = Kernel::service('app-locator')->getModelPath('/' . str_replace('.twig', '.php', $this->__data['template'])))) {
+                } elseif (file_exists($model = Kernel::service('app-locator')->getModelPath(str_replace('.twig', '.php', $this->__data['template'])))) {
                     require $model;
                 }
             } else {
@@ -90,7 +90,7 @@ class Render
                 $this->addLocationPath(Kernel::service('app-locator')->getViewPath());
 
                 // Load model if exist
-                if (file_exists($model = Kernel::service('app-locator')->getModelPath('/' . str_replace('.twig', '.php', $this->__data['template'])))) {
+                if (file_exists($model = Kernel::service('app-locator')->getModelPath(str_replace('.twig', '.php', $this->__data['template'])))) {
                     require $model;
                 }
             }
@@ -99,7 +99,7 @@ class Render
         }
 
         if (Kernel::getGlobal('core/module/theme-adaptor/cache')) {
-            $this->__ttb->setCachePath(Kernel::service('app-locator')->getCachePath('/twig'));
+            $this->__ttb->setCachePath(Kernel::service('app-locator')->getCachePath('twig'));
         }
 
         // Default shells

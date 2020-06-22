@@ -10,7 +10,7 @@
  */
 
 return [
-    'dir'       => '/fast-cache',
+    'dir'       => 'fast-cache',
     'id'        => 'fast-cache.cache',
     'extension' => '.cache',
 ];

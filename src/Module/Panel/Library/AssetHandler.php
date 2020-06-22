@@ -220,7 +220,7 @@ class AssetHandler
 
                     $path   = "module.panel.{$panelMode}.{$panelSlug}/$outputFile";
                     $cache  = "{$less->output}.{$path}";
-                    $output = Kernel::service('app-locator')->getVarPath("/assets/{$env}/{$path}");
+                    $output = Kernel::service('app-locator')->getVarPath("assets/{$env}/{$path}");
 
                     $less->cache  = $cache;
                     $less->output = $output;

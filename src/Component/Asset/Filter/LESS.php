@@ -53,7 +53,7 @@ class LESS extends Filter
 
         $this->appPath  = Kernel::service('app-locator')->getPath();
         $this->rootPath = Kernel::service('app-locator')->getRootPath();
-        $this->varPath  = Kernel::service('app-locator')->getVarPath("/assets/{$env}");
+        $this->varPath  = Kernel::service('app-locator')->getVarPath("assets/{$env}");
 
         $this->searchPoint   = Kernel::getGlobal('core/component/asset/filter/less/search-point');
         $this->externalPoint = Kernel::getGlobal('core/component/asset/filter/less/external-point');

@@ -221,14 +221,14 @@ abstract class AppKernel extends Kernel
     private function __customAppConfig()
     {
         // Load custom 'App' config file
-        if (file_exists($file = self::service('app-locator')->getConfigPath('/app.php'))) {
+        if (file_exists($file = self::service('app-locator')->getConfigPath('app.php'))) {
             if (is_array($config = require $file)) {
                 self::setGlobal('app', array_replace_recursive(self::getGlobal('app'), $config));
             }
         }
 
         // Load custom 'Core' config file
-        if (file_exists($file = self::service('app-locator')->getConfigPath('/core.php'))) {
+        if (file_exists($file = self::service('app-locator')->getConfigPath('core.php'))) {
             if (is_array($config = require $file)) {
                 self::setGlobal('core', array_replace_recursive(self::getGlobal('core'), $config));
             }

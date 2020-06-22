@@ -30,7 +30,7 @@ class FastCache
 
     public function __construct()
     {
-        $cacheDir  = Kernel::service('app-locator')->getCachePath(Kernel::getGlobal('core/component/fast-cache/dir', '/fast-cache'));
+        $cacheDir  = Kernel::service('app-locator')->getCachePath(Kernel::getGlobal('core/component/fast-cache/dir', 'fast-cache'));
         $cacheID   = Kernel::getGlobal('core/component/fast-cache/id', 'fast-cache.cache');
         $extension = Kernel::getGlobal('core/component/fast-cache/extension', '.cache');
 

@@ -58,7 +58,7 @@ return [
     ],
 
     'cache'                     => [
-        'dir'       => '/assets',
+        'dir'       => 'assets',
         'extension' => '.cache',
         'settings'  => [
             'check-only-dev'    => false,

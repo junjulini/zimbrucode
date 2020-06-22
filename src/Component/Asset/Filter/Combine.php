@@ -52,7 +52,7 @@ class Combine extends Filter
         $env = Kernel::getEnvironment();
 
         $this->data['settings'] = Kernel::getGlobal('core/component/asset/filter/combine');
-        $this->varPath          = Kernel::service('app-locator')->getVarPath("/assets/{$env}");
+        $this->varPath          = Kernel::service('app-locator')->getVarPath("assets/{$env}");
         $this->cacheExt         = Kernel::getGlobal('core/component/asset/cache/extension', '.cache');
 
         $exc = $this->data['settings']['exclude-marker'];
