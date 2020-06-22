@@ -58,7 +58,7 @@ class MetaLiteMode extends Mode
             'nonce' => AjaxHandler::getNonce($this->getModuleSetting('nonce')),
             'id'    => get_the_ID(),
         ], false, function($ttb) {
-            $ttb->addLoadPath($this->getModuleSetting('meta-module-resource') . '/views', 'meta');
+            $ttb->addLocationPath($this->getModuleSetting('meta-module-resource') . '/views', 'meta');
         });
 
         $this->callback()->run('panel-template--after');

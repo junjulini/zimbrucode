@@ -59,13 +59,13 @@ class Render
         if ($directMode === false) {
 
             // Set core views path
-            $this->addLoadPath($locationPath, 'core');
+            $this->addLocationPath($locationPath, 'core');
 
             if (Tools::isChildTheme()) {
 
                 // Set child views path
                 if (file_exists($dir = wp_normalize_path(get_stylesheet_directory()) . '/views')) {
-                    $this->addLoadPath($dir);
+                    $this->addLocationPath($dir);
                 }
 
                 if (!file_exists(Kernel::service('app-locator')->getViewPath())) {
@@ -73,7 +73,7 @@ class Render
                 }
 
                 // Set views path
-                $this->addLoadPath(Kernel::service('app-locator')->getViewPath());
+                $this->addLocationPath(Kernel::service('app-locator')->getViewPath());
 
                 // Load model if exist
                 if (file_exists($model = wp_normalize_path(get_stylesheet_directory()) . '/models/' . str_replace('.twig', '.php', $this->__data['template']))) {
@@ -87,7 +87,7 @@ class Render
                 }
 
                 // Set views path
-                $this->addLoadPath(Kernel::service('app-locator')->getViewPath());
+                $this->addLocationPath(Kernel::service('app-locator')->getViewPath());
 
                 // Load model if exist
                 if (file_exists($model = Kernel::service('app-locator')->getModelPath('/' . str_replace('.twig', '.php', $this->__data['template'])))) {
@@ -95,7 +95,7 @@ class Render
                 }
             }
         } else {
-            $this->addLoadPath($locationPath);
+            $this->addLocationPath($locationPath);
         }
 
         if (Kernel::getGlobal('core/module/theme-adaptor/cache')) {
@@ -269,9 +269,9 @@ class Render
      * @param string  $namespace   Namespace of templates
      * @since 1.0.0
      */
-    public function addLoadPath($path, $namespace = null)
+    public function addLocationPath($path, $namespace = null)
     {
-        return $this->__ttb->addLoadPath($path, $namespace);
+        return $this->__ttb->addLocationPath($path, $namespace);
     }
 
     /**

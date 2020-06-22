@@ -37,9 +37,9 @@ trait RenderTrait
         if ($template && is_string($template)) {
             $output = '';
 
-            $renderTemplate = function ($dir) use ($template, $vars, $renderCallback) {
+            $renderTemplate = function ($template, $locationPath) use ($vars, $renderCallback) {
                 $ttb = new TwigTemplateBridge;
-                $ttb->addLoadPath($dir);
+                $ttb->addLocationPath($locationPath);
                 $ttb->setCachePath(self::service('app-locator')->getCachePath('/twig'));
 
                 if (!empty($vars)) {
@@ -56,14 +56,14 @@ trait RenderTrait
             };
 
             if (Tools::isLocalPath($template) && file_exists($template)) {
-                $dir    = dirname($template);
-                $output = $renderTemplate($dir);
+                $output = $renderTemplate(basename($template), dirname($template));
             } else {
-                if (method_exists($this, 'getModulePath') && file_exists($this->getModulePath() . self::getGlobal('core/component/core/module/resource-dir') . "/views/{$template}")) {
-                    $dir    = $this->getModulePath() . self::getGlobal('core/component/core/module/resource-dir') . '/views';
-                    $output = $renderTemplate($dir);
+                $locationPath = $this->getModulePath() . self::getGlobal('core/component/core/module/resource-dir') . '/views';
+
+                if (method_exists($this, 'getModulePath') && file_exists("{$locationPath}/{$template}")) {
+                    $output = $renderTemplate($template, $locationPath);
                 } elseif (file_exists(self::service('app-locator')->getViewPath("/{$template}"))) {
-                    $output = $renderTemplate(self::service('app-locator')->getViewPath());
+                    $output = $renderTemplate($template, self::service('app-locator')->getViewPath());
                 }
             }
 

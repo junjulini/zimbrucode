@@ -33,11 +33,11 @@ use ZimbruCode\Component\TemplateBridges\Helper\TwigFunctions;
  */
 class TwigTemplateBridge extends Kernel
 {
-    protected $loadPath  = [];
-    protected $cachePath = false;
-    protected $twig      = false;
-    protected $loader    = false;
-    protected $data      = [
+    protected $locationPath = [];
+    protected $cachePath    = false;
+    protected $twig         = false;
+    protected $loader       = false;
+    protected $data         = [
         'vars'       => [],
         'functions'  => [],
         'escapers'   => [],
@@ -194,7 +194,7 @@ class TwigTemplateBridge extends Kernel
      * @return void                This function does not return a value
      * @since 1.0.0
      */
-    public function addLoadPath($path, $namespace = null)
+    public function addLocationPath($path, $namespace = null)
     {
         if (!$path) {
             throw new \RuntimeException('Load path is empty.');
@@ -204,7 +204,7 @@ class TwigTemplateBridge extends Kernel
             throw new \RuntimeException($path . ' - this path is not local.');
         }
 
-        $this->loadPath[] = [$path, $namespace];
+        $this->locationPath[] = [$path, $namespace];
     }
 
     /**
@@ -310,7 +310,7 @@ class TwigTemplateBridge extends Kernel
      */
     public function setLoader()
     {
-        if (!$this->loadPath) {
+        if (!$this->locationPath) {
             throw new \RuntimeException('Array path is empty.');
         }
 
@@ -325,7 +325,7 @@ class TwigTemplateBridge extends Kernel
             }
         }
 
-        foreach ($this->loadPath as $value) {
+        foreach ($this->locationPath as $value) {
             if (empty($value[1])) {
                 $this->loader->addPath($value[0]);
             } else {

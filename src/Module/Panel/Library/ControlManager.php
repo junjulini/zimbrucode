@@ -181,7 +181,7 @@ class ControlManager extends ModuleKernel
         // Set load path
         $this->callback()->set('panel-render', function ($ttb) use ($type) {
             $controlDir = self::getGlobal('core/module/panel/control-settings/template-dir');
-            $ttb->addLoadPath($this->getControl($type)->getControlPath($controlDir), $type);
+            $ttb->addLocationPath($this->getControl($type)->getControlPath($controlDir), $type);
         });
     }
 }

@@ -61,9 +61,9 @@ trait UtilityTrait
 
             $ttb = new TwigTemplateBridge;
 
-            $ttb->addLoadPath($this->getModuleResourcePath('views/macros'), 'macros');
-            $ttb->addLoadPath($this->getModuleResourcePath('views/blocks'), 'blocks');
-            $ttb->addLoadPath($this->getModuleResourcePath('views/mode'));
+            $ttb->addLocationPath($this->getModuleResourcePath('views/macros'), 'macros');
+            $ttb->addLocationPath($this->getModuleResourcePath('views/blocks'), 'blocks');
+            $ttb->addLocationPath($this->getModuleResourcePath('views/mode'));
 
             $ttb->setCachePath(self::service('app-locator')->getCachePath('/twig'));
 
