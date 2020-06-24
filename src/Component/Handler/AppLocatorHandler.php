@@ -34,10 +34,10 @@ class AppLocatorHandler
         $env = Kernel::getEnvironment() . '/';
 
         $reflected = new \ReflectionObject($app);
-        $path = dirname(wp_normalize_path($reflected->getFileName()));
+        $path = dirname(wp_normalize_path($reflected->getFileName())) . '/';
         Kernel::setGlobal('app/path', $path);
 
-        $url = Tools::getURL($path);
+        $url = Tools::getURL($path) . '/';
         Kernel::setGlobal('app/url', $url);
 
         // Root locations
@@ -118,7 +118,7 @@ class AppLocatorHandler
      */
     public function getPath($path = '')
     {
-        return wp_normalize_path(Kernel::getGlobal('app/path') .'/'. $path);
+        return wp_normalize_path(Kernel::getGlobal('app/path') . $path);
     }
 
     /**
