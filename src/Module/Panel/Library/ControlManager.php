@@ -164,15 +164,15 @@ class ControlManager extends ModuleKernel
         $this->setControl($type, $this->loadModulePart($control, false, $type));
 
         // Set less asset
-        $asset = self::getGlobal('core/module/panel/control-settings/less-file');
+        $asset = self::getGlobal('core/module/panel/control-settings/assets/less-file');
         $asset = $this->getControl($type)->getControlPath($asset);
 
         $this->getModuleData('asset')->setLessFile($asset);
 
         // Set js asset
         $asset = (self::dev())
-            ? self::getGlobal('core/module/panel/control-settings/js-file')
-            : self::getGlobal('core/module/panel/control-settings/min-js-file');
+            ? self::getGlobal('core/module/panel/control-settings/assets/js-file')
+            : self::getGlobal('core/module/panel/control-settings/assets/min-js-file');
 
         if (file_exists($asset = $this->getControl($type)->getControlPath($asset))) {
             $this->getModuleData('asset')->setLast($asset);

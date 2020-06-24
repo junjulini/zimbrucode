@@ -10,7 +10,7 @@
  */
 
 return [
-    'mode'            => [
+    'mode'             => [
         'page'      => 'ZimbruCode\\Module\\Panel\\Mode\\PageMode',
         'page-lite' => 'ZimbruCode\\Module\\Panel\\Mode\\LiteMode',
     ],
@@ -18,11 +18,13 @@ return [
     'control-settings' => [
         'namespace'     => 'ZimbruCode\\Module\\Panel\\Controls\\',
         'class'         => 'Control',
-        'template-file' => 'control.twig',
         'template-dir'  => '/Resources/views',
-        'less-file'     => '/Resources/assets/less/control.less',
-        'js-file'       => '/Resources/assets/js/control.js',
-        'min-js-file'   => '/Resources/assets/js/control.min.js',
+        'template-file' => 'control.twig',
+        'assets'        => [
+            'less-file'   => '/Resources/assets/less/control.less',
+            'js-file'     => '/Resources/assets/js/control.js',
+            'min-js-file' => '/Resources/assets/js/control.min.js',
+        ],
         'debug-mode'    => false,
         'exclude'       => [
             'menuTab',
@@ -34,7 +36,7 @@ return [
     ],
 
     # Prefix slug for options
-    'prefix-slug'     => "{$slug}_panel_option_",
+    'prefix-slug'      => "{$slug}_panel_option_",
 
     'settings'         => [
         'page'      => [
@@ -63,7 +65,7 @@ return [
 
             'ajax-response'        => [
                 'minify' => true,
-                'gzip'   => true
+                'gzip'   => true,
             ],
 
             'footer'               => [
