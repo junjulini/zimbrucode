@@ -72,7 +72,7 @@ abstract class AppKernel extends Kernel
         $this->__callbackAfter();    // Callback after load all modules
 
         // Load textdomain
-        $this->addAction('after_setup_theme', function() {
+        $this->addAction('init', function() {
             load_theme_textdomain('zc', __DIR__ . '/Resources/languages');
         });
     }
