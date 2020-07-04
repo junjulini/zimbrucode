@@ -42,11 +42,9 @@
     {% if help.content %}
         <div class="zc-panel-help">
             {% if help.type == 'tooltip' %}
-                <span class="zc-panel-help__starter zc-panel-help__starter_type_tooltip" data-tooltip="{{ help.content }}">
-                    <i class="zc-panel-help__icon zc-icon-help"></i>
-                </span>
+                <button class="zc-panel-help__starter zc-panel-help__starter_type_tooltip zc-icon-help" data-tooltip="{{ help.content }}"></button>
             {% else %}
-                <i title="{{ help.title|default(__('Help', 'zc')) }}" class="zc-panel-help__starter zc-panel-help__starter_type_simple zc-icon-help" data-settings="{{ help.settings|json_encode() }}"></i>
+                <button class="zc-panel-help__starter zc-panel-help__starter_type_simple zc-icon-help" data-tooltip="{{ help.title|default(__('Help', 'zc')) }}" data-settings="{{ help.settings|json_encode() }}"></button>
                 <div class="zc-panel-help__content">{{ help.content|raw }}</div>
             {% endif %}
         </div>

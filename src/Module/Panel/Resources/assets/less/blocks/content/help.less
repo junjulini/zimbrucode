@@ -17,14 +17,22 @@
  */
 
 .zc-panel-help {
+    position: absolute;
+    top: -2px;
+    right: 0;
+    display: flex;
+
     &__starter {
-        position: absolute;
-        top: 0;
-        right: 0;
         font-size: 16px;
         cursor: pointer;
         color: @text-color__alt;
         .def-transition(color);
+        border: none;
+        background: none;
+        padding: 0;
+        outline: none;
+        width: 25px;
+        height: 20px;
 
         &:hover {
             color: @accent-color__2;
