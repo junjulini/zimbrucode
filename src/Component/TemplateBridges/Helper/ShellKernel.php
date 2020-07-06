@@ -24,11 +24,11 @@ abstract class ShellKernel
 
     public function __set($name, callable $method)
     {
-        if ($name && is_string($name)) {
-            $this->__CM[$name] = $method;
-        } else {
-            throw new \RuntimeException(esc_html__('Name of var is not string or is empty.', 'zc'));
+        if (method_exists($this, $name) || !empty($this->customMethod[$name])) {
+            throw new \RuntimeException($name .' - this method exist in '. static::class);
         }
+
+        $this->__CM[$name] = $method;
     }
 
     public function __call($method, $args)

@@ -14,6 +14,7 @@ namespace ZimbruCode\Module\Panel\Library\Shell;
 use ZimbruCode\Component\Common\Tools;
 use ZimbruCode\Component\Core\Kernel;
 use ZimbruCode\Component\Core\ModuleKernel;
+use ZimbruCode\Component\TemplateBridges\Helper\ShellKernel;
 
 /**
  * Class : Base shell
@@ -22,7 +23,7 @@ use ZimbruCode\Component\Core\ModuleKernel;
  * @package ZimbruCode
  * @since   ZimbruCode 1.0.0
  */
-class BaseShell
+class BaseShell extends ShellKernel
 {
     protected $panel;
     protected $customMethod = [];
@@ -30,38 +31,6 @@ class BaseShell
     public function __construct(ModuleKernel $panel)
     {
         $this->panel = $panel;
-    }
-
-    /**
-     * Set custom method
-     * 
-     * @param string   $name   Method name
-     * @param callable $method
-     * @return void            This function does not return a value
-     * @since 1.0.0
-     */
-    public function __set($name, callable $method)
-    {
-        if (method_exists($this, $name) || !empty($this->customMethod[$name])) {
-            throw new \RuntimeException($name . esc_html__(' - this method exist in BaseShell.', 'zc'));
-        }
-
-        $this->customMethod[$name] = $method;
-    }
-
-    /**
-     * Call custom method
-     * 
-     * @param  string $name   Method name
-     * @param  array  $args   Method args
-     * @return mix            Method return after calling
-     * @since 1.0.0
-     */
-    public function __call($name, $args)
-    {
-        if (!empty($this->customMethod[$name]) && is_callable($this->customMethod[$name])) {
-            return call_user_func_array($this->customMethod[$name], $args);
-        }
     }
 
     /**
