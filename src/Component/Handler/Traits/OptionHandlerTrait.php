@@ -99,18 +99,20 @@ trait OptionHandlerTrait
     /**
      * Get meta data
      * 
-     * @param  string $meta   Meta name
-     * @param  int    $id     Custom post ID
-     * @return string         Return meta data
+     * @param  string $meta      Meta name
+     * @param  string $default   Default value
+     * @param  int    $id        Custom post ID
+     * @return string            Return meta data
      * @since 1.0.0
      */
-    public static function getMeta($meta, $id = null)
+    public static function getMeta($meta, $default = '', $id = null)
     {
         if ($meta && is_string($meta)) {
             $id   = ($id) ? $id : get_the_ID();
             $meta = '_' . Kernel::getGlobal('core/module/panel/prefix-slug') . $meta;
 
-            return get_post_meta($id, $meta, true);
+            $value = get_post_meta($id, $meta, true);
+            return ($value !== '' && $value !== null) ? $value : $default;
         }
     }
 }

@@ -55,6 +55,6 @@ class PostShell extends ShellKernel
 
     public function meta($meta, $id = null)
     {
-        return OptionHandler::getMeta($meta, $id);
+        return OptionHandler::getMeta($meta, '', $id);
     }
 }
