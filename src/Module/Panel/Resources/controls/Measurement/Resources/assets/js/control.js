@@ -335,7 +335,8 @@ zc.module.panel.setControl(function($, panel, global) {
             }
         });
     }, {
-        root: null
+        root: null,
+        threshold: 0.25
     });
 
     $(window).on('zc/panel/menu/item-change-ICP', function(event, section) {
