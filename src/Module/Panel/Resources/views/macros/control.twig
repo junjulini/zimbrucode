@@ -34,12 +34,13 @@
 
 {# Macro : HTML Select #}
 {% macro select(id, value, options, settings, type = 'single', class = 'zc-panel-control-select', ignore) %}
-    {% set id = id ? 'name="' ~ id ~'" id="' ~ id ~ '"' %}
+    {% set mid = id ? 'name="' ~ id ~'[]" id="' ~ id ~ '"' %}
+    {% set id  = id ? 'name="' ~ id ~'" id="' ~ id ~ '"' %}
     {% set settings = settings ? 'data-configs="' ~ settings|json_encode ~ '"' %}
 
     {# Multiple select #}
     {% if type == 'multiple' %}
-        <select {{ id|raw }} multiple class="{{ class }}" {{ ignore|raw }} data-option {{ settings|raw }} autocomplete="off">
+        <select {{ mid|raw }} multiple class="{{ class }}" {{ ignore|raw }} data-option {{ settings|raw }} autocomplete="off">
             {% if is_assoc(options) %}
                 {% for key, option in options %}
                     {% if option.disable %}
@@ -91,7 +92,7 @@
 
     {# Multiple Group select #}
     {% elseif type == 'multiple-group' %}
-        <select {{ id|raw }} multiple class="{{ class }}" {{ ignore|raw }} data-option {{ settings|raw }} autocomplete="off">
+        <select {{ mid|raw }} multiple class="{{ class }}" {{ ignore|raw }} data-option {{ settings|raw }} autocomplete="off">
             {% for group in options %}
                 <optgroup label="{{ group.title }}">
                     {% if is_assoc(group.options) %}

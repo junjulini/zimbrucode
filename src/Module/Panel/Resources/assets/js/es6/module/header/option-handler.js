@@ -55,10 +55,14 @@ export default class OptionHandler extends Kernel {
                 const options = {};
 
                 $('.zc-panel .zc-panel-controls [data-option]').each((index, el) => {
-                    if ($(el).data('i') == 'i') return;
+                    let nameItem = $(el).attr('name');
 
-                    const value    = $(el).val();
-                    const nameItem = $(el).attr('name');
+                    if ($(el).data('i') == 'i') return;
+                    if (nameItem === undefined) return;
+
+                    nameItem = nameItem.replace(/\[\]/g, '');
+
+                    const value = $(el).val();
 
                     if ($(el).is(':radio') || $(el).is(':checkbox')) {
                         if ($(el).is(':checked')) {
