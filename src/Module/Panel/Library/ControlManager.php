@@ -13,7 +13,7 @@ namespace ZimbruCode\Module\Panel\Library;
 
 use ZimbruCode\Component\Common\Tools;
 use ZimbruCode\Component\Core\ModuleKernel;
-use ZimbruCode\Module\Panel\Library\Interfaces\ControlInterface;
+use ZimbruCode\Module\Panel\Library\TwigContextController;
 use ZimbruCode\Module\Panel\Library\Traits\CallbackTrait;
 use ZimbruCode\Module\Panel\Library\Traits\ContentUtilityTrait;
 use ZimbruCode\Module\Panel\Library\TwigExtension\ControlsRenderTwigExtension;
@@ -29,12 +29,12 @@ class ControlManager extends ModuleKernel
 {
     use ContentUtilityTrait, CallbackTrait;
 
-    protected $controls     = [];
+    protected $controls   = [];
     protected $namespaces = [];
 
     /**
      * Controls setup
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
@@ -65,7 +65,7 @@ class ControlManager extends ModuleKernel
 
     /**
      * Get control
-     * 
+     *
      * @param  string $name   Control name
      * @return object         Control object
      * @since 1.0.0
@@ -83,7 +83,7 @@ class ControlManager extends ModuleKernel
 
     /**
      * Set control
-     * 
+     *
      * @param string      $name    Control name
      * @param ControlKernel $control   Control object
      * @since 1.0.0
@@ -100,7 +100,7 @@ class ControlManager extends ModuleKernel
 
     /**
      * Remove control
-     * 
+     *
      * @param  string $name   Control name
      * @return boolean        Unset result
      * @since 1.0.0
@@ -119,7 +119,7 @@ class ControlManager extends ModuleKernel
 
     /**
      * Search controls in build settings
-     * 
+     *
      * @param  array  $settings
      * @return void   This function does not return a value
      * @since 1.0.0
@@ -153,7 +153,7 @@ class ControlManager extends ModuleKernel
 
     /**
      * Load control
-     * 
+     *
      * @param  string $control   Control class
      * @param  string $control   Control type
      * @return void              This function does not return a value
@@ -163,6 +163,14 @@ class ControlManager extends ModuleKernel
     {
         $this->setControl($type, $this->loadModulePart($control, false, $type));
 
+        if (method_exists($this->getControl($type), 'each')) {
+            $this->addFilter("zc/module/panel/control/{$type}", function (array $context) use ($type) {
+                $this->getControl($type)->each(new TwigContextController($context));
+
+                return $context;
+            });
+        }
+
         // Set less asset
         $asset = self::getGlobal('core/module/panel/control-settings/assets/less-file');
         $asset = $this->getControl($type)->getControlPath($asset);
@@ -170,9 +178,11 @@ class ControlManager extends ModuleKernel
         $this->getModuleData('asset')->setLessFile($asset);
 
         // Set js asset
-        $asset = (self::dev())
-            ? self::getGlobal('core/module/panel/control-settings/assets/js-file')
-            : self::getGlobal('core/module/panel/control-settings/assets/min-js-file');
+        if (self::dev()) {
+            $asset = self::getGlobal('core/module/panel/control-settings/assets/js-file');
+        } else {
+            $asset = self::getGlobal('core/module/panel/control-settings/assets/min-js-file');
+        }
 
         if (file_exists($asset = $this->getControl($type)->getControlPath($asset))) {
             $this->getModuleData('asset')->setLast($asset);
