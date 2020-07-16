@@ -20,15 +20,17 @@
 {% import "@macros/control.twig" as html %}
 
 {% block content %}
-    {{
-        html.select(
-            control.ID,
-            control.option,
-            control.settings.options,
-            control.settings.configs,
-            control.settings.mode|default('single'),
-            'zc-panel-control-select',
-            control.ignore(null, true)
-        )
-    }}
+    <div class="zc-panel-control-select">
+        {{
+            html.select(
+                control.ID,
+                control.option,
+                control.settings.options,
+                control.settings.configs,
+                control.settings.mode|default('single'),
+                'zc-panel-control-select__list',
+                control.ignore(null, true)
+            )
+        }}
+    </div>
 {% endblock %}

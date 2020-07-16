@@ -212,7 +212,7 @@ zc.module.panel.setControl(function($, panel, global) {
         }
 
         if (zc.isMobile()) {
-            el.addClass('_zc-panel-controls_mobile');
+            el.addClass('zc-panel-control-measurement_mobile');
         }
 
         if (m != 'inherit') {

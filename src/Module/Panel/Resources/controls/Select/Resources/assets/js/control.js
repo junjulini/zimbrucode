@@ -34,10 +34,10 @@ zc.module.panel.setControl(function($, panel) {
                     var configs = $(entry.target).data('configs') || {};
                     var chosenConfigs = $.extend({}, defaults, configs);
 
-                    $(entry.target).chosen(chosenConfigs);
+                    $(entry.target).find('.zc-panel-control-select__list').chosen(chosenConfigs);
             
                     if (zc.isMobile()) {
-                        $(entry.target).parent().addClass('_zc-panel-controls_mobile');
+                        $(entry.target).addClass('zc-panel-control-select_mobile');
                     }
                 }
             }
