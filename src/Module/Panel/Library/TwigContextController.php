@@ -36,11 +36,11 @@ class TwigContextController
     public function get($name)
     {
         if (!$name || !is_string($name)) {
-            throw new \InvalidArgumentException('ZimbruCode\Module\Panel\Library\PreparingDefaultOptions : Name item is empty or not string');
+            throw new \InvalidArgumentException('ZimbruCode\Module\Panel\Library\TwigContextController : Name item is empty or not string');
         }
 
         if (!isset($this->context[$name])) {
-            throw new \InvalidArgumentException('ZimbruCode\Module\Panel\Library\PreparingDefaultOptions : The element does not exist in the context array');
+            throw new \InvalidArgumentException('ZimbruCode\Module\Panel\Library\TwigContextController : The element does not exist in the context array');
         }
 
         return $this->context[$name];
