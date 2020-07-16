@@ -35,7 +35,7 @@ class Control extends ControlKernel
         ]);
 
         // Custom template function
-        $this->setShellFunction('gridMark', [$this, '__callback_grid_mark']);
+        $this->setShellFunction('gridMark', '__callback_grid_mark');
     }
 
     public function __callback_grid_mark($value, $step)

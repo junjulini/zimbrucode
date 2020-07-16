@@ -60,8 +60,16 @@ abstract class ControlKernel extends ModuleKernel
      * @return void            This function does not return a value
      * @since 1.0.0
      */
-    protected function setShellFunction($name, callable $method, $type = 'panel-control-shell') // TODO: Posibil de scimbat denumirea
+    protected function setShellFunction($name, $method, $type = 'panel-control-shell') // TODO: Posibil de scimbat denumirea
     {
+        if (!is_string($method)) {
+            throw new \InvalidArgumentException('ZimbruCode\Module\Panel\Library\ControlKernel : Method name is not string');
+        }
+
+        if (!is_callable($method)) {
+            $method = [$this, $method];
+        }
+
         $this->callback()->set($type, function ($shell) use ($name, $method) {
             $shell->$name = function (...$args) use ($method) {
                 return call_user_func_array($method, $args);
