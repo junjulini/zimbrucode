@@ -73,14 +73,14 @@ class NamespaceHandler
     }
 
     /**
-     * Set namespace
-     * 
+     * Add namespace
+     *
      * @param  string             $namespace   Name of namespace
      * @param  AssetDataCollector $collector   Assets collector
      * @return NamespaceHandler object
      * @since 1.0.0
      */
-    public function set($namespace = '', AssetDataCollector $collector)
+    public function add($namespace = '', AssetDataCollector $collector)
     {
         if (empty($namespace)) {
             $namespace = Kernel::getGlobal('core/component/asset/filter/namespace/global-namespace');
@@ -93,7 +93,7 @@ class NamespaceHandler
         $data = Kernel::getGlobalCache("asset/namespace/{$namespace}", []);
         $data[] = $collector;
 
-        Kernel::setGlobalCache("asset/namespace/{$namespace}", $data);
+        Kernel::addGlobalCache("asset/namespace/{$namespace}", $data);
 
         return $this;
     }

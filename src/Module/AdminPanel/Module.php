@@ -31,19 +31,19 @@ class Module extends ModuleKernel
      */
     public function setup()
     {
-        self::setGlobal('core/module/admin-panel/settings/page-title', self::getGlobal('app/name') . esc_html__(' Options', 'zc'));
-        self::setGlobal('core/module/admin-panel/settings/menu-title', self::getGlobal('app/name'));
-        self::setGlobal('core/module/admin-panel/settings/menu-slug', self::getGlobal('app/slug') . '_panel');
+        self::addGlobal('core/module/admin-panel/settings/page-title', self::getGlobal('app/name') . esc_html__(' Options', 'zc'));
+        self::addGlobal('core/module/admin-panel/settings/menu-title', self::getGlobal('app/name'));
+        self::addGlobal('core/module/admin-panel/settings/menu-slug', self::getGlobal('app/slug') . '_panel');
 
         $panel = $this->module()->Panel;
 
-        $panel->setModuleSettings(Tools::arrayMerge(
+        $panel->addModuleSettings(Tools::arrayMerge(
             self::getGlobal('core/module/admin-panel/settings', []),
             $this->getModuleSetting(), 's'
         ));
 
-        $panel->setModuleSetting('build-settings', $this->getModuleSetting('build-settings'));
-        $panel->setModuleSetting('build-settings-file', $this->getModuleSetting('build-settings-file'));
+        $panel->addModuleSetting('build-settings', $this->getModuleSetting('build-settings'));
+        $panel->addModuleSetting('build-settings-file', $this->getModuleSetting('build-settings-file'));
 
         // Admin Panel hook
         do_action('zc/module/admin_panel/setup', $panel);

@@ -41,7 +41,7 @@ class MetaMode extends Mode
         $this->addAction('load-' . (isset($GLOBALS['pagenow']) ? $GLOBALS['pagenow'] : ''), '__action_preparing');
 
         // Ajax
-        $this->setAjax("zc/module/metabox_panel/reset_{$this->getModuleSetting('slug')}", '__ajax_options_reset');
+        $this->addAjax("zc/module/metabox_panel/reset_{$this->getModuleSetting('slug')}", '__ajax_options_reset');
 
         // Metabox panel backup init
         new Backup($this);
@@ -116,7 +116,7 @@ class MetaMode extends Mode
     {
         $this->callback()->run('panel-enqueue--before');
 
-        $this->asset()->setLessVar('hide_header', $this->getModuleSetting('hide-header'));
+        $this->asset()->addLessVar('hide_header', $this->getModuleSetting('hide-header'));
         $mmr = $this->getModuleSetting('meta-module-resource');
 
         // Assets
@@ -246,12 +246,12 @@ class MetaMode extends Mode
             }
 
             if ($result) {
-                $ajax->set($events['success'])->send();
+                $ajax->add($events['success'])->send();
             } else {
-                $ajax->set($events['failure'])->send();
+                $ajax->add($events['failure'])->send();
             }
         } else {
-            $ajax->set($events['failure'])->send();
+            $ajax->add($events['failure'])->send();
         }
     }
 }

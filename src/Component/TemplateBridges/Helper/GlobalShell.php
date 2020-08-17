@@ -24,7 +24,7 @@ class GlobalShell
 {
     /**
      * Call function
-     * 
+     *
      * @param  string $name function name
      * @param  array  $args function args
      * @return mix          function return after calling
@@ -66,7 +66,7 @@ class GlobalShell
 
     /**
      * Get global data from global var
-     * 
+     *
      * @param  string  $path      Base path
      * @param  string  $default   Default value
      * @return string             Return data
@@ -79,7 +79,7 @@ class GlobalShell
 
     /**
      * Get cache value
-     * 
+     *
      * @param  string  $key       Cache key
      * @param  string  $default   Default value
      * @return string             Return data
@@ -92,7 +92,7 @@ class GlobalShell
 
     /**
      * Get global var slug
-     * 
+     *
      * @return string   Slug name
      * @since 1.0.0
      */

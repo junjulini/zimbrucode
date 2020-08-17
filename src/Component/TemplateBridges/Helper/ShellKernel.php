@@ -25,7 +25,7 @@ abstract class ShellKernel
     public function __set($name, callable $method)
     {
         if (method_exists($this, $name) || !empty($this->customMethod[$name])) {
-            throw new \RuntimeException($name .' - this method exist in '. static::class);
+            throw new \RuntimeException($name . ' - this method exist in ' . static::class);
         }
 
         $this->__CM[$name] = $method;

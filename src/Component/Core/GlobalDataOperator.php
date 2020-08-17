@@ -162,13 +162,13 @@ abstract class GlobalDataOperator
     }
 
     /**
-     * Set global var slug
+     * Add global var slug
      * 
      * @param  string $slug   Slug name
      * @return void           This function does not return a value
      * @since 1.0.0
      */
-    final protected static function setGlobalVarSlug($slug)
+    final protected static function addGlobalVarSlug($slug)
     {
         if (!$slug) {
             throw new \InvalidArgumentException('Global var slug : empty.');
@@ -252,14 +252,14 @@ abstract class GlobalDataOperator
     }
 
     /**
-     * Set data to global var
+     * Add data to global var
      * 
      * @param  string  $path    Base path
      * @param  mix     $value   Value
      * @return void             This function does not return a value
      * @since 1.0.0
      */
-    final public static function setGlobal($path, $value)
+    final public static function addGlobal($path, $value)
     {
         if ($path && is_string($path)) {
             if (!self::__isOnCondition($path)) {
@@ -270,9 +270,9 @@ abstract class GlobalDataOperator
 
             if (self::__isRootNode($path)) {
                 $path = str_replace('@/', '', $path);
-                Tools::setNode(self::$__GN[self::$__RN], $path, $value);
+                Tools::addNode(self::$__GN[self::$__RN], $path, $value);
             } else {
-                Tools::setNode(self::$__GN[self::$__GNS], $path, $value);
+                Tools::addNode(self::$__GN[self::$__GNS], $path, $value);
             }
         }
     }

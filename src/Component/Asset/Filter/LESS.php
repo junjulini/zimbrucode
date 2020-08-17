@@ -47,7 +47,7 @@ class LESS extends Filter
     protected function setup()
     {
         $this->less = new LessRender;
-        $this->less->setFunctions(new LessDefaultFunctions);
+        $this->less->addFunctions(new LessDefaultFunctions);
 
         $env = Kernel::getEnvironment();
 
@@ -139,13 +139,13 @@ class LESS extends Filter
             // Render sources
             $this->less->render();
 
-            $newAsset = $this->collector()->set($this->less->output, false)
+            $newAsset = $this->collector()->add($this->less->output, false)
                                           ->get($this->less->output);
 
             $newAsset->name($newAsset->generateName())
                      ->url(Tools::getURL($this->less->output))
                      ->type('css')
-                     ->setArgs($asset->getArgs());
+                     ->addArgs($asset->getArgs());
 
             if (!empty($this->less->assetCache->get())) {
                 $versionPart = (integer) (substr(hexdec(md5(json_encode($this->less->assetCache->get()))), 0, 9) * 100000000);

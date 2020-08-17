@@ -35,56 +35,56 @@ class AppLocatorHandler
 
         $reflected = new \ReflectionObject($app);
         $path = dirname(wp_normalize_path($reflected->getFileName())) . '/';
-        Kernel::setGlobal('app/path', $path);
+        Kernel::addGlobal('app/path', $path);
 
         $url = Tools::getURL($path) . '/';
-        Kernel::setGlobal('app/url', $url);
+        Kernel::addGlobal('app/url', $url);
 
         // Root locations
         $rootPath = wp_normalize_path($rootPath);
-        Kernel::setGlobal('app/root-file', $rootPath);
-        Kernel::setGlobal('app/root-path', dirname($rootPath));
-        Kernel::setGlobal('app/root-url', Tools::getURL(dirname($rootPath)));
+        Kernel::addGlobal('app/root-file', $rootPath);
+        Kernel::addGlobal('app/root-path', dirname($rootPath));
+        Kernel::addGlobal('app/root-url', Tools::getURL(dirname($rootPath)));
 
         // Resource
         $resource = Kernel::getGlobal('app/resource-dir');
-        Kernel::setGlobal('app/resource-path', $this->getPath($resource));
-        Kernel::setGlobal('app/resource-url', $this->getURL($resource));
+        Kernel::addGlobal('app/resource-path', $this->getPath($resource));
+        Kernel::addGlobal('app/resource-url', $this->getURL($resource));
 
         // Var
         $var = Kernel::getGlobal('app/var-dir');
-        Kernel::setGlobal('app/var-path', $this->getPath("{$var}{$mid}"));
-        Kernel::setGlobal('app/var-url', $this->getURL("{$var}{$mid}"));
+        Kernel::addGlobal('app/var-path', $this->getPath("{$var}{$mid}"));
+        Kernel::addGlobal('app/var-url', $this->getURL("{$var}{$mid}"));
 
         // Cache
         $cache = Kernel::getGlobal('app/cache-dir');
-        Kernel::setGlobal('app/cache-path', $this->getPath("{$var}{$mid}{$cache}{$env}"));
-        Kernel::setGlobal('app/cache-url', $this->getURL("{$var}{$mid}{$cache}{$env}"));
+        Kernel::addGlobal('app/cache-path', $this->getPath("{$var}{$mid}{$cache}{$env}"));
+        Kernel::addGlobal('app/cache-url', $this->getURL("{$var}{$mid}{$cache}{$env}"));
 
         // Log
         $log = Kernel::getGlobal('app/log-dir');
-        Kernel::setGlobal('app/log-path', $this->getPath("{$var}{$mid}{$log}"));
-        Kernel::setGlobal('app/log-url', $this->getURL("{$var}{$mid}{$log}"));
+        Kernel::addGlobal('app/log-path', $this->getPath("{$var}{$mid}{$log}"));
+        Kernel::addGlobal('app/log-url', $this->getURL("{$var}{$mid}{$log}"));
 
         // Asset
         $asset = Kernel::getGlobal('app/asset-dir');
-        Kernel::setGlobal('app/asset-path', $this->getPath($asset));
-        Kernel::setGlobal('app/asset-url', $this->getURL($asset));
+        Kernel::addGlobal('app/asset-path', $this->getPath($asset));
+        Kernel::addGlobal('app/asset-url', $this->getURL($asset));
 
         // Config
         $config = Kernel::getGlobal('app/config-dir');
-        Kernel::setGlobal('app/config-path', $this->getPath($config));
-        Kernel::setGlobal('app/config-url', $this->getURL($config));
+        Kernel::addGlobal('app/config-path', $this->getPath($config));
+        Kernel::addGlobal('app/config-url', $this->getURL($config));
 
         // Model
         $model = Kernel::getGlobal('app/model-dir');
-        Kernel::setGlobal('app/model-path', $this->getPath($model));
-        Kernel::setGlobal('app/model-url', $this->getURL($model));
+        Kernel::addGlobal('app/model-path', $this->getPath($model));
+        Kernel::addGlobal('app/model-url', $this->getURL($model));
 
         // View
         $view = Kernel::getGlobal('app/view-dir');
-        Kernel::setGlobal('app/view-path', $this->getPath($view));
-        Kernel::setGlobal('app/view-url', $this->getURL($view));
+        Kernel::addGlobal('app/view-path', $this->getPath($view));
+        Kernel::addGlobal('app/view-url', $this->getURL($view));
     }
 
     /**

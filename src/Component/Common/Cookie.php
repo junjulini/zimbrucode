@@ -53,8 +53,8 @@ class Cookie
     }
 
     /**
-     * Set cookie
-     * 
+     * Add cookie
+     *
      * @param string $name     Name of cookie
      * @param string $data     Data for cookie
      * @param string $time     Time for cookie
@@ -62,7 +62,7 @@ class Cookie
      * @return void            This function does not return a value
      * @since 1.0.0
      */
-    public function set($name, $data, $time = 0, $filter = 'serialize')
+    public function add($name, $data, $time = 0, $filter = 'serialize')
     {
         if ($name && is_string($name)) {
             switch ($filter) {
@@ -111,6 +111,6 @@ class Cookie
      */
     public function removeOnlyData($name)
     {
-        $this->set($name, '');
+        $this->add($name, '');
     }
 }

@@ -46,14 +46,14 @@ class FastCache
     }
 
     /**
-     * Set element data
-     * 
+     * Add element data
+     *
      * @param  string $key     Element key
      * @param  string $value   Element value
      * @return void            This function does not return a value
      * @since 1.0.0
      */
-    public function set($key, $value = '')
+    public function add($key, $value = '')
     {
         if (!$key) {
             throw new \RuntimeException(esc_html__('Cache key : empty.', 'zc'));

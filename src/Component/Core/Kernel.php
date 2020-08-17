@@ -65,15 +65,15 @@ abstract class Kernel extends GlobalDataOperator
         if ($loader = self::getGlobalCache('module-instance')) {
             if (!($loader instanceof ModuleLoader)) {
                 $loader = new ModuleLoader;
-                self::setGlobalCache('module-instance', $loader);
+                self::addGlobalCache('module-instance', $loader);
             }
 
-            return $loader->flush()->setConfig($config);
+            return $loader->flush()->addConfig($config);
         } else {
             $loader = new ModuleLoader;
-            self::setGlobalCache('module-instance', $loader);
+            self::addGlobalCache('module-instance', $loader);
 
-            return $loader->setConfig($config);
+            return $loader->addConfig($config);
         }
     }
 
@@ -90,7 +90,7 @@ abstract class Kernel extends GlobalDataOperator
         if ($service && is_string($service)) {
             if ($handler && is_object($handler)) {
                 if (!self::getGlobalCache("services/{$service}")) {
-                    self::setGlobalCache("services/{$service}", $handler);
+                    self::addGlobalCache("services/{$service}", $handler);
                 } else {
                     throw new \RuntimeException(sprintf(esc_html__('This service exist : %s', 'zc'), $service));
                 }

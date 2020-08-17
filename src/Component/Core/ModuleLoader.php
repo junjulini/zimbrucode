@@ -112,7 +112,7 @@ class ModuleLoader
      * @param string $namespace
      * @since 1.0.0
      */
-    public function setNamespace($namespace)
+    public function addNamespace($namespace)
     {
         if (!$namespace) {
             throw new \InvalidArgumentException(esc_html__('Namespace is empty.', 'zc'));
@@ -122,30 +122,30 @@ class ModuleLoader
             throw new \InvalidArgumentException(esc_html__('Namespace is not string.', 'zc'));
         }
 
-        Kernel::setGlobalCache("module/namespace/{$namespace}", $namespace);
+        Kernel::addGlobalCache("module/namespace/{$namespace}", $namespace);
 
         return $this;
     }
 
     /**
-     * Set settings
+     * Add settings
      * 
      * @param array $setting   Module settings
      * @since 1.0.0
      */
-    public function setSettings(array $settings)
+    public function addSettings(array $settings)
     {
         $this->config['settings'] = $settings;
         return $this;
     }
 
     /**
-     * Set module as service
+     * Add module as service
      * 
      * @param string $name   Name of service
      * @since 1.0.0
      */
-    public function setAsService($name)
+    public function addAsService($name)
     {
         if ($name && is_string($name)) {
             $this->config['service'] = $name;
@@ -155,12 +155,12 @@ class ModuleLoader
     }
 
     /**
-     * Set module mode
+     * Add module mode
      * 
      * @param array $mode   Module mode
      * @since 1.0.0
      */
-    public function setMode($mode)
+    public function addMode($mode)
     {
         if ($mode && is_string($mode)) {
             $this->config['mode'] = $mode;
@@ -170,19 +170,19 @@ class ModuleLoader
     }
 
     /**
-     * Set module config
+     * Add module config
      * 
      * @param array $config   Module config
      * @since 1.0.0
      */
-    public function setConfig(array $config)
+    public function addConfig(array $config)
     {
         if ($config) {
             if (is_string($config)) {
                 $this->useModule($config)
-                     ->setAsService(false)
-                     ->setMode(false)
-                     ->setSettings([])
+                     ->addAsService(false)
+                     ->addMode(false)
+                     ->addSettings([])
                      ->build();
             } elseif (!empty($config['module'])) {
                 $service  = (!empty($config['service']) && is_string($config['service'])) ? $config['service'] : false;
@@ -190,9 +190,9 @@ class ModuleLoader
                 $settings = (isset($config['settings']) && is_array($config['settings'])) ? $config['settings'] : [];
 
                 $this->useModule($config['module'])
-                     ->setAsService($service)
-                     ->setMode($mode)
-                     ->setSettings($settings)
+                     ->addAsService($service)
+                     ->addMode($mode)
+                     ->addSettings($settings)
                      ->build();
             } else {
                 $this->group('init');
@@ -200,9 +200,9 @@ class ModuleLoader
                 foreach ($config as $module) {
                     if (is_string($module)) {
                         $this->useModule($module)
-                             ->setAsService(false)
-                             ->setMode(false)
-                             ->setSettings([])
+                             ->addAsService(false)
+                             ->addMode(false)
+                             ->addSettings([])
                              ->build();
                     } elseif (is_array($module)) {
                         if (empty($module['module'])) {
@@ -214,9 +214,9 @@ class ModuleLoader
                         $settings = (isset($module['settings']) && is_array($module['settings'])) ? $module['settings'] : [];
     
                         $this->useModule($module['module'])
-                             ->setAsService($service)
-                             ->setMode($mode)
-                             ->setSettings($settings)
+                             ->addAsService($service)
+                             ->addMode($mode)
+                             ->addSettings($settings)
                              ->build();
                     }
                 }
@@ -324,9 +324,9 @@ class ModuleLoader
 
         // Init collector
         $collector = new DataCollector;
-        $collector->set('settings', $this->config['settings'])
-                  ->set('multi-use', false)
-                  ->set('module-namespace', substr($module, 0, strrpos($module, '\\')));
+        $collector->add('settings', $this->config['settings'])
+                  ->add('multi-use', false)
+                  ->add('module-namespace', substr($module, 0, strrpos($module, '\\')));
 
         // Init module
         if (!(($module = new $module($collector)) instanceof ModuleKernel)) {
@@ -334,12 +334,12 @@ class ModuleLoader
         }
 
         // Set module path in collector
-        $collector->set('module-path', wp_normalize_path(dirname((new \ReflectionObject($module))->getFileName())));
+        $collector->add('module-path', wp_normalize_path(dirname((new \ReflectionObject($module))->getFileName())));
 
         // Check "MultiUse"
         if (!$collector->get('multi-use')) {
             if (!Kernel::getGlobal("cache/module/one-off/{$module->getModuleNamespace()}")) {
-                Kernel::setGlobal("cache/module/one-off/{$module->getModuleNamespace()}", $module->getModuleName());
+                Kernel::addGlobal("cache/module/one-off/{$module->getModuleNamespace()}", $module->getModuleName());
             } else {
                 throw new \RuntimeException(sprintf(esc_html__('Duplication of module : %s', 'zc'), $module->getModuleNamespace()));
             }

@@ -38,20 +38,20 @@ class Package extends Filter
             if ($packages = $this->prepPackageByCondition($asset->raw())) {
                 if (!empty($packages['styles'])) {
                     foreach ($packages['styles'] as $packageName => $packageData) {
-                        $package = $this->collector()->set($packageData['path'])
+                        $package = $this->collector()->add($packageData['path'])
                                         ->get($packageData['path']);
 
                         $package->type('css')
                                 ->name($package->generateName())
                                 ->url($package->getURL())
                                 ->version((!empty($packageData['version']) ? $packageData['version'] : Kernel::getGlobal('app/version')))
-                                ->setArgs($asset->getArgs());
+                                ->addArgs($asset->getArgs());
                     }
                 }
 
                 if (!empty($packages['scripts'])) {
                     foreach ($packages['scripts'] as $packageName => $packageData) {
-                        $package = $this->collector()->set($packageData['path'])
+                        $package = $this->collector()->add($packageData['path'])
                                         ->get($packageData['path']);
 
                         $package->type('js')
@@ -59,7 +59,7 @@ class Package extends Filter
                                 ->url($package->getURL())
                                 ->version((!empty($packageData['version']) ? $packageData['version'] : Kernel::getGlobal('app/version')))
                                 ->footer(true)
-                                ->setArgs($asset->getArgs());
+                                ->addArgs($asset->getArgs());
                     }
                 }
 

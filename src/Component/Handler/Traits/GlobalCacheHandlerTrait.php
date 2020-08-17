@@ -23,13 +23,13 @@ use ZimbruCode\Component\Core\Kernel;
 trait GlobalCacheHandlerTrait
 {
     /**
-     * Set cache
+     * Add cache
      * 
      * @param string $key     Cache key
      * @param mix    $value   Cache value
      * @since 1.0.0
      */
-    public static function setGlobalCache($key, $value = '')
+    public static function addGlobalCache($key, $value = '')
     {
         if (!$key) {
             throw new \InvalidArgumentException(esc_html__('Global cache key is empty.', 'zc'));
@@ -39,7 +39,7 @@ trait GlobalCacheHandlerTrait
             throw new \InvalidArgumentException(esc_html__('Global cache key not string.', 'zc'));
         }
 
-        return Kernel::setGlobal("cache/$key", $value);
+        return Kernel::addGlobal("cache/$key", $value);
     }
 
     /**
@@ -88,6 +88,6 @@ trait GlobalCacheHandlerTrait
      */
     public static function flushGlobalCache()
     {
-        Kernel::setGlobal('cache', []);
+        Kernel::addGlobal('cache', []);
     }
 }

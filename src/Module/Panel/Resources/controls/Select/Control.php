@@ -30,6 +30,6 @@ class Control extends ControlKernel
      */
     public function setup()
     {
-        $this->setAsset('chosen');
+        $this->addAsset('chosen');
     }
 }

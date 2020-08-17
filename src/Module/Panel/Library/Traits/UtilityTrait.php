@@ -26,16 +26,16 @@ trait UtilityTrait
     use ContentUtilityTrait, CallbackTrait;
 
     /**
-     * Set custom shell function
+     * Add custom shell function
      * 
      * @param string   $name   Name of function
      * @param callable $method
      * @param string   $type
      * @since 1.0.0
      */
-    protected function setShellFunction($name, callable $method, $type = 'panel-base-shell')
+    protected function addShellFunction($name, callable $method, $type = 'panel-base-shell')
     {
-        $this->callback()->set($type, function ($shell) use ($name, $method) {
+        $this->callback()->add($type, function ($shell) use ($name, $method) {
             $shell->$name = function (...$args) use ($method) {
                 return call_user_func_array($method, $args);
             };
@@ -65,12 +65,12 @@ trait UtilityTrait
             $ttb->addLocationPath($this->getModuleResourcePath('views/blocks'), 'blocks');
             $ttb->addLocationPath($this->getModuleResourcePath('views/mode'));
 
-            $ttb->setCachePath(self::service('app-locator')->getCachePath('twig'));
+            $ttb->addCachePath(self::service('app-locator')->getCachePath('twig'));
 
             // Custom vars
             if (!empty($vars)) {
                 foreach ($vars as $name => $value) {
-                    $ttb->setVar($name, $value);
+                    $ttb->addVar($name, $value);
                 }
             }
 
@@ -101,7 +101,7 @@ trait UtilityTrait
     public function asset(...$assets)
     {
         if ($assets) {
-            $this->getModuleData('asset')->set($assets);
+            $this->getModuleData('asset')->add($assets);
         }
         
         return $this->getModuleData('asset');

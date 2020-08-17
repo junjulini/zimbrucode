@@ -61,7 +61,7 @@ class AssetNamespace extends Filter
     {
         if ($namespaceCollector instanceof AssetDataCollector) {
             foreach ($namespaceCollector->get() as $asset => $assetData) {
-                $this->collector()->setRaw($asset, $assetData);
+                $this->collector()->addRaw($asset, $assetData);
             }
         }
     }

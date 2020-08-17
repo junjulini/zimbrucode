@@ -132,7 +132,7 @@ class Tools
     }
 
     /**
-     * Sets a value in a nested array based on path
+     * Add a value in a nested array based on path
      * 
      * @param  array  $array       The array to modify
      * @param  string $path        The path in the array
@@ -141,7 +141,7 @@ class Tools
      * @return void                This function does not return a value
      * @since 1.0.0
      */
-    public static function setNode(array &$array, $path, &$value, $delimiter = '/')
+    public static function addNode(array &$array, $path, &$value, $delimiter = '/')
     {
         // Fail if the path is empty
         if (!$path) {

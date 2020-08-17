@@ -29,13 +29,13 @@ class WPTemplateBridge
     protected $location  = '';
 
     /**
-     * Set location for custom templates files
+     * Add location for custom templates files
      * 
      * @param string $location   Patch
      * @return void              This function does not return a value
      * @since 1.0.0
      */
-    public function setLocation($location)
+    public function addLocation($location)
     {
         if ($location && is_string($location)) {
             $this->location = $location;
@@ -43,13 +43,13 @@ class WPTemplateBridge
     }
 
     /**
-     * Set custom templates
-     * 
+     * Add custom templates
+     *
      * @param array $templates   Templates list
      * @return void              This function does not return a value
      * @since 1.0.0
      */
-    public function set(array $templates)
+    public function add(array $templates)
     {
         $this->templates = Tools::arrayMerge($this->templates, $templates);
     }

@@ -31,7 +31,7 @@ class Control extends ControlKernel
     public function setup()
     {
         // Set Attachment Image Src in shell
-        $this->setShellFunction('getAttachmentImageSrc', '__custom_shell_function');
+        $this->addShellFunction('getAttachmentImageSrc', '__custom_shell_function');
 
         // Additional vars for control.js
         $this->localize([

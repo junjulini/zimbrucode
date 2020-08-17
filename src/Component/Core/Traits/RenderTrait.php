@@ -40,11 +40,11 @@ trait RenderTrait
             $renderTemplate = function ($template, $locationPath) use ($vars, $renderCallback) {
                 $ttb = new TwigTemplateBridge;
                 $ttb->addLocationPath($locationPath);
-                $ttb->setCachePath(self::service('app-locator')->getCachePath('twig'));
+                $ttb->addCachePath(self::service('app-locator')->getCachePath('twig'));
 
                 if (!empty($vars)) {
                     foreach ($vars as $name => $value) {
-                        $ttb->setVar($name, $value);
+                        $ttb->addVar($name, $value);
                     }
                 }
 

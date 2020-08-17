@@ -240,12 +240,12 @@ class AssetData
     }
 
     /**
-     * Set additional arguments
+     * Add additional arguments
      * 
      * @param array $args   List of arguments
      * @since 1.0.0
      */
-    public function setArgs(array $args)
+    public function addArgs(array $args)
     {
         $this->data['args'] = $args;
         return $this;
@@ -279,13 +279,13 @@ class AssetData
     }
 
     /**
-     * Set additional asset data
+     * Add additional asset data
      * 
      * @param string $id    Identifier
      * @param array  $data  Additional data
      * @since 1.0.0
      */
-    public function setAdditionalData($id, array $data)
+    public function addAdditionalData($id, array $data)
     {
         if ($id && is_string($id) && !empty($data)) {
             $this->data['additional-data'][$id] = $data;

@@ -99,7 +99,7 @@ class Render
         }
 
         if (Kernel::getGlobal('core/module/theme-adaptor/cache')) {
-            $this->__ttb->setCachePath(Kernel::service('app-locator')->getCachePath('twig'));
+            $this->__ttb->addCachePath(Kernel::service('app-locator')->getCachePath('twig'));
         }
 
         // Default shells
@@ -117,17 +117,17 @@ class Render
 
         // Add functions
         foreach ($this->__data['functions'] as $name => $method) {
-            $this->__ttb->setFunction($name, $method);
+            $this->__ttb->addFunction($name, $method);
         }
 
         // Add escapers
         foreach ($this->__data['escapers'] as $name => $method) {
-            $this->__ttb->setEscaper($name, $method);
+            $this->__ttb->addEscaper($name, $method);
         }
 
         // Add filters
         foreach ($this->__data['filters'] as $name => $method) {
-            $this->__ttb->setFilter($name, $method);
+            $this->__ttb->addFilter($name, $method);
         }
 
         // Filters
@@ -141,8 +141,8 @@ class Render
         do_action('zc/module/theme_adaptor/twig', $this->__ttb, $this->__data['template'], $locationPath);
 
         // Run loader & environment
-        $this->__ttb->setLoader();
-        $this->__ttb->setEnvironment();
+        $this->__ttb->addLoader();
+        $this->__ttb->addEnvironment();
 
         // Set extensions
         new InitTwigExtensions($this->__ttb->getTWIG());
@@ -165,7 +165,7 @@ class Render
     }
 
     /**
-     * Set var (setter)
+     * Add var (setter)
      * 
      * @param string $name    Name of var
      * @param mix    $value   Value of var
@@ -173,41 +173,41 @@ class Render
      */
     public function __set($name, $value)
     {
-        return $this->__ttb->setVar($name, $value);
+        return $this->__ttb->addVar($name, $value);
     }
 
     /**
-     * Set var
+     * Add var
      * 
      * @param string $name    Name of var
      * @param mix    $value   Value of var
      * @since 1.0.0
      */
-    public function setVar($name, $value)
+    public function addVar($name, $value)
     {
-        return $this->__ttb->setVar($name, $value);
+        return $this->__ttb->addVar($name, $value);
     }
 
     /**
-     * Set vars
+     * Add vars
      * 
      * @param array $vars   Vars
      * @since 1.0.0
      */
-    public function setVars(array $vars)
+    public function addVars(array $vars)
     {
         return $this->__ttb->getVars($vars);
     }
 
     /**
-     * Set function
+     * Add function
      * 
      * @param  string   $name     Function name
      * @param  callable $method   The function that will be called
      * @return void               This function does not return a value
      * @since 1.0.0
      */
-    public function setFunction($name, callable $method)
+    public function addFunction($name, callable $method)
     {
         if (!$name) {
             throw new \InvalidArgumentException('Function name is empty.');
@@ -221,14 +221,14 @@ class Render
     }
 
     /**
-     * Set escaper
+     * Add escaper
      * 
      * @param  string   $name     Escaper name
      * @param  callable $method   The function that will be called
      * @return void               This function does not return a value
      * @since 1.0.0
      */
-    public function setEscaper($name, callable $method)
+    public function addEscaper($name, callable $method)
     {
         if (!$name) {
             throw new \InvalidArgumentException('Escaper function name is empty.');
@@ -242,14 +242,14 @@ class Render
     }
 
     /**
-     * Set filter
+     * Add filter
      * 
      * @param  string   $name     Filter name
      * @param  callable $method   The function that will be called
      * @return void               This function does not return a value
      * @since 1.0.0
      */
-    public function setFilter($name, callable $method)
+    public function addFilter($name, callable $method)
     {
         if (!$name) {
             throw new \InvalidArgumentException('Filter function name is empty.');
@@ -263,7 +263,7 @@ class Render
     }
 
     /**
-     * Set load path
+     * Add load path
      * 
      * @param string  $path        Path of template
      * @param string  $namespace   Namespace of templates

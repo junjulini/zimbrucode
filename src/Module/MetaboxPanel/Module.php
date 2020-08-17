@@ -35,24 +35,24 @@ class Module extends ModuleKernel
     {
         $panel = $this->module()->Panel;
 
-        $this->setModuleSetting('slug', 'metabox_panel__' . $this->getModuleSetting('slug', 'default'));
+        $this->addModuleSetting('slug', 'metabox_panel__' . $this->getModuleSetting('slug', 'default'));
 
         if (is_string($this->getModuleSetting('screen'))) {
-            $this->setModuleSetting('screen', [$this->getModuleSetting('screen')]);
+            $this->addModuleSetting('screen', [$this->getModuleSetting('screen')]);
         } elseif (!is_array($this->getModuleSetting('screen'))) {
-            $this->setModuleSetting('screen', ['post']);
+            $this->addModuleSetting('screen', ['post']);
         }
 
-        $panel->setModuleSettings(Tools::arrayMerge(
+        $panel->addModuleSettings(Tools::arrayMerge(
             self::getGlobal('core/module/metabox-panel/settings', []),
             $this->getModuleSetting(), 's'
         ));
 
-        $panel->setModuleSetting('build-settings', $this->getModuleSetting('build-settings'))
-              ->setModuleSetting('build-settings-file', $this->getModuleSetting('build-settings-file'))
-              ->setModuleSetting('meta-module-resource', $this->getModuleResourcePath())
-              ->setCustomMode('meta', self::getGlobal('core/module/metabox-panel/mode/meta'))
-              ->setCustomMode('meta-lite', self::getGlobal('core/module/metabox-panel/mode/meta-lite'))
+        $panel->addModuleSetting('build-settings', $this->getModuleSetting('build-settings'))
+              ->addModuleSetting('build-settings-file', $this->getModuleSetting('build-settings-file'))
+              ->addModuleSetting('meta-module-resource', $this->getModuleResourcePath())
+              ->addCustomMode('meta', self::getGlobal('core/module/metabox-panel/mode/meta'))
+              ->addCustomMode('meta-lite', self::getGlobal('core/module/metabox-panel/mode/meta-lite'))
               ->addCustomControlsNamespace($this->getModuleResourcePath('controls'), self::getGlobal('core/module/metabox-panel/control-settings/namespace'));
 
         // Metabox Panel hook

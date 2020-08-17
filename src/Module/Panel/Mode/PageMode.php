@@ -57,9 +57,9 @@ class PageMode extends Mode
         }
 
         // Ajax
-        $this->setAjax('zc/module/panel/content_' . $this->getModuleSetting('slug'), '__ajax_load_panel_content');
-        $this->setAjax('zc/module/panel/save_' . $this->getModuleSetting('slug'),    '__ajax_save_options');
-        $this->setAjax('zc/module/panel/reset_' . $this->getModuleSetting('slug'),   '__ajax_reset_options');
+        $this->addAjax('zc/module/panel/content_' . $this->getModuleSetting('slug'), '__ajax_load_panel_content');
+        $this->addAjax('zc/module/panel/save_' . $this->getModuleSetting('slug'),    '__ajax_save_options');
+        $this->addAjax('zc/module/panel/reset_' . $this->getModuleSetting('slug'),   '__ajax_reset_options');
     }
 
     /**
@@ -234,7 +234,7 @@ class PageMode extends Mode
                 }
             }
 
-            self::service('fast-cache')->set('module/panel/bar-render', $menuItems);
+            self::service('fast-cache')->add('module/panel/bar-render', $menuItems);
         }
 
         if ($menuItems && is_array($menuItems)) {
@@ -309,20 +309,20 @@ class PageMode extends Mode
 
         if ($options) {
             if ($this->isOptionsDifferent($options)) {
-                if ($this->setOptions($options)) {
+                if ($this->addOptions($options)) {
 
                     // Callback : Options save - success
                     $this->callback()->run('panel-options-save--success', $this, $ajax);
 
-                    $ajax->set(self::getGlobal('core/module/panel/settings/page/events/event-1'))->send();
+                    $ajax->add(self::getGlobal('core/module/panel/settings/page/events/event-1'))->send();
                 } else {
-                    $ajax->set(self::getGlobal('core/module/panel/settings/page/events/event-5'))->send();
+                    $ajax->add(self::getGlobal('core/module/panel/settings/page/events/event-5'))->send();
                 }
             } else {
-                $ajax->set(self::getGlobal('core/module/panel/settings/page/events/event-2'))->send();
+                $ajax->add(self::getGlobal('core/module/panel/settings/page/events/event-2'))->send();
             }
         } else {
-            $ajax->set(self::getGlobal('core/module/panel/settings/page/events/event-6'))->send();
+            $ajax->add(self::getGlobal('core/module/panel/settings/page/events/event-6'))->send();
         }
     }
 
@@ -342,9 +342,9 @@ class PageMode extends Mode
         $result = $this->remOptions();
 
         if ($result) {
-            $ajax->set(self::getGlobal('core/module/panel/settings/page/events/event-3'))->send();
+            $ajax->add(self::getGlobal('core/module/panel/settings/page/events/event-3'))->send();
         } else {
-            $ajax->set(self::getGlobal('core/module/panel/settings/page/events/event-4'))->send();
+            $ajax->add(self::getGlobal('core/module/panel/settings/page/events/event-4'))->send();
         }
     }
 }

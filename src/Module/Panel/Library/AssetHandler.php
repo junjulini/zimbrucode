@@ -45,16 +45,16 @@ class AssetHandler
         $path = "{$this->module->getModulePath()}{$resourceDir}/assets/less";
         $url  = "{$this->module->getModuleURL()}{$resourceDir}/assets/less";
 
-        $this->setLessDir($path, $url);
+        $this->addLessDir($path, $url);
     }
 
     /**
-     * Set assets
-     * 
+     * Add assets
+     *
      * @param array/string $assets   Assets data
      * @since 1.0.0
      */
-    public function set($assets)
+    public function add($assets)
     {
         if ($assets && is_array($assets)) {
             foreach ($assets as $asset) {
@@ -68,13 +68,13 @@ class AssetHandler
     }
 
     /**
-     * Set asset : last queue
+     * Add asset : last queue
      * 
      * @param  string $path   Asset path
      * @return object         AssetHandler
      * @since 1.0.0
      */
-    public function setLast($path = '')
+    public function addLast($path = '')
     {
         if ($path && is_string($path)) {
             $this->lastAssets[] = $path;
@@ -84,13 +84,13 @@ class AssetHandler
     }
 
     /**
-     * Set less file
+     * Add less file
      * 
      * @param  string $file   File path
      * @return object         AssetHandler
      * @since 1.0.0
      */
-    public function setLessFile($file)
+    public function addLessFile($file)
     {
         if ($file && is_string($file) && file_exists($file)) {
             $this->lessData['files'][] = $file;
@@ -100,14 +100,14 @@ class AssetHandler
     }
 
     /**
-     * Set less dir
+     * Add less dir
      * 
      * @param  string $dir   Dir path
      * @param  string $url   Dir url
      * @return object        AssetHandler
      * @since 1.0.0
      */
-    public function setLessDir($dir, $url = '')
+    public function addLessDir($dir, $url = '')
     {
         if ($dir && is_string($dir) && file_exists($dir)) {
             $this->lessData['dirs'][] = [
@@ -120,14 +120,14 @@ class AssetHandler
     }
 
     /**
-     * Set less function
+     * Add less function
      * 
      * @param  string   $name     Name of function
      * @param  callable $method   Function
      * @return object             AssetHandler
      * @since 1.0.0
      */
-    public function setLessFunction($name, callable $method)
+    public function addLessFunction($name, callable $method)
     {
         if ($name && is_string($name)) {
             $this->lessData['functions'][] = [
@@ -140,14 +140,14 @@ class AssetHandler
     }
 
     /**
-     * Set less var
+     * Add less var
      * 
      * @param  string $slug
      * @param  mix    $value
      * @return object   AssetHandler
      * @since 1.0.0
      */
-    public function setLessVar($slug, $value = '')
+    public function addLessVar($slug, $value = '')
     {
         if ($slug && is_string($slug)) {
             $this->lessData['vars'][$slug] = $value;
@@ -157,13 +157,13 @@ class AssetHandler
     }
 
     /**
-     * Set less vars
+     * Add less vars
      * 
      * @param array $vars   Pool of vars for LESS
      * @return object       AssetHandler
      * @since 1.0.0
      */
-    public function setLessVars(array $vars)
+    public function addLessVars(array $vars)
     {
         if ($vars) {
             $this->lessData['vars'] = $vars;
@@ -191,7 +191,7 @@ class AssetHandler
                 if ($type == 'less-2') {
                     if (!empty($this->lessData['files'])) {
                         foreach ($this->lessData['files'] as $file) {
-                            $less->setFile($file);
+                            $less->addFile($file);
                         }
                     }
 
@@ -203,7 +203,7 @@ class AssetHandler
 
                     if (!empty($this->lessData['functions'])) {
                         foreach ($this->lessData['functions'] as $functionData) {
-                            $less->setFunction($functionData['name'], $functionData['method']);
+                            $less->addFunction($functionData['name'], $functionData['method']);
                         }
                     }
 
@@ -230,11 +230,11 @@ class AssetHandler
 
         foreach ($this->assets as $asset) {
             if ((new \SplFileInfo($asset))->getExtension() == 'less') {
-                $this->assetManager->setCallback($asset, $callbackForLessRender);
+                $this->assetManager->addCallback($asset, $callbackForLessRender);
             }
         }
 
-        $this->assetManager->set($this->assets)
+        $this->assetManager->add($this->assets)
              ->enroll('Panel - ' . ucfirst($this->module->getModuleSetting('slug')));
 
         return $this;

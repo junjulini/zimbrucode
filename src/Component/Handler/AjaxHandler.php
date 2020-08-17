@@ -90,13 +90,13 @@ class AjaxHandler
     }
 
     /**
-     * Set value
-     * 
+     * Add value
+     *
      * @param mix $name
      * @param mix $value
      * @since 1.0.0
      */
-    public function set($name, $value = '')
+    public function add($name, $value = '')
     {
         if ($name && is_string($name)) {
             $this->data[$name] = $value;

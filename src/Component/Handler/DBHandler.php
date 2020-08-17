@@ -81,16 +81,16 @@ class DBHandler
     }
 
     /**
-     * Set data in cache
+     * Add data in cache
      * 
      * @param string $path   The path in the array
      * @param mix    $value  The value to set
      * @return void          This function does not return a value
      * @since 1.0.0
      */
-    protected function setData($path, $value)
+    protected function addData($path, $value)
     {
-        Tools::setNode($this->data, $path, $value);
+        Tools::addNode($this->data, $path, $value);
     }
 
     /**
@@ -108,9 +108,9 @@ class DBHandler
         if ($data) {
             foreach ((array) $data as $item) {
                 if (is_serialized($item->value)) {
-                    $this->setData($item->name, unserialize($item->value));
+                    $this->addData($item->name, unserialize($item->value));
                 } else {
-                    $this->setData($item->name, $item->value);
+                    $this->addData($item->name, $item->value);
                 }
             }
         }
@@ -134,10 +134,10 @@ class DBHandler
 
             if (is_object($row)) {
                 if (is_serialized($row->value)) {
-                    $this->setData($key, unserialize($row->value));
+                    $this->addData($key, unserialize($row->value));
                     return true;
                 } else {
-                    $this->setData($key, $row->value);
+                    $this->addData($key, $row->value);
                     return true;
                 }
             } else {
@@ -149,15 +149,15 @@ class DBHandler
     }
 
     /**
-     * Set
-     * 
+     * Add
+     *
      * @param string  $path         Path to a specific option to extract
      * @param string  $value        New value
      * @param boolean $autoUpdate   Auto update data
      * @param boolean $autoload     Auto load data
      * @since 1.0.0
      */
-    public function set($path = '', $value = '', $autoUpdate = false, $autoload = true)
+    public function add($path = '', $value = '', $autoUpdate = false, $autoload = true)
     {
         if ($path && is_string($path)) {
             if ($this->getData($path) === $value) {
@@ -172,7 +172,7 @@ class DBHandler
                 }
             }
 
-            $this->setData($path, $value);
+            $this->addData($path, $value);
 
             if ($autoUpdate) {
                 if (strpos($path, '/') ==! false) {

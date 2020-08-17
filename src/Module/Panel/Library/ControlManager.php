@@ -41,8 +41,8 @@ class ControlManager extends ModuleKernel
     public function setup()
     {
         // Set Twig extension
-        $this->callback()->set('panel-render', function ($ttb) {
-            $ttb->setExtension(new ControlsRenderTwigExtension($this));
+        $this->callback()->add('panel-render', function ($ttb) {
+            $ttb->addExtension(new ControlsRenderTwigExtension($this));
         });
 
         $this->namespaces[] = [
@@ -82,13 +82,13 @@ class ControlManager extends ModuleKernel
     }
 
     /**
-     * Set control
+     * Add control
      *
      * @param string      $name    Control name
      * @param ControlKernel $control   Control object
      * @since 1.0.0
      */
-    public function setControl($name, ControlKernel $control)
+    public function addControl($name, ControlKernel $control)
     {
         if ($name && is_string($name)) {
             $this->controls[$name] = $control;
@@ -161,7 +161,7 @@ class ControlManager extends ModuleKernel
      */
     protected function load($control, $type)
     {
-        $this->setControl($type, $this->loadModulePart($control, false, $type));
+        $this->addControl($type, $this->loadModulePart($control, false, $type));
 
         if (method_exists($this->getControl($type), 'each')) {
             $this->addFilter("zc/module/panel/control/{$type}", function (array $context) use ($type) {
@@ -175,7 +175,7 @@ class ControlManager extends ModuleKernel
         $asset = self::getGlobal('core/module/panel/control-settings/assets/less-file');
         $asset = $this->getControl($type)->getControlPath($asset);
 
-        $this->getModuleData('asset')->setLessFile($asset);
+        $this->getModuleData('asset')->addLessFile($asset);
 
         // Set js asset
         if (self::dev()) {
@@ -185,11 +185,11 @@ class ControlManager extends ModuleKernel
         }
 
         if (file_exists($asset = $this->getControl($type)->getControlPath($asset))) {
-            $this->getModuleData('asset')->setLast($asset);
+            $this->getModuleData('asset')->addLast($asset);
         }
 
         // Set load path
-        $this->callback()->set('panel-render', function ($ttb) use ($type) {
+        $this->callback()->add('panel-render', function ($ttb) use ($type) {
             $controlDir = self::getGlobal('core/module/panel/control-settings/template-dir');
             $ttb->addLocationPath($this->getControl($type)->getControlPath($controlDir), $type);
         });

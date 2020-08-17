@@ -71,12 +71,12 @@ trait ContentUtilityTrait
     }
 
     /**
-     * Set options
+     * Add options
      * 
      * @param array $options   Mode options
      * @since 1.0.0
      */
-    protected function setOptions(array $options)
+    protected function addOptions(array $options)
     {
         $prefix = self::getGlobal('core/module/panel/prefix-slug');
 
@@ -86,7 +86,7 @@ trait ContentUtilityTrait
             $options[$key] = stripslashes_deep($option);
         }
 
-        return self::service('db')->set("module.panel.{$this->getModuleSetting('slug')}", $options, true);
+        return self::service('db')->add("module.panel.{$this->getModuleSetting('slug')}", $options, true);
     }
 
     /**

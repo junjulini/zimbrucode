@@ -11,8 +11,8 @@
 
 namespace ZimbruCode\Component\TemplateBridges\Helper;
 
-use ZimbruCode\Component\Core\Kernel;
 use ZimbruCode\Component\Common\Tools;
+use ZimbruCode\Component\Core\Kernel;
 use ZimbruCode\Component\TemplateBridges\TwigTemplateBridge;
 
 /**
@@ -26,27 +26,27 @@ class TwigFunctions
 {
     public function __construct(TwigTemplateBridge $ttb)
     {
-        $ttb->setFunction('__',       '__');
-        $ttb->setFunction('_n',       '_n');
-        $ttb->setFunction('_x',       '_x');
-        $ttb->setFunction('_nx',      '_nx');
-        $ttb->setFunction('_n_noop',  '_n_noop');
-        $ttb->setFunction('_nx_noop', '_nx_noop');
+        $ttb->addFunction('__',       '__');
+        $ttb->addFunction('_n',       '_n');
+        $ttb->addFunction('_x',       '_x');
+        $ttb->addFunction('_nx',      '_nx');
+        $ttb->addFunction('_n_noop',  '_n_noop');
+        $ttb->addFunction('_nx_noop', '_nx_noop');
 
-        $ttb->setFunction('translate',               'translate');
-        $ttb->setFunction('translate_nooped_plural', 'translate_nooped_plural');
+        $ttb->addFunction('translate',              'translate');
+        $ttb->addFunction('translate_nooped_plural', 'translate_nooped_plural');
 
-        $ttb->setFunction('to_string',           [$this, '__callback_to_string']);
-        $ttb->setFunction('action',              [$this, '__callback_action']);
-        $ttb->setFunction('filter',              [$this, '__callback_filter']);
-        $ttb->setFunction('fn',                  [$this, '__callback_fn']);
-        $ttb->setFunction('r_post',              [$this, '__callback_r_post']);
-        $ttb->setFunction('r_get',               [$this, '__callback_r_get']);
-        $ttb->setFunction('dev',                 [$this, '__callback_dev']);
-        $ttb->setFunction('get_session',         [$this, '__callback_get_session']);
-        $ttb->setFunction('dump',                [$this, '__callback_dump']);
-        $ttb->setFunction('get_HJWEP',           [$this, '__callback_get_HJWEP']);
-        $ttb->setFunction('is_assoc',            [$this, '__callback_is_assoc']);
+        $ttb->addFunction('to_string',   [$this, '__callback_to_string']);
+        $ttb->addFunction('action',      [$this, '__callback_action']);
+        $ttb->addFunction('filter',      [$this, '__callback_filter']);
+        $ttb->addFunction('fn',          [$this, '__callback_fn']);
+        $ttb->addFunction('r_post',      [$this, '__callback_r_post']);
+        $ttb->addFunction('r_get',       [$this, '__callback_r_get']);
+        $ttb->addFunction('dev',         [$this, '__callback_dev']);
+        $ttb->addFunction('get_session', [$this, '__callback_get_session']);
+        $ttb->addFunction('dump',        [$this, '__callback_dump']);
+        $ttb->addFunction('get_HJWEP',   [$this, '__callback_get_HJWEP']);
+        $ttb->addFunction('is_assoc',    [$this, '__callback_is_assoc']);
     }
 
     public function __callback_to_string($value)
@@ -71,7 +71,7 @@ class TwigFunctions
 
     /**
      * Post control
-     * 
+     *
      * @param  string $param
      * @return string
      * @since 1.0.0
@@ -83,7 +83,7 @@ class TwigFunctions
 
     /**
      * Get control
-     * 
+     *
      * @param  string $param
      * @return string
      * @since 1.0.0
@@ -95,7 +95,7 @@ class TwigFunctions
 
     /**
      * For developers
-     * 
+     *
      * @return object
      * @since 1.0.0
      */
@@ -106,7 +106,7 @@ class TwigFunctions
 
     /**
      * Get data from session
-     * 
+     *
      * @param  string  $path      Base path
      * @param  string  $default   Default value
      * @return string             Return data
@@ -119,7 +119,7 @@ class TwigFunctions
 
     /**
      * Dump data
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
@@ -134,7 +134,7 @@ class TwigFunctions
 
     /**
      * Get htmlentities -> json_encode | with ENT_QUOTES parameter
-     * 
+     *
      * @param  array  $array
      * @return string
      * @since 1.0.0
@@ -146,7 +146,7 @@ class TwigFunctions
         }
     }
 
-    function __callback_is_assoc($array)
+    public function __callback_is_assoc($array)
     {
         if (empty($array) || !is_array($array)) {
             return false;

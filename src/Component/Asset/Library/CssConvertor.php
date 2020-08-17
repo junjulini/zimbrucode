@@ -28,13 +28,13 @@ class CssConvertor
     protected $output;
 
     /**
-     * Set asset
+     * Add asset
      * 
      * @param string $asset   Asset path
      * @return void           This function does not return a value
      * @since 1.0.0
      */
-    public function setAsset($asset)
+    public function addAsset($asset)
     {
         if (!$asset) {
             throw new \InvalidArgumentException(esc_html__('Asset is empty.', 'zc'));
@@ -48,13 +48,13 @@ class CssConvertor
     }
 
     /**
-     * Set output
+     * Add output
      * 
      * @param string $output   Output file path
      * @return void            This function does not return a value
      * @since 1.0.0
      */
-    public function setOutput($output)
+    public function addOutput($output)
     {
         if (!$output) {
             throw new \InvalidArgumentException(esc_html__('Output is empty.', 'zc'));
@@ -64,13 +64,13 @@ class CssConvertor
     }
 
     /**
-     * Set asset content
+     * Add asset content
      * 
      * @param string $content   Content of asset
      * @return void             This function does not return a value
      * @since 1.0.0
      */
-    public function set($content)
+    public function add($content)
     {
         if (!$content) {
             throw new \InvalidArgumentException(esc_html__('Content is empty', 'zc'));

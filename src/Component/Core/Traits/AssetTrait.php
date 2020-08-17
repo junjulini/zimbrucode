@@ -96,7 +96,7 @@ trait AssetTrait
             }
 
             if (!$combine) {
-                $assetManager->set($assets)->enroll($name);
+                $assetManager->add($assets)->enroll($name);
             } else {
                 $callback = function($collector, $data) use ($name) {
                     $data['settings']['js']['outputName']  = $name;
@@ -105,7 +105,7 @@ trait AssetTrait
                     return $data;
                 };
 
-                $assetManager->set($assets)->filter(new Combine, false, $callback)->enroll($name);
+                $assetManager->add($assets)->filter(new Combine, false, $callback)->enroll($name);
             }
 
             return $assetManager;

@@ -49,20 +49,20 @@ abstract class AppKernel extends Kernel
             throw new \InvalidArgumentException(esc_html__('Error init app : Invalid arguments.', 'zc'));
         }
 
-        $this->__checkAppDuplicate($slug);                         // Checking doubling of application
-        $this->__initSession($session);                            // Session start
-        $this->__initGlobalConfigAndLibrary();                     // Initialization of global configs and global library
-        $this->__setEnvironment($dev);                             // Set DEV environment
-        $this->__setChmod();                                       // Set file/dir chmod from WP constants
-        self::setGlobalCache('app-instance', $this);               // Application instance
+        $this->__checkAppDuplicate($slug);                     // Checking doubling of application
+        $this->__initSession($session);                        // Session start
+        $this->__initGlobalConfigAndLibrary();                 // Initialization of global configs and global library
+        $this->__setEnvironment($dev);                         // Set DEV environment
+        $this->__setChmod();                                   // Set file/dir chmod from WP constants
+        self::addGlobalCache('app-instance', $this);           // Application instance
         $this->__initServices('before', $composer, $rootPath); // Init Services
-        $this->__appConfig($mode);                                 // App configs
+        $this->__appConfig($mode);                             // App configs
 
         // Other services
         $this->__initServices('after');
 
         // Set modules namespace
-        self::module()->setNamespace($this->getNamespace() . '\\' . self::getGlobal('app/module-namespace-dir'));
+        self::module()->addNamespace($this->getNamespace() . '\\' . self::getGlobal('app/module-namespace-dir'));
 
         // Run setup
         $this->setup();
@@ -88,10 +88,10 @@ abstract class AppKernel extends Kernel
     {
         $appClass = str_replace('\\', '-', get_class($this));
         if (!self::getGlobal("@/app-class/{$appClass}")) {
-            self::setGlobal("@/app-class/{$appClass}", true);
+            self::addGlobal("@/app-class/{$appClass}", true);
 
             // Set global var slug (GVS)
-            self::setGlobalVarSlug($slug);
+            self::addGlobalVarSlug($slug);
         } else {
             throw new \RuntimeException(sprintf('AppKernel - Doubling of application : %s', $appClass));
         }
@@ -134,8 +134,8 @@ abstract class AppKernel extends Kernel
     {
         $environment = ($dev === true) ? 'dev' : 'prod';
 
-        self::setGlobal('core/dev', $dev);
-        self::setGlobal('core/dev-config/environment', $environment);
+        self::addGlobal('core/dev', $dev);
+        self::addGlobal('core/dev-config/environment', $environment);
     }
 
     /**
@@ -146,8 +146,8 @@ abstract class AppKernel extends Kernel
      */
     private function __setChmod()
     {
-        self::setGlobal('core/chmod-dir', (fileperms(ABSPATH) & 0777 | 0755));
-        self::setGlobal('core/chmod-file', (fileperms(ABSPATH . 'index.php') & 0777 | 0644));
+        self::addGlobal('core/chmod-dir', (fileperms(ABSPATH) & 0777 | 0755));
+        self::addGlobal('core/chmod-file', (fileperms(ABSPATH . 'index.php') & 0777 | 0644));
     }
 
     /**
@@ -182,14 +182,14 @@ abstract class AppKernel extends Kernel
     {
         if ($check === false) {
             if (in_array($mode, self::getGlobal('app/modes'))) {
-                self::setGlobal('app/mode', $mode);
+                self::addGlobal('app/mode', $mode);
             } else {
                 throw new \RuntimeException(sprintf(esc_html__('AppKernel - Mode is not compatible : %s', 'zc'), $mode));
             }
         } else {
             if (self::getGlobal('app/mode') !== $mode) {
                 if (in_array($mode, self::getGlobal('app/modes'))) {
-                    self::setGlobal('app/mode', $mode);
+                    self::addGlobal('app/mode', $mode);
                 } else {
                     throw new \RuntimeException(sprintf(esc_html__('AppKernel - Mode is not compatible : %s', 'zc'), $mode));
                 }
@@ -223,14 +223,14 @@ abstract class AppKernel extends Kernel
         // Load custom 'App' config file
         if (file_exists($file = self::service('app-locator')->getConfigPath('app.php'))) {
             if (is_array($config = require $file)) {
-                self::setGlobal('app', array_replace_recursive(self::getGlobal('app'), $config));
+                self::addGlobal('app', array_replace_recursive(self::getGlobal('app'), $config));
             }
         }
 
         // Load custom 'Core' config file
         if (file_exists($file = self::service('app-locator')->getConfigPath('core.php'))) {
             if (is_array($config = require $file)) {
-                self::setGlobal('core', array_replace_recursive(self::getGlobal('core'), $config));
+                self::addGlobal('core', array_replace_recursive(self::getGlobal('core'), $config));
             }
         }
 
@@ -253,31 +253,31 @@ abstract class AppKernel extends Kernel
             $pref = self::getGlobal('core/slug');
 
             // Theme details
-            self::setGlobalCache('theme-details', ($td = wp_get_theme()));
+            self::addGlobalCache('theme-details', ($td = wp_get_theme()));
 
             // Theme name
-            self::setGlobal('app/name', ($tn = $td->get('Name')));
+            self::addGlobal('app/name', ($tn = $td->get('Name')));
 
             // Theme slug
-            self::setGlobal('app/slug', $pref . '_' . str_replace(['-', ' '], '_', strtolower($td->get('Name'))));
+            self::addGlobal('app/slug', $pref . '_' . str_replace(['-', ' '], '_', strtolower($td->get('Name'))));
 
             // Theme version
-            self::setGlobal('app/version', $td->get('Version'));
+            self::addGlobal('app/version', $td->get('Version'));
 
             // Plugin mode
         } elseif (self::getGlobal('app/mode') === 'plugin') {
 
             // Plugin name
             $name = ucfirst(str_replace(['-', '_'], '', self::getGlobalVarSlug()));
-            self::setGlobal('app/name', $name);
+            self::addGlobal('app/name', $name);
 
             // Plugin slug
             $pref = self::getGlobal('core/slug');
             $slug = $pref . '_' . str_replace(['-', ' '], '_', strtolower(self::getGlobalVarSlug()));
-            self::setGlobal('app/slug', $slug);
+            self::addGlobal('app/slug', $slug);
 
             // Plugin version
-            self::setGlobal('app/version', self::getGlobal('core/version'));
+            self::addGlobal('app/version', self::getGlobal('core/version'));
         }
     }
 
@@ -305,7 +305,7 @@ abstract class AppKernel extends Kernel
     private function __initThemeAdaptor()
     {
         if (self::getGlobal('app/mode') === 'theme') {
-            self::module()->setAsService('theme')->ThemeAdaptor;
+            self::module()->addAsService('theme')->ThemeAdaptor;
         }
     }
 

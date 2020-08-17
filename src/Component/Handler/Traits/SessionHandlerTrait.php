@@ -40,17 +40,17 @@ trait SessionHandlerTrait
     }
 
     /**
-     * Set data to session
+     * Add data to session
      * 
      * @param  string  $path    Base path
      * @param  string  $value   Value
      * @return void             This function does not return a value
      * @since 1.0.0
      */
-    public static function setSession($path, $value = '')
+    public static function addSession($path, $value = '')
     {
         if ($path && is_string($path)) {
-            Tools::setNode($_SESSION, $path, $value);
+            Tools::addNode($_SESSION, $path, $value);
         }
     }
 

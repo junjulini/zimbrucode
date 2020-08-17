@@ -41,21 +41,21 @@ abstract class ModuleKernel extends Kernel
 
         // Set as multi use
         if (isset($this->__multiUse) && $this->__multiUse === true) {
-            $this->__DC->set('multi-use', true);
+            $this->__DC->add('multi-use', true);
         }
     }
 
     /**
-     * Get module value
+     * Add module value
      * 
      * @param string $path
      * @param string $value
      * @since 1.0.0
      */
-    final public function setModuleData($path, $value)
+    final public function addModuleData($path, $value)
     {
         if ($path && is_string($path)) {
-            $this->__DC->set("additional-data/{$path}", $value);
+            $this->__DC->add("additional-data/{$path}", $value);
         }
 
         return $this;
@@ -112,30 +112,30 @@ abstract class ModuleKernel extends Kernel
     }
 
     /**
-     * Set module setting
+     * Add module setting
      * 
      * @param string $setting   Setting key
      * @param string $value     Value for setting
      * @since 1.0.0
      */
-    final public function setModuleSetting($setting, $value)
+    final public function addModuleSetting($setting, $value)
     {
         if ($setting && is_string($setting)) {
-            $this->__DC->set("settings/{$setting}", $value);
+            $this->__DC->add("settings/{$setting}", $value);
         }
 
         return $this;
     }
 
     /**
-     * Set module settings
+     * Add module settings
      * 
      * @param array $value   Value for settings
      * @since 1.0.0
      */
-    final public function setModuleSettings(array $value)
+    final public function addModuleSettings(array $value)
     {
-        $this->__DC->set('settings', $value);
+        $this->__DC->add('settings', $value);
         return $this;
     }
 
@@ -160,7 +160,7 @@ abstract class ModuleKernel extends Kernel
     {
         if (!$moduleName = $this->__DC->get('module-name')) {
             $moduleName = basename($this->getModulePath());
-            $this->__DC->set('module-name', $moduleName);
+            $this->__DC->add('module-name', $moduleName);
         }
 
         return $moduleName;
@@ -200,7 +200,7 @@ abstract class ModuleKernel extends Kernel
     {
         if (!$moduleURL = $this->__DC->get('module-url')) {
             $moduleURL = Tools::getURL($this->getModulePath());
-            $this->__DC->set('module-url', $moduleURL);
+            $this->__DC->add('module-url', $moduleURL);
         }
 
         return $moduleURL . $url;
@@ -258,7 +258,7 @@ abstract class ModuleKernel extends Kernel
         }
 
         if ($service && is_string($service) && !$this->__DC->get("module-services/{$service}")) {
-            $this->__DC->set("module-services/{$service}", $part);
+            $this->__DC->add("module-services/{$service}", $part);
         }
 
         return $part;

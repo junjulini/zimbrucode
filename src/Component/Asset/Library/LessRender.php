@@ -69,13 +69,13 @@ class LessRender
     }
 
     /**
-     * Set file for parsing
+     * Add file for parsing
      * 
      * @param string $path   Less file
      * @return void          This function does not return a value
      * @since 1.0.0
      */
-    public function setFile($path)
+    public function addFile($path)
     {
         if ($path && is_string($path)) {
             $path = wp_normalize_path($path);
@@ -88,29 +88,29 @@ class LessRender
     }
 
     /**
-     * Set function
+     * Add function
      * 
      * @param string   $name     Name of function
      * @param callable $method   Function
      * @return void              This function does not return a value
      * @since 1.0.0
      */
-    public function setFunction($name, callable $method)
+    public function addFunction($name, callable $method)
     {
         if ($name && is_string($name)) {
-            Kernel::setGlobalCache("asset/less/functions/{$name}", $method);
+            Kernel::addGlobalCache("asset/less/functions/{$name}", $method);
         }
     }
 
     /**
-     * Set Less core vars
+     * Add Less core vars
      * 
      * @param string  $slug    Var slug
      * @param mix     $value   Vars for less
      * @return void            This function does not return a value
      * @since 1.0.0
      */
-    public function setVar($slug, $value = '')
+    public function addVar($slug, $value = '')
     {
         if ($slug && is_string($slug)) {
             $this->vars[$slug] = $value;
@@ -118,18 +118,18 @@ class LessRender
     }
 
     /**
-     * Set functions
+     * Add functions
      * 
      * @param LessFunctionsInterface $object   Object with less functions
      * @return void                            This function does not return a value
      * @since 1.0.0
      */
-    public function setFunctions(LessFunctionsInterface $object)
+    public function addFunctions(LessFunctionsInterface $object)
     {
         $methods = $object->get();
 
         foreach ($methods as $name => $method) {
-            $this->setFunction($name, $method);
+            $this->addFunction($name, $method);
         }
     }
 
@@ -267,10 +267,10 @@ class LessRender
         // Data preparing
         $this->prepData();
 
-        $executeLocation = $this->assetCache->setExecuteLocation(__CLASS__);
+        $executeLocation = $this->assetCache->addExecuteLocation(__CLASS__);
 
-        $this->assetCache->setSetting('check-asset-count', false);
-        $this->assetCache->setPath($this->data['cache']);
+        $this->assetCache->addSetting('check-asset-count', false);
+        $this->assetCache->addPath($this->data['cache']);
 
         // Callback : Check output file if exist and less vars is different
         $this->assetCache->addCheckFunction(function ($args) use ($executeLocation) {
@@ -325,7 +325,7 @@ class LessRender
             if ($this->assetCache->check()) {
                 $this->initParser();
 
-                $this->assetCache->setAssets($this->getAssets());
+                $this->assetCache->addAssets($this->getAssets());
                 $this->assetCache->build([
                     'md5-vars'     => $this->data['md5-vars'],
                     'parsed-files' => (empty($this->data['parsed-files']) ? 0 : md5(json_encode($this->data['parsed-files']))),

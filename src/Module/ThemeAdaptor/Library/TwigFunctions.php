@@ -25,7 +25,7 @@ class TwigFunctions
 {
     public function __construct(TwigTemplateBridge $ttb)
     {
-        $ttb->setFunction('option', [$this, '__callback_option']);
+        $ttb->addFunction('option', [$this, '__callback_option']);
     }
 
     public function __callback_option($option, $default = '', $ao = false)

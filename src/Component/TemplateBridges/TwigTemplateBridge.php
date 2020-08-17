@@ -31,7 +31,7 @@ use ZimbruCode\Component\TemplateBridges\Helper\TwigFunctions;
  * @package ZimbruCode
  * @since   ZimbruCode 1.0.0
  */
-class TwigTemplateBridge extends Kernel
+class TwigTemplateBridge
 {
     protected $locationPath = [];
     protected $cachePath    = false;
@@ -60,9 +60,9 @@ class TwigTemplateBridge extends Kernel
         if ($loadDefaultShells) {
             $gs = new GlobalShell;
 
-            $this->setVar('global', $gs);
-            $this->setVar('glob', $gs);
-            $this->setVar('app', self::getGlobalCache('app-instance'));
+            $this->addVar('global', $gs);
+            $this->addVar('glob', $gs);
+            $this->addVar('app', Kernel::getGlobalCache('app-instance'));
         }
     }
 
@@ -113,7 +113,7 @@ class TwigTemplateBridge extends Kernel
     }
 
     /**
-     * Set var (setter)
+     * Add var (setter)
      *
      * @param string $name    Name of var
      * @param mix    $value   Value of var
@@ -140,7 +140,7 @@ class TwigTemplateBridge extends Kernel
     {
         if ($name && is_string($name)) {
             if (!isset($this->data['vars'][$name])) {
-                throw new \RuntimeException($name . ' - this variable not found.');
+                throw new \RuntimeException("{$name} - this variable not found.");
             }
 
             return $this->data['vars'][$name];
@@ -161,14 +161,14 @@ class TwigTemplateBridge extends Kernel
     }
 
     /**
-     * Set var
+     * Add var
      *
      * @param string $name    Name of var
      * @param mix    $value   Value of var
      * @return void           This function does not return a value
      * @since 1.0.0
      */
-    public function setVar($name, $value)
+    public function addVar($name, $value)
     {
         if ($name && is_string($name)) {
             $this->data['vars'][$name] = $value;
@@ -176,12 +176,12 @@ class TwigTemplateBridge extends Kernel
     }
 
     /**
-     * Set vars
+     * Add vars
      *
      * @param array $vars   Vars
      * @since 1.0.0
      */
-    public function setVars(array $vars)
+    public function addVars(array $vars)
     {
         $this->data['vars'] = $vars;
     }
@@ -201,41 +201,41 @@ class TwigTemplateBridge extends Kernel
         }
 
         if (!Tools::isLocalPath($path)) {
-            throw new \RuntimeException($path . ' - this path is not local.');
+            throw new \RuntimeException("{$name} - this path is not local.");
         }
 
         $this->locationPath[] = [$path, $namespace];
     }
 
     /**
-     * Set cache path
+     * Add cache path
      *
      * @param string $cache   Cache path
      * @return void           This function does not return a value
      * @since 1.0.0
      */
-    public function setCachePath($path)
+    public function addCachePath($path)
     {
         if (!$path) {
             throw new \RuntimeException('Cache path is empty.');
         }
 
         if (!Tools::isLocalPath($path)) {
-            throw new \RuntimeException($path . ' - this path is not local.');
+            throw new \RuntimeException("{$name} - this path is not local.");
         }
 
         $this->cachePath = $path;
     }
 
     /**
-     * Set function
+     * Add function
      *
      * @param  string   $name     Function name
      * @param  callable $method   The function that will be called
      * @return void               This function does not return a value
      * @since 1.0.0
      */
-    public function setFunction($name, callable $method)
+    public function addFunction($name, callable $method)
     {
         if (!$name) {
             throw new \InvalidArgumentException('Function name is empty.');
@@ -249,14 +249,14 @@ class TwigTemplateBridge extends Kernel
     }
 
     /**
-     * Set escaper
+     * Add escaper
      *
      * @param  string   $name     Escaper name
      * @param  callable $method   The function that will be called
      * @return void               This function does not return a value
      * @since 1.0.0
      */
-    public function setEscaper($name, callable $method)
+    public function addEscaper($name, callable $method)
     {
         if (!$name) {
             throw new \InvalidArgumentException('Escaper function name is empty.');
@@ -270,14 +270,14 @@ class TwigTemplateBridge extends Kernel
     }
 
     /**
-     * Set filter
+     * Add filter
      *
      * @param  string   $name     Filter name
      * @param  callable $method   The function that will be called
      * @return void               This function does not return a value
      * @since 1.0.0
      */
-    public function setFilter($name, callable $method)
+    public function addFilter($name, callable $method)
     {
         if (!$name) {
             throw new \InvalidArgumentException('Filter function name is empty.');
@@ -291,24 +291,24 @@ class TwigTemplateBridge extends Kernel
     }
 
     /**
-     * Set extension
+     * Add extension
      *
      * @param  AbstractExtension $extension   Extension object
      * @return void                           This function does not return a value
      * @since 1.0.0
      */
-    public function setExtension(AbstractExtension $extension)
+    public function addExtension(AbstractExtension $extension)
     {
         $this->data['extensions'][] = $extension;
     }
 
     /**
-     * Set loader
+     * Add loader
      *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function setLoader()
+    public function addLoader()
     {
         if (!$this->locationPath) {
             throw new \RuntimeException('Array path is empty.');
@@ -317,7 +317,7 @@ class TwigTemplateBridge extends Kernel
         $this->loader = new FilesystemLoader();
 
         // From global
-        foreach (self::getGlobalCache('templates-path', []) as $value) {
+        foreach (Kernel::getGlobalCache('templates-path', []) as $value) {
             if (empty($value[1])) {
                 $this->loader->addPath($value[0]);
             } else {
@@ -338,17 +338,17 @@ class TwigTemplateBridge extends Kernel
     }
 
     /**
-     * Set Environment
+     * Add Environment
      *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function setEnvironment()
+    public function addEnvironment()
     {
         $cache      = ($this->cachePath) ? new FilesystemCache($this->cachePath, FilesystemCache::FORCE_BYTECODE_INVALIDATION) : false;
         $this->twig = new Environment($this->getLoader(), [
             'cache'       => $cache,
-            'auto_reload' => self::dop(true, false),
+            'auto_reload' => Kernel::dop(true, false),
         ]);
 
         // Set functions
@@ -410,11 +410,11 @@ class TwigTemplateBridge extends Kernel
     public function render($template = '')
     {
         if (!$this->loader || !($this->loader instanceof FilesystemLoader)) {
-            $this->setLoader();
+            $this->addLoader();
         }
 
         if (!$this->twig || !($this->twig instanceof Environment)) {
-            $this->setEnvironment();
+            $this->addEnvironment();
         }
 
         return $this->renderTemplate($template);

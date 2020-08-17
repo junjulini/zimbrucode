@@ -74,7 +74,7 @@ class AssetDataCollector
      * @throws \InvalidArgumentException     If the asset name is invalid
      * @since 1.0.0
      */
-    public function set($asset, $autoFilter = false, callable $callback = null)
+    public function add($asset, $autoFilter = false, callable $callback = null)
     {
         if ($asset && is_string($asset)) {
             $args = [];
@@ -85,10 +85,10 @@ class AssetDataCollector
                 $asset = str_replace($output[0], '', $asset);
             }
 
-            $this->setRaw($asset, new AssetData($asset, $this->location));
+            $this->addRaw($asset, new AssetData($asset, $this->location));
 
             if (!empty($args)) {
-                $this->get($asset)->setArgs($args);
+                $this->get($asset)->addArgs($args);
             }
 
             if ($autoFilter) {
@@ -173,16 +173,16 @@ class AssetDataCollector
     }
 
     /**
-     * Set additional global data for collector
+     * Add additional global data for collector
      * 
      * @param string $path   The path in the array
      * @param mix    $value  The value to set
      * @since 1.0.0
      */
-    public function setGlobal($path, $value = '')
+    public function addGlobal($path, $value = '')
     {
         if ($path && is_string($path)) {
-            Tools::setNode($this->global, $path, $value);
+            Tools::addNode($this->global, $path, $value);
         }
 
         return $this;
@@ -205,13 +205,13 @@ class AssetDataCollector
     }
 
     /**
-     * Set raw asset data
+     * Add raw asset data
      * 
      * @param string    $asset       Asset ID
      * @param AssetData $assetData   Asset data
      * @since 1.0.0
      */
-    public function setRaw($asset, AssetData $assetData)
+    public function addRaw($asset, AssetData $assetData)
     {
         if ($asset && is_string($asset)) {
             $this->data[$asset] = $assetData;

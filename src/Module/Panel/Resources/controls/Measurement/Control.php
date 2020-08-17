@@ -34,6 +34,6 @@ class Control extends ControlKernel
             'title-range-error' => esc_html__('Permitted only number with next intervals : min = {MIN}, max = {MAX}', 'zc')
         ]);
 
-        $this->setAsset('chosen');
+        $this->addAsset('chosen');
     }
 }

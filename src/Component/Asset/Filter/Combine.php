@@ -94,8 +94,8 @@ class Combine extends Filter
         $convert = $this->data['settings']['css']['convert'];
 
         $this->cache     = new AssetCache;
-        $executeLocation = $this->cache->setExecuteLocation(__CLASS__);
-        $this->cache->setPath($output . $this->cacheExt);
+        $executeLocation = $this->cache->addExecuteLocation(__CLASS__);
+        $this->cache->addPath($output . $this->cacheExt);
 
         // Callback : Check output file if exist
         $this->cache->addCheckFunction(function ($args) use ($executeLocation, $output) {
@@ -148,9 +148,9 @@ class Combine extends Filter
 
                 if ($convert) {
                     $convertor = new CssConvertor;
-                    $convertor->setAsset($asset->getPath());
-                    $convertor->setOutput($output);
-                    $convertor->set($content);
+                    $convertor->addAsset($asset->getPath());
+                    $convertor->addOutput($output);
+                    $convertor->add($content);
                     $content = $convertor->convertPathToRelative();
                 }
 
@@ -166,7 +166,7 @@ class Combine extends Filter
             Tools::fWrite($output, $outputContent);
         }
 
-        $asset = $this->collector()->set($output)->get($output);
+        $asset = $this->collector()->add($output)->get($output);
         $asset->type('css')
               ->name($asset->generateName())
               ->url($asset->getURL())
@@ -187,8 +187,8 @@ class Combine extends Filter
         $minifyType = $this->data['settings']['js']['minify-type'];
 
         $this->cache     = new AssetCache;
-        $executeLocation = $this->cache->setExecuteLocation(__CLASS__);
-        $this->cache->setPath($output . $this->cacheExt);
+        $executeLocation = $this->cache->addExecuteLocation(__CLASS__);
+        $this->cache->addPath($output . $this->cacheExt);
 
         // Callback : Check output file if exist
         $this->cache->addCheckFunction(function ($args) use ($executeLocation, $output) {
@@ -255,7 +255,7 @@ class Combine extends Filter
             Tools::fWrite($output, $outputContent);
         }
 
-        $asset = $this->collector()->set($output)->get($output);
+        $asset = $this->collector()->add($output)->get($output);
         $asset->type('js')
               ->name($asset->generateName())
               ->url($asset->getURL())

@@ -28,9 +28,9 @@ final class GlobalConfig
     public function __construct()
     {
         // Core configs
-        Kernel::setGlobal('core', require __DIR__ . '/../../Resources/config/core.php');
+        Kernel::addGlobal('core', require __DIR__ . '/../../Resources/config/core.php');
 
         // Application configs
-        Kernel::setGlobal('app', require __DIR__ . '/../../Resources/config/app.php');
+        Kernel::addGlobal('app', require __DIR__ . '/../../Resources/config/app.php');
     }
 }

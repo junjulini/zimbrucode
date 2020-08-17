@@ -98,7 +98,7 @@ class PreparingDefaultOptions
      */
     public function addChecker(callable $checker)
     {
-        $this->callback->set('additional-checker', $checker);
+        $this->callback->add('additional-checker', $checker);
     }
 
     /**

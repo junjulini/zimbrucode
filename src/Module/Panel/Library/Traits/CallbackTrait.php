@@ -31,7 +31,7 @@ trait CallbackTrait
     public function callback()
     {
         if (!$this->getModuleData('callback') || !($this->getModuleData('callback') instanceof CoreCallback)) {
-            $this->setModuleData('callback', new CoreCallback);
+            $this->addModuleData('callback', new CoreCallback);
         }
 
         return $this->getModuleData('callback');

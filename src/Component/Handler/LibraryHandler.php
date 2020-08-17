@@ -24,30 +24,30 @@ use ZimbruCode\Component\Core\Kernel;
 class LibraryHandler
 {
     /**
-     * Set package
+     * Add package
      * 
      * @param string $name   Name of package
      * @param array  $source
      * @return void          This function does not return a value
      * @since 1.0.0
      */
-    public static function setPackage($name, array $source)
+    public static function addPackage($name, array $source)
     {
         if ($name && is_string($name)) {
-            Kernel::setGlobalCache("library/package/{$name}", $source);
+            Kernel::addGlobalCache("library/package/{$name}", $source);
         }
     }
 
     /**
-     * Set packages
+     * Add packages
      * 
      * @param array $source
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public static function setPackages(array $source)
+    public static function addPackages(array $source)
     {
-        Kernel::setGlobalCache(
+        Kernel::addGlobalCache(
             'library/package',
             Tools::arrayMerge(
                 self::getPackages(),
@@ -109,17 +109,17 @@ class LibraryHandler
     }
 
     /**
-     * Set element
+     * Add element
      * 
      * @param string $name     Name of element
      * @param string $source   Source of element
      * @return void            This function does not return a value
      * @since 1.0.0
      */
-    public static function setElement($name, $source)
+    public static function addElement($name, $source)
     {
         if ($name && is_string($name) && $source) {
-            Kernel::setGlobalCache("library/other/{$name}", $source);
+            Kernel::addGlobalCache("library/other/{$name}", $source);
         }
     }
 

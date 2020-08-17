@@ -30,7 +30,7 @@ class Control extends ControlKernel
      */
     public function setup()
     {
-        $this->setAsset('colorpicker');
+        $this->addAsset('colorpicker');
         $this->addAction('admin_enqueue_scripts', function () {
             wp_enqueue_script('jquery-ui-core');
             wp_enqueue_script('jquery-ui-draggable');

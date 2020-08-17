@@ -25,15 +25,14 @@ class TwigFilters
 {
     public function __construct(TwigTemplateBridge $ttb)
     {
-        // Filter : Remove Slashes
-        $ttb->setFilter('rs', [$this, '__callback_stripslashes']);
-        $ttb->setFilter('fn', [$this, '__callback_fn']);
-        $ttb->setFilter('json_decode', [$this, '__callback_json_decode']);
+        $ttb->addFilter('rs',          [$this, '__callback_stripslashes']);
+        $ttb->addFilter('fn',          [$this, '__callback_fn']);
+        $ttb->addFilter('json_decode', [$this, '__callback_json_decode']);
     }
 
     /**
      * Filter : Remove Slashes
-     * 
+     *
      * @param  string $string   String from template
      * @return string           Modificated string
      * @since 1.0.0
@@ -54,7 +53,7 @@ class TwigFilters
 
     /**
      * Json decode
-     * 
+     *
      * @param  json  $array   Json data
      * @return array          Decoded data
      * @since 1.0.0

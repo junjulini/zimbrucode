@@ -25,15 +25,15 @@ class DataCollector
     protected $data = [];
 
     /**
-     * Set value
-     * 
+     * Add value
+     *
      * @param string $path
      * @param string $value
      * @since 1.0.0
      */
-    public function set($path, $value = '')
+    public function add($path, $value = '')
     {
-        Tools::setNode($this->data, $path, $value);
+        Tools::addNode($this->data, $path, $value);
         return $this;
     }
 

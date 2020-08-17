@@ -33,7 +33,7 @@ class Backup extends Kernel
         $this->backupKey = $this->mode->getModuleSetting('backup/key');
 
         // Ajax
-        $this->setAjax("zc/module/metabox_panel/backup_{$this->mode->getModuleSetting('slug')}", '__ajax_backup');
+        $this->addAjax("zc/module/metabox_panel/backup_{$this->mode->getModuleSetting('slug')}", '__ajax_backup');
     }
 
     /**
@@ -81,7 +81,7 @@ class Backup extends Kernel
             'list'   => $list
         ]);
 
-        $ajax->set('content', $content)->send();
+        $ajax->add('content', $content)->send();
     }
     
     /**
@@ -111,17 +111,17 @@ class Backup extends Kernel
                             $data[$pageType][$backupName]['data'] = $filtered;
 
                             // If has but different data
-                            if (self::service('db')->set($this->backupKey, $data, true, false)) {
-                                $ajax->set('result', 'success')
+                            if (self::service('db')->add($this->backupKey, $data, true, false)) {
+                                $ajax->add('result', 'success')
                                      ->send();
                             } else {
-                                $ajax->set('result', 'failure')
-                                     ->set('result_msg', 'Backup/Save - Error : 1')
+                                $ajax->add('result', 'failure')
+                                     ->add('result_msg', 'Backup/Save - Error : 1')
                                      ->send();
                             }
                         } else {
-                            $ajax->set('result', 'failure')
-                                 ->set('result_msg', 'Backup/Save - Error : 2')
+                            $ajax->add('result', 'failure')
+                                 ->add('result_msg', 'Backup/Save - Error : 2')
                                  ->send();
                         }
                     } else {
@@ -131,16 +131,16 @@ class Backup extends Kernel
                         ];
 
                         // If not has
-                        if (self::service('db')->set($this->backupKey, $data, true, false)) {
-                            $ajax->set('result', 'success')
-                                 ->set('change', [
+                        if (self::service('db')->add($this->backupKey, $data, true, false)) {
+                            $ajax->add('result', 'success')
+                                 ->add('change', [
                                       'count' => count($data[$pageType]),
                                       'item'  => $this->getItemContent($backupName, $ajax->post('backup_name')),
                                   ])
                                  ->send();
                         } else {
-                            $ajax->set('result', 'failure')
-                                 ->set('result_msg', 'Backup/Save - Error : 3')
+                            $ajax->add('result', 'failure')
+                                 ->add('result_msg', 'Backup/Save - Error : 3')
                                  ->send();
                         }
                     }
@@ -155,27 +155,27 @@ class Backup extends Kernel
                     ];
 
                     // If data is empty
-                    if (self::service('db')->set($this->backupKey, $data, true, false)) {
-                        $ajax->set('result', 'success')
-                             ->set('change', [
+                    if (self::service('db')->add($this->backupKey, $data, true, false)) {
+                        $ajax->add('result', 'success')
+                             ->add('change', [
                                   'count' => 1,
                                   'item'  => $this->getItemContent($backupName, $ajax->post('backup_name')),
                               ])
                              ->send();
                     } else {
-                        $ajax->set('result', 'failure')
-                             ->set('result_msg', 'Backup/Save - Error : 4')
+                        $ajax->add('result', 'failure')
+                             ->add('result_msg', 'Backup/Save - Error : 4')
                              ->send();
                     }
                 }
             } else {
-                $ajax->set('result', 'failure')
-                     ->set('result_msg', 'Backup/Save - Error : 5')
+                $ajax->add('result', 'failure')
+                     ->add('result_msg', 'Backup/Save - Error : 5')
                      ->send();
             }
         } else {
-            $ajax->set('result', 'failure')
-                 ->set('result_msg', 'Backup/Save - Error : 6')
+            $ajax->add('result', 'failure')
+                 ->add('result_msg', 'Backup/Save - Error : 6')
                  ->send();
         }
     }
@@ -194,16 +194,16 @@ class Backup extends Kernel
             if (!empty($data[$pageType])) {
                 $data[$pageType] = [];
 
-                if (self::service('db')->set($this->backupKey, $data, true, false)) {
-                    $ajax->set('result', 'success')->send();
+                if (self::service('db')->add($this->backupKey, $data, true, false)) {
+                    $ajax->add('result', 'success')->send();
                 } else {
-                    $ajax->set('result', 'failure')->send();
+                    $ajax->add('result', 'failure')->send();
                 }
             }
         }
 
-        $ajax->set('result', 'failure')
-             ->set('result_msg', 'Backup/Delete All - Error : 1')
+        $ajax->add('result', 'failure')
+             ->add('result_msg', 'Backup/Delete All - Error : 1')
              ->send();
     }
 
@@ -221,20 +221,20 @@ class Backup extends Kernel
             if (!empty($data[$pageType][$ajax->post('backup_name')])) {
                 unset($data[$pageType][$ajax->post('backup_name')]);
 
-                if (self::service('db')->set($this->backupKey, $data, true, false)) {
-                    $ajax->set('result', 'success')
-                         ->set('count', count($data[$pageType]))
+                if (self::service('db')->add($this->backupKey, $data, true, false)) {
+                    $ajax->add('result', 'success')
+                         ->add('count', count($data[$pageType]))
                          ->send();
                 } else {
-                    $ajax->set('result', 'failure')
-                         ->set('result_msg', 'Backup/Delete Item - Error : 1')
+                    $ajax->add('result', 'failure')
+                         ->add('result_msg', 'Backup/Delete Item - Error : 1')
                          ->send();
                 }
             }
         }
 
-        $ajax->set('result', 'failure')
-             ->set('result_msg', 'Backup/Delete Item - Error : 2')
+        $ajax->add('result', 'failure')
+             ->add('result_msg', 'Backup/Delete Item - Error : 2')
              ->send();
     }
 
@@ -281,19 +281,19 @@ class Backup extends Kernel
                 }
 
                 $events = $this->mode->getModuleSetting('events/backup');
-                $ajax->set('result', 'success')
-                     ->set('type', $events['success']['type'])
-                     ->set('title', $events['success']['title'])
-                     ->set('content', $events['success']['content'])
+                $ajax->add('result', 'success')
+                     ->add('type', $events['success']['type'])
+                     ->add('title', $events['success']['title'])
+                     ->add('content', $events['success']['content'])
                      ->send();
             } else {
-                $ajax->set('result', 'failure')
-                     ->set('result_msg', 'Backup/Restore - Error : 1')
+                $ajax->add('result', 'failure')
+                     ->add('result_msg', 'Backup/Restore - Error : 1')
                      ->send();
             }
         } else {
-            $ajax->set('result', 'failure')
-                 ->set('result_msg', 'Backup/Restore - Error : 2')
+            $ajax->add('result', 'failure')
+                 ->add('result_msg', 'Backup/Restore - Error : 2')
                  ->send();
         }
     }

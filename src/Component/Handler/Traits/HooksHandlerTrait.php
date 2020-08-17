@@ -86,7 +86,7 @@ trait HooksHandlerTrait
     }
 
     /**
-     * Set AJAX
+     * Add AJAX
      * 
      * @param string  $hook     The name of the action to which $method is hooked
      * @param mix     $method   The name of the function you wish to be hooked
@@ -94,7 +94,7 @@ trait HooksHandlerTrait
      * @return void             This function does not return a value
      * @since 1.0.0
      */
-    protected function setAjax($hook, $method, $nopriv = false)
+    protected function addAjax($hook, $method, $nopriv = false)
     {
         if (!$hook) {
             throw new \InvalidArgumentException(esc_html__('Action is empty.', 'zc'));
@@ -149,7 +149,7 @@ trait HooksHandlerTrait
     }
 
     /**
-     * Set filter
+     * Add filter
      * 
      * @param string  $tag        The action hook to which the function to be removed is hooked
      * @param mix     $method     The callback for the function which should be removed
@@ -181,14 +181,14 @@ trait HooksHandlerTrait
     }
 
     /**
-     * Set shortcode
+     * Add shortcode
      * 
      * @param string $tag      Shortcode tag to be searched in post content
      * @param mix    $method   Hook to run when shortcode is found
      * @return void            This function does not return a value
      * @since 1.0.0
      */
-    protected function setShortCode($tag, $method)
+    protected function addShortCode($tag, $method)
     {
         if (!$tag) {
             throw new \InvalidArgumentException(esc_html__('Tag is empty.', 'zc'));

@@ -52,7 +52,7 @@ abstract class ControlKernel extends ModuleKernel
     }
 
     /**
-     * Set custom shell function
+     * Add custom shell function
      * 
      * @param string   $name   Name of function
      * @param callable $method
@@ -60,7 +60,7 @@ abstract class ControlKernel extends ModuleKernel
      * @return void            This function does not return a value
      * @since 1.0.0
      */
-    protected function setShellFunction($name, $method, $type = 'panel-control-shell') // TODO: Posibil de scimbat denumirea
+    protected function addShellFunction($name, $method, $type = 'panel-control-shell') // TODO: Posibil de scimbat denumirea
     {
         if (!is_string($method)) {
             throw new \InvalidArgumentException('ZimbruCode\Module\Panel\Library\ControlKernel : Method name is not string');
@@ -70,7 +70,7 @@ abstract class ControlKernel extends ModuleKernel
             $method = [$this, $method];
         }
 
-        $this->callback()->set($type, function ($shell) use ($name, $method) {
+        $this->callback()->add($type, function ($shell) use ($name, $method) {
             $shell->$name = function (...$args) use ($method) {
                 return call_user_func_array($method, $args);
             };
@@ -78,49 +78,49 @@ abstract class ControlKernel extends ModuleKernel
     }
 
     /**
-     * Set template var
+     * Add template var
      * 
      * @param string $name
      * @param mix    $value
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    protected function setTemplateVar($name, $value = '')
+    protected function addTemplateVar($name, $value = '')
     {
         if ($name && is_string($name)) {
-            $this->callback()->set('panel-render', function ($ttb) use ($name, $value) {
-                $ttb->setVar($name, $value);
+            $this->callback()->add('panel-render', function ($ttb) use ($name, $value) {
+                $ttb->addVar($name, $value);
             });
         }
     }
 
     /**
-     * Set less var
+     * Add less var
      * 
      * @param  string $slug
      * @param  mix    $value
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    protected function setLessVar($slug, $value = '')
+    protected function addLessVar($slug, $value = '')
     {
-        $this->getModuleData('asset')->setLessVar($slug, $value);
+        $this->getModuleData('asset')->addLessVar($slug, $value);
     }
 
     /**
-     * Set control asset
+     * Add control asset
      * 
      * @param string $path   Asset path or package name
      * @return void          This function does not return a value
      * @since 1.0.0
      */
-    protected function setAsset($path)
+    protected function addAsset($path)
     {
         if (!$path) {
             throw new \InvalidArgumentException(esc_html__('Path is empty.', 'zc'));
         }
 
-        $this->getModuleData('asset')->set($path);
+        $this->getModuleData('asset')->add($path);
     }
 
     /**
@@ -133,6 +133,6 @@ abstract class ControlKernel extends ModuleKernel
     protected function localize(array $data = [])
     {
         $control = basename($this->getControlPath());
-        $this->setModuleData("control-localize-vars/{$control}", $data);
+        $this->addModuleData("control-localize-vars/{$control}", $data);
     }
 }

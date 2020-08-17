@@ -65,7 +65,7 @@ class Module extends ModuleKernel
             $this->prepSettings();
 
             // Load asset handler
-            $this->setModuleData('asset', new AssetHandler($this));
+            $this->addModuleData('asset', new AssetHandler($this));
 
             // Load panel mode
             $this->loadMode();
@@ -85,9 +85,9 @@ class Module extends ModuleKernel
     protected function prepBuildSettings()
     {
         if ($this->getModuleSetting('build-settings')) {
-            $this->setModuleData('build-settings', $this->getModuleSetting('build-settings'));
+            $this->addModuleData('build-settings', $this->getModuleSetting('build-settings'));
         } else {
-            $this->setModuleData('build-settings-file', $this->getModuleSetting('build-settings-file'));
+            $this->addModuleData('build-settings-file', $this->getModuleSetting('build-settings-file'));
         }
     }
 
@@ -118,7 +118,7 @@ class Module extends ModuleKernel
             }
         }
 
-        $this->setModuleData('mode', $mode);
+        $this->addModuleData('mode', $mode);
     }
 
     /**
@@ -130,7 +130,7 @@ class Module extends ModuleKernel
     protected function prepSettings()
     {
         if (self::getGlobal("core/module/panel/settings/{$this->getModuleData('mode')}")) {
-            $this->setModuleSettings(Tools::arrayMerge(
+            $this->addModuleSettings(Tools::arrayMerge(
                 self::getGlobal("core/module/panel/settings/{$this->getModuleData('mode')}", []),
                 $this->getModuleSetting(), 's'
             ));
@@ -153,13 +153,13 @@ class Module extends ModuleKernel
     }
 
     /**
-     * Set custom mode
+     * Add custom mode
      * 
      * @param string $mode    Mode name
      * @param string $class   Mode class name
      * @since 1.0.0
      */
-    public function setCustomMode($mode, $class)
+    public function addCustomMode($mode, $class)
     {
         if (!$mode) {
             throw new \InvalidArgumentException(esc_html__('Mode is empty.', 'zc'));
@@ -169,7 +169,7 @@ class Module extends ModuleKernel
             throw new \InvalidArgumentException($class . esc_html__(' - class don\'t exist.', 'zc'));
         }
 
-        $this->setModuleData("custom-mode/{$mode}", $class);
+        $this->addModuleData("custom-mode/{$mode}", $class);
         return $this;
     }
 
@@ -198,7 +198,7 @@ class Module extends ModuleKernel
             throw new \InvalidArgumentException(esc_html__('Control namespace is not string.', 'zc'));
         }
 
-        $this->setModuleData('custom-controls-namespaces', Tools::arrayMerge(
+        $this->addModuleData('custom-controls-namespaces', Tools::arrayMerge(
             $this->getModuleData('custom-controls-namespaces', []),
             [[
                 'path'      => wp_normalize_path($path),

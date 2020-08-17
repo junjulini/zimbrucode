@@ -25,15 +25,15 @@ class Callback
     protected $callback = [];
 
     /**
-     * Set callback
-     * 
+     * Add callback
+     *
      * @param string   $name       Name of callback
      * @param callable $callback   Function ( object )
      * @param string   $id         Return identifier
      * @return void                This function does not return a value
      * @since 1.0.0
      */
-    public function set($name, callable $callback, $id = '')
+    public function add($name, callable $callback, $id = '')
     {
         if ($name && is_string($name)) {
             if ($id) {

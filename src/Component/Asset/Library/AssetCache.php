@@ -47,14 +47,14 @@ class AssetCache
     }
 
     /**
-     * Set setting
+     * Add setting
      * 
      * @param string $setting   Setting key
      * @param string $value     New value
      * @return void             This function does not return a value
      * @since 1.0.0
      */
-    public function setSetting($setting, $value = '')
+    public function addSetting($setting, $value = '')
     {
         if (!isset($this->settings[$setting])) {
             throw new \RuntimeException("{$setting} - this setting don't exist.");
@@ -75,12 +75,12 @@ class AssetCache
     }
 
     /**
-     * Set execute location ( For DEV )
+     * Add execute location ( For DEV )
      * 
      * @param string $class   Class name
      * @since 1.0.0
      */
-    public function setExecuteLocation($class)
+    public function addExecuteLocation($class)
     {
         if (!class_exists($class)) {
             throw new \InvalidArgumentException("{$class} - class don't exist.");
@@ -103,25 +103,25 @@ class AssetCache
     }
 
     /**
-     * Set assets in cache
+     * Add assets in cache
      * 
      * @param array $asset   All path of files
      * @return void          This function does not return a value
      * @since 1.0.0
      */
-    public function setAssets(array $assets)
+    public function addAssets(array $assets)
     {
         $this->assets = $assets;
     }
 
     /**
-     * Set cache path
+     * Add cache path
      * 
      * @param string $path   Path of cache file
      * @return void          This function does not return a value
      * @since 1.0.0
      */
-    public function setPath($path = 'file.cache')
+    public function addPath($path = 'file.cache')
     {
         if ($path && is_string($path)) {
             $this->cacheID = $path;
@@ -144,14 +144,14 @@ class AssetCache
 
         switch ($type) {
             case 'asset':
-                $this->object['callback']->set('asset', $callback);
+                $this->object['callback']->add('asset', $callback);
                 break;
             case 'additional':
-                $this->object['callback']->set('additional', $callback);
+                $this->object['callback']->add('additional', $callback);
                 break;
 
             default:
-                $this->object['callback']->set('additional', $callback);
+                $this->object['callback']->add('additional', $callback);
                 break;
         }
     }
@@ -184,7 +184,7 @@ class AssetCache
             ];
         }
 
-        $this->set($content);
+        $this->add($content);
 
         return false;
     }
@@ -311,13 +311,13 @@ class AssetCache
     }
 
     /**
-     * Set cache content
-     * 
+     * Add cache content
+     *
      * @param array $content   Content of cache file
      * @return void            This function does not return a value
      * @since 1.0.0
      */
-    public function set($content)
+    public function add($content)
     {
         if (!$this->cacheID) {
             throw new \RuntimeException('Cache id : empty.');

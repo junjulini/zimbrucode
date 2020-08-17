@@ -11,8 +11,8 @@
 
 namespace ZimbruCode\Component\TemplateBridges\Helper;
 
-use ZimbruCode\Component\TemplateBridges\TwigTemplateBridge;
 use Twig\Environment;
+use ZimbruCode\Component\TemplateBridges\TwigTemplateBridge;
 
 /**
  * Class : Twig escaper
@@ -25,20 +25,20 @@ class TwigEscaper
 {
     public function __construct(TwigTemplateBridge $ttb)
     {
-        $ttb->setEscaper('esc_url',         [$this, '__callback_esc_url']);
-        $ttb->setEscaper('_url',            [$this, '__callback_esc_url']);
-        $ttb->setEscaper('esc_url_raw',     [$this, '__callback_esc_url_raw']);
-        $ttb->setEscaper('_url_raw',        [$this, '__callback_esc_url_raw']);
-        $ttb->setEscaper('esc_html',        [$this, '__callback_esc_html']);
-        $ttb->setEscaper('_html',           [$this, '__callback_esc_html']);
-        $ttb->setEscaper('esc_js',          [$this, '__callback_esc_js']);
-        $ttb->setEscaper('_js',             [$this, '__callback_esc_js']);
-        $ttb->setEscaper('esc_textarea',    [$this, '__callback_esc_textarea']);
-        $ttb->setEscaper('_textarea',       [$this, '__callback_esc_textarea']);
-        $ttb->setEscaper('esc_attr',        [$this, '__callback_esc_attr']);
-        $ttb->setEscaper('_attr',           [$this, '__callback_esc_attr']);
-        $ttb->setEscaper('wp_kses_post',    [$this, '__callback_wp_kses_post']);
-        $ttb->setEscaper('wp_rel_nofollow', [$this, '__callback_wp_rel_nofollow']);
+        $ttb->addEscaper('esc_url',         [$this, '__callback_esc_url']);
+        $ttb->addEscaper('_url',            [$this, '__callback_esc_url']);
+        $ttb->addEscaper('esc_url_raw',     [$this, '__callback_esc_url_raw']);
+        $ttb->addEscaper('_url_raw',        [$this, '__callback_esc_url_raw']);
+        $ttb->addEscaper('esc_html',        [$this, '__callback_esc_html']);
+        $ttb->addEscaper('_html',           [$this, '__callback_esc_html']);
+        $ttb->addEscaper('esc_js',          [$this, '__callback_esc_js']);
+        $ttb->addEscaper('_js',             [$this, '__callback_esc_js']);
+        $ttb->addEscaper('esc_textarea',    [$this, '__callback_esc_textarea']);
+        $ttb->addEscaper('_textarea',       [$this, '__callback_esc_textarea']);
+        $ttb->addEscaper('esc_attr',        [$this, '__callback_esc_attr']);
+        $ttb->addEscaper('_attr',           [$this, '__callback_esc_attr']);
+        $ttb->addEscaper('wp_kses_post',    [$this, '__callback_wp_kses_post']);
+        $ttb->addEscaper('wp_rel_nofollow', [$this, '__callback_wp_rel_nofollow']);
     }
 
     public function __callback_esc_url(Environment $env, $string)

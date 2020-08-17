@@ -78,18 +78,18 @@ class AssetManager
      * 
      * @since 1.0.0
      */
-    public function set(...$assets)
+    public function add(...$assets)
     {
         if ($assets) {
             foreach ($assets as $asset) {
                 if (is_array($asset)) {
                     foreach ($asset as $afc) {
                         $callback = (!empty($this->callbacks[$afc])) ? $this->callbacks[$afc] : null;
-                        $this->collector->set($afc, $this->autoFilter, $callback);
+                        $this->collector->add($afc, $this->autoFilter, $callback);
                     }
                 } else {
                     $callback = (!empty($this->callbacks[$asset])) ? $this->callbacks[$asset] : null;
-                    $this->collector->set($asset, $this->autoFilter, $callback);
+                    $this->collector->add($asset, $this->autoFilter, $callback);
                 }
             }
         } else {
@@ -182,7 +182,7 @@ class AssetManager
      */
     public function enrollAsNamespace($namespace = '')
     {
-        $this->nh->set($namespace, $this->collector);
+        $this->nh->add($namespace, $this->collector);
     }
 
     /**
@@ -209,13 +209,13 @@ class AssetManager
     }
 
     /**
-     * Set preventive callback
+     * Add preventive callback
      * 
      * @param string   $asset      Asset ID
      * @param callable $callback   Callback for asset
      * @since 1.0.0
      */
-    public function setCallback($asset, callable $callback)
+    public function addCallback($asset, callable $callback)
     {
         if ($asset && is_string($asset)) {
             $this->callbacks[$asset] = $callback;
@@ -225,32 +225,32 @@ class AssetManager
     }
 
     /**
-     * Set less vars
+     * Add less vars
      * 
      * @param  string $assetName  Name of LESS file
      * @param  array  $vars       Vars for LESS Render
      * @since 1.0.0
      */
-    public function setLessVars($assetName, array $vars)
+    public function addLessVars($assetName, array $vars)
     {
         if ($assetName && is_string($assetName) && $vars) {
             $assetName = str_replace('/', '\\', $assetName);
 
-            $this->collector->setGlobal("less-vars/{$assetName}", $vars);
+            $this->collector->addGlobal("less-vars/{$assetName}", $vars);
         }
 
         return $this;
     }
 
     /**
-     * Set global less vars
+     * Add global less vars
      * 
      * @param array  $vars          Vars for LESS Render
      * @param  string $assetName    Name of LESS file
      * @param string $restriction   Restriction : vars for app/admin mode
      * @since 1.0.0
      */
-    public function setGlobalLessVars(array $vars, $assetName = false, $restriction = 'app')
+    public function addGlobalLessVars(array $vars, $assetName = false, $restriction = 'app')
     {
         if ($vars) {
             $globalVars = Kernel::getGlobalCache('asset/less/vars', []);
@@ -260,7 +260,7 @@ class AssetManager
                 'restriction' => $restriction,
             ];
 
-            Kernel::setGlobalCache('asset/less/vars', $globalVars);
+            Kernel::addGlobalCache('asset/less/vars', $globalVars);
         }
 
         return $this;
