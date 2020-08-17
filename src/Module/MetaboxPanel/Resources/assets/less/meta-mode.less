@@ -43,6 +43,10 @@
 @import 'middle-viewport.less';
 
 [id*="zc_"] {
+    > .postbox-header > h2 {
+        border-bottom: none !important;
+    }
+
     > .inside {
         margin: 0 !important;
         padding: 0 !important;
@@ -68,7 +72,6 @@
 .zc-panel {
     body.block-editor-page & {
         box-sizing: border-box;
-        border-right: 1px solid #e2e4e7;
     }
 }
 
