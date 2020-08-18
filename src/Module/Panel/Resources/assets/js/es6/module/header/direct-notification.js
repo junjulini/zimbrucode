@@ -36,7 +36,7 @@ export default class DirectNotification extends Kernel {
     }
 
     /**
-     * Set direct notification
+     * Add direct notification
      * 
      * @param  {string}   type     Data type of content
      * @param  {string}   title    Title of content
@@ -46,7 +46,7 @@ export default class DirectNotification extends Kernel {
      * @return {null}              None
      * @since 1.0.0
      */
-    set(type, title, content, duration, callback) {
+    add(type, title, content, duration, callback) {
         type     = type || this.type;
         title    = title || this.title;
         content  = content || this.content;

@@ -44,12 +44,12 @@ class ZimbruCode {
     }
 
     /**
-     * Set module
+     * Add module
      * 
      * @return {null} None
      * @since 1.0.0
      */
-    setModule(name, module) {
+    addModule(name, module) {
         this.moduleData[name] = {};
         this.module[name] = new module($);
     }
@@ -65,12 +65,12 @@ class ZimbruCode {
     }
 
     /**
-     * Set module data
+     * Add module data
      * 
      * @return {null} None
      * @since 1.0.0
      */
-    setModuleData(name, data = {}) {
+    addModuleData(name, data = {}) {
         this.moduleData[name] = data;
     }
 
@@ -378,7 +378,7 @@ class ZimbruCode {
      * @param {string} url          URL
      * @since 1.0.0
      */
-    setQueryString(parameters = {}, url) {
+    addQueryString(parameters = {}, url) {
         if (!url) {
             url = window.location.href;
         }
@@ -573,7 +573,7 @@ class ZimbruCode {
             });
         }
 
-        popup.set({
+        popup.add({
             title: settings.title,
             html: html,
             width: settings.width,
@@ -640,7 +640,7 @@ class ZimbruCode {
             });
         }
 
-        popup.set({
+        popup.add({
             title: settings.title,
             html: html,
             width: settings.width,
@@ -704,7 +704,7 @@ class ZimbruCode {
             });
         }
 
-        popup.set({
+        popup.add({
             title: settings.title,
             html: html,
             width: settings.width,

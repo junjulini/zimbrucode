@@ -30,10 +30,6 @@ export default class RestAPI {
         return this.__ajax('GET', path, data);
     }
 
-    get(path, data = {}) {
-        return this.__ajax('GET', path, data);
-    }
-
     create(path, data = {}) {
         return this.__ajax('POST', path, data);
     }

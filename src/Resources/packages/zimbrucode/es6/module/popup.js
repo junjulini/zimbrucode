@@ -28,12 +28,12 @@ export default class PopUp {
     }
 
     /**
-     * Set popup
+     * Add popup
      * 
      * @return {null} None
      * @since 1.0.0
      */
-    set(options) {
+    add(options) {
         const defaults = {
             title: 'PopUp Title',
             ajax: '',

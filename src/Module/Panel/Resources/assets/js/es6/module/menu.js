@@ -77,13 +77,13 @@ export default class Menu extends Kernel {
     displaySection(menuItemID) {
         const menuItem = $(`.zc-panel-menu li[data-menu-item-id="${menuItemID}"]`);
 
-        // Set icon
+        // Add icon
         const titleIconClass = menuItem.find('i').first().attr('class').match(/\bzc-icon-\S+/g)[0];
         $('.zc-panel-header__title-icon').removeClass((index, className) => {
             return (className.match(/\bzc-icon-\S+/g) || []).join(' ');
         }).addClass(titleIconClass);
 
-        // Set title
+        // Add title
         $('.zc-panel-header__title').text(menuItem.find('span').text());
 
         // Remove / active content section
@@ -95,7 +95,7 @@ export default class Menu extends Kernel {
 
         section.addClass('zc-panel-controls__section_active');
         $(window).trigger('zc/panel/menu/item-change');
-        this.setCache('menu/current-section', section);
+        this.addCache('menu/current-section', section);
 
         if (!section.hasClass('zc-panel-controls__section_ICP')) {
             section.addClass('zc-panel-controls__section_ICP');
@@ -124,7 +124,7 @@ export default class Menu extends Kernel {
                 this.addSubmenuActive();
             }
 
-            // Set global data
+            // Add global data
             this.isSubmenuItem  = true;
             this.submenuItem    = submenuItem;
             this.menuParentItem = menuParentItem;
@@ -135,13 +135,13 @@ export default class Menu extends Kernel {
                 this.removeSubmenuActive();
             }
 
-            // Set global data
+            // Add global data
             this.isSubmenuItem  = false;
             this.submenuItem    = false;
             this.menuParentItem = false;
         }
 
-        // Set global data
+        // Add global data
         this.menuItem   = menuItem;
         this.menuItemID = menuItemID;
     }

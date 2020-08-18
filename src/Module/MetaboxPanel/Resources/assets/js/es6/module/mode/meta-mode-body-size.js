@@ -61,7 +61,7 @@ export default class MetaModeBodySize extends Kernel {
         }
     }
 
-    setModeSize(width) {
+    addModeSize(width) {
         let mode = 'mode-1-';
 
         if (this.getConfig('min-size/mode1') >= width) {
@@ -80,7 +80,7 @@ export default class MetaModeBodySize extends Kernel {
     checkPanelWidth() {
         const ro = new ResizeObserver(entries => {
             if (entries[0] !== undefined) {
-                this.setModeSize(entries[0].contentRect.width);
+                this.addModeSize(entries[0].contentRect.width);
             }
         });
 

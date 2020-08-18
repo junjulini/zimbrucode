@@ -18,7 +18,7 @@
 
 'use strict';
 
-zc.module.panel.setControl(function($, panel) {
+zc.module.panel.addControl(function($, panel) {
     $('.zc-panel').on('click', '.zc-panel-control-radio__item-element', function(event) {
         event.preventDefault();
         /* Act on the event */

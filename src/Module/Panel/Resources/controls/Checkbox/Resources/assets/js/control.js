@@ -18,7 +18,7 @@
 
 'use strict';
 
-zc.module.panel.setControl(function($, panel) {
+zc.module.panel.addControl(function($, panel) {
 
     $('.zc-panel').on('click', '.zc-panel-control-checkbox__element', function(event) {
         if ($(this).hasClass('zc-panel-control-checkbox__element_active')) {

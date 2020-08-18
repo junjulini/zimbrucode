@@ -20,7 +20,7 @@
 
 import Base from './module/base';
 
-zc.setModule('panel', ($) => {
+zc.addModule('panel', ($) => {
 
     const panel = new Base;
     
@@ -51,19 +51,19 @@ zc.setModule('panel', ($) => {
     // ############# PUBLIC METHODS #############
 
     return {
-        // Set control
-        setControl: (callback) => {
+        // Add control
+        addControl: (callback) => {
             const scripts = document.getElementsByTagName('script'),
                   scriptLocation = scripts[scripts.length - 1].src,
                   dataH = scriptLocation.split('/'),
                   controlName = dataH[dataH.length - 5];
 
             const controlVars = panel.getVar('controls')[controlName];
-            panel.service('callback').set('control', callback, controlVars);
+            panel.service('callback').add('control', callback, controlVars);
         },
 
-        // Set mode
-        setMode: (callback) => {
+        // Add mode
+        addMode: (callback) => {
             panel.mode = callback;
         }
     }

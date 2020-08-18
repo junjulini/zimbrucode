@@ -18,7 +18,7 @@
 
 'use strict';
 
-zc.module.panel.setControl(function($, panel) {
+zc.module.panel.addControl(function($, panel) {
 
     $('.zc-panel-control-tab').on('click', '.zc-panel-control-tab__element', function(event) {
         event.preventDefault();

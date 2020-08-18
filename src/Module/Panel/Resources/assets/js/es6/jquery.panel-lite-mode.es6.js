@@ -22,7 +22,7 @@ import BodySize      from './module/mode/panel-lite-mode-body-size';
 import OptionHandler from './module/header/option-handler';
 import QuickLinks    from './module/header/quick-links';
 
-zc.module.panel.setMode(($, panel) => {
+zc.module.panel.addMode(($, panel) => {
 
     setTimeout(() => {
         panel.closeBlock();          // Init callback of close block.
@@ -40,7 +40,7 @@ zc.module.panel.setMode(($, panel) => {
 
         // Active section
         const section = $('.zc-panel .zc-panel-controls__section');
-        panel.setCache('menu/current-section', section);
+        panel.addCache('menu/current-section', section);
         $(window).trigger('zc/panel/menu/item-change-ICP', [section]);
 
         $('.zc-panel-template__panel-loading').hide(); // Hide panel loading text.

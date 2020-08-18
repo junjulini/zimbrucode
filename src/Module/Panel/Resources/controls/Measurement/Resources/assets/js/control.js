@@ -18,11 +18,11 @@
 
 'use strict';
 
-zc.module.panel.setControl(function($, panel, global) {
+zc.module.panel.addControl(function($, panel, global) {
 
     var control = {};
 
-    control.setDefaultValue = function(el, m) {
+    control.addDefaultValue = function(el, m) {
         var n = m.match(/[+-]?([0-9]*[.])?[0-9]+/),
             unit = m.replace(/[+-]?([0-9]*[.])?[0-9]+/g, '');
 
@@ -58,7 +58,7 @@ zc.module.panel.setControl(function($, panel, global) {
                 ifErrorCallback: function () {}
             },
     
-            setSettings: function(settings) {
+            addSettings: function(settings) {
                 this.settings = settings;
                 return this;
             },
@@ -187,7 +187,7 @@ zc.module.panel.setControl(function($, panel, global) {
             }
         }
 
-        internFunctions.setSettings(settings);
+        internFunctions.addSettings(settings);
         internFunctions.manualInput();
         internFunctions.manualScroll();
         internFunctions.buttonInc();
@@ -216,14 +216,14 @@ zc.module.panel.setControl(function($, panel, global) {
         }
 
         if (m != 'inherit') {
-            control.setDefaultValue(el, m);
+            control.addDefaultValue(el, m);
         } else {
             el.find('.zc-panel-control-measurement__input').prop('disabled', true);
             el.find('.zc-panel-control-measurement__inherit-type').addClass('zc-panel-control-measurement__inherit-type_active');
             el.find('.zc-panel-control-measurement__inherit-container').addClass('zc-panel-control-measurement__inherit-container_active');
 
             if (el.hasClass('zc-panel-control-measurement_only')) {
-                control.setDefaultValue(el, el.data('default'));
+                control.addDefaultValue(el, el.data('default'));
             }
         }
 
@@ -315,7 +315,7 @@ zc.module.panel.setControl(function($, panel, global) {
                 $(this).parent().find('.zc-panel-control-measurement__inherit-container').removeClass('zc-panel-control-measurement__inherit-container_active');
 
                 if ($(this).data('output') === undefined) {
-                    control.setDefaultValue(el, el.data('default'));
+                    control.addDefaultValue(el, el.data('default'));
                     el.find('input[type=hidden]').val(el.data('default')).change();
                 } else {
                     el.find('input[type=hidden]').val($(this).data('output')).change();

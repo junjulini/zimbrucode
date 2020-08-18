@@ -124,7 +124,7 @@ export default class Cookie {
         return result;
     }
 
-    set(key, value, attributes) {
+    add(key, value, attributes) {
         this.__api(key, value, attributes);
     }
 

@@ -20,7 +20,7 @@
 
 import BodySize from './module/mode/meta-lite-mode-body-size';
 
-zc.module.panel.setMode(($, panel) => {
+zc.module.panel.addMode(($, panel) => {
 
     panel.controlInit(); // Initialization of controls.
     panel.controlHelp(); // Control help window.
@@ -32,7 +32,7 @@ zc.module.panel.setMode(($, panel) => {
 
     // Active section
     const section = $('.zc-panel .zc-panel-controls__section');
-    panel.setCache('menu/current-section', section);
+    panel.addCache('menu/current-section', section);
     $(window).trigger('zc/panel/menu/item-change-ICP', [section]);
 
     $('.zc-panel-template__panel-loading').hide(); // Hide panel loading text.

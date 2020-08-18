@@ -43,7 +43,7 @@ export default class Kernel {
      */
     calcHeight() {
         if (this.getCache('wp-body-height') !== $(window).height()) {
-            this.setCache('wp-body-height', $(window).height());
+            this.addCache('wp-body-height', $(window).height());
         }
     }
 
@@ -123,24 +123,24 @@ export default class Kernel {
     }
 
     /**
-     * Set global var value
+     * Add global var value
      * 
      * @param {string} key   Key/Path
      * @param {mix}    data  Var value
      * @since 1.0.0
      */
-    setVar(key, data) {
+    addVar(key, data) {
         zc.deepFindAndSetting(this.global.vars, key, data);
     }
 
     /**
-     * Set global cache value
+     * Add global cache value
      * 
      * @param {string} key   Key/Path
      * @param {mix}    data  Cache value
      * @since 1.0.0
      */
-    setCache(key, data) {
+    addCache(key, data) {
         zc.deepFindAndSetting(this.global.cache, key, data);
     }
 
@@ -170,13 +170,13 @@ export default class Kernel {
     }
 
     /**
-     * Set global config value
+     * Add global config value
      * 
      * @param {string} key   Key/Path
      * @param {mix}    data  Config value
      * @since 1.0.0
      */
-    setConfig(key, data) {
+    addConfig(key, data) {
         zc.deepFindAndSetting(this.global.config, key, data);
     }
 
@@ -199,7 +199,7 @@ export default class Kernel {
     service(name, callback) {
         if (name !== undefined && typeof name === 'string') {
             if ($.isFunction(callback) || typeof callback === 'object') {
-                this.setCache(`services/${name}`, callback);
+                this.addCache(`services/${name}`, callback);
             } else {
                 const service = this.getCache(`services/${name}`, false);
                 if (service !== undefined) {

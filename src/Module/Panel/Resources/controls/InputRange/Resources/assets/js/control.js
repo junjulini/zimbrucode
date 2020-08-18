@@ -18,7 +18,7 @@
 
 'use strict';
 
-zc.module.panel.setControl(function($, panel, global) {
+zc.module.panel.addControl(function($, panel, global) {
 
     var control = {};
 
@@ -42,7 +42,7 @@ zc.module.panel.setControl(function($, panel, global) {
                 ifErrorCallback: function () {}
             },
     
-            setSettings: function(settings) {
+            addSettings: function(settings) {
                 this.settings = settings;
                 return this;
             },
@@ -170,7 +170,7 @@ zc.module.panel.setControl(function($, panel, global) {
             }
         }
 
-        internFunctions.setSettings(settings);
+        internFunctions.addSettings(settings);
         internFunctions.manualInput();
         internFunctions.manualScroll();
         internFunctions.buttonInc();

@@ -22,10 +22,10 @@ import BodySize from './module/mode/meta-mode-body-size';
 import Backup   from './module/header/backup';
 import Reset    from './module/header/reset';
 
-zc.module.panel.setMode(($, panel) => {
+zc.module.panel.addMode(($, panel) => {
 
-    panel.setConfig('height-FAH', 56);
-    panel.setConfig('min-size/mode2', 780);
+    panel.addConfig('height-FAH', 56);
+    panel.addConfig('min-size/mode2', 780);
 
     panel.closeBlock();          // Init callback of close block.
     panel.controlInit();         // Initialization of controls.

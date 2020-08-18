@@ -18,7 +18,7 @@
 
 'use strict';
 
-zc.module.panel.setControl(function($, panel) {
+zc.module.panel.addControl(function($, panel) {
 
     var defaults = {
         width: '100%',

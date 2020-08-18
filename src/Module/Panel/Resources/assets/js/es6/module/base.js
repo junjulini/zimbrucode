@@ -194,7 +194,7 @@ export default class Base extends Kernel {
             defaults.title = $this.attr('title');
             defaults.html  = $this.parent().find('.zc-panel-help__content').text();
 
-            zc.popup().set($.extend({}, defaults, settings));
+            zc.popup().add($.extend({}, defaults, settings));
         });
     }
 

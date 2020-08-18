@@ -18,7 +18,7 @@
 
 'use strict';
 
-zc.module.panel.setControl(function($, panel, global) {
+zc.module.panel.addControl(function($, panel, global) {
 
     $('.zc-panel').on('click', '.zc-panel-control-upload__button', function(event) {
         event.preventDefault();

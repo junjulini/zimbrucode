@@ -18,7 +18,7 @@
 
 'use strict';
 
-zc.module.panel.setControl(function($, panel) {
+zc.module.panel.addControl(function($, panel) {
 
     $('.zc-panel').on('click', '.zc-panel-control-toggle-button__checkbox', function(event) {
         if ($(this).prop('checked')) {

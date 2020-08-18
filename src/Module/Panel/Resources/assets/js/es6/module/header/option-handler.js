@@ -96,7 +96,7 @@ export default class OptionHandler extends Kernel {
                     };
 
                     const dn = new DirectNotification;
-                    dn.set(response.type, response.title, response.content, 3000, reload);
+                    dn.add(response.type, response.title, response.content, 3000, reload);
 
                     priv.hideLoading();
 
@@ -104,7 +104,7 @@ export default class OptionHandler extends Kernel {
                         $(window).trigger('zc/panel/save/success-response');
                     }
 
-                    this.setCache('changed', false);
+                    this.addCache('changed', false);
 
                     $(window).trigger('zc/panel/save/success-end');
                 }
@@ -185,7 +185,7 @@ export default class OptionHandler extends Kernel {
                                 popup.close();
                             });
 
-                            this.setCache('changed', false);
+                            this.addCache('changed', false);
 
                             $(window).trigger('zc/panel/reset/success-end');
                         }

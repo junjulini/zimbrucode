@@ -66,7 +66,7 @@ export default class Condition extends Kernel {
             }
 
             if ($this.data('i') === undefined) {
-                this.setCache('changed', true);
+                this.addCache('changed', true);
                 $(window).trigger('zc/panel/if-changed');
             }
 

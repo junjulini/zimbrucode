@@ -26,12 +26,12 @@ export default class Callback {
     }
 
     /**
-     * Set panel callback
+     * Add panel callback
      * 
      * @return {null} None
      * @since 1.0.0
      */
-    set(name, callback, additional) {
+    add(name, callback, additional) {
         if ($.isFunction(callback)) {
             if (this.callback[name] === undefined) {
                 this.callback[name] = [];

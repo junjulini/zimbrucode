@@ -22,7 +22,7 @@ import BodySize      from './module/mode/panel-page-mode-body-size';
 import OptionHandler from './module/header/option-handler';
 import QuickLinks    from './module/header/quick-links';
 
-zc.module.panel.setMode(($, panel) => {
+zc.module.panel.addMode(($, panel) => {
     const priv = {};
 
     priv.addLoadingData = (msg = '', percent) => {
@@ -77,8 +77,8 @@ zc.module.panel.setMode(($, panel) => {
 
             $('.zc-panel-template').append(data);
 
-            // Set wp body height
-            panel.setConfig('wp-body-height', $(window).height());
+            // Add wp body height
+            panel.addConfig('wp-body-height', $(window).height());
 
             panel.closeBlock();          // Init callback of close block.
             panel.controlInit();         // Initialization of controls.
@@ -98,7 +98,7 @@ zc.module.panel.setMode(($, panel) => {
                 $('.zc-panel-template__panel-loading').hide();  // Hide panel loading text.
                 $('.zc-panel').css('visibility', 'visible');    // Full display panel.
 
-                panel.setCache('first-start', true);
+                panel.addCache('first-start', true);
                 $(window).trigger('zc/panel/show-content');
             }, 50);
         }

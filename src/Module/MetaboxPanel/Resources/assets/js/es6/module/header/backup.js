@@ -50,7 +50,7 @@ export default class Backup extends Kernel {
         this.click('.zc-metabox-panel-backup-button', () => {
             this.id = $('.zc-panel-template_wid').data('post-id');
 
-            this.popup.set({
+            this.popup.add({
                 title: this.getVar('backup-pop-up-title'),
                 width: 400,
                 height: 400,
