@@ -206,8 +206,8 @@ export default class Menu extends Kernel {
             }
         });
 
-        // When click on menu item
-        this.click('.zc-panel-menu__item_type_parent:not(.zc-panel-menu__item_active)', ($this) => {
+        // When click on parent menu item
+        this.click('.zc-panel-menu__item_type_parent', ($this) => {
             const submenuItemID = $this.data('menu-container-id');
             const menuItem      = $(`.zc-panel-submenu__container[data-menu-container-id=${submenuItemID}] .zc-panel-submenu__item_type_simple`).first();
             const menuItemID    = menuItem.data('menu-item-id');
@@ -302,6 +302,7 @@ export default class Menu extends Kernel {
         this.click('.zc-panel-submenu__header-section_mode_mobile', () => {
             this.removeSubmenuActive();
             this.scrollbarTop();
+            window.location.hash = '';
         });
     }
 }
