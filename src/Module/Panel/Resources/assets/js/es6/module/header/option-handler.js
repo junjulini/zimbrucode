@@ -29,6 +29,8 @@ export default class OptionHandler extends Kernel {
     constructor() {
         super();
 
+        this.dn = new DirectNotification;
+
         this.save();
         this.reset();
     }
@@ -95,8 +97,7 @@ export default class OptionHandler extends Kernel {
                         location.reload();
                     };
 
-                    const dn = new DirectNotification;
-                    dn.add(response.type, response.title, response.content, 3000, reload);
+                    this.dn.add(response.type, response.title, response.content, 3000, reload);
 
                     priv.hideLoading();
 

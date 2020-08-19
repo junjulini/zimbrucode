@@ -27,7 +27,8 @@ export default class DirectNotification extends Kernel {
     constructor() {
         super();
 
-        this.timer    = false;
+        this.timer1   = false;
+        this.timer2   = false;
         this.type     = 'error';
         this.title    = 'Error';
         this.content  = 'General error ( AJAX / LOGIN / PHP Error )';
@@ -53,35 +54,38 @@ export default class DirectNotification extends Kernel {
         duration = duration || this.duration;
         callback = callback || this.callback;
 
-        clearTimeout(this.timer);
-        
-        const ae = 'animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd',
-              structure = zc.tpl(TPL__direct_notification, {
-                type: type,
-                title: title,
-                content: content
-             });
+        clearTimeout(this.timer1);
+        clearTimeout(this.timer2);
 
-        $('.zc-panel-direct-notification').remove();
-        $('.zc-panel-controls').prepend(structure);
+        const structure = zc.tpl(TPL__direct_notification, {
+            type: type,
+            title: title,
+            content: content
+        });
+
+        $('.zc-panel .zc-panel-direct-notification').remove();
+        $('.zc-panel .zc-panel-controls').prepend(structure);
 
         this.click('.zc-panel-direct-notification__close-controller', () => {
-            $('.zc-panel-direct-notification').addClass('zc-panel-direct-notification_close');
-            $('.zc-panel-direct-notification').one(ae, function() {
-                $(this).remove();
-            });
+            clearTimeout(this.timer1);
+            clearTimeout(this.timer2);
 
-            clearTimeout(this.timer);
+            $('.zc-panel .zc-panel-direct-notification').addClass('zc-panel-direct-notification_close');
+
+            this.timer2 = setTimeout(() => {
+                $('.zc-panel .zc-panel-direct-notification').remove();
+            }, 300);
+
             callback.call();
         });
 
-        this.timer = setTimeout(() => {
-            $('.zc-panel-direct-notification').addClass('zc-panel-direct-notification_close');
-            $('.zc-panel-direct-notification').one(ae, function() {
-                $(this).remove();
-            });
+        this.timer1 = setTimeout(() => {
+            $('.zc-panel .zc-panel-direct-notification').addClass('zc-panel-direct-notification_close');
 
-            clearTimeout(this.timer);
+            this.timer2 = setTimeout(() => {
+                $('.zc-panel .zc-panel-direct-notification').remove();
+            }, 300);
+
             callback.call();
         }, duration);
     }
