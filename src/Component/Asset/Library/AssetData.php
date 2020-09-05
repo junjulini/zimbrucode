@@ -324,9 +324,10 @@ class AssetData
 
         if (0 === strpos($fileURL, $rootURL)) {
             $rootURL = str_replace('/app', '', $rootURL);
+            $rootURL = rtrim($rootURL, '/');
             $output  = str_replace($rootURL . '/', '', $fileURL);
             $output  = strtolower($output);
-            
+
             return ($withCoreSlug) ? Kernel::getGlobal('core/slug') .'/'. $output : $output;
         } else {
             $rootURL = Kernel::service('app-locator')->getRootURL();
