@@ -73,10 +73,8 @@ class ControlShell
      */
     public function option($option = null, $default = null)
     {
-        if (!isset($option)) {
-            $option  = $this->ID();
-            $default = (isset($default)) ? $default : $this->defaultValue();
-        }
+        $option  = (isset($option))  ? $option  : $this->ID();
+        $default = (isset($default)) ? $default : $this->defaultValue();
 
         return $this->panel->getOption($option, $default);
     }

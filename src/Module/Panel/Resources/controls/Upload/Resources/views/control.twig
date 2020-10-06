@@ -26,8 +26,8 @@
         {{ html.button(control.ID, __('Upload', 'zc'), 'button', 'zc-panel-control-upload__button') }}
 
         <input type="hidden" name="{{ control.ID }}" value="{{ value|e('_url') }}" {{ control.ignore }} data-option autocomplete="off">
-        <input type="hidden" name="{{ control.ID }}--large_image" value="{{ control.option(control.ID ~ '--large_image') }}" autocomplete="off">
-        <input type="hidden" name="{{ control.ID }}--id" value="{{ control.option(control.ID ~ '--id') }}" autocomplete="off">
+        <input type="hidden" name="{{ control.ID }}--large_image" value="{{ control.option(control.ID ~ '--large_image') }}" {{ control.ignore }} data-option autocomplete="off">
+        <input type="hidden" name="{{ control.ID }}--id" value="{{ control.option(control.ID ~ '--id') }}" {{ control.ignore }} data-option autocomplete="off">
 
         {# Display image #}
         {% if value %}
