@@ -192,16 +192,11 @@ class MetaMode extends Mode
             $options = $_POST;
 
             if ($options && is_array($options)) {
-                $prefix     = self::getGlobal('core/module/panel/prefix-slug');
-                $defOptions = apply_filters('zc/module/metabox_panel/default_options', [], $this->getBuildSettings());
+                $prefix = self::getGlobal('core/module/panel/prefix-slug');
 
                 foreach ($options as $key => $value) {
                     if (strpos($key, $prefix) !== false) {
-                        $cleanKey = str_replace($prefix, '', $key);
-
-                        if (isset($defOptions[$cleanKey])) {
-                            update_post_meta($postID, "_{$key}", stripslashes_deep($value));
-                        }
+                        update_post_meta($postID, "_{$key}", stripslashes_deep($value));
                     }
                 }
             }
@@ -225,19 +220,11 @@ class MetaMode extends Mode
 
         if ($options && is_array($options)) {
             $result = false;
-
-            $prefix     = self::getGlobal('core/module/panel/prefix-slug');
-            $defOptions = apply_filters('zc/module/metabox_panel/default_options', [], $this->getBuildSettings());
+            $prefix = self::getGlobal('core/module/panel/prefix-slug');
 
             foreach ($options as $key => $value) {
                 if (strpos($key, $prefix) !== false) {
-                    $cleanKey = str_replace("_{$prefix}", '', $key);
-
-                    if (isset($defOptions[$cleanKey])) {
-                        update_post_meta($ajax->post('id'), $key, stripslashes_deep($defOptions[$cleanKey]));
-                    } else {
-                        delete_post_meta($ajax->post('id'), $key);
-                    }
+                    delete_post_meta($ajax->post('id'), $key);
 
                     if (!$result) {
                         $result = true;
