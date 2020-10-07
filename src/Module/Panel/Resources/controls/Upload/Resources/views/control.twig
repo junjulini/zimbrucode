@@ -33,12 +33,7 @@
         {% if value %}
             <div class="zc-panel-control-upload__image-container">
                 <i title="{{ __('Remove', 'zc') }}" class="zc-panel-control-upload__icon-close zc-icon-clear"></i>
-
-                {% if control.option(control.ID ~ '--id') %}
-                    <img src="{{ glob.wp_get_attachment_image_url(control.option(control.ID ~ '--id'), 'large')|e('_url') }}" class="zc-panel-control-upload__image" />
-                {% else %}
-                    <img src="{{ value|e('_url') }}" class="zc-panel-control-upload__image zc-panel-control-upload__image_direct" />
-                {% endif %}
+                <img src="{{ value|e('_url') }}" class="zc-panel-control-upload__image zc-panel-control-upload__image_direct" />
             </div>
         {% endif %}
     </div>
