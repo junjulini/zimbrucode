@@ -57,7 +57,9 @@ export default class Condition extends Kernel {
             /* Act on the event */
 
             const $this = $(event.currentTarget);
-            const name  = $this.attr('name');
+            let name  = $this.attr('name') || '';
+
+            name = name.replace('[]', '');
 
             if (this.cache[name] !== undefined) {
                 $.each(this.cache[name], (index, el) => {
@@ -108,9 +110,20 @@ export default class Condition extends Kernel {
             operator   = (control.data('condition-operator') || 'and').toLowerCase();
 
         $.each(conditions, (index, condition) => {
-            const target = $(`.zc-panel .zc-panel-controls [name=${this.getVar('prefix-slug')}${condition.check}]`);
+            let status = false;
+            let target = $(`.zc-panel .zc-panel-controls [name=${this.getVar('prefix-slug')}${condition.check}]`);
 
             if (target.length > 0 && target.is('[data-option]')) {
+                status = true;
+            } else {
+                target = $(`.zc-panel .zc-panel-controls [id=${this.getVar('prefix-slug')}${condition.check}]`);
+
+                if (target.length > 0 && target.is('[data-option]')) {
+                    status = true;
+                }
+            }
+
+            if (status === true) {
                 const v1 = target.val() !== null ? target.val().toString() : '';
                 const v2 = condition.value.toString();
                 let result;
