@@ -25,11 +25,11 @@ class LessDefaultFunctions implements LessFunctionsInterface
 {
     /**
      * Get functions
-     * 
+     *
      * @return array   Functions
      * @since 1.0.0
      */
-    public function get()
+    public function get(): array
     {
         return [
             'dov'         => [$this, '__less_dov'],
@@ -41,7 +41,7 @@ class LessDefaultFunctions implements LessFunctionsInterface
 
     /**
      * Function : Font import
-     * 
+     *
      * @return string   Link from google font
      * @since 1.0.0
      */
@@ -56,7 +56,7 @@ class LessDefaultFunctions implements LessFunctionsInterface
 
     /**
      * Function : Dov
-     * 
+     *
      * @return string
      * @since 1.0.0
      */
@@ -71,7 +71,7 @@ class LessDefaultFunctions implements LessFunctionsInterface
 
     /**
      * Function : Is
-     * 
+     *
      * @return string
      * @since 1.0.0
      */
@@ -88,7 +88,7 @@ class LessDefaultFunctions implements LessFunctionsInterface
 
     /**
      * Function : Dump
-     * 
+     *
      * @return string
      * @since 1.0.0
      */

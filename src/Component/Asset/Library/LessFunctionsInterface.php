@@ -22,8 +22,8 @@ interface LessFunctionsInterface
 {
     /**
      * Get functions
-     * 
-     * @return boolean/array   Return data
+     *
+     * @return bool/array   Return data
      * @since 1.0.0
      */
     public function get();

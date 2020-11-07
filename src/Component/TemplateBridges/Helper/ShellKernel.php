@@ -22,7 +22,7 @@ abstract class ShellKernel
 {
     private $__CM = [];
 
-    public function __set($name, callable $method)
+    public function __set(string $name, callable $method)
     {
         if (method_exists($this, $name) || !empty($this->customMethod[$name])) {
             throw new \RuntimeException($name . ' - this method exist in ' . static::class);
@@ -31,7 +31,7 @@ abstract class ShellKernel
         $this->__CM[$name] = $method;
     }
 
-    public function __call($method, $args)
+    public function __call(string $method, array $args)
     {
         if (isset($this->__CM[$method]) && is_callable($this->__CM[$method])) {
             return call_user_func_array($this->__CM[$method], $args);

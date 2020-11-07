@@ -47,14 +47,14 @@ abstract class ModuleKernel extends Kernel
 
     /**
      * Add module value
-     * 
+     *
      * @param string $path
-     * @param string $value
+     * @param mix $value
      * @since 1.0.0
      */
-    final public function addModuleData($path, $value)
+    final public function addModuleData(string $path, $value): ModuleKernel
     {
-        if ($path && is_string($path)) {
+        if ($path) {
             $this->__DC->add("additional-data/{$path}", $value);
         }
 
@@ -63,15 +63,15 @@ abstract class ModuleKernel extends Kernel
 
     /**
      * Get module value
-     * 
+     *
      * @param  string  $path
-     * @param  boolean $default
+     * @param  mix $default
      * @return mix
      * @since 1.0.0
      */
-    final public function getModuleData($path = '', $default = false)
+    final public function getModuleData(string $path = '', $default = false)
     {
-        if ($path && is_string($path)) {
+        if ($path) {
             return $this->__DC->get("additional-data/{$path}", $default);
         }
 
@@ -80,14 +80,14 @@ abstract class ModuleKernel extends Kernel
 
     /**
      * Remove module value
-     * 
+     *
      * @param  string $path
-     * @return boolean
+     * @return bool
      * @since 1.0.0
      */
-    final public function remModuleData($path)
+    final public function remModuleData(string $path): bool
     {
-        if ($path && is_string($path)) {
+        if ($path) {
             return $this->__DC->remove("additional-data/{$path}");
         }
 
@@ -96,15 +96,15 @@ abstract class ModuleKernel extends Kernel
 
     /**
      * Get module setting
-     * 
+     *
      * @param  string $setting   Single setting
-     * @param  string $default   Default value
+     * @param  mix $default      Default value
      * @return string/array      Settings or single setting
      * @since 1.0.0
      */
-    final public function getModuleSetting($setting = '', $default = '')
+    final public function getModuleSetting(string $setting = '', $default = '')
     {
-        if ($setting && is_string($setting)) {
+        if ($setting) {
             return $this->__DC->get("settings/{$setting}", $default);
         }
 
@@ -113,14 +113,14 @@ abstract class ModuleKernel extends Kernel
 
     /**
      * Add module setting
-     * 
+     *
      * @param string $setting   Setting key
      * @param string $value     Value for setting
      * @since 1.0.0
      */
-    final public function addModuleSetting($setting, $value)
+    final public function addModuleSetting(string $setting, $value): ModuleKernel
     {
-        if ($setting && is_string($setting)) {
+        if ($setting) {
             $this->__DC->add("settings/{$setting}", $value);
         }
 
@@ -129,11 +129,11 @@ abstract class ModuleKernel extends Kernel
 
     /**
      * Add module settings
-     * 
+     *
      * @param array $value   Value for settings
      * @since 1.0.0
      */
-    final public function addModuleSettings(array $value)
+    final public function addModuleSettings(array $value): ModuleKernel
     {
         $this->__DC->add('settings', $value);
         return $this;
@@ -141,22 +141,22 @@ abstract class ModuleKernel extends Kernel
 
     /**
      * Get module data collector
-     * 
+     *
      * @return DataCollector   Module data
      * @since 1.0.0
      */
-    final public function getModuleDataCollector()
+    final public function getModuleDataCollector(): DataCollector
     {
         return $this->__DC;
     }
 
     /**
      * Returns the module name
-     * 
+     *
      * @return string   The Module name
      * @since 1.0.0
      */
-    final public function getModuleName()
+    final public function getModuleName(): string
     {
         if (!$moduleName = $this->__DC->get('module-name')) {
             $moduleName = basename($this->getModulePath());
@@ -168,35 +168,35 @@ abstract class ModuleKernel extends Kernel
 
     /**
      * Gets the module namespace
-     * 
+     *
      * @return string   The Module namespace
      * @since 1.0.0
      */
-    final public function getModuleNamespace()
+    final public function getModuleNamespace(): string
     {
         return $this->__DC->get('module-namespace');
     }
 
     /**
      * Gets the module directory path
-     * 
+     *
      * @param  string $path   Additional part of path
      * @return string         The Module absolute path
      * @since 1.0.0
      */
-    final public function getModulePath($path = '')
+    final public function getModulePath(string $path = ''): string
     {
         return $this->__DC->get('module-path') . $path;
     }
 
     /**
      * Gets the module URL
-     * 
+     *
      * @param  string $url   Additional part of url
      * @return string        The Module URL
      * @since 1.0.0
      */
-    final public function getModuleURL($url = '')
+    final public function getModuleURL(string $url = ''): string
     {
         if (!$moduleURL = $this->__DC->get('module-url')) {
             $moduleURL = Tools::getURL($this->getModulePath());
@@ -208,24 +208,24 @@ abstract class ModuleKernel extends Kernel
 
     /**
      * Get resource path
-     * 
+     *
      * @param  string $path Additional part of path
      * @return string       Resource path
      * @since 1.0.0
      */
-    public function getModuleResourcePath($path = '')
+    public function getModuleResourcePath(string $path = ''): string
     {
         return wp_normalize_path($this->getModulePath() . self::getGlobal('core/component/core/module/resource-dir') . $path);
     }
 
     /**
      * Get resource URL
-     * 
+     *
      * @param  string $url Additional part of URL
      * @return string      Resource URL
      * @since 1.0.0
      */
-    public function getModuleResourceURL($url = '')
+    public function getModuleResourceURL(string $url = ''): string
     {
         return esc_url($this->getModuleURL() . self::getGlobal('core/component/core/module/resource-dir') . $url);
     }
@@ -239,14 +239,10 @@ abstract class ModuleKernel extends Kernel
      * @return object           Instance of module part
      * @since 1.0.0
      */
-    final public function loadModulePart($part, $service = false, $data = null)
+    final public function loadModulePart(string $part, string $service = '', $data = null): object
     {
         if (!$part) {
-            throw new \InvalidArgumentException(esc_html__('Module part : empty.', 'zc'));
-        }
-
-        if (!is_string($part)) {
-            throw new \InvalidArgumentException(esc_html__('Module part : not string.', 'zc'));
+            throw new \InvalidArgumentException('Module part : empty.');
         }
 
         if (!(($part = new $part($this->__DC)) instanceof ModuleKernel)) {
@@ -257,7 +253,7 @@ abstract class ModuleKernel extends Kernel
             $part->setup($this, $data);
         }
 
-        if ($service && is_string($service) && !$this->__DC->get("module-services/{$service}")) {
+        if ($service && !$this->__DC->get("module-services/{$service}")) {
             $this->__DC->add("module-services/{$service}", $part);
         }
 
@@ -271,12 +267,12 @@ abstract class ModuleKernel extends Kernel
      * @return object           Instance of module part as local service
      * @since 1.0.0
      */
-    final public function moduleService($service)
+    final public function moduleService(string $service): object
     {
-        if ($service && is_string($service) && $moduleService = $this->__DC->get("module-services/{$service}")) {
+        if ($service && $moduleService = $this->__DC->get("module-services/{$service}")) {
             return $moduleService;
         } else {
-            throw new \InvalidArgumentException(esc_html__('Module service is : empty, not string or not exist.', 'zc'));
+            throw new \InvalidArgumentException('Module service is : empty, not string or not exist.');
         }
     }
 }

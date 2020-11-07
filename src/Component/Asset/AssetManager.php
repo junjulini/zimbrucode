@@ -11,7 +11,9 @@
 
 namespace ZimbruCode\Component\Asset;
 
+use ZimbruCode\Component\Asset\Library\AssetData;
 use ZimbruCode\Component\Asset\Library\AssetDataCollector;
+use ZimbruCode\Component\Asset\Library\Filter;
 use ZimbruCode\Component\Asset\Library\LocationDetector;
 use ZimbruCode\Component\Asset\Library\NamespaceHandler;
 use ZimbruCode\Component\Common\Tools;
@@ -31,15 +33,15 @@ class AssetManager
     protected $callbacks = [];
     protected $nh;
 
-    public function __construct($autoFilter = true, $customLocation = '')
+    public function __construct(bool $autoFilter = true, string $customLocation = '')
     {
         $this->autoFilter($autoFilter);
 
-        if (!$customLocation || !is_string($customLocation)) {
+        if (!$customLocation) {
             $customLocation = dirname(debug_backtrace()[0]['file']);
         }
 
-        $location = new LocationDetector($customLocation);
+        $location        = new LocationDetector($customLocation);
         $this->collector = new AssetDataCollector($location);
 
         $this->nh = new NamespaceHandler;
@@ -47,14 +49,14 @@ class AssetManager
 
     /**
      * Disable or enable auto filter
-     * 
-     * @param  boolean $autoFilter   Auto filter option : true/false
-     * @return boolean               Auto filter option
+     *
+     * @param  bool $autoFilter   Auto filter option : true/false
+     * @return bool               Auto filter option
      * @since 1.0.0
      */
-    public function autoFilter($autoFilter = true)
+    public function autoFilter(bool $autoFilter = null): bool
     {
-        if (is_bool($autoFilter)) {
+        if ($autoFilter !== null) {
             $this->autoFilter = $autoFilter;
         }
 
@@ -63,22 +65,22 @@ class AssetManager
 
     /**
      * Gets an asset by name
-     * 
+     *
      * @param string $asset   The asset name
-     * @return The asset data
+     * @return AssetData
      * @since 1.0.0
      */
-    public function get($asset = '')
+    public function get(string $asset): AssetData
     {
         return $this->collector->get($asset);
     }
 
     /**
      * Registers an asset
-     * 
+     *
      * @since 1.0.0
      */
-    public function add(...$assets)
+    public function add(...$assets): AssetManager
     {
         if ($assets) {
             foreach ($assets as $asset) {
@@ -93,7 +95,7 @@ class AssetManager
                 }
             }
         } else {
-            throw new \InvalidArgumentException(esc_html__('No assets.', 'zc'));
+            throw new \InvalidArgumentException('No assets.');
         }
 
         return $this;
@@ -101,39 +103,39 @@ class AssetManager
 
     /**
      * Remove an asset by name
-     * 
+     *
      * @param string $asset  The asset name
-     * @return boolean       True if the asset has been set, false if not
+     * @return bool          True if the asset has been set, false if not
      * @since 1.0.0
      */
-    public function has($asset)
+    public function has(string $asset): bool
     {
         return $this->collector->has($asset);
     }
 
     /**
      * Remove an asset by name
-     * 
+     *
      * @param string $asset   The asset name
      * @since 1.0.0
      */
-    public function remove($asset)
+    public function remove(string $asset): bool
     {
         return $this->collector->remove($asset);
     }
 
     /**
      * Remove all assets
-     * 
+     *
      * @since 1.0.0
      */
-    public function flush()
+    public function flush(): AssetManager
     {
         $this->collector->flush();
         return $this;
     }
 
-    public function filter($filter, $single = false, callable $callback = null)
+    public function filter(Filter $filter, bool $single = false, callable $callback = null): AssetManager
     {
         $this->collector->filter($filter, $single, $callback);
         return $this;
@@ -141,26 +143,26 @@ class AssetManager
 
     /**
      * Dump data
-     * 
-     * @return boolean  None
+     *
+     * @return void
      * @since 1.0.0
      */
-    public function dump()
+    public function dump(): void
     {
         Tools::dump($this->collector);
     }
 
     /**
      * Enroll assets
-     * 
+     *
      * @param  string $logTitle   Additional log title
      * @return void               This function does not return a value
      * @since 1.0.0
      */
-    public function enroll($logTitle = '')
+    public function enroll(string $logTitle = ''): void
     {
         if (Kernel::dev()) {
-            Kernel::dev()->addLogMessage(esc_html__('Asset : ', 'zc') . $logTitle, $this->collector->get());
+            Kernel::dev()->addLogMessage("Asset : {$logTitle}", $this->collector->get());
         }
 
         foreach ($this->collector->get() as $asset) {
@@ -176,27 +178,27 @@ class AssetManager
 
     /**
      * Enroll assets as namespace
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function enrollAsNamespace($namespace = '')
+    public function enrollAsNamespace(string $namespace = ''): void
     {
         $this->nh->add($namespace, $this->collector);
     }
 
     /**
      * Localizes a registered script with data for a JavaScript variable.
-     * 
+     *
      * @param  string $handle   The registered script handle you are attaching the data for
      * @param  string $name     The name of the variable which will contain the data
      * @param  array  $data     The data itself
      * @return void             This function does not return a value
      * @since 1.0.0
      */
-    public function localize($handle, $name, array $data = [])
+    public function localize(string $handle, string $name, array $data = []): void
     {
-        if ($handle && is_string($handle) && $name && is_string($name)) {
+        if ($handle && $name) {
             foreach ($this->collector->get() as $asset) {
                 if (strpos($asset->name(), $handle) !== false) {
                     wp_localize_script($asset->name(), $name, $data);
@@ -204,20 +206,20 @@ class AssetManager
                 }
             }
 
-            throw new \InvalidArgumentException(esc_html__('Next script handle for "localize" function not found : ', 'zc') . $handle);
+            throw new \InvalidArgumentException("Next script handle for \"localize\" function not found : {$handle}");
         }
     }
 
     /**
      * Add preventive callback
-     * 
+     *
      * @param string   $asset      Asset ID
      * @param callable $callback   Callback for asset
      * @since 1.0.0
      */
-    public function addCallback($asset, callable $callback)
+    public function addCallback(string $asset, callable $callback): AssetManager
     {
-        if ($asset && is_string($asset)) {
+        if ($asset) {
             $this->callbacks[$asset] = $callback;
         }
 
@@ -226,14 +228,14 @@ class AssetManager
 
     /**
      * Add less vars
-     * 
+     *
      * @param  string $assetName  Name of LESS file
      * @param  array  $vars       Vars for LESS Render
      * @since 1.0.0
      */
-    public function addLessVars($assetName, array $vars)
+    public function addLessVars(string $assetName, array $vars): AssetManager
     {
-        if ($assetName && is_string($assetName) && $vars) {
+        if ($assetName && $vars) {
             $assetName = str_replace('/', '\\', $assetName);
 
             $this->collector->addGlobal("less-vars/{$assetName}", $vars);
@@ -244,16 +246,16 @@ class AssetManager
 
     /**
      * Add global less vars
-     * 
+     *
      * @param array  $vars          Vars for LESS Render
-     * @param  string $assetName    Name of LESS file
+     * @param string $assetName     Name of LESS file
      * @param string $restriction   Restriction : vars for app/admin mode
      * @since 1.0.0
      */
-    public function addGlobalLessVars(array $vars, $assetName = false, $restriction = 'app')
+    public function addGlobalLessVars(array $vars, string $assetName = '', string $restriction = 'app'): AssetManager
     {
         if ($vars) {
-            $globalVars = Kernel::getGlobalCache('asset/less/vars', []);
+            $globalVars   = Kernel::getGlobalCache('asset/less/vars', []);
             $globalVars[] = [
                 'vars'        => $vars,
                 'asset-name'  => $assetName,

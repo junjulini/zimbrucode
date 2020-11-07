@@ -11,11 +11,12 @@
 
 namespace ZimbruCode\Component\Asset\Filter;
 
+use ZimbruCode\Component\Asset\Library\AssetData;
 use ZimbruCode\Component\Asset\Library\Filter;
-use ZimbruCode\Component\Core\Kernel;
-use ZimbruCode\Component\Common\Tools;
-use ZimbruCode\Component\Asset\Library\LessRender;
 use ZimbruCode\Component\Asset\Library\LessDefaultFunctions;
+use ZimbruCode\Component\Asset\Library\LessRender;
+use ZimbruCode\Component\Common\Tools;
+use ZimbruCode\Component\Core\Kernel;
 
 /**
  * Class : Filter - LESS
@@ -40,11 +41,11 @@ class LESS extends Filter
 
     /**
      * Setup filter
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    protected function setup()
+    protected function setup(): void
     {
         $this->less = new LessRender;
         $this->less->addFunctions(new LessDefaultFunctions);
@@ -58,18 +59,18 @@ class LESS extends Filter
         $this->searchPoint   = Kernel::getGlobal('core/component/asset/filter/less/search-point');
         $this->externalPoint = Kernel::getGlobal('core/component/asset/filter/less/external-point');
 
-        $this->fwSP = str_replace('/', '\/', Kernel::getGlobal('core/component/asset/fw-search-point'));
+        $this->fwSP     = str_replace('/', '\/', Kernel::getGlobal('core/component/asset/fw-search-point'));
         $this->cacheExt = Kernel::getGlobal('core/component/asset/cache/extension', '.cache');
     }
 
     /**
      * Each asset
-     * 
+     *
      * @param  AssetData $asset   Asset data
      * @return void               This function does not return a value
      * @since 1.0.0
      */
-    protected function each($asset)
+    protected function each(AssetData $asset): void
     {
         if ($asset->info()->getExtension() == 'less') {
             $output = $this->getOutput($asset);
@@ -114,7 +115,7 @@ class LESS extends Filter
                         }
 
                         $run = false;
-    
+
                         if ($restriction === 'admin') {
                             if (is_admin()) {
                                 $run = true;
@@ -140,7 +141,7 @@ class LESS extends Filter
             $this->less->render();
 
             $newAsset = $this->collector()->add($this->less->output, false)
-                                          ->get($this->less->output);
+                             ->get($this->less->output);
 
             $newAsset->name($newAsset->generateName())
                      ->url(Tools::getURL($this->less->output))
@@ -149,7 +150,7 @@ class LESS extends Filter
 
             if (!empty($this->less->assetCache->get())) {
                 $versionPart = (integer) (substr(hexdec(md5(json_encode($this->less->assetCache->get()))), 0, 9) * 100000000);
-                $version = Kernel::getGlobal('app/version') . '.' . $versionPart;
+                $version     = Kernel::getGlobal('app/version') . '.' . $versionPart;
 
                 $newAsset->version($version);
             }
@@ -161,12 +162,12 @@ class LESS extends Filter
 
     /**
      * Get output path of converted css file
-     * 
+     *
      * @param  AssetData $asset   Asset data
      * @return string             Output path
      * @since 1.0.0
      */
-    protected function getOutput($asset)
+    protected function getOutput(AssetData $asset): string
     {
         $assetDir = dirname($asset->getPath());
 

@@ -11,8 +11,6 @@
 
 namespace ZimbruCode\Component\Common;
 
-use ZimbruCode\Component\Core\Kernel;
-
 /**
  * Class : Callback
  *
@@ -33,9 +31,9 @@ class Callback
      * @return void                This function does not return a value
      * @since 1.0.0
      */
-    public function add($name, callable $callback, $id = '')
+    public function add(string $name, callable $callback, string $id = ''): void
     {
-        if ($name && is_string($name)) {
+        if ($name) {
             if ($id) {
                 $this->callback[$name][$id] = $callback;
             } else {
@@ -46,14 +44,14 @@ class Callback
 
     /**
      * Run callback
-     * 
+     *
      * @return array   Functions results
      * @since 1.0.0
      */
-    public function run($name, ...$args)
+    public function run(string $name, ...$args)
     {
-        if (!$name || !is_string($name)) {
-            throw new \RuntimeException(esc_html__('Name of callback is not defined.', 'zc'));
+        if (!$name) {
+            throw new \RuntimeException('Name of callback is not defined.');
         }
 
         $output = [];
@@ -70,12 +68,12 @@ class Callback
 
     /**
      * Remove callback
-     * 
+     *
      * @param  string $name   Name of callback
      * @return void           This function does not return a value
      * @since 1.0.0
      */
-    public function remove($name)
+    public function remove(string $name): void
     {
         if (!empty($this->callback[$name])) {
             unset($this->callback[$name]);
@@ -84,11 +82,11 @@ class Callback
 
     /**
      * Remove all callback's
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function flush()
+    public function flush(): void
     {
         $this->callback = [];
     }

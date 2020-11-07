@@ -11,7 +11,6 @@
 
 namespace ZimbruCode\Module\MetaboxPanel\Helper;
 
-use ZimbruCode\Component\Core\Kernel;
 use ZimbruCode\Module\Panel\Library\Shell\ControlShell as PanelControlShell;
 
 /**
@@ -25,16 +24,16 @@ class ControlShell extends PanelControlShell
 {
     /**
      * Get control option
-     * 
+     *
      * @param  string $option    Option name
      * @param  mix    $default   Default value
      * @return mix               Control option
      * @since 1.0.0
      */
-    public function option($option = null, $default = null)
+    public function option(string $option = null, $default = null)
     {
         $option  = (isset($option)) ? "_{$option}" : "_{$this->ID()}";
-        $default = (isset($default)) ? $default : $this->defaultValue();
+        $default = $default ?? $this->defaultValue();
         $output  = get_post_meta(get_the_ID(), $option, true);
 
         return ($output) ? $output : $default;

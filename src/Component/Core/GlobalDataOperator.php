@@ -24,7 +24,7 @@ abstract class GlobalDataOperator
 {
     /**
      * GVS ( Global nodes slug )
-     * 
+     *
      * @var string
      * @since 1.0.0
      */
@@ -32,7 +32,7 @@ abstract class GlobalDataOperator
 
     /**
      * GV ( Global nodes )
-     * 
+     *
      * @var array
      * @since 1.0.0
      */
@@ -43,7 +43,7 @@ abstract class GlobalDataOperator
 
     /**
      * SGV ( Standard global nodes )
-     * 
+     *
      * @var array
      * @since 1.0.0
      */
@@ -55,7 +55,7 @@ abstract class GlobalDataOperator
 
     /**
      * RN : Root Node
-     * 
+     *
      * @var string
      * @since 1.0.0
      */
@@ -63,7 +63,7 @@ abstract class GlobalDataOperator
 
     /**
      * CGV ( Condition global nodes )
-     * 
+     *
      * @var array
      * @since 1.0.0
      */
@@ -71,7 +71,7 @@ abstract class GlobalDataOperator
 
     /**
      * OEM ( Operator exception message )
-     * 
+     *
      * @var string
      * @since 1.0.0
      */
@@ -79,7 +79,7 @@ abstract class GlobalDataOperator
 
     /**
      * Nodes cache
-     * 
+     *
      * @var string
      * @since 1.0.0
      */
@@ -89,25 +89,25 @@ abstract class GlobalDataOperator
 
     /**
      * Get OEM ( Operator exception message )
-     * 
+     *
      * @param  string $path   Base path
      * @return string         Exception message
      * @since 1.0.0
      */
-    private static function __getOEM($path)
+    private static function __getOEM(string $path): string
     {
         return str_replace(['{PATH}', '{NODES}'], [$path, implode(', ', self::$__CGN)], self::$__OEM);
     }
 
     /**
      * Is on condition
-     * 
+     *
      * @param  string  $path
      * @param  string  $delimiter
-     * @return boolean   true/false
+     * @return bool    true/false
      * @since 1.0.0
      */
-    private static function __isOnCondition($path, $delimiter = '/')
+    private static function __isOnCondition(string $path, string $delimiter = '/'): bool
     {
         if ($path) {
             $element = explode($delimiter, $path);
@@ -124,7 +124,7 @@ abstract class GlobalDataOperator
      * @return void           This function does not return a value
      * @since 1.0.0
      */
-    private static function __removeFromNodesCache($path = '')
+    private static function __removeFromNodesCache(string $path = ''): void
     {
         if (self::__isRootNode($path)) {
             foreach (self::$__NODES_CACHE['@'] as $key => $value) {
@@ -145,13 +145,13 @@ abstract class GlobalDataOperator
 
     /**
      * Is root node
-     * 
+     *
      * @param  string $path
      * @param  string $delimiter
-     * @return boolean   true/false
+     * @return bool   true/false
      * @since 1.0.0
      */
-    private static function __isRootNode($path, $delimiter = '/')
+    private static function __isRootNode(string $path, string $delimiter = '/'): bool
     {
         if ($path) {
             $element = explode($delimiter, $path);
@@ -163,32 +163,28 @@ abstract class GlobalDataOperator
 
     /**
      * Add global var slug
-     * 
+     *
      * @param  string $slug   Slug name
      * @return void           This function does not return a value
      * @since 1.0.0
      */
-    final protected static function addGlobalVarSlug($slug)
+    final protected static function addGlobalVarSlug(string $slug): void
     {
         if (!$slug) {
             throw new \InvalidArgumentException('Global var slug : empty.');
-        }
-
-        if (!is_string($slug)) {
-            throw new \InvalidArgumentException('Global var slug : not string.');
         }
 
         if (isset(self::$__GN[$slug])) {
             throw new \RuntimeException('App slug is already used.');
         }
 
-        self::$__GNS = $slug;
+        self::$__GNS       = $slug;
         self::$__GN[$slug] = self::$__SGN;
     }
 
     /**
      * Get global var slug
-     * 
+     *
      * @return string   Slug name
      * @since 1.0.0
      */
@@ -199,15 +195,15 @@ abstract class GlobalDataOperator
 
     /**
      * Get data from global var
-     * 
+     *
      * @param  string  $path      Base path
      * @param  mix     $default   Default value
      * @return mix                Return data
      * @since 1.0.0
      */
-    final public static function getGlobal($path, $default = false)
+    final public static function getGlobal(string $path, $default = false)
     {
-        if ($path && is_string($path)) {
+        if ($path) {
             if (isset(self::$__NODES_CACHE[self::$__GNS][$path])) {
                 if (self::__isRootNode($path)) {
                     return self::$__NODES_CACHE['@'][$path];
@@ -222,9 +218,11 @@ abstract class GlobalDataOperator
                 if (self::__isRootNode($path)) {
                     $path = str_replace('@/', '', $path);
                     self::$__NODES_CACHE['@'][$path] = Tools::getNode(self::$__GN[self::$__RN], $path, $default);
+
                     return self::$__NODES_CACHE['@'][$path];
                 } else {
                     self::$__NODES_CACHE[self::$__GNS][$path] = Tools::getNode(self::$__GN[self::$__GNS], $path, $default);
+
                     return self::$__NODES_CACHE[self::$__GNS][$path];
                 }
             }
@@ -235,33 +233,31 @@ abstract class GlobalDataOperator
 
     /**
      * ifG : If global exist, return value1, if not, return value2
-     * 
+     *
      * @param  string  $path      Base path
      * @param  mix     $value1    Value 1
      * @param  mix     $value2    Value 2
      * @return mix                Return data
      * @since 1.0.0
      */
-    final public static function ifG($path, $value1, $value2)
+    final public static function ifG(string $path, $value1, $value2)
     {
-        if ($path && is_string($path)) {
+        if ($path) {
             return (self::getGlobal($path)) ? $value1 : $value2;
         }
-
-        return false;
     }
 
     /**
      * Add data to global var
-     * 
+     *
      * @param  string  $path    Base path
      * @param  mix     $value   Value
      * @return void             This function does not return a value
      * @since 1.0.0
      */
-    final public static function addGlobal($path, $value)
+    final public static function addGlobal(string $path, $value): void
     {
-        if ($path && is_string($path)) {
+        if ($path) {
             if (!self::__isOnCondition($path)) {
                 throw new \InvalidArgumentException(self::__getOEM($path));
             }
@@ -279,14 +275,14 @@ abstract class GlobalDataOperator
 
     /**
      * Remove data from global var
-     * 
+     *
      * @param  string $path   Base path
-     * @return boolean        Return false/true
+     * @return bool           Return false/true
      * @since 1.0.0
      */
-    final public static function remGlobal($path)
+    final public static function remGlobal(string $path): bool
     {
-        if ($path && is_string($path)) {
+        if ($path) {
             if (!self::__isOnCondition($path)) {
                 throw new \InvalidArgumentException(self::__getOEM($path));
             }
@@ -306,14 +302,14 @@ abstract class GlobalDataOperator
 
     /**
      * Dump global
-     * 
+     *
      * @param  string $path   Base path
      * @return void           This function does not return a value
      * @since 1.0.0
      */
-    final public static function dumpGlobal($path = '')
+    final public static function dumpGlobal(string $path = ''): void
     {
-        if ($path && is_string($path)) {
+        if ($path) {
             if (!self::__isOnCondition($path)) {
                 throw new \InvalidArgumentException(self::__getOEM($path));
             }

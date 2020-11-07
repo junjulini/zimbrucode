@@ -37,7 +37,7 @@ class TwigFilters
      * @return string           Modificated string
      * @since 1.0.0
      */
-    public function __callback_stripslashes($string)
+    public function __callback_stripslashes(?string $string): ?string
     {
         if (!$string) {
             return $string;
@@ -58,9 +58,9 @@ class TwigFilters
      * @return array          Decoded data
      * @since 1.0.0
      */
-    public function __callback_json_decode($json)
+    public function __callback_json_decode(string $json): array
     {
-        if ($json && is_string($json)) {
+        if ($json) {
             $data = json_decode($json);
 
             return (json_last_error() == JSON_ERROR_NONE) ? $data : [];

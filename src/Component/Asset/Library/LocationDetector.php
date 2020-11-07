@@ -11,8 +11,8 @@
 
 namespace ZimbruCode\Component\Asset\Library;
 
-use ZimbruCode\Component\Core\Kernel;
 use ZimbruCode\Component\Common\Tools;
+use ZimbruCode\Component\Core\Kernel;
 
 /**
  * Class : Location detector
@@ -27,20 +27,17 @@ class LocationDetector
     protected $root;
     protected $defaultLocation = [];
 
-    public function __construct($location)
+    public function __construct(string $location)
     {
         if (!$location) {
-            throw new \InvalidArgumentException(esc_html__('Location is empty.', 'zc'));
+            throw new \InvalidArgumentException('Location is empty.');
         }
 
-        if (!is_string($location)) {
-            throw new \InvalidArgumentException(esc_html__('Location not string.', 'zc'));
-        }
-
-        $this->root = Kernel::service('app-locator')->getResourcePath();
+        $this->root            = Kernel::service('app-locator')->getResourcePath();
         $this->defaultLocation = Kernel::getGlobal('core/component/asset/default-location');
 
         $path = wp_normalize_path($location);
+
         while (!file_exists($path . $this->defaultLocation['resources'])) {
             $path = wp_normalize_path(realpath($path . '/..'));
         }
@@ -50,19 +47,15 @@ class LocationDetector
 
     /**
      * Get path of asset if exist
-     * 
+     *
      * @param  string $path   Name or path of asset
      * @return string         Asset path
      * @since 1.0.0
      */
-    public function get($path)
+    public function get(string $path): string
     {
         if (!$path) {
-            throw new \InvalidArgumentException(esc_html__('Path is empty.', 'zc'));
-        }
-
-        if (!is_string($path)) {
-            throw new \InvalidArgumentException(esc_html__('Path not string.', 'zc'));
+            throw new \InvalidArgumentException('Path is empty.');
         }
 
         if (Tools::isPath($path)) {
@@ -76,12 +69,12 @@ class LocationDetector
 
     /**
      * Preparing path defined as string
-     * 
+     *
      * @param  string $path   Path of asset
      * @return string         Full path of asset
      * @since 1.0.0
      */
-    protected function definedAsString($path)
+    protected function definedAsString(string $path): string
     {
         $type = (new \SplFileInfo($path))->getExtension();
 
@@ -100,7 +93,7 @@ class LocationDetector
             $loc1 = realpath("{$this->location}/{$path}");
             $loc2 = realpath("{$this->root}/{$path}");
 
-            if (file_exists($loc1))  {
+            if (file_exists($loc1)) {
                 return $loc1;
             } elseif (file_exists($loc2)) {
                 return $loc2;
@@ -109,38 +102,38 @@ class LocationDetector
             }
         }
 
-        throw new \RuntimeException(esc_html__('Asset not exist : ', 'zc') . $path);
+        throw new \RuntimeException("Asset not exist : {$path}");
     }
 
     /**
      * Preparing path defined as path
-     * 
+     *
      * @param  string $path   Path of asset
      * @return string         Full path of asset
      * @since 1.0.0
      */
-    protected function definedAsPath($path)
+    protected function definedAsPath(string $path): string
     {
         if (file_exists($path)) {
             return $path;
         }
 
-        throw new \RuntimeException(esc_html__('Asset not exist : ', 'zc') . $path);
+        throw new \RuntimeException("Asset not exist : {$path}");
     }
 
     /**
      * Preparing path defined as URL
-     * 
+     *
      * @param  string $path   Path of asset
      * @return string         Full path of asset
      * @since 1.0.0
      */
-    protected function definedAsURL($path)
+    protected function definedAsURL(string $path): string
     {
         if (Tools::isLocalURL($path)) {
             return Tools::getPath($path);
         } else {
-            throw new \RuntimeException(esc_html__('Can\'t get path for non local URL : ', 'zc') . $path);
+            throw new \RuntimeException("Can't get path for non local URL : {$path}");
         }
     }
 }

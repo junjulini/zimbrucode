@@ -11,9 +11,9 @@
 
 namespace ZimbruCode\Component\Asset\Library;
 
-use ZimbruCode\Component\Core\Kernel;
 use ZimbruCode\Component\Asset\Library\LocationDetector;
 use ZimbruCode\Component\Common\Tools;
+use ZimbruCode\Component\Core\Kernel;
 
 /**
  * Class : Asset data
@@ -29,7 +29,7 @@ class AssetData
     protected $data;
     protected $location;
 
-    public function __construct($asset, LocationDetector $location)
+    public function __construct(string $asset, LocationDetector $location)
     {
         $this->raw  = $asset;
         $this->info = new \SplFileInfo($this->raw);
@@ -40,14 +40,14 @@ class AssetData
 
     /**
      * Asset type
-     * 
-     * @param  string $type   Option for asset type
-     * @return string         Asset type
+     *
+     * @param  string $type       Option for asset type
+     * @return string|AssetData   Asset type
      * @since 1.0.0
      */
-    public function type($type = '')
+    public function type(string $type = '')
     {
-        if ($type && is_string($type)) {
+        if ($type) {
             $this->data['type'] = $type;
             return $this;
         }
@@ -57,14 +57,14 @@ class AssetData
 
     /**
      * Asset name
-     * 
-     * @param  string $name   Option for asset name
-     * @return string         Asset name
+     *
+     * @param  string $name       Option for asset name
+     * @return string|AssetData   Asset name
      * @since 1.0.0
      */
-    public function name($name = '')
+    public function name(string $name = '')
     {
-        if ($name && is_string($name)) {
+        if ($name) {
             $this->data['name'] = $name;
             return $this;
         }
@@ -74,14 +74,14 @@ class AssetData
 
     /**
      * Asset url
-     * 
-     * @param  string $url   Option for asset url
-     * @return string        Asset url
+     *
+     * @param  string $url        Option for asset url
+     * @return string|AssetData   Asset url
      * @since 1.0.0
      */
-    public function url($url = '')
+    public function url(string $url = '')
     {
-        if ($url && is_string($url)) {
+        if ($url) {
             $this->data['url'] = $url;
             return $this;
         }
@@ -91,9 +91,9 @@ class AssetData
 
     /**
      * Asset deps
-     * 
-     * @param  array $deps   Option for asset deps
-     * @return array         Asset deps
+     *
+     * @param  array $deps       Option for asset deps
+     * @return array|AssetData   Asset deps
      * @since 1.0.0
      */
     public function deps(array $deps = [])
@@ -108,14 +108,14 @@ class AssetData
 
     /**
      * Asset version
-     * 
-     * @param  string $version   Option for asset version
-     * @return string            Asset version
+     *
+     * @param  string $version    Option for asset version
+     * @return string|AssetData   Asset version
      * @since 1.0.0
      */
-    public function version($version = '')
+    public function version(string $version = '')
     {
-        if ($version && is_string($version)) {
+        if ($version) {
             $this->data['version'] = $version;
             return $this;
         }
@@ -125,14 +125,14 @@ class AssetData
 
     /**
      * Asset media
-     * 
-     * @param  string $media   Option for asset media
-     * @return string          Asset media
+     *
+     * @param  bool $media      Option for asset media
+     * @return bool|AssetData   Asset media
      * @since 1.0.0
      */
-    public function media($media = '')
+    public function media(bool $media = null)
     {
-        if ($media && is_bool($media)) {
+        if ($media !== null) {
             $this->data['media'] = $media;
             return $this;
         }
@@ -142,14 +142,14 @@ class AssetData
 
     /**
      * Asset footer : if script set for footer
-     * 
-     * @param  string $footer   Option for asset footer
-     * @return string           Asset footer
+     *
+     * @param  bool $footer     Option for asset footer
+     * @return bool|AssetData   Asset footer
      * @since 1.0.0
      */
-    public function footer($footer = '')
+    public function footer(bool $footer = null)
     {
-        if ($footer && is_bool($footer)) {
+        if ($footer !== null) {
             $this->data['footer'] = $footer;
             return $this;
         }
@@ -159,93 +159,93 @@ class AssetData
 
     /**
      * Remove all asset data
-     * 
+     *
      * @return AssetData object
      * @since 1.0.0
      */
-    public function flush()
+    public function flush(): AssetData
     {
-        $this->data  = Kernel::getGlobal('core/component/asset/default-data');
+        $this->data = Kernel::getGlobal('core/component/asset/default-data');
         return $this;
     }
 
     /**
      * Get raw identification of asset
-     * 
+     *
      * @return string   Identification of asset
      * @since 1.0.0
      */
-    public function raw()
+    public function raw(): string
     {
         return $this->raw;
     }
 
     /**
      * Additional info of asset
-     * 
+     *
      * @return SplFileInfo object
      * @since 1.0.0
      */
-    public function info()
+    public function info(): object
     {
         return $this->info;
     }
 
     /**
      * Check if asset is file
-     * 
-     * @return boolean   True of False
+     *
+     * @return bool   True of False
      * @since 1.0.0
      */
-    public function isFile()
+    public function isFile(): bool
     {
         return ($this->info->getExtension()) ? true : false;
     }
 
     /**
      * Get asset path if is file
-     * 
+     *
      * @return string   Asset path
      * @since 1.0.0
      */
-    public function getPath()
+    public function getPath(): string
     {
         if ($this->isFile()) {
             return $this->location->get($this->raw);
         } else {
-            throw new \RuntimeException(esc_html__('Asset is not file : ', 'zc') . $this->raw);
+            throw new \RuntimeException("Asset is not file : {$this->raw}");
         }
     }
 
     /**
      * Get asset URL
-     * 
+     *
      * @return string   Asset URL
      * @since 1.0.0
      */
-    public function getURL()
+    public function getURL(): string
     {
         return Tools::getURL($this->getPath());
     }
 
     /**
      * Asset data
-     * 
+     *
      * @return array   All asset data
      * @since 1.0.0
      */
-    public function getAssetData()
+    public function getAssetData(): array
     {
         return $this->data;
     }
 
     /**
      * Add additional arguments
-     * 
+     *
      * @param array $args   List of arguments
      * @since 1.0.0
      */
-    public function addArgs(array $args)
+    public function addArgs(array $args): AssetData
     {
         $this->data['args'] = $args;
         return $this;
@@ -253,25 +253,25 @@ class AssetData
 
     /**
      * Get additional arguments
-     * 
+     *
      * @return array   Additional arguments
      * @since 1.0.0
      */
-    public function getArgs()
+    public function getArgs(): array
     {
         return (!empty($this->data['args'])) ? $this->data['args'] : [];
     }
 
     /**
      * Check if asset has additional argument
-     * 
-     * @param  string  $arg   Argument name
-     * @return boolean        True of False
+     *
+     * @param  string $arg   Argument name
+     * @return bool           True of False
      * @since 1.0.0
      */
-    public function hasArg($arg)
+    public function hasArg(string $arg): bool
     {
-        if ($arg && is_string($arg)) {
+        if ($arg) {
             return in_array($arg, $this->getArgs());
         }
 
@@ -280,14 +280,14 @@ class AssetData
 
     /**
      * Add additional asset data
-     * 
+     *
      * @param string $id    Identifier
      * @param array  $data  Additional data
      * @since 1.0.0
      */
-    public function addAdditionalData($id, array $data)
+    public function addAdditionalData(string $id, array $data): AssetData
     {
-        if ($id && is_string($id) && !empty($data)) {
+        if ($id && !empty($data)) {
             $this->data['additional-data'][$id] = $data;
         }
 
@@ -296,14 +296,14 @@ class AssetData
 
     /**
      * Get additional asset data
-     * 
+     *
      * @param  string $id   Identifier
-     * @return array        Additional asset data
+     * @return array|bool   Additional asset data
      * @since 1.0.0
      */
-    public function getAdditionalData($id)
+    public function getAdditionalData(string $id)
     {
-        if ($id && is_string($id)) {
+        if ($id) {
             return (!empty($this->data['additional-data'][$id])) ? $this->data['additional-data'][$id] : false;
         }
 
@@ -312,12 +312,12 @@ class AssetData
 
     /**
      * Generate asset name
-     * 
-     * @param  boolean $withCoreSlug   With next prefix : zc
-     * @return string                  Generated asset name
+     *
+     * @param  bool $withCoreSlug   With next prefix : zc
+     * @return string               Generated asset name
      * @since 1.0.0
      */
-    public function generateName($withCoreSlug = true)
+    public function generateName(bool $withCoreSlug = true): string
     {
         $fileURL = $this->getURL();
         $rootURL = Kernel::service('app-locator')->getURL();
@@ -328,7 +328,7 @@ class AssetData
             $output  = str_replace($rootURL . '/', '', $fileURL);
             $output  = strtolower($output);
 
-            return ($withCoreSlug) ? Kernel::getGlobal('core/slug') .'/'. $output : $output;
+            return ($withCoreSlug) ? Kernel::getGlobal('core/slug') . '/' . $output : $output;
         } else {
             $rootURL = Kernel::service('app-locator')->getRootURL();
 
@@ -339,12 +339,10 @@ class AssetData
                 preg_match("/{$fwSP}(.*)/i", $fileURL, $output);
                 $output = strtolower($output[1]);
 
-                return ($withCoreSlug) ? Kernel::getGlobal('core/slug') .'/'. $output : $output;
+                return ($withCoreSlug) ? Kernel::getGlobal('core/slug') . '/' . $output : $output;
             } else {
                 return basename($fileURL);
             }
         }
-
-        return false;
     }
 }

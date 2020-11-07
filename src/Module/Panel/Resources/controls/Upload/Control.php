@@ -24,14 +24,14 @@ class Control extends ControlKernel
 {
     /**
      * Control setup
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function setup()
+    public function setup(): void
     {
         $this->localize([
-            'remove' => __('Remove', 'zc')
+            'remove' => __('Remove', 'zc'),
         ]);
 
         $this->addAction('admin_enqueue_scripts', function () {

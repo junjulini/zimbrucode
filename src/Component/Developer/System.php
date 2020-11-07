@@ -11,8 +11,8 @@
 
 namespace ZimbruCode\Component\Developer;
 
-use ZimbruCode\Component\Core\Kernel;
 use ZimbruCode\Component\Common\Tools;
+use ZimbruCode\Component\Core\Kernel;
 
 /**
  * Class : System functions
@@ -25,19 +25,20 @@ class System
 {
     /**
      * Dump system data
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function dumpSysData()
+    public function dumpSysData(): void
     {
         $memory = $this->getMemoryUsage();
+
         $data   = [
             'server-load'         => $this->getServerLoad(),
             'server-memory-usage' => $this->getServerMemoryUsage(),
-            'memory-limit'        => $memory['limit'] . ' Mb',
-            'memory-usage'        => $memory['usage'] . ' Mb',
-            'memory-percent'      => $memory['percent'] . '%',
+            'memory-limit'        => "{$memory['limit']} Mb",
+            'memory-usage'        => "{$memory['usage']} Mb",
+            'memory-percent'      => "{$memory['percent']} %",
             'ip'                  => $_SERVER['SERVER_ADDR'],
             'php'                 => PHP_VERSION . ' @' . (PHP_INT_SIZE * 8) . 'BitOS',
         ];
@@ -47,19 +48,20 @@ class System
 
     /**
      * Get system data
-     * 
+     *
      * @return array   Data
      * @since 1.0.0
      */
-    public function getSysData()
+    public function getSysData(): array
     {
         $memory = $this->getMemoryUsage();
+
         return [
             'server-load'         => $this->getServerLoad(),
             'server-memory-usage' => $this->getServerMemoryUsage(),
-            'memory-limit'        => $memory['limit'] . ' Mb',
-            'memory-usage'        => $memory['usage'] . ' Mb',
-            'memory-percent'      => $memory['percent'] . '%',
+            'memory-limit'        => "{$memory['limit']} Mb",
+            'memory-usage'        => "{$memory['usage']} Mb",
+            'memory-percent'      => "{$memory['percent']} %",
             'ip'                  => $_SERVER['SERVER_ADDR'],
             'php'                 => PHP_VERSION . ' @' . (PHP_INT_SIZE * 8) . 'BitOS',
         ];
@@ -67,28 +69,27 @@ class System
 
     /**
      * Display system data
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function displaySysData()
+    public function displaySysData(): void
     {
         if (Kernel::dev()) {
-            Kernel::dev()->addInfoMessage(esc_html__('System : ', 'zc'), $this->getSysData());
+            Kernel::dev()->addInfoMessage('System : ', $this->getSysData());
         }
     }
 
     /**
      * Get server CPU load
-     * 
-     * @return float   CPU load
+     *
      * @since 1.0.0
      */
     public function getServerLoad()
     {
         if (stristr(PHP_OS, 'win')) {
             if (!class_exists('COM')) {
-                return esc_html__('Not compatible', 'zc');
+                return 'Not compatible';
             }
 
             $wmi    = new \COM('Winmgmts://');
@@ -111,7 +112,7 @@ class System
 
     /**
      * Get server memory usage
-     * 
+     *
      * @return integer   Memory usage
      * @since 1.0.0
      */
@@ -129,17 +130,17 @@ class System
 
             return intval($memory_usage) . '%';
         } else {
-            return esc_html__('Not compatible', 'zc');
+            return 'Not compatible';
         }
     }
 
     /**
      * Get script memory usage
-     * 
+     *
      * @return array   Data memory usage
      * @since 1.0.0
      */
-    public function getMemoryUsage()
+    public function getMemoryUsage(): array
     {
         $memory          = [];
         $memory['limit'] = (int) ini_get('memory_limit');

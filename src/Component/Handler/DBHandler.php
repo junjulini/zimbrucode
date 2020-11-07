@@ -23,29 +23,30 @@ use ZimbruCode\Component\Core\Kernel;
  */
 class DBHandler
 {
-    protected $data = [];
+    protected $data      = [];
     protected $tableName = false;
 
     public function __construct()
     {
         if (!$slug = esc_sql(Kernel::getGlobal('app/slug'))) {
-            throw new \RuntimeException(esc_html__('App slug not defined.', 'zc'));
+            throw new \RuntimeException('App slug not defined.');
         }
 
         $this->tableName = Kernel::service('wpdb')->prefix . $slug;
         $check = strcasecmp(Kernel::service('wpdb')->get_var("SHOW TABLES LIKE '{$this->tableName}'"), $this->tableName);
+
         $this->checkError();
 
         if (0 !== $check) {
             $charsetCollate = Kernel::service('wpdb')->get_charset_collate();
             $sql = "CREATE TABLE {$this->tableName} (
-                      id bigint(20) unsigned NOT NULL auto_increment,
-                      name varchar(191) NOT NULL default '',
-                      value longtext NOT NULL,
-                      autoload varchar(20) NOT NULL default 'yes',
-                      PRIMARY KEY  (id),
-                      UNIQUE KEY name (name)
-                    ) {$charsetCollate};";
+                    id bigint(20) unsigned NOT NULL auto_increment,
+                    name varchar(191) NOT NULL default '',
+                    value longtext NOT NULL,
+                    autoload varchar(20) NOT NULL default 'yes',
+                    PRIMARY KEY  (id),
+                    UNIQUE KEY name (name)
+                ) {$charsetCollate};";
 
             Kernel::service('wpdb')->query($sql);
             $this->checkError();
@@ -56,11 +57,11 @@ class DBHandler
 
     /**
      * Check if error in WPDB
-     * 
-     * @return none
+     *
+     * @return void
      * @since 1.0.0
      */
-    protected function checkError()
+    protected function checkError(): void
     {
         if ($e = Kernel::service('wpdb')->last_error) {
             throw new \RuntimeException('Error : WPDB - ' . $e);
@@ -69,40 +70,41 @@ class DBHandler
 
     /**
      * Get data from cache
-     * 
+     *
      * @param  string  $path      The path in the array
-     * @param  boolean $default   Value to use if the path was not found
+     * @param  mix     $default   Value to use if the path was not found
      * @return mix
      * @since 1.0.0
      */
-    protected function getData($path, $default = false)
+    protected function getData(string $path, $default = false)
     {
         return Tools::getNode($this->data, $path, $default);
     }
 
     /**
      * Add data in cache
-     * 
+     *
      * @param string $path   The path in the array
      * @param mix    $value  The value to set
      * @return void          This function does not return a value
      * @since 1.0.0
      */
-    protected function addData($path, $value)
+    protected function addData(string $path, $value): void
     {
         Tools::addNode($this->data, $path, $value);
     }
 
     /**
      * Cache data
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    protected function cacheData()
+    protected function cacheData(): void
     {
         $suppress = Kernel::service('wpdb')->suppress_errors();
-        $data = Kernel::service('wpdb')->get_results("SELECT name, value FROM {$this->tableName} WHERE autoload = 'yes'");
+        $data     = Kernel::service('wpdb')->get_results("SELECT name, value FROM {$this->tableName} WHERE autoload = 'yes'");
+
         $this->checkError();
 
         if ($data) {
@@ -120,16 +122,17 @@ class DBHandler
 
     /**
      * Cache direct data if is not autoload
-     * 
+     *
      * @param  string $key  Name of item from DB
-     * @return boolean      Result if item exist
+     * @return bool         Result if item exist
      * @since 1.0.0
      */
-    protected function cacheDirect($key)
+    protected function cacheDirect(string $key): bool
     {
-        if ($key && is_string($key)) {
+        if ($key) {
             $prep = Kernel::service('wpdb')->prepare("SELECT value FROM {$this->tableName} WHERE name = %s LIMIT 1", $key);
             $row  = Kernel::service('wpdb')->get_row($prep);
+
             $this->checkError();
 
             if (is_object($row)) {
@@ -153,13 +156,13 @@ class DBHandler
      *
      * @param string  $path         Path to a specific option to extract
      * @param string  $value        New value
-     * @param boolean $autoUpdate   Auto update data
-     * @param boolean $autoload     Auto load data
+     * @param bool    $autoUpdate   Auto update data
+     * @param bool    $autoload     Auto load data
      * @since 1.0.0
      */
-    public function add($path = '', $value = '', $autoUpdate = false, $autoload = true)
+    public function add(string $path = '', $value = '', bool $autoUpdate = false, bool $autoload = true): bool
     {
-        if ($path && is_string($path)) {
+        if ($path) {
             if ($this->getData($path) === $value) {
                 return false;
             }
@@ -174,8 +177,8 @@ class DBHandler
 
             $this->addData($path, $value);
 
-            if ($autoUpdate) {
-                if (strpos($path, '/') ==! false) {
+            if ($autoUpdate == true) {
+                if (strpos($path, '/') == !false) {
                     $path = strstr($path, '/', true);
                     $data = serialize($this->getData($path));
                 } elseif (strpos($path, '/') === false && is_array($value)) {
@@ -183,8 +186,8 @@ class DBHandler
                 } else {
                     $data = $this->getData($path);
                 }
-                
-                $autoload = ($autoload) ? 'yes' : 'no';
+
+                $autoload = ($autoload === true) ? 'yes' : 'no';
 
                 $check = Kernel::service('wpdb')->get_row(Kernel::service('wpdb')->prepare("SELECT autoload FROM {$this->tableName} WHERE name = %s", $path));
                 $this->checkError();
@@ -206,17 +209,18 @@ class DBHandler
 
     /**
      * Get
-     * 
+     *
      * @param  string  $path      Path to a specific option to extract
-     * @param  boolean $default   Default value
+     * @param  mix     $default   Default value
      * @return mix                Value from DB
      * @since 1.0.0
      */
-    public function get($path = '', $default = false)
+    public function get(string $path = '', $default = false)
     {
-        if ($path && is_string($path)) {
+        if ($path) {
             if (strpos($path, '/') !== false) {
                 $first = strstr($path, '/', true);
+
                 if (isset($this->data[$first])) {
                     return Tools::getNode($this->data, $path, $default);
                 } else {
@@ -240,23 +244,22 @@ class DBHandler
         } else {
             return $this->data;
         }
-
-        return false;
     }
 
     /**
      * Remove
-     * 
+     *
      * @param  string  $path         Path to a specific option to extract
-     * @param  boolean $autoUpdate   Auto update data
-     * @return boolean               Result of manipulation
+     * @param  bool    $autoUpdate   Auto update data
+     * @return bool                  Result of manipulation
      * @since 1.0.0
      */
-    public function remove($path = '', $autoUpdate = false)
+    public function remove(string $path = '', $autoUpdate = false)
     {
-        if ($path && is_string($path)) {
+        if ($path) {
             if (strpos($path, '/') !== false) {
                 $first = strstr($path, '/', true);
+
                 if (isset($this->data[$first])) {
                     $result = Tools::unsetNode($this->data, $path);
                 } else {
@@ -284,6 +287,7 @@ class DBHandler
                     $this->checkError();
                 } else {
                     $path = strstr($path, '/', true);
+
                     if ($data = $this->getData($path)) {
                         $check = Kernel::service('wpdb')->get_row(Kernel::service('wpdb')->prepare("SELECT autoload FROM {$this->tableName} WHERE name = %s", $path));
                         $this->checkError();
@@ -299,17 +303,15 @@ class DBHandler
                 return $result;
             }
         }
-
-        return false;
     }
 
     /**
      * Full remove data
-     * 
-     * @return boolean   Result of removing
+     *
+     * @return bool   Result of removing
      * @since 1.0.0
      */
-    public function flush()
+    public function flush(): bool
     {
         $result = Kernel::service('wpdb')->query("TRUNCATE TABLE `{$this->tableName}`");
         $this->checkError();
@@ -320,11 +322,11 @@ class DBHandler
 
     /**
      * Dump data
-     * 
-     * @return boolean  None
+     *
+     * @return void
      * @since 1.0.0
      */
-    public function dump()
+    public function dump(): void
     {
         Tools::dump($this->data);
     }

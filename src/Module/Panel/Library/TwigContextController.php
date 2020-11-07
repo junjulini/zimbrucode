@@ -22,21 +22,22 @@ class TwigContextController
 {
     protected $context = [];
 
-    public function __construct(array &$context) {
+    public function __construct(array &$context)
+    {
         $this->context = &$context;
     }
 
-    public function add($name, $value = '')
+    public function add(string $name, $value = ''): void
     {
-        if ($name && is_string($name)) {
+        if ($name) {
             $this->context[$name] = $value;
         }
     }
 
-    public function get($name)
+    public function get(string $name)
     {
-        if (!$name || !is_string($name)) {
-            throw new \InvalidArgumentException('ZimbruCode\Module\Panel\Library\TwigContextController : Name item is empty or not string');
+        if (!$name) {
+            throw new \InvalidArgumentException('ZimbruCode\Module\Panel\Library\TwigContextController : Name item is empty');
         }
 
         if (!isset($this->context[$name])) {

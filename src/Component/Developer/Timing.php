@@ -27,11 +27,11 @@ class Timing
 
     /**
      * Start time
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function start($marker = '')
+    public function start(string $marker = ''): void
     {
         self::$marker = $marker;
         self::$start  = microtime(true);
@@ -39,7 +39,7 @@ class Timing
 
     /**
      * End time
-     * 
+     *
      * @return int   Time
      * @since 1.0.0
      */
@@ -50,17 +50,17 @@ class Timing
 
     /**
      * Converted time
-     * 
+     *
      * @since 1.0.0
      */
     public function display()
     {
-        $segs  = $this->segs();
-        $days  = floor($segs / 86400);
+        $segs = $this->segs();
+        $days = floor($segs / 86400);
         $segs -= $days * 86400;
         $hours = floor($segs / 3600);
         $segs -= $hours * 3600;
-        $mins  = floor($segs / 60);
+        $mins = floor($segs / 60);
         $segs -= $mins * 60;
         $microsegs = ($segs - floor($segs)) * 1000;
         $segs      = floor($segs);

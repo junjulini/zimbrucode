@@ -28,7 +28,7 @@ class Module extends ModuleKernel
      * @return void
      * @since 1.0.0
      */
-    public function setup()
+    public function setup(): void
     {
         
     }

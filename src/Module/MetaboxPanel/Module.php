@@ -27,15 +27,15 @@ class Module extends ModuleKernel
 
     /**
      * Module setup
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function setup()
+    public function setup(): void
     {
         $panel = $this->module()->Panel;
 
-        $this->addModuleSetting('slug', 'metabox_panel__' . $this->getModuleSetting('slug', 'default'));
+        $this->addModuleSetting('slug', "metabox_panel__{$this->getModuleSetting('slug', 'default')}");
 
         if (is_string($this->getModuleSetting('screen'))) {
             $this->addModuleSetting('screen', [$this->getModuleSetting('screen')]);

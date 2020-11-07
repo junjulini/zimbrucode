@@ -12,7 +12,6 @@
 namespace ZimbruCode\Component\Debug;
 
 use Tracy\IBarPanel;
-use ZimbruCode\Component\Core\Kernel;
 
 /**
  * Class : DevLogTracyBarExtension
@@ -27,16 +26,17 @@ class DevLogTracyBarExtension implements IBarPanel
 
     /**
      * Renders HTML code for custom tab
-     * 
+     *
      * @return string
      * @since 1.0.0
      */
-    public function getTab()
+    public function getTab(): string
     {
-        ob_start();
         if (empty($this->data)) {
             return '';
         }
+
+        ob_start();
 
         ?>
         <svg version="1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" enable-background="new 0 0 48 48">
@@ -52,7 +52,7 @@ class DevLogTracyBarExtension implements IBarPanel
             <path fill="#3F51B5" d="M9,29h10V15H9c-1.1,0-2,0.9-2,2v10C7,28.1,7.9,29,9,29z"/>
             <path fill="#42A5F5" d="M38,38L38,38c-1.1,0-2-0.9-2-2V8c0-1.1,0.9-2,2-2h0c1.1,0,2,0.9,2,2v28C40,37.1,39.1,38,38,38z"/>
         </svg>
-        <span class="tracy-label"><?php echo esc_html__('Log collector', 'zc'); ?></span>
+        <span class="tracy-label"><?php echo 'Log collector'; ?></span>
         <?php
 
         return ob_get_clean();
@@ -60,11 +60,11 @@ class DevLogTracyBarExtension implements IBarPanel
 
     /**
      * Renders HTML code for custom panel
-     * 
+     *
      * @return string
      * @since 1.0.0
      */
-    public function getPanel()
+    public function getPanel(): string
     {
         ob_start();
         ?>
@@ -77,20 +77,20 @@ class DevLogTracyBarExtension implements IBarPanel
             }
         </style>
 
-        <h1><?php echo esc_html__('Log collector', 'zc'); ?></h1>
+        <h1><?php echo 'Log collector'; ?></h1>
 
         <div class="tracy-inner tracy-DumpPanel">
             <?php foreach ($this->data as $item): ?>
                 <?php if ($item['title']): ?>
                     <?php
-                    $color = htmlspecialchars($item['color'], ENT_NOQUOTES, 'UTF-8');
-                    $title = htmlspecialchars($item['title'], ENT_NOQUOTES, 'UTF-8');
+                        $color = htmlspecialchars($item['color'], ENT_NOQUOTES, 'UTF-8');
+                        $title = htmlspecialchars($item['title'], ENT_NOQUOTES, 'UTF-8');
                     ?>
                     <h2 <?php echo "style=\"background:{$color}\""; ?>><?php echo $title; ?></h2>
-                <?php endif; ?>
+                <?php endif;?>
 
                 <?php echo $item['dump']; ?>
-            <?php endforeach; ?>
+            <?php endforeach;?>
         </div>
         <?php
 

@@ -13,8 +13,8 @@ namespace ZimbruCode\Component\Core;
 
 use ZimbruCode\Component\Core\ModuleLoader;
 use ZimbruCode\Component\Developer\DeveloperMode;
-use ZimbruCode\Component\Handler\Traits\HooksHandlerTrait;
 use ZimbruCode\Component\Handler\Traits\GlobalCacheHandlerTrait;
+use ZimbruCode\Component\Handler\Traits\HooksHandlerTrait;
 use ZimbruCode\Component\Handler\Traits\RequestHandlerTrait;
 use ZimbruCode\Component\Handler\Traits\SessionHandlerTrait;
 
@@ -27,40 +27,37 @@ use ZimbruCode\Component\Handler\Traits\SessionHandlerTrait;
  */
 abstract class Kernel extends GlobalDataOperator
 {
-    use HooksHandlerTrait,
-        GlobalCacheHandlerTrait,
-        RequestHandlerTrait,
-        SessionHandlerTrait;
+    use HooksHandlerTrait, GlobalCacheHandlerTrait, RequestHandlerTrait, SessionHandlerTrait;
 
     /**
      * Get environment
-     * 
+     *
      * @return string  Environment
      * @since 1.0.0
      */
-    final public static function getEnvironment()
+    final public static function getEnvironment(): string
     {
         return self::getGlobal('core/dev-config/environment', 'prod');
     }
 
     /**
      * For developers
-     * 
-     * @return object  DeveloperMode
+     *
+     * @return DeveloperMode
      * @since 1.0.0
      */
-    final public static function dev($type = '', $title = 'Title', $msg = ' ... ')
+    final public static function dev(string $type = '', string $title = 'Title', string $msg = ' ... '): ?DeveloperMode
     {
-        return (self::getGlobal('core/dev')) ? new DeveloperMode($type, $title, $msg) : false;
+        return (self::getGlobal('core/dev')) ? new DeveloperMode($type, $title, $msg) : null;
     }
 
     /**
      * Module loader
-     * 
-     * @return object  ModuleLoader
+     *
+     * @return ModuleLoader
      * @since 1.0.0
      */
-    final public function module(array $config = [])
+    final public function module(array $config = []): ModuleLoader
     {
         if ($loader = self::getGlobalCache('module-instance')) {
             if (!($loader instanceof ModuleLoader)) {
@@ -79,20 +76,20 @@ abstract class Kernel extends GlobalDataOperator
 
     /**
      * Get service ( or set )
-     * 
+     *
      * @param  string  $service   Service name
      * @param  object  $handler   Service object ( for setter )
      * @return object             Service object
      * @since 1.0.0
      */
-    final public static function service($service, $handler = false)
+    final public static function service(string $service, $handler = false)
     {
-        if ($service && is_string($service)) {
+        if ($service) {
             if ($handler && is_object($handler)) {
                 if (!self::getGlobalCache("services/{$service}")) {
                     self::addGlobalCache("services/{$service}", $handler);
                 } else {
-                    throw new \RuntimeException(sprintf(esc_html__('This service exist : %s', 'zc'), $service));
+                    throw new \RuntimeException("This service exist : {$service}");
                 }
             } else {
 
@@ -111,12 +108,10 @@ abstract class Kernel extends GlobalDataOperator
                 if ($object = self::getGlobalCache("services/{$service}")) {
                     return $object;
                 } else {
-                    throw new \RuntimeException(sprintf(esc_html__('This service don\'t exist : %s', 'zc'), $service));
+                    throw new \RuntimeException("This service don't exist : {$service}");
                 }
             }
         }
-
-        return false;
     }
 
     /**

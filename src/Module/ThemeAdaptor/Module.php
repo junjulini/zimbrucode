@@ -30,7 +30,7 @@ class Module extends ModuleKernel
 
     /**
      * Module setup
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
@@ -45,14 +45,14 @@ class Module extends ModuleKernel
 
     /**
      * Search custom templates
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    protected function searchCustomTemplates()
+    protected function searchCustomTemplates(): void
     {
         $prefix = self::getGlobal('core/module/theme-adaptor/custom-template-prefix', '__');
-        $slug = self::getGlobal('core/slug', 'zc');
+        $slug   = self::getGlobal('core/slug', 'zc');
 
         if (file_exists($dir = self::service('app-locator')->getViewPath())) {
             foreach ((new Finder)->files()->in($dir) as $file) {
@@ -62,7 +62,7 @@ class Module extends ModuleKernel
 
                     $this->templates[$hash] = [
                         'name' => ucfirst(str_replace([$prefix, '-', '_'], ['', ' ', ' '], $file->getBasename('.twig'))),
-                        'file' => $path
+                        'file' => $path,
                     ];
                 }
             }
@@ -77,7 +77,7 @@ class Module extends ModuleKernel
 
                         $this->templates[$hash] = [
                             'name' => ucfirst(str_replace([$prefix, '-', '_'], ['', ' ', ' '], $file->getBasename('.twig'))),
-                            'file' => $path
+                            'file' => $path,
                         ];
                     }
                 }
@@ -86,11 +86,11 @@ class Module extends ModuleKernel
 
         if ($this->templates) {
             $this->addFilter('theme_page_templates', '__filter_register_templates', 20, 4);
-            $this->addFilter('template_include',     '__filter_register_templates_files', 11);
+            $this->addFilter('template_include', '__filter_register_templates_files', 11);
         }
     }
 
-    public function advancedRender($template, $locationPath, $directRender = true, $directMode = false, $flush = true)
+    public function advancedRender(string $template, string $locationPath, bool $directRender = true, bool $directMode = false, $flush = true): Render
     {
         return new Render($template, $locationPath, $directRender, $directMode, $flush);
     }
@@ -113,6 +113,7 @@ class Module extends ModuleKernel
     public function __filter_register_templates_files($template)
     {
         $templates = get_post_meta(get_the_ID(), '_wp_page_template');
+
         if (!empty($templates)) {
             foreach ($templates as $templateHash) {
                 if (isset($this->templates[$templateHash])) {
@@ -126,14 +127,14 @@ class Module extends ModuleKernel
 
     /**
      * Filter : Template include
-     * 
+     *
      * @param  string $wpTemplate WordPress template
      * @return string             WordPress template
      * @since 1.0.0
      */
     public function __filter_template_include($wpTemplate)
     {
-        $tfh = new TemplateFilesHandler;
+        $tfh           = new TemplateFilesHandler;
         $tfh->location = self::service('app-locator')->getViewPath();
 
         $template     = false;

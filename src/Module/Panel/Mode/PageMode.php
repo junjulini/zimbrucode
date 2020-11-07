@@ -28,11 +28,11 @@ class PageMode extends Mode
 
     /**
      * Mode setup
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function setup()
+    public function setup(): void
     {
         // Preparing controls & assets
         if (self::rGet('page') == $this->getModuleSetting('menu-slug')) {
@@ -58,17 +58,17 @@ class PageMode extends Mode
 
         // Ajax
         $this->addAjax('zc/module/panel/content_' . $this->getModuleSetting('slug'), '__ajax_load_panel_content');
-        $this->addAjax('zc/module/panel/save_' . $this->getModuleSetting('slug'),    '__ajax_save_options');
-        $this->addAjax('zc/module/panel/reset_' . $this->getModuleSetting('slug'),   '__ajax_reset_options');
+        $this->addAjax('zc/module/panel/save_' . $this->getModuleSetting('slug'), '__ajax_save_options');
+        $this->addAjax('zc/module/panel/reset_' . $this->getModuleSetting('slug'), '__ajax_reset_options');
     }
 
     /**
      * Callback : Creates html structure for panel
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function __callback_html_structure()
+    public function __callback_html_structure(): void
     {
         $this->callback()->run('panel-template--before');
 
@@ -90,11 +90,11 @@ class PageMode extends Mode
 
     /**
      * Action : Enqueue styles and scripts for panel
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function __action_enqueue()
+    public function __action_enqueue(): void
     {
         $this->callback()->run('panel-enqueue--before');
 
@@ -119,7 +119,7 @@ class PageMode extends Mode
             'reset-pop-up-ok'       => esc_html__('OK', 'zc'),
             'reset-pop-up-cancel'   => esc_html__('Cancel', 'zc'),
             'if-changed'            => esc_html__('Are you sure you want to leave ?', 'zc'),
-            'prefix-slug'           => self::getGlobal('core/module/panel/prefix-slug')
+            'prefix-slug'           => self::getGlobal('core/module/panel/prefix-slug'),
         ]));
 
         $this->callback()->run('panel-enqueue--after');
@@ -127,11 +127,11 @@ class PageMode extends Mode
 
     /**
      * Action : Register panel
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function __action_register_panel()
+    public function __action_register_panel(): void
     {
         // Menu page
         add_menu_page(
@@ -149,11 +149,11 @@ class PageMode extends Mode
 
     /**
      * Action : Register submenu panel
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function __action_register_submenu_panel()
+    public function __action_register_submenu_panel(): void
     {
         add_submenu_page(
             $this->getModuleSetting('parent-slug'),
@@ -169,11 +169,11 @@ class PageMode extends Mode
 
     /**
      * Action : Set admin bar with panel items
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function __action_bar_render($wpAdminBar)
+    public function __action_bar_render($wpAdminBar): void
     {
         $slug   = self::getGlobal('core/slug') . '-' . $this->getModuleSetting('slug');
         $target = (!is_admin()) ? '_blank' : '';
@@ -187,43 +187,43 @@ class PageMode extends Mode
                 if (!isset($setting['type'])) {
                     continue;
                 }
-    
+
                 if ($setting['type'] == 'menuTab' && !empty($setting['id'])) {
                     $menuItems[] = [
                         'parent' => $slug,
-                        'id'     => $slug . '-menu-item-' . $setting['id'],
+                        'id'     => "{$slug}-menu-item-{$setting['id']}",
                         'title'  => $setting['title'],
-                        'href'   => admin_url('admin.php?page=' . $this->getModuleSetting('menu-slug') . '#section_' . $setting['id']),
+                        'href'   => admin_url("admin.php?page={$this->getModuleSetting('menu-slug')}#section_{$setting['id']}"),
                         'meta'   => [
                             'target' => $target,
                         ],
                     ];
                 }
-    
+
                 if ($setting['type'] == 'menuParentTab' && !empty($setting['id'])) {
-                    $parentTab = $setting['id'];
+                    $parentTab   = $setting['id'];
                     $menuItems[] = [
                         'parent' => $slug,
-                        'id'     => $slug . '-menu-parent-item-' . $parentTab,
+                        'id'     => "{$slug}-menu-parent-item-{$parentTab}",
                         'title'  => $setting['title'],
                         'href'   => '#',
                         'meta'   => [
                             'target' => $target,
                         ],
                     ];
-    
+
                     if (!empty($setting['content']) && is_array($setting['content'])) {
                         foreach ($setting['content'] as $setting) {
                             if (!isset($setting['type'])) {
                                 continue;
                             }
-    
+
                             if ($setting['type'] == 'menuTab' && !empty($setting['id'])) {
                                 $menuItems[] = [
-                                    'parent' => $slug . '-menu-parent-item-' . $parentTab,
-                                    'id'     => $slug . '-menu-item-' . $setting['id'],
+                                    'parent' => "{$slug}-menu-parent-item-{$parentTab}",
+                                    'id'     => "{$slug}-menu-item-{$setting['id']}",
                                     'title'  => $setting['title'],
-                                    'href'   => admin_url('admin.php?page=' . $this->getModuleSetting('menu-slug') . '#section_' . $setting['id']),
+                                    'href'   => admin_url("admin.php?page={$this->getModuleSetting('menu-slug')}#section_{$setting['id']}"),
                                     'meta'   => [
                                         'target' => $target,
                                     ],
@@ -242,12 +242,12 @@ class PageMode extends Mode
                 'parent' => false,
                 'id'     => $slug,
                 'title'  => $title,
-                'href'   => admin_url('admin.php?page=' . $this->getModuleSetting('menu-slug')),
+                'href'   => admin_url("admin.php?page={$this->getModuleSetting('menu-slug')}"),
                 'meta'   => [
                     'target' => $target,
                 ],
             ]);
-    
+
             foreach ($menuItems as $item) {
                 $wpAdminBar->add_menu($item);
             }
@@ -256,11 +256,11 @@ class PageMode extends Mode
 
     /**
      * Ajax : Panel content
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function __ajax_load_panel_content()
+    public function __ajax_load_panel_content(): void
     {
         $ajax = new AjaxHandler($this->getModuleSetting('nonce'));
 
@@ -271,7 +271,7 @@ class PageMode extends Mode
         if ($this->getModuleSetting('ajax-response/minify')) {
             $content = trim(preg_replace('/>\s+</', '><', $content));
         }
-        
+
         $oc = null;
         if ($this->getModuleSetting('ajax-response/gzip')) {
             $oc = (ini_get('zlib.output_compression') != '1') ? 'ob_gzhandler' : $oc;
@@ -294,11 +294,11 @@ class PageMode extends Mode
 
     /**
      * Ajax : Panel options save
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function __ajax_save_options()
+    public function __ajax_save_options(): void
     {
         $ajax = new AjaxHandler($this->getModuleSetting('nonce'));
 
@@ -328,11 +328,11 @@ class PageMode extends Mode
 
     /**
      * Ajax : Panel options reset
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function __ajax_reset_options()
+    public function __ajax_reset_options(): void
     {
         $ajax = new AjaxHandler($this->getModuleSetting('nonce'));
 

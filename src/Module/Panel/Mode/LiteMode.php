@@ -28,11 +28,11 @@ class LiteMode extends Mode
 
     /**
      * Mode setup
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function setup()
+    public function setup(): void
     {
         // Preparing controls & assets
         if (self::rGet('page') == $this->getModuleSetting('menu-slug')) {
@@ -52,17 +52,17 @@ class LiteMode extends Mode
         $this->addAction('admin_menu', $action);
 
         // Ajax
-        $this->addAjax('zc/module/panel/save_' . $this->getModuleSetting('slug'),  '__ajax_save_options');
+        $this->addAjax('zc/module/panel/save_' . $this->getModuleSetting('slug'), '__ajax_save_options');
         $this->addAjax('zc/module/panel/reset_' . $this->getModuleSetting('slug'), '__ajax_reset_options');
     }
 
     /**
      * Callback : Creates html structure for panel
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function __callback_html_structure()
+    public function __callback_html_structure(): void
     {
         $this->callback()->run('panel-template--before');
 
@@ -74,11 +74,11 @@ class LiteMode extends Mode
 
     /**
      * Action : Enqueue styles and scripts for panel
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function __action_enqueue()
+    public function __action_enqueue(): void
     {
         $this->callback()->run('panel-enqueue--before');
 
@@ -103,7 +103,7 @@ class LiteMode extends Mode
             'reset-pop-up-ok'       => esc_html__('OK', 'zc'),
             'reset-pop-up-cancel'   => esc_html__('Cancel', 'zc'),
             'if-changed'            => esc_html__('Are you sure you want to leave ?', 'zc'),
-            'prefix-slug'           => self::getGlobal('core/module/panel/prefix-slug')
+            'prefix-slug'           => self::getGlobal('core/module/panel/prefix-slug'),
         ]));
 
         $this->callback()->run('panel-enqueue--after');
@@ -111,11 +111,11 @@ class LiteMode extends Mode
 
     /**
      * Action : Register panel
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function __action_register_panel()
+    public function __action_register_panel(): void
     {
         // Menu page
         add_menu_page(
@@ -133,11 +133,11 @@ class LiteMode extends Mode
 
     /**
      * Action : Register submenu panel
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function __action_register_submenu_panel()
+    public function __action_register_submenu_panel(): void
     {
         add_submenu_page(
             $this->getModuleSetting('parent-slug'),
@@ -153,11 +153,11 @@ class LiteMode extends Mode
 
     /**
      * Ajax : Panel options save
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function __ajax_save_options()
+    public function __ajax_save_options(): void
     {
         $ajax = new AjaxHandler($this->getModuleSetting('nonce'));
 
@@ -185,11 +185,11 @@ class LiteMode extends Mode
 
     /**
      * Ajax : Panel options reset
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function __ajax_reset_options()
+    public function __ajax_reset_options(): void
     {
         $ajax = new AjaxHandler($this->getModuleSetting('nonce'));
 

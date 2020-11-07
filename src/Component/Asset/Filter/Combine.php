@@ -43,11 +43,11 @@ class Combine extends Filter
 
     /**
      * Setup filter
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    protected function setup()
+    protected function setup(): void
     {
         $env = Kernel::getEnvironment();
 
@@ -83,29 +83,28 @@ class Combine extends Filter
 
     /**
      * Preparing CSS assets
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    protected function prepCSSAssets()
+    protected function prepCSSAssets(): void
     {
-        $output  = $this->varPath . '/' . $this->data['settings']['css']['outputName'] . '.css';
+        $output  = "{$this->varPath}/{$this->data['settings']['css']['outputName']}.css";
         $minify  = $this->data['settings']['css']['minify'];
         $convert = $this->data['settings']['css']['convert'];
 
         $this->cache     = new AssetCache;
         $executeLocation = $this->cache->addExecuteLocation(__CLASS__);
+
         $this->cache->addPath($output . $this->cacheExt);
 
         // Callback : Check output file if exist
-        $this->cache->addCheckFunction(function ($args) use ($executeLocation, $output) {
+        $this->cache->addCheckFunction(function (array $args) use ($executeLocation, $output): bool {
             if (!file_exists($output)) {
                 if (Kernel::dev()) {
-                    Kernel::dev()->addWarningMessage(esc_html__('Asset - ', 'zc') . $executeLocation . esc_html__('/Cache : ', 'zc') .
-                        esc_html__('Additional checking functions', 'zc') . ' : ' .
-                        $output . esc_html__(' : file output not found.', 'zc')
-                    );
+                    Kernel::dev()->addWarningMessage("Asset - {$executeLocation}/Cache : Additional checking functions : {$output}  : file output not found.");
                 }
+
                 return true;
             }
 
@@ -113,6 +112,7 @@ class Combine extends Filter
                 return true;
             }
 
+            return false;
         });
 
         foreach ($this->data['assets']['css'] as $asset) {
@@ -121,7 +121,7 @@ class Combine extends Filter
 
         // DEV
         if (Kernel::dev()) {
-            Kernel::dev()->addLogMessage(esc_html__('Asset - ', 'zc') . $executeLocation, [
+            Kernel::dev()->addLogMessage("Asset - {$executeLocation}", [
                 'cache-content' => ($this->cache->has() ? $this->cache->get() : '?'),
             ]);
         }
@@ -143,6 +143,7 @@ class Combine extends Filter
                 if ($minify) {
                     $minifier = new MinifyCSS;
                     $minifier->add($content);
+
                     $content = $minifier->minify();
                 }
 
@@ -151,12 +152,13 @@ class Combine extends Filter
                     $convertor->addAsset($asset->getPath());
                     $convertor->addOutput($output);
                     $convertor->add($content);
+
                     $content = $convertor->convertPathToRelative();
                 }
 
                 $data = [
                     'between' => (0 != $n ? "\n\n\n" : ''),
-                    'comment' => "/*\n* " . $asset->name() . ' : v' . $asset->version() . "\n*/\n\n",
+                    'comment' => "/*\n* {$asset->name()} : v{$asset->version()}\n*/\n\n",
                     'content' => $content,
                 ];
 
@@ -175,30 +177,29 @@ class Combine extends Filter
 
     /**
      * Preparing JavaScript assets
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    protected function prepJavaScriptAssets()
+    protected function prepJavaScriptAssets(): void
     {
-        $suffix     = ($this->data['settings']['js']['minify']) ? '.min.js': '.js';
+        $suffix     = ($this->data['settings']['js']['minify']) ? '.min.js' : '.js';
         $output     = $this->varPath . '/' . $this->data['settings']['js']['outputName'] . $suffix;
         $minify     = $this->data['settings']['js']['minify'];
         $minifyType = $this->data['settings']['js']['minify-type'];
 
         $this->cache     = new AssetCache;
         $executeLocation = $this->cache->addExecuteLocation(__CLASS__);
+
         $this->cache->addPath($output . $this->cacheExt);
 
         // Callback : Check output file if exist
-        $this->cache->addCheckFunction(function ($args) use ($executeLocation, $output) {
+        $this->cache->addCheckFunction(function (array $args) use ($executeLocation, $output): bool {
             if (!file_exists($output)) {
                 if (Kernel::dev()) {
-                    Kernel::dev()->addWarningMessage(esc_html__('Asset - ', 'zc') . $executeLocation . esc_html__('/Cache : ', 'zc') .
-                        esc_html__('Additional checking functions', 'zc') . ' : ' .
-                        $output . esc_html__(' : file output not found.', 'zc')
-                    );
+                    Kernel::dev()->addWarningMessage("Asset - {$executeLocation}/Cache : Additional checking functions : {$output}  : file output not found.");
                 }
+
                 return true;
             }
 
@@ -206,6 +207,7 @@ class Combine extends Filter
                 return true;
             }
 
+            return false;
         });
 
         foreach ($this->data['assets']['js'] as $asset) {
@@ -214,7 +216,7 @@ class Combine extends Filter
 
         // DEV
         if (Kernel::dev()) {
-            Kernel::dev()->addLogMessage(esc_html__('Asset - ', 'zc') . $executeLocation, [
+            Kernel::dev()->addLogMessage("Asset - {$executeLocation}", [
                 'cache-content' => ($this->cache->has() ? $this->cache->get() : '?'),
             ]);
         }
@@ -245,7 +247,7 @@ class Combine extends Filter
 
                 $data = [
                     'between' => (0 != $n ? "\n\n\n" : ''),
-                    'comment' => "/*\n* " . $asset->name() . ' : v' . $asset->version() . "\n*/\n\n",
+                    'comment' => "/*\n* {$asset->name()} : v{$asset->version()}\n*/\n\n",
                     'content' => $content,
                 ];
 

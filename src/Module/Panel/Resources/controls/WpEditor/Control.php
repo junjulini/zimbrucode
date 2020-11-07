@@ -11,8 +11,8 @@
 
 namespace ZimbruCode\Module\Panel\Controls\WpEditor;
 
-use ZimbruCode\Module\Panel\Library\ControlKernel;
 use ZimbruCode\Component\Common\Tools;
+use ZimbruCode\Module\Panel\Library\ControlKernel;
 
 /**
  * Panel control : WP Editor
@@ -25,11 +25,11 @@ class Control extends ControlKernel
 {
     /**
      * Control setup
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function setup()
+    public function setup(): void
     {
         if (!class_exists('_WP_Editors', false)) {
             require ABSPATH . WPINC . '/class-wp-editor.php';

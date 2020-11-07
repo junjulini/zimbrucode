@@ -24,11 +24,11 @@ trait CallbackTrait
 {
     /**
      * Callback object
-     * 
-     * @return function   Object
+     *
+     * @return CoreCallback
      * @since 1.0.0
      */
-    public function callback()
+    public function callback(): CoreCallback
     {
         if (!$this->getModuleData('callback') || !($this->getModuleData('callback') instanceof CoreCallback)) {
             $this->addModuleData('callback', new CoreCallback);

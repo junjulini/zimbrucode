@@ -26,18 +26,18 @@ use ZimbruCode\Module\Panel\Library\Traits\CallbackTrait;
 class Module extends ModuleKernel
 {
     use CallbackTrait {
-        CallbackTrait::callback as public;
+        CallbackTrait::callback as public ;
     }
 
     protected $__multiUse = true;
 
     /**
      * Module setup
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function setup()
+    public function setup(): void
     {
         // Initialization of Callback
         $this->callback();
@@ -47,13 +47,13 @@ class Module extends ModuleKernel
             // Check build settings if not empty
             if (!$this->getModuleSetting('build-settings', [])) {
                 if (!file_exists($this->getModuleSetting('build-settings-file'))) {
-                    throw new \InvalidArgumentException(esc_html__('Build settings are empty or file with settings not exist.', 'zc'));
+                    throw new \InvalidArgumentException('Build settings are empty or file with settings not exist.');
                 }
             }
 
             // Panel hook before
             do_action('zc/module/panel/setup_before', $this);
-            do_action('zc/module/panel/setup_before--' . $this->getModuleSetting('slug', 'general'), $this);
+            do_action("zc/module/panel/setup_before--{$this->getModuleSetting('slug', 'general')}", $this);
 
             // Preparing build settings
             $this->prepBuildSettings();
@@ -72,17 +72,17 @@ class Module extends ModuleKernel
 
             // Panel hook after
             do_action('zc/module/panel/setup_after', $this);
-            do_action('zc/module/panel/setup_after--' . $this->getModuleSetting('slug', 'general'), $this);
+            do_action("zc/module/panel/setup_after--{$this->getModuleSetting('slug', 'general')}", $this);
         }
     }
 
     /**
      * Preparing build settings
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    protected function prepBuildSettings()
+    protected function prepBuildSettings(): void
     {
         if ($this->getModuleSetting('build-settings')) {
             $this->addModuleData('build-settings', $this->getModuleSetting('build-settings'));
@@ -93,26 +93,26 @@ class Module extends ModuleKernel
 
     /**
      * Check panel mode
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    protected function checkMode()
+    protected function checkMode(): void
     {
         $mode = $this->getModuleSetting('mode', 'page');
+
         if (empty($mode)) {
-            throw new \InvalidArgumentException(esc_html__('Mode is empty.', 'zc'));
+            throw new \InvalidArgumentException('Mode is empty.');
         }
 
         if (!is_string($mode)) {
-            throw new \InvalidArgumentException(esc_html__('Mode is not string.', 'zc'));
+            throw new \InvalidArgumentException('Mode is not string.');
         }
 
         if (!self::getGlobal("core/module/panel/mode/{$mode}")) {
             if (!$this->getModuleData("custom-mode/{$mode}")) {
                 throw new \InvalidArgumentException(
-                    $mode .
-                    esc_html__(' - this mode is not compatible, permitted only : ', 'zc') .
+                    "{$mode} - this mode is not compatible, permitted only : " .
                     implode(', ', array_keys(Tools::arrayMerge(self::getGlobal('core/module/panel/mode'), $this->getModuleData('custom-mode', []))))
                 );
             }
@@ -123,11 +123,11 @@ class Module extends ModuleKernel
 
     /**
      * Preparing panel settings
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    protected function prepSettings()
+    protected function prepSettings(): void
     {
         if (self::getGlobal("core/module/panel/settings/{$this->getModuleData('mode')}")) {
             $this->addModuleSettings(Tools::arrayMerge(
@@ -139,11 +139,11 @@ class Module extends ModuleKernel
 
     /**
      * Load panel mode
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    protected function loadMode()
+    protected function loadMode(): void
     {
         $mode = ($mode = self::getGlobal("core/module/panel/mode/{$this->getModuleData('mode')}"))
             ? $mode
@@ -154,19 +154,19 @@ class Module extends ModuleKernel
 
     /**
      * Add custom mode
-     * 
+     *
      * @param string $mode    Mode name
      * @param string $class   Mode class name
      * @since 1.0.0
      */
-    public function addCustomMode($mode, $class)
+    public function addCustomMode(string $mode, string $class): ModuleKernel
     {
         if (!$mode) {
-            throw new \InvalidArgumentException(esc_html__('Mode is empty.', 'zc'));
+            throw new \InvalidArgumentException('Mode is empty.');
         }
 
         if (!class_exists($class)) {
-            throw new \InvalidArgumentException($class . esc_html__(' - class don\'t exist.', 'zc'));
+            throw new \InvalidArgumentException("{$class} - class don't exist.");
         }
 
         $this->addModuleData("custom-mode/{$mode}", $class);
@@ -175,27 +175,23 @@ class Module extends ModuleKernel
 
     /**
      * Add custom controls namespace
-     * 
+     *
      * @param string $path        Controls namespace path
      * @param string $namespace   Controls namespace
      * @since 1.0.0
      */
-    public function addCustomControlsNamespace($path, $namespace)
+    public function addCustomControlsNamespace(string $path, string $namespace): ModuleKernel
     {
         if (!$path) {
-            throw new \InvalidArgumentException(esc_html__('Control path is empty.', 'zc'));
+            throw new \InvalidArgumentException('Control path is empty.');
         }
 
         if (!Tools::isLocalPath($path)) {
-            throw new \InvalidArgumentException($path . esc_html__(' - control path is not local.', 'zc'));
+            throw new \InvalidArgumentException("{$path} - control path is not local.");
         }
 
         if (!$namespace) {
-            throw new \InvalidArgumentException(esc_html__('Control namespace is empty.', 'zc'));
-        }
-
-        if (!is_string($namespace)) {
-            throw new \InvalidArgumentException(esc_html__('Control namespace is not string.', 'zc'));
+            throw new \InvalidArgumentException('Control namespace is empty.');
         }
 
         $this->addModuleData('custom-controls-namespaces', Tools::arrayMerge(

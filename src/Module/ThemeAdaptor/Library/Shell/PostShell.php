@@ -28,17 +28,17 @@ class PostShell extends ShellKernel
         return $this->title();
     }
 
-    public function title($before = '', $after = '')
+    public function title(string $before = '', string $after = ''): void
     {
         the_title($before, $after);
     }
 
-    public function content()
+    public function content(): void
     {
         the_content();
     }
 
-    public function link()
+    public function link(): void
     {
         the_permalink();
     }
@@ -48,12 +48,12 @@ class PostShell extends ShellKernel
         return join(' ', get_post_class($class, $postID));
     }
 
-    public function ID()
+    public function ID(): void
     {
         the_ID();
     }
 
-    public function meta($meta, $id = null)
+    public function meta(string $meta, $id = null)
     {
         return OptionHandler::getMeta($meta, '', $id);
     }

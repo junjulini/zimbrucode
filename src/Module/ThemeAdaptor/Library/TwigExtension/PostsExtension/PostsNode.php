@@ -11,8 +11,8 @@
 
 namespace ZimbruCode\Module\ThemeAdaptor\Library\TwigExtension\PostsExtension;
 
-use Twig\Node\Node;
 use Twig\Compiler;
+use Twig\Node\Node;
 
 /**
  * Twig node class : Posts
@@ -23,40 +23,42 @@ use Twig\Compiler;
  */
 class PostsNode extends Node
 {
-    public function __construct(Node $body, $values, $line, $tag = null)
+    public function __construct(Node $body, ?Node $values, int $lineno, string $tag = null)
     {
+        $nodes = ['body' => $body];
+
         if ($values) {
-            parent::__construct(['body' => $body, 'values' => $values], [], $line, $tag);
-        } else {
-            parent::__construct(['body' => $body], [], $line, $tag);
+            $nodes['values'] = $values;
         }
+
+        parent::__construct($nodes, [], $lineno, $tag);
     }
 
-    public function compile(Compiler $compiler)
+    public function compile(Compiler $compiler): void
     {
         $compiler->addDebugInfo($this);
 
-        if ($this->hasNode('values') && null !== $this->getNode('values')) {
+        if ($this->hasNode('values')) {
             $compiler->write('$args = ')->subcompile($this->getNode('values'))->raw(";\n");
         } else {
             $compiler->write('$args = false;' . "\n");
         }
 
         $compiler
-        ->write('if (!empty($args)) {' . "\n")
-            ->indent()
-            ->write('$query = ($args instanceof WP_Query) ? $args : new WP_Query($args);' . "\n")
-        ->outdent()
-        ->write('} else {' . "\n")
-            ->indent()
-            ->write('global $wp_query;' . "\n")
-            ->write('$query = $wp_query;' . "\n")
-        ->outdent()
-        ->write('}' . "\n")
-        ->write('while ($query->have_posts()) : $query->the_post();' . "\n")
-            ->indent()
-            ->subcompile($this->getNode('body'))
-        ->outdent()
-        ->write('endwhile;' . "\n");
+            ->write('if (!empty($args)) {' . "\n")
+                ->indent()
+                ->write('$query = ($args instanceof WP_Query) ? $args : new WP_Query($args);' . "\n")
+            ->outdent()
+            ->write('} else {' . "\n")
+                ->indent()
+                ->write('global $wp_query;' . "\n")
+                ->write('$query = $wp_query;' . "\n")
+            ->outdent()
+            ->write('}' . "\n")
+            ->write('while ($query->have_posts()) : $query->the_post();' . "\n")
+                ->indent()
+                ->subcompile($this->getNode('body'))
+            ->outdent()
+            ->write('endwhile;' . "\n");
     }
 }

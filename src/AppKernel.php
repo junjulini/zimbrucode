@@ -12,11 +12,11 @@
 namespace ZimbruCode;
 
 use Composer\Autoload\ClassLoader;
+use ZimbruCode\Component\Common\FastCache;
 use ZimbruCode\Component\Core\GlobalConfig;
 use ZimbruCode\Component\Core\GlobalLibrary;
 use ZimbruCode\Component\Core\Kernel;
 use ZimbruCode\Component\Core\Traits\AssetTrait;
-use ZimbruCode\Component\Common\FastCache;
 use ZimbruCode\Component\Handler\AppLocatorHandler;
 use ZimbruCode\Component\Handler\DBHandler;
 
@@ -36,19 +36,15 @@ abstract class AppKernel extends Kernel
      *
      * @param  string      $slug           Slug name of global var
      * @param  string      $mode           Mode of app ( theme / plugin )
-     * @param  boolean     $dev            Dev environment
+     * @param  bool        $dev            Dev environment
      * @param  string      $rootPath       ( Only for plugin mode ) plugin file path
-     * @param  boolean     $session        Disable or enable "session_start()"
+     * @param  bool        $session        Disable or enable "session_start()"
      * @param  ClassLoader $composer       Instance of ClassLoader
      * @return void                        This function does not return a value
      * @since 1.0.0
      */
-    final public function __construct($slug, $mode = 'theme', $dev = false, $rootPath = '', $session = false, ClassLoader $composer)
+    final public function __construct(string $slug, string $mode = 'theme', bool $dev = false, string $rootPath = '', bool $session = false, ClassLoader $composer)
     {
-        if (!is_string($slug) || !is_string($mode) || !is_bool($dev) || !is_string($rootPath)) {
-            throw new \InvalidArgumentException(esc_html__('Error init app : Invalid arguments.', 'zc'));
-        }
-
         $this->__checkAppDuplicate($slug);                     // Checking doubling of application
         $this->__initSession($session);                        // Session start
         $this->__initGlobalConfigAndLibrary();                 // Initialization of global configs and global library
@@ -72,7 +68,7 @@ abstract class AppKernel extends Kernel
         $this->__callbackAfter();    // Callback after load all modules
 
         // Load textdomain
-        $this->addAction('init', function() {
+        $this->addAction('init', function () {
             load_theme_textdomain('zc', __DIR__ . '/Resources/languages');
         });
     }
@@ -84,7 +80,7 @@ abstract class AppKernel extends Kernel
      * @return void          This function does not return a value
      * @since 1.0.0
      */
-    private function __checkAppDuplicate($slug)
+    private function __checkAppDuplicate(string $slug): void
     {
         $appClass = str_replace('\\', '-', get_class($this));
         if (!self::getGlobal("@/app-class/{$appClass}")) {
@@ -93,18 +89,18 @@ abstract class AppKernel extends Kernel
             // Set global var slug (GVS)
             self::addGlobalVarSlug($slug);
         } else {
-            throw new \RuntimeException(sprintf('AppKernel - Doubling of application : %s', $appClass));
+            throw new \RuntimeException("AppKernel - Doubling of application : {$appClass}");
         }
     }
 
     /**
      * Init session
      *
-     * @param boolean $session   Enable/Disable session
-     * @return void              This function does not return a value
+     * @param bool $session   Enable/Disable session
+     * @return void           This function does not return a value
      * @since 1.0.0
      */
-    private function __initSession($session)
+    private function __initSession(bool $session): void
     {
         if (session_status() == PHP_SESSION_NONE && $session === true) {
             session_start();
@@ -117,7 +113,7 @@ abstract class AppKernel extends Kernel
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    private function __initGlobalConfigAndLibrary()
+    private function __initGlobalConfigAndLibrary(): void
     {
         new GlobalConfig;  // Set global configs
         new GlobalLibrary; // Set global library
@@ -126,11 +122,11 @@ abstract class AppKernel extends Kernel
     /**
      * Set environment
      *
-     * @param boolean $dev   True/False if Dev environment
-     * @return void          This function does not return a value
+     * @param bool $dev   True/False if Dev environment
+     * @return void       This function does not return a value
      * @since 1.0.0
      */
-    private function __setEnvironment($dev)
+    private function __setEnvironment(bool $dev): void
     {
         $environment = ($dev === true) ? 'dev' : 'prod';
 
@@ -144,7 +140,7 @@ abstract class AppKernel extends Kernel
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    private function __setChmod()
+    private function __setChmod(): void
     {
         self::addGlobal('core/chmod-dir', (fileperms(ABSPATH) & 0777 | 0755));
         self::addGlobal('core/chmod-file', (fileperms(ABSPATH . 'index.php') & 0777 | 0644));
@@ -153,13 +149,13 @@ abstract class AppKernel extends Kernel
     /**
      * Init services
      *
-     * @param string      $mode           Mode of loading services
-     * @param ClassLoader $composer       Instance of Composer ClassLoader
+     * @param string      $mode       Mode of loading services
+     * @param ClassLoader $composer   Instance of Composer ClassLoader
      * @param string      $rootPath   File path where was initialized app class
-     * @return void                       This function does not return a value
+     * @return void                   This function does not return a value
      * @since 1.0.0
      */
-    private function __initServices($mode = 'before', ClassLoader $composer = null, $rootPath = null)
+    private function __initServices(string $mode = 'before', ClassLoader $composer = null, string $rootPath = null): void
     {
         if ($mode === 'before') {
             self::service('composer', $composer);
@@ -174,24 +170,24 @@ abstract class AppKernel extends Kernel
      * Set app mode
      *
      * @param string  $mode    App mode
-     * @param boolean $check   Check if mode is different
+     * @param bool    $check   Check if mode is different
      * @return void            This function does not return a value
      * @since 1.0.0
      */
-    private function __setMode($mode, $check = false)
+    private function __setMode(string $mode, bool $check = false): void
     {
         if ($check === false) {
             if (in_array($mode, self::getGlobal('app/modes'))) {
                 self::addGlobal('app/mode', $mode);
             } else {
-                throw new \RuntimeException(sprintf(esc_html__('AppKernel - Mode is not compatible : %s', 'zc'), $mode));
+                throw new \RuntimeException("AppKernel - Mode is not compatible : {$mode}");
             }
         } else {
             if (self::getGlobal('app/mode') !== $mode) {
                 if (in_array($mode, self::getGlobal('app/modes'))) {
                     self::addGlobal('app/mode', $mode);
                 } else {
-                    throw new \RuntimeException(sprintf(esc_html__('AppKernel - Mode is not compatible : %s', 'zc'), $mode));
+                    throw new \RuntimeException("AppKernel - Mode is not compatible : {$mode}");
                 }
             }
         }
@@ -204,7 +200,7 @@ abstract class AppKernel extends Kernel
      * @return void          This function does not return a value
      * @since 1.0.0
      */
-    private function __appConfig($mode)
+    private function __appConfig(string $mode): void
     {
         $this->__setMode($mode);
         $this->__defaultAppConfig();
@@ -218,7 +214,7 @@ abstract class AppKernel extends Kernel
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    private function __customAppConfig()
+    private function __customAppConfig(): void
     {
         // Load custom 'App' config file
         if (file_exists($file = self::service('app-locator')->getConfigPath('app.php'))) {
@@ -246,7 +242,7 @@ abstract class AppKernel extends Kernel
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    private function __defaultAppConfig()
+    private function __defaultAppConfig(): void
     {
         // Theme mode
         if (self::getGlobal('app/mode') === 'theme') {
@@ -287,7 +283,7 @@ abstract class AppKernel extends Kernel
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    private function __loadModules()
+    private function __loadModules(): void
     {
         if (file_exists($this->getResourcePath('config/modules.php'))) {
             if ($modules = require $this->getResourcePath('config/modules.php')) {
@@ -302,7 +298,7 @@ abstract class AppKernel extends Kernel
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    private function __initThemeAdaptor()
+    private function __initThemeAdaptor(): void
     {
         if (self::getGlobal('app/mode') === 'theme') {
             self::module()->addAsService('theme')->ThemeAdaptor;
@@ -315,7 +311,7 @@ abstract class AppKernel extends Kernel
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    private function __callbackAfter()
+    private function __callbackAfter(): void
     {
         if (method_exists($this, 'afterLoadAllModules')) {
             $this->afterLoadAllModules();
@@ -330,7 +326,7 @@ abstract class AppKernel extends Kernel
      * @return string   The app name
      * @since 1.0.0
      */
-    final public function getName()
+    final public function getName(): string
     {
         return self::service('app-locator')->getName();
     }
@@ -341,7 +337,7 @@ abstract class AppKernel extends Kernel
      * @return string   The app namespace
      * @since 1.0.0
      */
-    final public function getNamespace()
+    final public function getNamespace(): string
     {
         return self::service('app-locator')->getNamespace();
     }
@@ -352,7 +348,7 @@ abstract class AppKernel extends Kernel
      * @return string   App path
      * @since 1.0.0
      */
-    final public function getPath($path = '')
+    final public function getPath(string $path = ''): string
     {
         return self::service('app-locator')->getPath($path);
     }
@@ -363,7 +359,7 @@ abstract class AppKernel extends Kernel
      * @return string   The app URL
      * @since 1.0.0
      */
-    final public function getURL($url = '')
+    final public function getURL(string $url = ''): string
     {
         return self::service('app-locator')->getUrl($url);
     }
@@ -375,7 +371,7 @@ abstract class AppKernel extends Kernel
      * @return string         Resource path
      * @since 1.0.0
      */
-    final public function getResourcePath($path = '')
+    final public function getResourcePath(string $path = ''): string
     {
         return self::service('app-locator')->getResourcePath($path);
     }
@@ -387,7 +383,7 @@ abstract class AppKernel extends Kernel
      * @return string        Resource URL
      * @since 1.0.0
      */
-    final public function getResourceURL($url = '')
+    final public function getResourceURL(string $url = ''): string
     {
         return self::service('app-locator')->getResourceURL($url);
     }
@@ -398,7 +394,7 @@ abstract class AppKernel extends Kernel
      * @return string   Plugin file path
      * @since 1.0.0
      */
-    final public function getRootFilePath()
+    final public function getRootFilePath(): string
     {
         return self::service('app-locator')->getRootFilePath();
     }
@@ -408,5 +404,5 @@ abstract class AppKernel extends Kernel
      *
      * @since 1.0.0
      */
-    abstract protected function setup();
+    abstract protected function setup(): void;
 }

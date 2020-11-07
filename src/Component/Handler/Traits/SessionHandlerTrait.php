@@ -24,46 +24,44 @@ trait SessionHandlerTrait
 {
     /**
      * Get data from session
-     * 
+     *
      * @param  string  $path      Base path
-     * @param  string  $default   Default value
-     * @return string             Return data
+     * @param  mix     $default   Default value
+     * @return mix                Return data
      * @since 1.0.0
      */
-    public static function getSession($path, $default = false)
+    public static function getSession(string $path, $default = false)
     {
-        if ($path && is_string($path)) {
+        if ($path) {
             return Tools::getNode($_SESSION, $path, $default);
         }
-
-        return false;
     }
 
     /**
      * Add data to session
-     * 
+     *
      * @param  string  $path    Base path
-     * @param  string  $value   Value
+     * @param  mix     $value   Value
      * @return void             This function does not return a value
      * @since 1.0.0
      */
-    public static function addSession($path, $value = '')
+    public static function addSession(string $path, $value = ''): void
     {
-        if ($path && is_string($path)) {
+        if ($path) {
             Tools::addNode($_SESSION, $path, $value);
         }
     }
 
     /**
      * Remove data from session
-     * 
+     *
      * @param  string $path   Base path
-     * @return boolean        Return false/true
+     * @return bool           Return false/true
      * @since 1.0.0
      */
-    public static function remSession($path)
+    public static function remSession(string $path): bool
     {
-        if ($path && is_string($path)) {
+        if ($path) {
             return Tools::unsetNode($_SESSION, $path);
         }
 

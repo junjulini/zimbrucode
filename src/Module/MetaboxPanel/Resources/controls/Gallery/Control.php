@@ -24,11 +24,11 @@ class Control extends ControlKernel
 {
     /**
      * Control setup
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function setup()
+    public function setup(): void
     {
         // Set Attachment Image Src in shell
         $this->addShellFunction('getAttachmentImageSrc', '__custom_shell_function');
@@ -46,12 +46,12 @@ class Control extends ControlKernel
 
     /**
      * Custom shell function : Attachment Image Src
-     * 
+     *
      * @param  string $value   Value from BD
      * @return string          Image src
      * @since 1.0.0
      */
-    public function __custom_shell_function($value = '')
+    public function __custom_shell_function(string $value = ''): string
     {
         $image = wp_get_attachment_image_src($value, 'thumbnail');
         return $image[0];

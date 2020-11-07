@@ -49,12 +49,12 @@ class TwigFunctions
         $ttb->addFunction('is_assoc',    [$this, '__callback_is_assoc']);
     }
 
-    public function __callback_to_string($value)
+    public function __callback_to_string($value): string
     {
         return (string) $value;
     }
 
-    public function __callback_action(...$args)
+    public function __callback_action(...$args): void
     {
         call_user_func_array('do_action', $args);
     }
@@ -76,7 +76,7 @@ class TwigFunctions
      * @return string
      * @since 1.0.0
      */
-    public function __callback_r_post($param, $default = '')
+    public function __callback_r_post(string $param, $default = ''): string
     {
         return Kernel::rPost($param, $default);
     }
@@ -88,7 +88,7 @@ class TwigFunctions
      * @return string
      * @since 1.0.0
      */
-    public function __callback_r_get($param, $default = '')
+    public function __callback_r_get(string $param, $default = ''): string
     {
         return Kernel::rGet($param, $default);
     }
@@ -99,7 +99,7 @@ class TwigFunctions
      * @return object
      * @since 1.0.0
      */
-    public function __callback_dev()
+    public function __callback_dev(): ?object
     {
         return Kernel::dev();
     }
@@ -109,10 +109,9 @@ class TwigFunctions
      *
      * @param  string  $path      Base path
      * @param  string  $default   Default value
-     * @return string             Return data
      * @since 1.0.0
      */
-    public function __callback_get_session($path, $default = false)
+    public function __callback_get_session(string $path, $default = false)
     {
         return Kernel::getSession($path, $default);
     }
@@ -126,7 +125,7 @@ class TwigFunctions
     public function __callback_dump(...$args)
     {
         if (class_exists('\\Tracy\\Debugger')) {
-            array_map('ZimbruCode\\Component\\Debug\\TracyDebugger::dump', $args);
+            array_map('Tracy\Debugger::dump', $args);
         } else {
             var_dump($args);
         }
@@ -136,14 +135,11 @@ class TwigFunctions
      * Get htmlentities -> json_encode | with ENT_QUOTES parameter
      *
      * @param  array  $array
-     * @return string
      * @since 1.0.0
      */
-    public function __callback_get_HJWEP($array)
+    public function __callback_get_HJWEP(array $array)
     {
-        if ($array && is_array($array)) {
-            return Tools::getHJWEP($array);
-        }
+        return Tools::getHJWEP($array);
     }
 
     public function __callback_is_assoc($array)

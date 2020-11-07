@@ -11,6 +11,7 @@
 
 namespace ZimbruCode\Component\Asset\Filter;
 
+use ZimbruCode\Component\Asset\Library\AssetData;
 use ZimbruCode\Component\Asset\Library\AssetDataCollector;
 use ZimbruCode\Component\Asset\Library\Filter;
 use ZimbruCode\Component\Asset\Library\NamespaceHandler;
@@ -31,19 +32,19 @@ class AssetNamespace extends Filter
      * @return void               This function does not return a value
      * @since 1.0.0
      */
-    protected function each($asset)
+    protected function each(AssetData $asset): void
     {
-        $nh = new NamespaceHandler($asset->raw());
+        $nameSpaceHandler = new NamespaceHandler($asset->raw());
 
-        if (!$asset->isFile() && $nh->is() && $nh->has()) {
-            $nc = $nh->collector();
+        if (!$asset->isFile() && $nameSpaceHandler->is() && $nameSpaceHandler->has()) {
+            $collectors = $nameSpaceHandler->collector();
 
-            if (is_array($nc)) {
-                foreach ($nc as $nci) {
-                    $this->prepNamespace($nci);
+            if (is_array($collectors)) {
+                foreach ($collectors as $collector) {
+                    $this->prepNamespace($collector);
                 }
             } else {
-                $this->prepNamespace($nc);
+                $this->prepNamespace($collectors);
             }
 
             $this->collector()->remove($asset->raw());
@@ -57,12 +58,10 @@ class AssetNamespace extends Filter
      * @return void                                     This function does not return a value
      * @since 1.0.0
      */
-    protected function prepNamespace($namespaceCollector)
+    protected function prepNamespace(AssetDataCollector $namespaceCollector): void
     {
-        if ($namespaceCollector instanceof AssetDataCollector) {
-            foreach ($namespaceCollector->get() as $asset => $assetData) {
-                $this->collector()->addRaw($asset, $assetData);
-            }
+        foreach ($namespaceCollector->get() as $asset => $assetData) {
+            $this->collector()->addRaw($asset, $assetData);
         }
     }
 }

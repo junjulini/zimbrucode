@@ -33,7 +33,7 @@ class ScriptHandler
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public static function installTheme(Event $event)
+    public static function installTheme(Event $event): void
     {
         $event->getIO()->write("\n<question>###################### ZimbruCode Installer : Theme ######################</question>\n");
 
@@ -117,7 +117,7 @@ class ScriptHandler
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public static function installPlugin(Event $event)
+    public static function installPlugin(Event $event): void
     {
         $event->getIO()->write("\n<question>###################### ZimbruCode Installer : Plugin ######################</question>\n");
 
@@ -195,7 +195,7 @@ class ScriptHandler
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public static function clearCache(Event $event)
+    public static function clearCache(Event $event): void
     {
         $root     = dirname($event->getComposer()->getConfig()->get('vendor-dir'));
         $cacheDir = "{$root}/app/Resources/var/cache";
@@ -219,7 +219,7 @@ class ScriptHandler
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public static function clearVar(Event $event)
+    public static function clearVar(Event $event): void
     {
         $root     = dirname($event->getComposer()->getConfig()->get('vendor-dir'));
         $cacheDir = "{$root}/app/Resources/var";
@@ -243,22 +243,22 @@ class ScriptHandler
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public static function newModule(Event $event)
+    public static function newModule(Event $event): void
     {
         $root      = dirname($event->getComposer()->getConfig()->get('vendor-dir'));
         $moduleDir = "{$root}/app/Module";
+        $config    = false;
 
-        $config = false;
         if (file_exists("{$root}/config.json")) {
             $config = @json_decode(@file_get_contents("{$root}/config.json"), true);
 
             if (!is_array($config)) {
                 $event->getIO()->writeError('App config is not compatible.');
-                return false;
+                return;
             }
         } else {
             $event->getIO()->writeError('App config file don\'t exist.');
-            return false;
+            return;
         }
 
         if ($module = self::checkModuleName($event, $moduleDir)) {
@@ -321,18 +321,18 @@ class ScriptHandler
      * @param  string $moduleDir   App modules dir
      * @return string              Module name
      */
-    protected static function checkModuleName(Event $event, $moduleDir)
+    protected static function checkModuleName(Event $event, $moduleDir): ?string
     {
         $args = $event->getArguments();
         $name = (!empty($args[0])) ? $args[0] : false;
 
         if (!$name) {
-            return false;
+            return null;
         }
 
         if (file_exists("{$moduleDir}/{$name}")) {
             $event->getIO()->writeError("This module exist : {$name}");
-            return false;
+            return null;
         }
 
         return $name;
@@ -345,22 +345,22 @@ class ScriptHandler
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public static function newControl(Event $event)
+    public static function newControl(Event $event): void
     {
         $root      = dirname($event->getComposer()->getConfig()->get('vendor-dir'));
         $moduleDir = "{$root}/app/Module";
+        $config    = false;
 
-        $config = false;
         if (file_exists("{$root}/config.json")) {
             $config = @json_decode(@file_get_contents("{$root}/config.json"), true);
 
             if (!is_array($config)) {
                 $event->getIO()->writeError('App config is not compatible.');
-                return false;
+                return;
             }
         } else {
             $event->getIO()->writeError('App config file don\'t exist.');
-            return false;
+            return;
         }
 
         if ($data = self::checkControlData($event, $moduleDir)) {
@@ -429,25 +429,25 @@ class ScriptHandler
      *
      * @param  Event  $event
      * @param  string $moduleDir   App modules dir
-     * @return string              Control data ( name, module location )
+     * @return array               Control data ( name, module location )
      */
-    protected static function checkControlData(Event $event, $moduleDir)
+    protected static function checkControlData(Event $event, string $moduleDir): ?array
     {
         $args    = $event->getArguments();
         $control = (!empty($args[0])) ? $args[0] : false;
 
         if (!$control) {
-            return false;
+            return null;
         }
 
         $module = (!empty($args[1])) ? $args[1] : false;
         if (!$module) {
-            return false;
+            return null;
         }
 
         if (file_exists("{$moduleDir}/{$module}/Resources/controls/{$control}")) {
             $event->getIO()->writeError("This control exist : {$control}");
-            return false;
+            return null;
         }
 
         return [
@@ -463,7 +463,7 @@ class ScriptHandler
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public static function minify(Event $event)
+    public static function minify(Event $event): void
     {
         $root = dirname($event->getComposer()->getConfig()->get('vendor-dir'));
 
@@ -471,19 +471,19 @@ class ScriptHandler
         $name = (!empty($args[0])) ? $args[0] : false;
 
         if (!$name) {
-            return false;
+            return;
         }
 
         $path = (!empty($args[1])) ? $args[1] : false;
         if (!$path) {
-            return false;
+            return;
         }
 
         $path = "{$root}/{$path}";
 
         if (!file_exists($path) || !is_file($path)) {
             $event->getIO()->writeError("File don't exist or is not valid : {$path}");
-            return false;
+            return;
         }
 
         $rm = new RemoteMinify;

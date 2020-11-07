@@ -12,7 +12,6 @@
 namespace ZimbruCode\Component\Common;
 
 use ZimbruCode\Component\Core\Kernel;
-use ZimbruCode\Component\Debug\TracyDebugger;
 
 /**
  * Class : Tools
@@ -25,14 +24,15 @@ class Tools
 {
     /**
      * Array value copy to key
-     * 
+     *
      * @param  array  $array   Array for work
      * @return array           Return new modificated array
      * @since 1.0.0
      */
-    public static function arrayValueToKey(array $array)
+    public static function arrayValueToKey(array $array): array
     {
         $output = [];
+
         foreach ($array as $key => $value) {
             $output[$value] = $value;
         }
@@ -42,14 +42,15 @@ class Tools
 
     /**
      * Array key copy to value
-     * 
+     *
      * @param  array  $array   Array for work
      * @return array           Return new modificated array
      * @since 1.0.0
      */
-    public static function arrayKeyToValue(array $array)
+    public static function arrayKeyToValue(array $array): array
     {
         $output = [];
+
         foreach ($array as $key => $value) {
             $output[$key] = $key;
         }
@@ -59,25 +60,25 @@ class Tools
 
     /**
      * Check if array is associative
-     * 
+     *
      * @param  array  $array   Array for work
      * @return bool            Return true or false
      * @since 1.0.0
      */
-    public static function arrayIsAssoc(array $array)
+    public static function arrayIsAssoc(array $array): bool
     {
         return (bool) count(array_filter(array_keys($array), 'is_string'));
     }
 
     /**
      * Merge more arrays in one
-     * 
+     *
      * @param array   $array1   First array
      * @param array   $array2   Last array
-     * @param boolean $mode     Mode : d (Default), wk (Without key), s (Strict)
+     * @param string  $mode     Mode : d (Default), wk (Without key), s (Strict)
      * @since 1.0.0
      */
-    public static function arrayMerge(array $array1, array $array2, $mode = 'd')
+    public static function arrayMerge(array $array1, array $array2, string $mode = 'd'): array
     {
         switch ($mode) {
             case 'd':
@@ -112,13 +113,13 @@ class Tools
 
     /**
      * Computes the difference of arrays
-     * 
-     * @param array $array1   The array to compare from
-     * @param array $array2   An array to compare against
-     * @return bool             Return true ( if different ) or false
+     *
+     * @param mix $array1   The array to compare from
+     * @param mix $array2   An array to compare against
+     * @return bool         Return true ( if different ) or false
      * @since 1.0.0
      */
-    public static function arrayDiff($array1, $array2)
+    public static function arrayDiff($array1, $array2): bool
     {
         if (is_array($array1) && is_array($array2)) {
             foreach ($array1 as $key => $value) {
@@ -126,6 +127,8 @@ class Tools
                     return true;
                 }
             }
+
+            return false;
         } else {
             return ($array1 !== $array2);
         }
@@ -133,7 +136,7 @@ class Tools
 
     /**
      * Add a value in a nested array based on path
-     * 
+     *
      * @param  array  $array       The array to modify
      * @param  string $path        The path in the array
      * @param  mix    $value       The value to set
@@ -141,15 +144,11 @@ class Tools
      * @return void                This function does not return a value
      * @since 1.0.0
      */
-    public static function addNode(array &$array, $path, &$value, $delimiter = '/')
+    public static function addNode(array &$array, string $path, &$value, string $delimiter = '/'): void
     {
         // Fail if the path is empty
         if (!$path) {
-            throw new \InvalidArgumentException(esc_html__('Node path cannot be empty.', 'zc'));
-        }
-
-        if (!is_string($path)) {
-            throw new \InvalidArgumentException(esc_html__('Path not string.', 'zc'));
+            throw new \InvalidArgumentException('Node path cannot be empty.');
         }
 
         $path    = trim($path, $delimiter);    // Remove all leading and trailing slashes
@@ -167,22 +166,18 @@ class Tools
 
     /**
      * Get value an array by using "root/branch/leaf" notation
-     * 
+     *
      * @param  array  $array
      * @param  string $path      Path to a specific option to extract
      * @param  mix    $default   Value to use if the path was not found
      * @return mix
      * @since 1.0.0
      */
-    public static function getNode(array $array, $path, $default = null, $delimiter = '/')
+    public static function getNode(array $array, string $path, $default = null, string $delimiter = '/')
     {
         // Fail if the path is empty
         if (!$path) {
-            throw new \InvalidArgumentException(esc_html__('Node path cannot be empty.', 'zc'));
-        }
-
-        if (!is_string($path)) {
-            throw new \InvalidArgumentException(esc_html__('Path not string.', 'zc'));
+            throw new \InvalidArgumentException('Node path cannot be empty.');
         }
 
         $path    = trim($path, $delimiter);    // Remove all leading and trailing slashes
@@ -208,18 +203,14 @@ class Tools
      *
      * @param  array  $array
      * @param  string $path   Path to a specific option to extract
-     * @return boolean        true/false
+     * @return bool          true/false
      * @since 1.0.0
      */
-    public static function unsetNode(array &$array, $path, $delimiter = '/')
+    public static function unsetNode(array &$array, string $path, string $delimiter = '/'): bool
     {
         // Fail if the path is empty
         if (!$path) {
-            throw new \InvalidArgumentException(esc_html__('Node path cannot be empty.', 'zc'));
-        }
-
-        if (!is_string($path)) {
-            throw new \InvalidArgumentException(esc_html__('Path not string.', 'zc'));
+            throw new \InvalidArgumentException('Node path cannot be empty.');
         }
 
         $path    = trim($path, $delimiter);    // Remove all leading and trailing slashes
@@ -249,7 +240,7 @@ class Tools
 
     /**
      * Inserts a new key/value after the key in the array.
-     * 
+     *
      * @param  $array       An array to insert in to.
      * @param  $node        The node to insert after.
      * @param  $newNode     The new node to insert.
@@ -257,7 +248,7 @@ class Tools
      * @return The new array if the key exists, FALSE otherwise.
      * @since 1.0.0
      */
-    public static function appendNode(array $array, $node, $newNode, $value, $after = true)
+    public static function appendNode(array $array, string $node, string $newNode, $value, bool $after = true)
     {
         if (array_key_exists($node, $array)) {
             $output = [];
@@ -282,22 +273,20 @@ class Tools
 
             return $output;
         }
-
-        return false;
     }
 
     /**
      * Image resize
-     * 
+     *
      * @param  integer  $attachID   ID of attach
      * @param  string   $imgURL     URL of image
      * @param  integer  $width
      * @param  integer  $height
-     * @param  boolean  $crop
+     * @param  bool     $crop
      * @return string               URL of resized image
      * @since 1.0.0
      */
-    public static function resizeImg($attachID = false, $imgURL = false, $width = 9999, $height = 9999, $crop = false)
+    public static function resizeImg(int $attachID = null, string $imgURL = '', int $width = 9999, int $height = 9999, bool $crop = false)
     {
         $filePath = $imageSrc = $extension = $noExtPath = '';
 
@@ -308,7 +297,7 @@ class Tools
                 $imageSrc = wp_get_attachment_image_src($attachID, 'full');
                 $filePath = get_attached_file($attachID);
 
-            // This is not an attachment, let's use the image url
+                // This is not an attachment, let's use the image url
             } elseif ($imgURL) {
                 $filePath = parse_url($imgURL);
                 $filePath = $_SERVER['DOCUMENT_ROOT'] . $filePath['path'];
@@ -412,21 +401,17 @@ class Tools
 
     /**
      * Cut string
-     * 
+     *
      * @param  string  $input    String / text
      * @param  integer $n        Number of symbols
-     * @param  boolean $return   Return or Echo
+     * @param  bool    $return   Return or Echo
      * @return string            Return string / text with modification
      * @since 1.0.0
      */
-    public static function cut($input, $n = 20, $return = false)
+    public static function cut(string $input, int $n = 20, bool $return = false)
     {
         if (!$input) {
-            throw new \InvalidArgumentException(esc_html__('Input is empty.', 'zc'));
-        }
-
-        if (!is_string($input)) {
-            throw new \InvalidArgumentException(esc_html__('Input not string.', 'zc'));
+            throw new \InvalidArgumentException('Input is empty.');
         }
 
         $output = ($n < strlen($input)) ? substr($input, 0, $n) . ' ...' : $input;
@@ -435,19 +420,18 @@ class Tools
             return $output;
         } else {
             echo $output;
-            return false;
         }
     }
 
     /**
      * Script Condition
-     * 
+     *
      * @param  array  $data
      * @param  string $condition
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public static function scriptCondition(array $data, $condition = 'lt IE 9')
+    public static function scriptCondition(array $data, string $condition = 'lt IE 9'): void
     {
         $output = sprintf("<!--[if %s]>\n", $condition);
 
@@ -456,17 +440,18 @@ class Tools
         }
 
         $output .= sprintf("<![endif]-->\n");
+
         echo $output;
     }
 
     /**
      * Get random string
-     * 
+     *
      * @param  integer $length   Length of string
      * @return string            Random string
      * @since 1.0.0
      */
-    public static function getRandomString($length = 10)
+    public static function getRandomString(int $length = 10): string
     {
         $characters   = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $randomString = '';
@@ -480,12 +465,12 @@ class Tools
 
     /**
      * Get random number
-     * 
+     *
      * @param  integer $length   Length of number
      * @return string            Random number
      * @since 1.0.0
      */
-    public static function getRandomNumber($length = 10)
+    public static function getRandomNumber(int $length = 10): string
     {
         $characters   = '0123456789';
         $randomString = '';
@@ -499,11 +484,11 @@ class Tools
 
     /**
      * Get time
-     * 
-     * @return time   String
+     *
+     * @return string
      * @since 1.0.0
      */
-    public static function getTime()
+    public static function getTime(): string
     {
         $time       = microtime(true);
         $micro_time = sprintf('%06d', ($time - floor($time)) * 1000000);
@@ -514,11 +499,11 @@ class Tools
 
     /**
      * Check is child theme
-     * 
-     * @return boolean   true/false
+     *
+     * @return bool   true/false
      * @since 1.0.0
      */
-    public static function isChildTheme()
+    public static function isChildTheme(): bool
     {
         if (!defined('TEMPLATEPATH') || !defined('STYLESHEETPATH')) {
             return false;
@@ -529,12 +514,12 @@ class Tools
 
     /**
      * Get posts in array where is only id and title
-     * 
+     *
      * @param  string $args
      * @return array
      * @since 1.0.0
      */
-    public static function getPWIT(array $args = [])
+    public static function getPWIT(array $args = []): array
     {
         $output = [];
         $data   = get_posts($args);
@@ -550,27 +535,27 @@ class Tools
 
     /**
      * Get htmlentities -> json_encode | with ENT_QUOTES parameter
-     * 
+     *
      * @param  array  $array
      * @return string
      * @since 1.0.0
      */
-    public static function getHJWEP(array $array)
+    public static function getHJWEP(array $array): string
     {
         return htmlentities(json_encode($array), ENT_QUOTES);
     }
 
     /**
      * Check if is image file
-     * 
+     *
      * @param  string $image   File
-     * @return boolean         true/false
+     * @return bool            true/false
      * @since 1.0.0
      */
-    public static function checkImage($image)
+    public static function checkImage(string $image): bool
     {
-        if (!$image || !is_string($image)) {
-            throw new \InvalidArgumentException(esc_html__('Image path is empty or not string.', 'zc'));
+        if (!$image) {
+            throw new \InvalidArgumentException('Image path is empty.');
         }
 
         $mimes = [
@@ -597,12 +582,12 @@ class Tools
 
     /**
      * PRE
-     * 
+     *
      * @param  array $data array
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public static function pre(array $data)
+    public static function pre(array $data): void
     {
         echo '<pre>';
         print_r($data);
@@ -611,41 +596,34 @@ class Tools
 
     /**
      * Remove slashes
-     * 
+     *
      * @param  string $input   Input string
      * @return string          Clean string
      * @since 1.0.0
      */
-    public static function removeSlashes($input)
+    public static function removeSlashes(string $input): string
     {
         if (!$input) {
-            throw new \InvalidArgumentException(esc_html__('Input is empty.', 'zc'));
-        }
-
-        if (!is_string($input)) {
-            throw new \InvalidArgumentException(esc_html__('Input not string.', 'zc'));
+            throw new \InvalidArgumentException('Input is empty.');
         }
 
         $input = implode('', explode('\\', $input));
+
         return stripslashes(trim($input));
     }
 
     /**
      * Replace spaces
-     * 
+     *
      * @param  string $input   Input string
      * @param  string $replace
      * @return string
      * @since 1.0.0
      */
-    public static function replaceSpaces($input, $replace = '-')
+    public static function replaceSpaces(string $input, string $replace = '-'): string
     {
         if (!$input) {
-            throw new \InvalidArgumentException(esc_html__('Input is empty.', 'zc'));
-        }
-
-        if (!is_string($input)) {
-            throw new \InvalidArgumentException(esc_html__('Input not string.', 'zc'));
+            throw new \InvalidArgumentException('Input is empty.');
         }
 
         return str_replace(' ', $replace, $input);
@@ -653,74 +631,71 @@ class Tools
 
     /**
      * Convertor size
-     * 
+     *
      * @param  integer $size
      * @return string
      * @since 1.0.0
      */
-    public static function convertSize($size)
+    public static function convertSize(int $size): string
     {
-        if (!$size || !is_int($size)) {
-            return 0;
-        }
-
         $unit = ['Bits', 'Kb', 'Mb', 'Gb', 'Tb', 'Pb'];
+
         return @round($size / pow(1024, ($i = floor(log($size, 1024)))), 2) . ' ' . $unit[$i];
     }
 
     /**
      * Get multi site ID
-     * 
+     *
      * @param  string $delimiter   Delimiter for ID
      * @param  mix    $default     Return value if not multi site
      * @return string              Multi site ID
      * @since 1.0.0
      */
-    public static function getMultiSiteID($delimiter = false, $default = false)
+    public static function getMultiSiteID(string $delimiter = '', $default = false): string
     {
-        $delimiter = ($delimiter && is_string($delimiter)) ? $delimiter : Kernel::getGlobal('app/network-site-delimiter');
+        $delimiter = ($delimiter) ? $delimiter : Kernel::getGlobal('app/network-site-delimiter');
         return (is_multisite()) ? $delimiter . get_current_blog_id() : $default;
     }
 
     /**
      * Cut server part from path
-     * 
+     *
      * @param  string  $path   Path
-     * @param  boolean $nm     Normal mode
-     * @return boolean         None
+     * @param  bool    $nm     Normal mode
+     * @return bool            None
      * @since 1.0.0
      */
-    public static function cutServerPartFromPath($path, $nm = false)
+    public static function cutServerPartFromPath(string $path, bool $nm = false): string
     {
-        if ($path && is_string($path)) {
+        $output = '';
+
+        if ($path) {
             $path = wp_normalize_path($path);
             $root = wp_normalize_path(get_theme_root());
-            $dir  = strstr(
-                $root,
-                '/' . Kernel::getGlobal('core/component/path/search-point'),
-                true
-            );
+            $dir  = strstr($root, '/' . Kernel::getGlobal('core/component/path/search-point'), true);
 
             if (!$nm) {
-                return str_replace($dir, Kernel::getGlobal('core/component/path/spfp/indicator'), $path);
+                $output = str_replace($dir, Kernel::getGlobal('core/component/path/spfp/indicator'), $path);
             } else {
-                return str_replace(Kernel::getGlobal('core/component/path/spfp/indicator'), $dir, $path);
+                $output = str_replace(Kernel::getGlobal('core/component/path/spfp/indicator'), $dir, $path);
             }
         }
 
-        return false;
+        return $output;
     }
 
     /**
      * Get URL of file
-     * 
+     *
      * @param  string $path
      * @return string
      * @since 1.0.0
      */
-    public static function getURL($path)
+    public static function getURL(string $path): string
     {
-        if ($path && is_string($path)) {
+        $output = '';
+
+        if ($path) {
             $templateDir = wp_normalize_path(get_template_directory());
             $path        = ($path) ? $path : ((!empty(debug_backtrace()[0]['file'])) ? debug_backtrace()[0]['file'] : __FILE__);
             $path        = wp_normalize_path(realpath($path));
@@ -733,23 +708,25 @@ class Tools
                     $url .= '/' . ltrim($folder, '/');
                 }
 
-                return trim($url, '/');
+                $output = trim($url, '/');
             }
         }
 
-        return false;
+        return $output;
     }
 
     /**
      * Get path
-     * 
+     *
      * @param  string $url
      * @return path
      * @since 1.0.0
      */
-    public static function getPath($url)
+    public static function getPath(string $url): string
     {
-        if ($url && is_string($url)) {
+        $output = '';
+
+        if ($url) {
             $path = strstr(
                 wp_normalize_path(wp_make_link_relative($url)),
                 Kernel::getGlobal('core/component/path/search-point')
@@ -761,26 +738,24 @@ class Tools
                 true
             );
 
-            return $root . $path;
+            $output = $root . $path;
         } else {
-            return (!empty(debug_backtrace()[0]['file']))
-                ? wp_normalize_path(dirname(debug_backtrace()[0]['file']))
-                : wp_normalize_path(__DIR__);
+            $output = (!empty(debug_backtrace()[0]['file'])) ? wp_normalize_path(dirname(debug_backtrace()[0]['file'])) : wp_normalize_path(__DIR__);
         }
 
-        return false;
+        return $output;
     }
 
     /**
      * Is path
-     * 
+     *
      * @param  string  $path
-     * @return boolean
+     * @return bool
      * @since 1.0.0
      */
-    public static function isPath($path)
+    public static function isPath(string $path): bool
     {
-        if ($path && is_string($path) && !empty($_SERVER['DOCUMENT_ROOT'])) {
+        if ($path && !empty($_SERVER['DOCUMENT_ROOT'])) {
             $path        = wp_normalize_path($path);
             $templateDir = wp_normalize_path($_SERVER['DOCUMENT_ROOT']);
 
@@ -792,14 +767,14 @@ class Tools
 
     /**
      * Is url
-     * 
+     *
      * @param  string  $url
-     * @return boolean
+     * @return bool
      * @since 1.0.0
      */
-    public static function isURL($url)
+    public static function isURL(string $url): bool
     {
-        if ($url && is_string($url)) {
+        if ($url) {
             return (filter_var($url, FILTER_VALIDATE_URL) === false) ? false : true;
         }
 
@@ -808,14 +783,14 @@ class Tools
 
     /**
      * Check if path is from local server
-     * 
+     *
      * @param  string  $path   Path
-     * @return boolean         true/false
+     * @return bool           true/false
      * @since 1.0.0
      */
-    public static function isLocalPath($path)
+    public static function isLocalPath(string $path): bool
     {
-        if ($path && is_string($path)) {
+        if ($path) {
             $root = wp_normalize_path(strstr(
                 get_theme_root(),
                 Kernel::getGlobal('core/component/path/search-point'),
@@ -832,14 +807,14 @@ class Tools
 
     /**
      * Check if url is local
-     * 
+     *
      * @param  string  $url   Url
-     * @return boolean        true/false
+     * @return bool           true/false
      * @since 1.0.0
      */
-    public static function isLocalURL($url)
+    public static function isLocalURL(string $url): bool
     {
-        if ($url && is_string($url)) {
+        if ($url) {
             return (strpos($url, get_site_url()) !== false) ? true : false;
         }
 
@@ -848,12 +823,12 @@ class Tools
 
     /**
      * Parse info format
-     * 
+     *
      * @param  string $data   Content of info file
      * @return array          Parsed data
      * @since 1.0.0
      */
-    public static function parseInfoFormat($data)
+    public static function parseInfoFormat(string $data): array
     {
         $info = [];
 
@@ -914,15 +889,15 @@ class Tools
 
     /**
      * Add content in the file
-     * 
+     *
      * @param  string  $file        File path
      * @param  string  $content     Content for file
      * @param  string  $filter      Format : simple '', serialize, json
-     * @param  boolean $condition   Condition if file exist
-     * @return boolean              None
+     * @param  bool    $condition   Condition if file exist
+     * @return bool                 None
      * @since 1.0.0
      */
-    public static function fWrite($file, $content = '', $filter = '', $condition = false)
+    public static function fWrite(string $file, string $content = '', string $filter = '', bool $condition = false): bool
     {
         if ($filter === 'serialize') {
             $content = serialize($content);
@@ -933,7 +908,7 @@ class Tools
         $dir = dirname($file);
         if (!is_dir($dir)) {
             if (false === @mkdir($dir, Kernel::getGlobal('core/chmod-dir'), true)) {
-                throw new \RuntimeException(sprintf(esc_html__('Unable to create the directory (%s).', 'zc'), $dir));
+                throw new \RuntimeException("Unable to create the directory ({$dir})");
             }
         }
 
@@ -943,7 +918,7 @@ class Tools
 
         $fp = @fopen($file, 'wb');
         if (!$fp) {
-            throw new \RuntimeException(sprintf(esc_html__('E1 - Unable to create the file : (%s)', 'zc'), $file));
+            throw new \RuntimeException("E1 - Unable to create the file : ({$file})");
         }
 
         mbstring_binary_safe_encoding();
@@ -956,7 +931,7 @@ class Tools
         fclose($fp);
 
         if ($dataLength !== $bytesWritten) {
-            throw new \RuntimeException(sprintf(esc_html__('E2 - Unable to create the file : (%s)', 'zc'), $file));
+            throw new \RuntimeException("E2 - Unable to create the file : ({$file})");
         }
 
         @chmod($file, Kernel::getGlobal('core/chmod-file'));
@@ -966,15 +941,15 @@ class Tools
 
     /**
      * Get number of lines from file
-     * 
+     *
      * @param  string $file   File path
      * @return int            Number of lines
      * @since 1.0.0
      */
-    public static function getLineCount($file)
+    public static function getLineCount(string $file): int
     {
         if (!file_exists($file)) {
-            throw new \InvalidArgumentException($file . esc_html__(' - file don\'t exist.', 'zc'));
+            throw new \InvalidArgumentException("{$file}  - file don\'t exist.");
         }
 
         return count(file($file));
@@ -982,19 +957,15 @@ class Tools
 
     /**
      * Get absolute path
-     * 
+     *
      * @param  string $path   File path
      * @return string         Absolute path
      * @since 1.0.0
      */
-    public static function getAbsolutePath($path)
+    public static function getAbsolutePath(string $path): string
     {
         if (!$path) {
-            throw new \InvalidArgumentException(esc_html__('Path is empty.', 'zc'));
-        }
-
-        if (!is_string($path)) {
-            throw new \InvalidArgumentException(esc_html__('Path is not string.', 'zc'));
+            throw new \InvalidArgumentException('Path is empty.');
         }
 
         $separator = self::getGlobal('core/component/path/directory-separator');
@@ -1019,28 +990,20 @@ class Tools
 
     /**
      * Get relative path
-     * 
+     *
      * @param  string $from   File path
      * @param  string $to     Destination path
      * @return string         Relative path
      * @since 1.0.0
      */
-    public static function getRelativePath($from, $to)
+    public static function getRelativePath(string $from, string $to): string
     {
         if (!$from) {
-            throw new \InvalidArgumentException(esc_html__('$from is empty.', 'zc'));
-        }
-
-        if (!is_string($from)) {
-            throw new \InvalidArgumentException(esc_html__('$from is not string.', 'zc'));
+            throw new \InvalidArgumentException('$from is empty.');
         }
 
         if (!$to) {
-            throw new \InvalidArgumentException(esc_html__('$to is empty.', 'zc'));
-        }
-
-        if (!is_string($to)) {
-            throw new \InvalidArgumentException(esc_html__('$to is not string.', 'zc'));
+            throw new \InvalidArgumentException('$to is empty.');
         }
 
         // Some compatibility fixes for Windows paths
@@ -1080,10 +1043,10 @@ class Tools
      * @param mix $data   Data for dumping
      * @return void
      */
-    public static function dump($data)
+    public static function dump($data): void
     {
         if (class_exists('\\Tracy\\Debugger')) {
-            TracyDebugger::dump($data);
+            Tracy\Debugger::dump($data);
         } else {
             var_dump($data);
         }
@@ -1096,7 +1059,7 @@ class Tools
      * @param array $data   The directories and namespaces
      * @return void
      */
-    public static function addPsr4(array $data)
+    public static function addPsr4(array $data): void
     {
         foreach ($data as $el) {
             if (!empty($el['path']) && !empty($el['namespace'])) {
@@ -1109,7 +1072,7 @@ class Tools
         }
     }
 
-    public static function removeClassAction($tag, $class = '', $method, $priority = null)
+    public static function removeClassAction(string $tag, string $class = '', $method, $priority = null)
     {
         global $wp_filter;
 
@@ -1126,6 +1089,7 @@ class Tools
 
                                 if ($class !== '') {
                                     $_class = '';
+
                                     if (is_string($data['function'][0])) {
                                         $_class = $data['function'][0];
                                     } elseif (is_object($data['function'][0])) {

@@ -11,12 +11,12 @@
 
 namespace ZimbruCode\Component\Handler;
 
-use ZimbruCode\Component\Core\Kernel;
-use Doctrine\Common\Cache\FilesystemCache;
 use Doctrine\Common\Cache\ApcCache;
+use Doctrine\Common\Cache\FilesystemCache;
 use Doctrine\Common\Cache\MemcacheCache;
 use Doctrine\Common\Cache\MemcachedCache;
 use Doctrine\Common\Cache\RedisCache;
+use ZimbruCode\Component\Core\Kernel;
 
 /**
  * Class : Cache handler
@@ -30,30 +30,22 @@ class CacheHandler
     protected $fileCacheDir;
     protected $fileCacheExtension;
 
-    public function __construct($fileCacheDir, $fileCacheExtension = '.cache')
+    public function __construct(string $fileCacheDir, string $fileCacheExtension = '.cache')
     {
-        if (is_string($fileCacheDir)) {
-            $this->fileCacheDir = $fileCacheDir;
-        } else {
-            throw new \InvalidArgumentException(esc_html__('File cache dir is not valid.', 'zc'));
-        }
-
-        if (is_string($fileCacheExtension)) {
-            $this->fileCacheExtension = $fileCacheExtension;
-        } else {
-            throw new \InvalidArgumentException(esc_html__('File cache extension is not valid.', 'zc'));   
-        }
+        $this->fileCacheDir       = $fileCacheDir;
+        $this->fileCacheExtension = $fileCacheExtension;
     }
 
     /**
      * Get cache drive
-     * 
+     *
      * @return object  Cache drive
      * @since 1.0.0
      */
-    public function getCacheDriver()
+    public function getCacheDriver(): object
     {
         $mode = Kernel::getGlobal('core/component/cache/mode', 'auto');
+
         if ($mode == 'auto') {
             if (extension_loaded('apc') && ini_get('apc.enabled')) {
                 return $this->apc();
@@ -99,39 +91,38 @@ class CacheHandler
                         return $this->filesystem();
                     }
                     break;
-                
+
                 default:
                     return $this->filesystem();
                     break;
             }
         }
-
-        return false;
     }
 
     /**
      * APC
-     * 
-     * @return object  APC drive
+     *
+     * @return ApcCache
      * @since 1.0.0
      */
-    protected function apc()
+    protected function apc(): ApcCache
     {
         return new ApcCache;
     }
 
     /**
      * Memcache
-     * 
-     * @return object  Memcache drive
+     *
+     * @return MemcacheCache
      * @since 1.0.0
      */
-    protected function memcache()
+    protected function memcache(): MemcacheCache
     {
         $host = Kernel::getGlobal('core/component/cache/settings/memcache/host');
         $port = Kernel::getGlobal('core/component/cache/settings/memcache/port');
 
         $memcache = new \Memcache;
+
         if ($memcache->connect($host, $port)) {
             $cacheDriver = new MemcacheCache;
             $cacheDriver->setMemcache($memcache);
@@ -142,16 +133,17 @@ class CacheHandler
 
     /**
      * Memcached
-     * 
-     * @return object  Memcached drive
+     *
+     * @return MemcachedCache
      * @since 1.0.0
      */
-    protected function memcached()
+    protected function memcached(): MemcachedCache
     {
         $host = Kernel::getGlobal('core/component/cache/settings/memcached/host');
         $port = Kernel::getGlobal('core/component/cache/settings/memcached/port');
 
         $memcached = new \Memcached;
+
         if ($memcached->addServer($host, $port)) {
             $cacheDriver = new MemcachedCache;
             $cacheDriver->setMemcached($memcached);
@@ -162,16 +154,17 @@ class CacheHandler
 
     /**
      * Redis
-     * 
+     *
      * @return object  Redis drive
      * @since 1.0.0
      */
-    protected function redis()
+    protected function redis(): RedisCache
     {
         $host = Kernel::getGlobal('core/component/cache/settings/redis/host');
         $port = Kernel::getGlobal('core/component/cache/settings/redis/port');
 
         $redis = new \Redis;
+
         if ($redis->connect($host, $port)) {
             $cacheDriver = new RedisCache;
             $cacheDriver->setRedis($redis);
@@ -182,11 +175,11 @@ class CacheHandler
 
     /**
      * Filesystem
-     * 
-     * @return object  Filesystem drive
+     *
+     * @return FilesystemCache
      * @since 1.0.0
      */
-    protected function filesystem()
+    protected function filesystem(): FilesystemCache
     {
         return new FilesystemCache($this->fileCacheDir, $this->fileCacheExtension);
     }

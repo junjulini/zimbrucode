@@ -52,15 +52,15 @@ class LessRender
 
     /**
      * Add import directory
-     * 
+     *
      * @param string $path   Directory path
      * @param string $url    Directory url
      * @return void          This function does not return a value
      * @since 1.0.0
      */
-    public function addDir($path, $url = '/')
+    public function addDir(string $path, string $url = '/'): void
     {
-        if ($path && is_string($path) && $url && is_string($url)) {
+        if ($path && $url) {
             $this->data['custom-dirs'][] = [
                 'path' => wp_normalize_path($path),
                 'url'  => $url,
@@ -70,15 +70,16 @@ class LessRender
 
     /**
      * Add file for parsing
-     * 
+     *
      * @param string $path   Less file
      * @return void          This function does not return a value
      * @since 1.0.0
      */
-    public function addFile($path)
+    public function addFile(string $path): void
     {
-        if ($path && is_string($path)) {
+        if ($path) {
             $path = wp_normalize_path($path);
+
             if (!empty($this->data['parsed-files'][$path])) {
                 return;
             }
@@ -89,42 +90,42 @@ class LessRender
 
     /**
      * Add function
-     * 
+     *
      * @param string   $name     Name of function
      * @param callable $method   Function
      * @return void              This function does not return a value
      * @since 1.0.0
      */
-    public function addFunction($name, callable $method)
+    public function addFunction(string $name, callable $method): void
     {
-        if ($name && is_string($name)) {
+        if ($name) {
             Kernel::addGlobalCache("asset/less/functions/{$name}", $method);
         }
     }
 
     /**
      * Add Less core vars
-     * 
+     *
      * @param string  $slug    Var slug
      * @param mix     $value   Vars for less
      * @return void            This function does not return a value
      * @since 1.0.0
      */
-    public function addVar($slug, $value = '')
+    public function addVar(string $slug, $value = ''): void
     {
-        if ($slug && is_string($slug)) {
+        if ($slug) {
             $this->vars[$slug] = $value;
         }
     }
 
     /**
      * Add functions
-     * 
+     *
      * @param LessFunctionsInterface $object   Object with less functions
      * @return void                            This function does not return a value
      * @since 1.0.0
      */
-    public function addFunctions(LessFunctionsInterface $object)
+    public function addFunctions(LessFunctionsInterface $object): void
     {
         $methods = $object->get();
 
@@ -135,13 +136,13 @@ class LessRender
 
     /**
      * Parse files
-     * 
+     *
      * @param  string $input   Input path
      * @param  string $url     Input url
      * @return void            This function does not return a value
      * @since 1.0.0
      */
-    protected function parseFiles($input, $url)
+    protected function parseFiles(string $input, string $url): void
     {
         $this->parser->parseFile($input, $url);
 
@@ -155,11 +156,11 @@ class LessRender
 
     /**
      * Get assets
-     * 
+     *
      * @return array   All assets
      * @since 1.0.0
      */
-    protected function getAssets()
+    protected function getAssets(): array
     {
         $parsedFiles = (!empty($this->data['parsed-files'])) ? $this->data['parsed-files'] : [];
         return Tools::arrayMerge($this->parser->AllParsedFiles(), $parsedFiles, 'wk');
@@ -167,13 +168,14 @@ class LessRender
 
     /**
      * Preparing import dirs
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    protected function prepImportDirs()
+    protected function prepImportDirs(): void
     {
         $importDirs = Kernel::getGlobalCache('asset/less/import-dirs');
+
         if ($importDirs && is_array($importDirs)) {
             $output = [];
             foreach ($importDirs as $data) {
@@ -192,11 +194,11 @@ class LessRender
 
     /**
      * Register all functions
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    protected function prepFunctions()
+    protected function prepFunctions(): void
     {
         $functions = Kernel::getGlobalCache('asset/less/functions');
 
@@ -209,11 +211,11 @@ class LessRender
 
     /**
      * Data preparing
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    protected function prepData()
+    protected function prepData(): void
     {
         $this->data['cache']  = wp_normalize_path($this->cache);  // Set cache path
         $this->data['input']  = wp_normalize_path($this->input);  // Set input path (LESS File)
@@ -231,14 +233,14 @@ class LessRender
             throw new \RuntimeException("{$this->data['input']} - input file not found.");
         }
 
-        $info                   = new \SplFileInfo($this->data['input']);
+        $info = new \SplFileInfo($this->data['input']);
         $this->data['key-name'] = $info->getBasename('.' . $ext = $info->getExtension());
 
         // Prep vars
         $this->data['md5-vars'] = md5(json_encode($this->vars));
     }
 
-    protected function initParser()
+    protected function initParser(): void
     {
         $sourceMap = (Kernel::dev()) ? true : false;
 
@@ -256,11 +258,11 @@ class LessRender
 
     /**
      * Render
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function render()
+    public function render(): void
     {
         $this->inputURL = $this->inputURL . '/';
 
@@ -273,7 +275,7 @@ class LessRender
         $this->assetCache->addPath($this->data['cache']);
 
         // Callback : Check output file if exist and less vars is different
-        $this->assetCache->addCheckFunction(function ($args) use ($executeLocation) {
+        $this->assetCache->addCheckFunction(function (array $args) use ($executeLocation): bool {
             if (!file_exists($this->data['output'])) {
                 if (Kernel::dev()) {
                     $msg = "Asset - {$executeLocation}/Cache : Additional checking functions : {$this->data['output']} : file output not found.";
@@ -303,6 +305,8 @@ class LessRender
 
                 return true;
             }
+
+            return false;
         });
 
         // DEV

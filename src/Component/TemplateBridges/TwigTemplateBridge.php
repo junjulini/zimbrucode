@@ -45,7 +45,7 @@ class TwigTemplateBridge
         'extensions' => [],
     ];
 
-    public function __construct($loadDefaultShells = true)
+    public function __construct(bool $loadDefaultShells = true)
     {
         // Set filters
         new TwigFilters($this);
@@ -57,7 +57,7 @@ class TwigTemplateBridge
         new TwigFunctions($this);
 
         // Set shells
-        if ($loadDefaultShells) {
+        if ($loadDefaultShells === true) {
             $gs = new GlobalShell;
 
             $this->addVar('global', $gs);
@@ -72,7 +72,7 @@ class TwigTemplateBridge
      * @return Environment  TWIG Environment
      * @since 1.0.0
      */
-    public function getTWIG()
+    public function getTWIG(): Environment
     {
         if (!$this->twig || !($this->twig instanceof Environment)) {
             throw new \RuntimeException('TWIG Environment is not initialized.');
@@ -87,7 +87,7 @@ class TwigTemplateBridge
      * @return FilesystemLoader  TWIG filesystem loader
      * @since 1.0.0
      */
-    public function getLoader()
+    public function getLoader(): FilesystemLoader
     {
         if (!$this->loader || !($this->loader instanceof FilesystemLoader)) {
             throw new \RuntimeException('TWIG FilesystemLoader is not initialized.');
@@ -100,10 +100,9 @@ class TwigTemplateBridge
      * Get var
      *
      * @param  string $name   Name of var
-     * @return string         Value of var
      * @since 1.0.0
      */
-    public function __get($name)
+    public function __get(string $name)
     {
         if (!isset($this->data['vars'][$name])) {
             throw new \RuntimeException($name . ' - this variable not found.');
@@ -117,12 +116,11 @@ class TwigTemplateBridge
      *
      * @param string $name    Name of var
      * @param mix    $value   Value of var
-     * @return void           This function does not return a value
      * @since 1.0.0
      */
-    public function __set($name, $value)
+    public function __set(string $name, $value)
     {
-        if ($name && is_string($name)) {
+        if ($name) {
             $this->data['vars'][$name] = $value;
         } else {
             throw new \RuntimeException('Name of var is not string or is empty.');
@@ -133,20 +131,17 @@ class TwigTemplateBridge
      * Get var
      *
      * @param  string $name   Name of var
-     * @return string         Value of var
      * @since 1.0.0
      */
-    public function getVar($name)
+    public function getVar(string $name)
     {
-        if ($name && is_string($name)) {
+        if ($name) {
             if (!isset($this->data['vars'][$name])) {
                 throw new \RuntimeException("{$name} - this variable not found.");
             }
 
             return $this->data['vars'][$name];
         }
-
-        return false;
     }
 
     /**
@@ -155,7 +150,7 @@ class TwigTemplateBridge
      * @return array   Vars
      * @since 1.0.0
      */
-    public function getVars()
+    public function getVars(): array
     {
         return $this->data['vars'];
     }
@@ -168,9 +163,9 @@ class TwigTemplateBridge
      * @return void           This function does not return a value
      * @since 1.0.0
      */
-    public function addVar($name, $value)
+    public function addVar(string $name, $value): void
     {
-        if ($name && is_string($name)) {
+        if ($name) {
             $this->data['vars'][$name] = $value;
         }
     }
@@ -181,7 +176,7 @@ class TwigTemplateBridge
      * @param array $vars   Vars
      * @since 1.0.0
      */
-    public function addVars(array $vars)
+    public function addVars(array $vars): void
     {
         $this->data['vars'] = $vars;
     }
@@ -194,14 +189,14 @@ class TwigTemplateBridge
      * @return void                This function does not return a value
      * @since 1.0.0
      */
-    public function addLocationPath($path, $namespace = null)
+    public function addLocationPath(string $path, string $namespace = null): void
     {
         if (!$path) {
             throw new \RuntimeException('Load path is empty.');
         }
 
         if (!Tools::isLocalPath($path)) {
-            throw new \RuntimeException("{$name} - this path is not local.");
+            throw new \RuntimeException("{$path} - this path is not local.");
         }
 
         $this->locationPath[] = [$path, $namespace];
@@ -214,14 +209,14 @@ class TwigTemplateBridge
      * @return void           This function does not return a value
      * @since 1.0.0
      */
-    public function addCachePath($path)
+    public function addCachePath(string $path): void
     {
         if (!$path) {
             throw new \RuntimeException('Cache path is empty.');
         }
 
         if (!Tools::isLocalPath($path)) {
-            throw new \RuntimeException("{$name} - this path is not local.");
+            throw new \RuntimeException("{$path} - this path is not local.");
         }
 
         $this->cachePath = $path;
@@ -235,14 +230,10 @@ class TwigTemplateBridge
      * @return void               This function does not return a value
      * @since 1.0.0
      */
-    public function addFunction($name, callable $method)
+    public function addFunction(string $name, callable $method): void
     {
         if (!$name) {
             throw new \InvalidArgumentException('Function name is empty.');
-        }
-
-        if (!is_string($name)) {
-            throw new \InvalidArgumentException('Function name is not string.');
         }
 
         $this->data['functions'][$name] = $method;
@@ -256,14 +247,10 @@ class TwigTemplateBridge
      * @return void               This function does not return a value
      * @since 1.0.0
      */
-    public function addEscaper($name, callable $method)
+    public function addEscaper(string $name, callable $method): void
     {
         if (!$name) {
             throw new \InvalidArgumentException('Escaper function name is empty.');
-        }
-
-        if (!is_string($name)) {
-            throw new \InvalidArgumentException('Escaper function name is not string.');
         }
 
         $this->data['escapers'][$name] = $method;
@@ -277,14 +264,10 @@ class TwigTemplateBridge
      * @return void               This function does not return a value
      * @since 1.0.0
      */
-    public function addFilter($name, callable $method)
+    public function addFilter(string $name, callable $method): void
     {
         if (!$name) {
             throw new \InvalidArgumentException('Filter function name is empty.');
-        }
-
-        if (!is_string($name)) {
-            throw new \InvalidArgumentException('Filter function name is not string.');
         }
 
         $this->data['filters'][$name] = $method;
@@ -297,7 +280,7 @@ class TwigTemplateBridge
      * @return void                           This function does not return a value
      * @since 1.0.0
      */
-    public function addExtension(AbstractExtension $extension)
+    public function addExtension(AbstractExtension $extension): void
     {
         $this->data['extensions'][] = $extension;
     }
@@ -308,7 +291,7 @@ class TwigTemplateBridge
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function addLoader()
+    public function addLoader(): void
     {
         if (!$this->locationPath) {
             throw new \RuntimeException('Array path is empty.');
@@ -343,7 +326,7 @@ class TwigTemplateBridge
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function addEnvironment()
+    public function addEnvironment(): void
     {
         $cache      = ($this->cachePath) ? new FilesystemCache($this->cachePath, FilesystemCache::FORCE_BYTECODE_INVALIDATION) : false;
         $this->twig = new Environment($this->getLoader(), [
@@ -361,7 +344,7 @@ class TwigTemplateBridge
         // Set escapers
         if (!empty($this->data['escapers'])) {
             foreach ($this->data['escapers'] as $name => $method) {
-                $this->twig->getExtension('Twig_Extension_Core')->setEscaper($name, $method);
+                $this->twig->getExtension(\Twig\Extension\EscaperExtension::class)->setEscaper($name, $method);
             }
         }
 
@@ -390,11 +373,10 @@ class TwigTemplateBridge
      * @return string           html
      * @since 1.0.0
      */
-    public function renderTemplate($template)
+    public function renderTemplate(string $template): string
     {
         if ($template && is_string($template)) {
-            $template = $this->twig->loadTemplate($template);
-            return $template->render($this->data['vars']);
+            return $this->twig->render($template, $this->data['vars']);
         }
 
         return '';
@@ -407,7 +389,7 @@ class TwigTemplateBridge
      * @return string             Html
      * @since 1.0.0
      */
-    public function render($template = '')
+    public function render(string $template = ''): string
     {
         if (!$this->loader || !($this->loader instanceof FilesystemLoader)) {
             $this->addLoader();

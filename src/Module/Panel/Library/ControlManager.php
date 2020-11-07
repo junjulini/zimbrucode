@@ -13,9 +13,9 @@ namespace ZimbruCode\Module\Panel\Library;
 
 use ZimbruCode\Component\Common\Tools;
 use ZimbruCode\Component\Core\ModuleKernel;
-use ZimbruCode\Module\Panel\Library\TwigContextController;
 use ZimbruCode\Module\Panel\Library\Traits\CallbackTrait;
 use ZimbruCode\Module\Panel\Library\Traits\ContentUtilityTrait;
+use ZimbruCode\Module\Panel\Library\TwigContextController;
 use ZimbruCode\Module\Panel\Library\TwigExtension\ControlsRenderTwigExtension;
 
 /**
@@ -38,7 +38,7 @@ class ControlManager extends ModuleKernel
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function setup()
+    public function setup(): void
     {
         // Set Twig extension
         $this->callback()->add('panel-render', function ($ttb) {
@@ -67,18 +67,18 @@ class ControlManager extends ModuleKernel
      * Get control
      *
      * @param  string $name   Control name
-     * @return object         Control object
+     * @return ControlKernel
      * @since 1.0.0
      */
-    public function getControl($name)
+    public function getControl(string $name): ?ControlKernel
     {
-        if ($name && is_string($name)) {
+        if ($name) {
             if (!empty($this->controls[$name])) {
                 return $this->controls[$name];
             }
         }
 
-        return false;
+        return null;
     }
 
     /**
@@ -88,9 +88,9 @@ class ControlManager extends ModuleKernel
      * @param ControlKernel $control   Control object
      * @since 1.0.0
      */
-    public function addControl($name, ControlKernel $control)
+    public function addControl(string $name, ControlKernel $control): bool
     {
-        if ($name && is_string($name)) {
+        if ($name) {
             $this->controls[$name] = $control;
             return true;
         }
@@ -102,12 +102,12 @@ class ControlManager extends ModuleKernel
      * Remove control
      *
      * @param  string $name   Control name
-     * @return boolean        Unset result
+     * @return bool           Unset result
      * @since 1.0.0
      */
-    public function removeControl($name)
+    public function removeControl(string $name): bool
     {
-        if ($name && is_string($name)) {
+        if ($name) {
             if (!empty($this->controls[$name])) {
                 unset($this->controls[$name]);
                 return true;
@@ -124,7 +124,7 @@ class ControlManager extends ModuleKernel
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function search(array $settings)
+    public function search(array $settings): void
     {
         if (!empty($settings['type']) && !$this->getControl($settings['type'])) {
             $type         = $settings['type'];
@@ -159,7 +159,7 @@ class ControlManager extends ModuleKernel
      * @return void              This function does not return a value
      * @since 1.0.0
      */
-    protected function load($control, $type)
+    protected function load(string $control, string $type): void
     {
         $this->addControl($type, $this->loadModulePart($control, false, $type));
 

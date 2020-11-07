@@ -24,23 +24,23 @@ trait ControlTrait
 {
     /**
      * Initialization of controls
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function initControls()
+    public function initControls(): void
     {
         $this->addModuleData('control', $this->loadModulePart('ZimbruCode\\Module\\Panel\\Library\\ControlManager'));
     }
 
     /**
      * Merge controls localize vars with custom
-     * 
+     *
      * @param  array  $data   You custom vars
      * @return array          Prepared data
      * @since 1.0.0
      */
-    public function mergeControlsLocalizeVars(array $data)
+    public function mergeControlsLocalizeVars(array $data): array
     {
         if (isset($data['controls'])) {
             throw new \RuntimeException('Detected "controls" key in array. You can\'t use this key because is reserved for "controls localize vars".');

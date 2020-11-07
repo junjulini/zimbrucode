@@ -11,6 +11,7 @@
 
 namespace ZimbruCode\Module\ThemeAdaptor\Library\TwigExtension\PostsExtension;
 
+use Twig\Node\Node;
 use Twig\Token;
 use Twig\TokenParser\AbstractTokenParser;
 
@@ -23,10 +24,10 @@ use Twig\TokenParser\AbstractTokenParser;
  */
 class PostsTokenParser extends AbstractTokenParser
 {
-    public function parse(Token $token)
+    public function parse(Token $token): Node
     {
         $stream = $this->parser->getStream();
-        $values = '';
+        $values = null;
 
         if (!$stream->test(Token::BLOCK_END_TYPE)) {
             $values = $this->parser->getExpressionParser()->parseExpression();
@@ -39,12 +40,12 @@ class PostsTokenParser extends AbstractTokenParser
         return new PostsNode($body, $values, $token->getLine(), $this->getTag());
     }
 
-    public function decidePostsEnd(Token $token)
+    public function decidePostsEnd(Token $token): bool
     {
         return $token->test('endposts');
     }
 
-    public function getTag()
+    public function getTag(): string
     {
         return 'posts';
     }

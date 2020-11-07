@@ -11,8 +11,8 @@
 
 namespace ZimbruCode\Component\Asset\Library;
 
-use ZimbruCode\Component\Core\Kernel;
 use ZimbruCode\Component\Asset\Library\AssetDataCollector;
+use ZimbruCode\Component\Core\Kernel;
 
 /**
  * Class : Namespace handler
@@ -27,12 +27,12 @@ class NamespaceHandler
     protected $namespaceSymbol;
     protected $globalNamespace;
 
-    public function __construct($namespace = '')
+    public function __construct(string $namespace = '')
     {
         $this->globalNamespace = Kernel::getGlobal('core/component/asset/filter/namespace/global-namespace');
         $this->namespaceSymbol = Kernel::getGlobal('core/component/asset/filter/namespace/namespace-symbol');
 
-        if ($namespace && is_string($namespace)) {
+        if ($namespace) {
             $this->namespace = $namespace;
         } else {
             $this->namespace = $this->namespaceSymbol . $this->globalNamespace;
@@ -41,33 +41,33 @@ class NamespaceHandler
 
     /**
      * Clear namespace
-     * 
+     *
      * @return string  Namespace
      * @since 1.0.0
      */
-    public function name()
+    public function name(): string
     {
         return str_replace($this->namespaceSymbol, '', $this->namespace);
     }
 
     /**
      * Check if word is namespace
-     * 
-     * @return boolean   False or True
+     *
+     * @return bool   False or True
      * @since 1.0.0
      */
-    public function is()
+    public function is(): bool
     {
         return (substr($this->namespace, 0, 2) == $this->namespaceSymbol) ? true : false;
     }
 
     /**
      * Check if exist namespace
-     * 
-     * @return boolean   False or True
+     *
+     * @return bool   False or True
      * @since 1.0.0
      */
-    public function has()
+    public function has(): bool
     {
         return (Kernel::getGlobalCache("asset/namespace/{$this->name()}")) ? true : false;
     }
@@ -80,17 +80,17 @@ class NamespaceHandler
      * @return NamespaceHandler object
      * @since 1.0.0
      */
-    public function add($namespace = '', AssetDataCollector $collector)
+    public function add(string $namespace = '', AssetDataCollector $collector): NamespaceHandler
     {
         if (empty($namespace)) {
             $namespace = Kernel::getGlobal('core/component/asset/filter/namespace/global-namespace');
         } elseif (is_string($namespace)) {
             if (strpos($namespace, '/') !== false) {
-                throw new \InvalidArgumentException(esc_html__('Namespace with next symbol "/" not permitted.', 'zc'));
+                throw new \InvalidArgumentException('Namespace with next symbol "/" not permitted.');
             }
         }
 
-        $data = Kernel::getGlobalCache("asset/namespace/{$namespace}", []);
+        $data   = Kernel::getGlobalCache("asset/namespace/{$namespace}", []);
         $data[] = $collector;
 
         Kernel::addGlobalCache("asset/namespace/{$namespace}", $data);
@@ -100,11 +100,11 @@ class NamespaceHandler
 
     /**
      * Get assets collector from namespace
-     * 
-     * @return AssetDataCollector object
+     *
+     * @return array
      * @since 1.0.0
      */
-    public function collector()
+    public function collector(): array
     {
         return Kernel::getGlobalCache("asset/namespace/{$this->name()}");
     }

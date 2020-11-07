@@ -24,29 +24,27 @@ trait ContentUtilityTrait
 {
     /**
      * Get option if exist
-     * 
+     *
      * @param  array  $options   All options
      * @param  string $option    Option name
      * @param  mix    $default   Default value if option not exist
      * @return string            Return value of option
      * @since 1.0.0
      */
-    protected function getOIE(array $options = [], $option = '', $default = '')
+    protected function getOIE(array $options = [], string $option = '', $default = '')
     {
-        if ($options && $option && is_string($option)) {
+        if ($options && $option) {
             return (!empty($options[$option])) ? $options[$option] : $default;
         }
-
-        return false;
     }
 
     /**
      * Get build settings
-     * 
+     *
      * @return array   Build settings
      * @since 1.0.0
      */
-    public function getBuildSettings()
+    public function getBuildSettings(): array
     {
         if ($this->getModuleData('build-settings')) {
             return $this->getModuleData('build-settings', []);
@@ -61,18 +59,18 @@ trait ContentUtilityTrait
 
     /**
      * Get mode
-     * 
+     *
      * @return string   Panel mode
      * @since 1.0.0
      */
-    public function getMode()
+    public function getMode(): string
     {
         return $this->getModuleData('mode', '');
     }
 
     /**
      * Add options
-     * 
+     *
      * @param array $options   Mode options
      * @since 1.0.0
      */
@@ -82,7 +80,8 @@ trait ContentUtilityTrait
 
         foreach ($options as $key => $option) {
             unset($options[$key]);
-            $key = str_replace($prefix, '', $key);
+
+            $key           = str_replace($prefix, '', $key);
             $options[$key] = stripslashes_deep($option);
         }
 
@@ -93,16 +92,17 @@ trait ContentUtilityTrait
      * Check if options is different from options in DB
      *
      * @param  array $options   Mode options
-     * @return boolean          True if different
+     * @return bool             True if different
      * @since 1.0.0
      */
-    protected function isOptionsDifferent(array $options)
+    protected function isOptionsDifferent(array $options): bool
     {
         $prefix = self::getGlobal('core/module/panel/prefix-slug');
 
         foreach ($options as $key => $option) {
             unset($options[$key]);
-            $key = str_replace($prefix, '', $key);
+
+            $key           = str_replace($prefix, '', $key);
             $options[$key] = stripslashes_deep($option);
         }
 
@@ -111,38 +111,38 @@ trait ContentUtilityTrait
 
     /**
      * Remove options
-     * 
-     * @return boolean   Result of manipulation
+     *
+     * @return bool   Result of manipulation
      * @since 1.0.0
      */
-    protected function remOptions()
+    protected function remOptions(): bool
     {
         return self::service('db')->remove("module.panel.{$this->getModuleSetting('slug')}", true);
     }
 
     /**
      * Get options
-     * 
-     * @param  string $default   Default value
-     * @return array             Mode options
+     *
+     * @param  mix $default   Default value
+     * @return array          Mode options
      * @since 1.0.0
      */
-    protected function getOptions($default = '')
+    protected function getOptions($default = ''): array
     {
         return self::service('db')->get("module.panel.{$this->getModuleSetting('slug')}", $default);
     }
 
     /**
      * Get option
-     * 
+     *
      * @param  string $option    Name of option
      * @param  mix    $default   Default value
      * @return mix
      * @since 1.0.0
      */
-    public function getOption($option, $default = '')
+    public function getOption(string $option, $default = '')
     {
-        if ($option && is_string($option)) {
+        if ($option) {
             $prefix = self::getGlobal('core/module/panel/prefix-slug');
 
             if (strpos($option, $prefix) !== false) {
@@ -151,7 +151,5 @@ trait ContentUtilityTrait
 
             return self::service('db')->get("module.panel.{$this->getModuleSetting('slug')}/{$option}", $default);
         }
-
-        return false;
     }
 }

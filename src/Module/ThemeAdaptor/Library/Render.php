@@ -15,15 +15,13 @@ use ZimbruCode\Component\Common\Tools;
 use ZimbruCode\Component\Core\Kernel;
 use ZimbruCode\Component\Handler\Traits\OptionHandlerTrait;
 use ZimbruCode\Component\TemplateBridges\TwigTemplateBridge;
-use ZimbruCode\Component\TemplateBridges\Helper\GlobalShell;
-use ZimbruCode\Module\ThemeAdaptor\Library\TwigFunctions;
-use ZimbruCode\Module\ThemeAdaptor\Library\TwigExtension\InitTwigExtensions;
-use ZimbruCode\Module\ThemeAdaptor\Library\Shell\RenderShell;
+use ZimbruCode\Module\ThemeAdaptor\Library\Shell\GeneralShell;
+use ZimbruCode\Module\ThemeAdaptor\Library\Shell\MenuShell;
 use ZimbruCode\Module\ThemeAdaptor\Library\Shell\PostShell;
 use ZimbruCode\Module\ThemeAdaptor\Library\Shell\QueryShell;
 use ZimbruCode\Module\ThemeAdaptor\Library\Shell\SidebarShell;
-use ZimbruCode\Module\ThemeAdaptor\Library\Shell\MenuShell;
-use ZimbruCode\Module\ThemeAdaptor\Library\Shell\GeneralShell;
+use ZimbruCode\Module\ThemeAdaptor\Library\TwigExtension\InitTwigExtensions;
+use ZimbruCode\Module\ThemeAdaptor\Library\TwigFunctions;
 
 /**
  * Class : Render
@@ -41,20 +39,20 @@ class Render
         'functions' => [],
         'escapers'  => [],
         'filters'   => [],
-        'template'  => false
+        'template'  => false,
     ];
 
     protected $__eflush;
 
-    public function __construct($template, $locationPath, $directRender = true, $directMode = false, $flush = true)
+    public function __construct(string $template, string $locationPath, bool $directRender = true, bool $directMode = false, bool $flush = true)
     {
-        if (!$template || !is_string($template)) {
-            throw new \InvalidArgumentException('Template is empty or not string.');
+        if (!$template) {
+            throw new \InvalidArgumentException('Template is empty.');
         }
 
-        $this->__ttb = new TwigTemplateBridge;
+        $this->__ttb              = new TwigTemplateBridge;
         $this->__data['template'] = $template;
-        $this->__flush = $flush;
+        $this->__flush            = $flush;
 
         if ($directMode === false) {
 
@@ -131,10 +129,10 @@ class Render
         }
 
         // Filters
-        apply_filters('zc/module/theme_adaptor/twig/shell/post',    $this->post);
-        apply_filters('zc/module/theme_adaptor/twig/shell/query',   $this->query);
+        apply_filters('zc/module/theme_adaptor/twig/shell/post', $this->post);
+        apply_filters('zc/module/theme_adaptor/twig/shell/query', $this->query);
         apply_filters('zc/module/theme_adaptor/twig/shell/sidebar', $this->sidebar);
-        apply_filters('zc/module/theme_adaptor/twig/shell/menu',    $this->menu);
+        apply_filters('zc/module/theme_adaptor/twig/shell/menu', $this->menu);
         apply_filters('zc/module/theme_adaptor/twig/shell/general', $this->gen);
 
         // Action
@@ -154,7 +152,7 @@ class Render
 
     /**
      * Get var
-     * 
+     *
      * @param  string $name   Name of var
      * @return string         Value of var
      * @since 1.0.0
@@ -166,55 +164,51 @@ class Render
 
     /**
      * Add var (setter)
-     * 
+     *
      * @param string $name    Name of var
      * @param mix    $value   Value of var
      * @since 1.0.0
      */
     public function __set($name, $value)
     {
-        return $this->__ttb->addVar($name, $value);
+        $this->__ttb->addVar($name, $value);
     }
 
     /**
      * Add var
-     * 
+     *
      * @param string $name    Name of var
      * @param mix    $value   Value of var
      * @since 1.0.0
      */
-    public function addVar($name, $value)
+    public function addVar(string $name, $value): void
     {
-        return $this->__ttb->addVar($name, $value);
+        $this->__ttb->addVar($name, $value);
     }
 
     /**
      * Add vars
-     * 
+     *
      * @param array $vars   Vars
      * @since 1.0.0
      */
-    public function addVars(array $vars)
+    public function addVars(array $vars): void
     {
-        return $this->__ttb->getVars($vars);
+        $this->__ttb->getVars($vars);
     }
 
     /**
      * Add function
-     * 
+     *
      * @param  string   $name     Function name
      * @param  callable $method   The function that will be called
      * @return void               This function does not return a value
      * @since 1.0.0
      */
-    public function addFunction($name, callable $method)
+    public function addFunction(string $name, callable $method): void
     {
         if (!$name) {
             throw new \InvalidArgumentException('Function name is empty.');
-        }
-
-        if (!is_string($name)) {
-            throw new \InvalidArgumentException('Function name is not string.');
         }
 
         $this->__data['functions'][$name] = $method;
@@ -222,20 +216,16 @@ class Render
 
     /**
      * Add escaper
-     * 
+     *
      * @param  string   $name     Escaper name
      * @param  callable $method   The function that will be called
      * @return void               This function does not return a value
      * @since 1.0.0
      */
-    public function addEscaper($name, callable $method)
+    public function addEscaper(string $name, callable $method): void
     {
         if (!$name) {
             throw new \InvalidArgumentException('Escaper function name is empty.');
-        }
-
-        if (!is_string($name)) {
-            throw new \InvalidArgumentException('Escaper function name is not string.');
         }
 
         $this->__data['escapers'][$name] = $method;
@@ -243,20 +233,16 @@ class Render
 
     /**
      * Add filter
-     * 
+     *
      * @param  string   $name     Filter name
      * @param  callable $method   The function that will be called
      * @return void               This function does not return a value
      * @since 1.0.0
      */
-    public function addFilter($name, callable $method)
+    public function addFilter(string $name, callable $method): void
     {
         if (!$name) {
             throw new \InvalidArgumentException('Filter function name is empty.');
-        }
-
-        if (!is_string($name)) {
-            throw new \InvalidArgumentException('Filter function name is not string.');
         }
 
         $this->__data['filters'][$name] = $method;
@@ -264,14 +250,14 @@ class Render
 
     /**
      * Add load path
-     * 
+     *
      * @param string  $path        Path of template
      * @param string  $namespace   Namespace of templates
      * @since 1.0.0
      */
-    public function addLocationPath($path, $namespace = null)
+    public function addLocationPath(string $path, string $namespace = null): void
     {
-        return $this->__ttb->addLocationPath($path, $namespace);
+        $this->__ttb->addLocationPath($path, $namespace);
     }
 
     /**
@@ -279,7 +265,7 @@ class Render
      *
      * @return void
      */
-    public function renderContent()
+    public function renderContent(): void
     {
         if ($this->__flush === true) {
             flush();

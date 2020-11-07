@@ -28,10 +28,10 @@ class DataCollector
      * Add value
      *
      * @param string $path
-     * @param string $value
+     * @param mix $value
      * @since 1.0.0
      */
-    public function add($path, $value = '')
+    public function add(string $path, $value = ''): DataCollector
     {
         Tools::addNode($this->data, $path, $value);
         return $this;
@@ -39,36 +39,36 @@ class DataCollector
 
     /**
      * Get value
-     * 
+     *
      * @param  string  $path
-     * @param  boolean $default
+     * @param  mix $default
      * @return mix
      * @since 1.0.0
      */
-    public function get($path, $default = false)
+    public function get(string $path, $default = false)
     {
         return Tools::getNode($this->data, $path, $default);
     }
 
     /**
      * Remove
-     * 
+     *
      * @param  string $path
-     * @return boolean
+     * @return bool
      * @since 1.0.0
      */
-    public function remove($path)
+    public function remove(string $path): bool
     {
         return Tools::unsetNode($this->data, $path);
     }
 
     /**
      * Dump data
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function dump()
+    public function dump(): void
     {
         dump($this->data);
     }

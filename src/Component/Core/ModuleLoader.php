@@ -35,7 +35,7 @@ class ModuleLoader
 
     /**
      * Use module direct
-     * 
+     *
      * @param  object $name   Short name of module
      * @return object         Module class
      * @since 1.0.0
@@ -50,76 +50,72 @@ class ModuleLoader
      *
      * @param string  $module   Module name
      * @param string  $path     Additional part of path
-     * @param boolean $default  Return value if not exist module
-     * @return string           Module path
+     * @param mix     $default  Return value if not exist module
+     * @return mix              Module path
      * @since 1.0.0
      */
-    public function getModulePath($module, $path = '', $default = false)
+    public function getModulePath(string $module, string $path = '', $default = false)
     {
         $class    = $this->getModuleClass($module);
         $filePath = Kernel::service('composer')->findFile($class);
         $dirPath  = dirname(wp_normalize_path(realpath($filePath)));
 
-        return ($dirPath && is_string($dirPath)) ? $dirPath . $path : $default;
+        return ($dirPath) ? $dirPath . $path : $default;
     }
 
     /**
      * Get module URL
      *
      * @param string  $module   Module name
-     * @param string  $URL      Additional part of URL
-     * @param boolean $default  Return value if not exist module
-     * @return string           Module URL
+     * @param string  $url      Additional part of URL
+     * @param mix     $default  Return value if not exist module
+     * @return mix              Module URL
      * @since 1.0.0
      */
-    public function getModuleURL($module, $URL = '', $default = false)
+    public function getModuleURL(string $module, string $url = '', $default = false)
     {
         $dirPath = $this->getModulePath($module);
-        return ($dirPath && is_string($dirPath)) ? Tools::getURL($dirPath) . $URL : $default;
+        return ($dirPath) ? Tools::getURL($dirPath) . $url : $default;
     }
 
     /**
      * Get module resource path
-     * 
-     * @param string  $module   Module name
-     * @param  string $path     Additional part of path
-     * @return string           Module resource path
+     *
+     * @param string $module   Module name
+     * @param string $path     Additional part of path
+     * @return mix             Module resource path
      * @since 1.0.0
      */
-    public function getModuleResourcePath($module, $path = '')
+    public function getModuleResourcePath(string $module, string $path = '')
     {
         $dirPath = $this->getModulePath($module);
-        return ($dirPath && is_string($dirPath)) ? $dirPath . Kernel::getGlobal('core/component/core/module/resource-dir') . $path : false;
+        return ($dirPath) ? $dirPath . Kernel::getGlobal('core/component/core/module/resource-dir') . $path : false;
     }
 
     /**
      * Get module resource URL
-     * 
-     * @param string  $module   Module name
-     * @param  string $url      Additional part of URL
-     * @return string           Module resource URL
+     *
+     * @param string $module   Module name
+     * @param string $url      Additional part of URL
+     * @return mix             Module resource URL
      * @since 1.0.0
      */
-    public function getModuleResourceURL($module, $url = '')
+    public function getModuleResourceURL(string $module, string $url = '')
     {
         $urlPath = $this->getModuleURL($module);
-        return ($urlPath && is_string($urlPath)) ? $urlPath . Kernel::getGlobal('core/component/core/module/resource-dir') . $url : false;
+        return ($urlPath) ? $urlPath . Kernel::getGlobal('core/component/core/module/resource-dir') . $url : false;
     }
 
     /**
      * Add namespace for search
-     * 
+     *
      * @param string $namespace
      * @since 1.0.0
      */
-    public function addNamespace($namespace)
+    public function addNamespace(string $namespace): ModuleLoader
     {
         if (!$namespace) {
-            throw new \InvalidArgumentException(esc_html__('Namespace is empty.', 'zc'));
-        }
-
-        if (!is_string($namespace)) {
-            throw new \InvalidArgumentException(esc_html__('Namespace is not string.', 'zc'));
+            throw new \InvalidArgumentException('Namespace is empty.');
         }
 
         Kernel::addGlobalCache("module/namespace/{$namespace}", $namespace);
@@ -129,11 +125,11 @@ class ModuleLoader
 
     /**
      * Add settings
-     * 
+     *
      * @param array $setting   Module settings
      * @since 1.0.0
      */
-    public function addSettings(array $settings)
+    public function addSettings(array $settings): ModuleLoader
     {
         $this->config['settings'] = $settings;
         return $this;
@@ -141,13 +137,13 @@ class ModuleLoader
 
     /**
      * Add module as service
-     * 
+     *
      * @param string $name   Name of service
      * @since 1.0.0
      */
-    public function addAsService($name)
+    public function addAsService(string $name): ModuleLoader
     {
-        if ($name && is_string($name)) {
+        if ($name) {
             $this->config['service'] = $name;
         }
 
@@ -156,13 +152,13 @@ class ModuleLoader
 
     /**
      * Add module mode
-     * 
-     * @param array $mode   Module mode
+     *
+     * @param string $mode   Module mode
      * @since 1.0.0
      */
-    public function addMode($mode)
+    public function addMode(string $mode): ModuleLoader
     {
-        if ($mode && is_string($mode)) {
+        if ($mode) {
             $this->config['mode'] = $mode;
         }
 
@@ -171,11 +167,11 @@ class ModuleLoader
 
     /**
      * Add module config
-     * 
-     * @param array $config   Module config
+     *
+     * @param array|string $config   Module config
      * @since 1.0.0
      */
-    public function addConfig(array $config)
+    public function addConfig($config): ModuleLoader
     {
         if ($config) {
             if (is_string($config)) {
@@ -206,13 +202,13 @@ class ModuleLoader
                              ->build();
                     } elseif (is_array($module)) {
                         if (empty($module['module'])) {
-                            throw new \RuntimeException(esc_html__('Module name is empty.', 'zc'));
+                            throw new \RuntimeException('Module name is empty.');
                         }
-    
+
                         $service  = (!empty($module['service']) && is_string($module['service'])) ? $module['service'] : false;
                         $mode     = (!empty($module['mode']) && is_string($module['mode'])) ? $module['mode'] : false;
                         $settings = (isset($module['settings']) && is_array($module['settings'])) ? $module['settings'] : [];
-    
+
                         $this->useModule($module['module'])
                              ->addAsService($service)
                              ->addMode($mode)
@@ -230,22 +226,22 @@ class ModuleLoader
 
     /**
      * Get module config
-     * 
+     *
      * @return array   Module config
      * @since 1.0.0
      */
-    public function getConfig()
+    public function getConfig(): array
     {
         return $this->config;
     }
 
     /**
      * Clear config
-     * 
-     * @return boolean   None
+     *
+     * @return ModuleLoader
      * @since 1.0.0
      */
-    public function flush()
+    public function flush(): ModuleLoader
     {
         $this->config = [
             'module'   => '',
@@ -259,14 +255,14 @@ class ModuleLoader
 
     /**
      * Use module
-     * 
+     *
      * @param  string $module   Module name
-     * @return object           This
+     * @return ModuleLoader
      * @since 1.0.0
      */
-    protected function useModule($module)
+    protected function useModule(string $module): ModuleLoader
     {
-        if ($module && is_string($module)) {
+        if ($module) {
             $this->config['module'] = $module;
         }
 
@@ -275,14 +271,13 @@ class ModuleLoader
 
     /**
      * Build the module and run it
-     * 
-     * @return boolean   None
+     *
      * @since 1.0.0
      */
-    protected function build()
+    protected function build(): ?ModuleKernel
     {
         if (empty($this->config['module']) || !is_string($this->config['module'])) {
-            throw new \RuntimeException(esc_html__('Module is empty or is not compatible.', 'zc'));
+            throw new \RuntimeException('Module is empty or is not compatible.');
         }
 
         if (!empty($this->config['mode']) && is_string($this->config['mode'])) {
@@ -291,13 +286,15 @@ class ModuleLoader
                     if (is_admin()) {
                         return $this->prepModuleData();
                     }
+
                     break;
                 case 'front-end':
                     if (!is_admin()) {
                         return $this->prepModuleData();
                     }
+
                     break;
-                
+
                 default:
                     return $this->prepModuleData();
                     break;
@@ -307,19 +304,19 @@ class ModuleLoader
         }
 
         $this->flush();
-        return false;
+
+        return null;
     }
 
     /**
      * Preparing module data
      *
-     * @return boolean   None
      * @since 1.0.0
      */
-    protected function prepModuleData()
+    protected function prepModuleData(): ModuleKernel
     {
         if (!$module = $this->getModuleClass($this->config['module'])) {
-            throw new \RuntimeException($this->config['module'] . esc_html__(' - module not exist.', 'zc'));
+            throw new \RuntimeException("{$this->config['module']} - module not exist.");
         }
 
         // Init collector
@@ -341,7 +338,7 @@ class ModuleLoader
             if (!Kernel::getGlobal("cache/module/one-off/{$module->getModuleNamespace()}")) {
                 Kernel::addGlobal("cache/module/one-off/{$module->getModuleNamespace()}", $module->getModuleName());
             } else {
-                throw new \RuntimeException(sprintf(esc_html__('Duplication of module : %s', 'zc'), $module->getModuleNamespace()));
+                throw new \RuntimeException("Duplication of module : {$module->getModuleNamespace()}");
             }
         }
 
@@ -369,16 +366,18 @@ class ModuleLoader
 
     /**
      * Get module class
-     * 
+     *
      * @param  string $module   Module name
      * @return string           Module class
      * @since 1.0.0
      */
-    protected function getModuleClass($module)
+    protected function getModuleClass(string $module): string
     {
         $moduleName = Kernel::getGlobal('core/component/core/module/module-name');
+
         foreach (Kernel::getGlobal('core/component/core/module/namespace') as $namespace) {
             $class = "{$namespace}\\{$module}\\{$moduleName}";
+
             if (class_exists($class)) {
                 return $class;
             }
@@ -386,23 +385,22 @@ class ModuleLoader
 
         foreach (Kernel::getGlobalCache('module/namespace') as $namespace) {
             $class = "{$namespace}\\{$module}\\{$moduleName}";
+
             if (class_exists($class)) {
                 return $class;
             }
         }
-
-        return false;
     }
 
     /**
      * Group modules
      *
-     * @param boolean      $mode     Task
+     * @param string       $mode     Task
      * @param ModuleKernel $module   Module object
-     * @return void
+     * @return bool
      * @since 1.0.0
      */
-    protected function group($mode = false, ModuleKernel $module = null)
+    protected function group(string $mode = '', ModuleKernel $module = null): bool
     {
         if ($mode === 'init') {
             $this->isGroup = true;
@@ -420,12 +418,14 @@ class ModuleLoader
                     }
                 }
 
-                $this->group = [];
+                $this->group   = [];
                 $this->isGroup = false;
             }
         }
+
+        return false;
     }
-    
+
     /**
      * Do action before setup
      *
@@ -433,7 +433,7 @@ class ModuleLoader
      * @return void
      * @since 1.0.0
      */
-    protected function doAction(ModuleKernel $module)
+    protected function doAction(ModuleKernel $module): void
     {
         $slug = Kernel::getGlobal('core/slug');
         $name = ltrim(strtolower(preg_replace('/[A-Z]([A-Z](?![a-z]))*/', '_$0', $module->getModuleName())), '_');

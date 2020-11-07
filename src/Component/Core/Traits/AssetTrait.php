@@ -11,9 +11,9 @@
 
 namespace ZimbruCode\Component\Core\Traits;
 
-use ZimbruCode\Component\Core\Kernel;
 use ZimbruCode\Component\Asset\AssetManager;
 use ZimbruCode\Component\Asset\Filter\Combine;
+use ZimbruCode\Component\Core\Kernel;
 
 /**
  * Trait : Asset function
@@ -26,8 +26,8 @@ trait AssetTrait
 {
     /**
      * Asset
-     * 
-     * @return object   AssetAutomatic
+     *
+     * @return AssetManager
      * @since 1.0.0
      */
     protected function asset(...$assets)
@@ -73,8 +73,8 @@ trait AssetTrait
             if ($assets && is_bool(array_slice($assets, -1, 1)[0])) {
                 array_pop($assets);
                 $combine = true;
-            
-            // If last arg : callable : Additional callback
+
+                // If last arg : callable : Additional callback
             } elseif ($assets && is_callable(array_slice($assets, -1, 1)[0])) {
                 $callback = array_slice($assets, -1, 1)[0];
                 array_pop($assets);
@@ -98,7 +98,7 @@ trait AssetTrait
             if (!$combine) {
                 $assetManager->add($assets)->enroll($name);
             } else {
-                $callback = function($collector, $data) use ($name) {
+                $callback = function ($collector, array $data) use ($name): array {
                     $data['settings']['js']['outputName']  = $name;
                     $data['settings']['css']['outputName'] = $name;
 

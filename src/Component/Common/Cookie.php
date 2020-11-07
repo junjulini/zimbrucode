@@ -22,14 +22,14 @@ class Cookie
 {
     /**
      * Get cookie
-     * 
+     *
      * @param  string $name     Name of cookie
      * @param  mix    $default  Default value in case if null
      * @param  string $filter   Format : simple '', serialize, json
      * @return mix
      * @since 1.0.0
      */
-    public function get($name, $default = false, $filter = 'serialize')
+    public function get(string $name, $default = false, string $filter = 'serialize')
     {
         if (empty($_COOKIE[$name])) {
             return $default;
@@ -56,15 +56,15 @@ class Cookie
      * Add cookie
      *
      * @param string $name     Name of cookie
-     * @param string $data     Data for cookie
-     * @param string $time     Time for cookie
+     * @param mix    $data     Data for cookie
+     * @param int    $time     Time for cookie
      * @param string $filter   Format : simple '', serialize, json
      * @return void            This function does not return a value
      * @since 1.0.0
      */
-    public function add($name, $data, $time = 0, $filter = 'serialize')
+    public function add(string $name, $data, int $time = 0, string $filter = 'serialize'): void
     {
-        if ($name && is_string($name)) {
+        if ($name) {
             switch ($filter) {
                 case 'serialize':
                     $data = serialize($data);
@@ -76,6 +76,7 @@ class Cookie
             }
 
             setcookie($name, $data, $time, COOKIEPATH, COOKIE_DOMAIN);
+
             if (SITECOOKIEPATH != COOKIEPATH) {
                 setcookie($name, $data, $time, SITECOOKIEPATH, COOKIE_DOMAIN);
             }
@@ -84,12 +85,12 @@ class Cookie
 
     /**
      * Remove cookie
-     * 
+     *
      * @param  string $name   Name of cookie
      * @return void           This function does not return a value
      * @since 1.0.0
      */
-    public function remove($name)
+    public function remove(string $name): void
     {
         if (empty($_COOKIE[$name])) {
             return;
@@ -97,6 +98,7 @@ class Cookie
 
         unset($_COOKIE[$name]);
         setcookie($name, null, -1, COOKIEPATH, COOKIE_DOMAIN);
+
         if (SITECOOKIEPATH != COOKIEPATH) {
             setcookie($name, null, -1, SITECOOKIEPATH, COOKIE_DOMAIN);
         }
@@ -104,12 +106,12 @@ class Cookie
 
     /**
      * Remove data in cookie
-     * 
+     *
      * @param  string $name   Name of cookie
      * @return void           This function does not return a value
      * @since 1.0.0
      */
-    public function removeOnlyData($name)
+    public function removeOnlyData(string $name): void
     {
         $this->add($name, '');
     }

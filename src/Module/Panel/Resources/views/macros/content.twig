@@ -27,12 +27,10 @@
 
 {# Macro : Attribute condition #}
 {% macro condition(condition, operator) %}
-{% spaceless %}
     {% set condition = condition ? 'data-condition="' ~ condition ~ '"' %}
     {% set operator  = operator  ? ' data-condition-operator="' ~ operator ~ '"' %}
     {% set data = condition ~ operator %}
     {{ data|raw }}
-{% endspaceless %}
 {% endmacro %}
 
 {# Macro : Help content #}

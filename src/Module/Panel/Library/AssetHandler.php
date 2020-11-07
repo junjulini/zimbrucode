@@ -38,12 +38,12 @@ class AssetHandler
 
     public function __construct(ModuleKernel $module)
     {
-        $this->module = $module;
+        $this->module       = $module;
         $this->assetManager = new AssetManager(true, $this->module->getModulePath());
 
         $resourceDir = Kernel::getGlobal('core/component/core/module/resource-dir');
-        $path = "{$this->module->getModulePath()}{$resourceDir}/assets/less";
-        $url  = "{$this->module->getModuleURL()}{$resourceDir}/assets/less";
+        $path        = "{$this->module->getModulePath()}{$resourceDir}/assets/less";
+        $url         = "{$this->module->getModuleURL()}{$resourceDir}/assets/less";
 
         $this->addLessDir($path, $url);
     }
@@ -52,9 +52,10 @@ class AssetHandler
      * Add assets
      *
      * @param array/string $assets   Assets data
+     * @return AssetHandler
      * @since 1.0.0
      */
-    public function add($assets)
+    public function add($assets): AssetHandler
     {
         if ($assets && is_array($assets)) {
             foreach ($assets as $asset) {
@@ -69,14 +70,14 @@ class AssetHandler
 
     /**
      * Add asset : last queue
-     * 
+     *
      * @param  string $path   Asset path
-     * @return object         AssetHandler
+     * @return AssetHandler
      * @since 1.0.0
      */
-    public function addLast($path = '')
+    public function addLast(string $path = ''): AssetHandler
     {
-        if ($path && is_string($path)) {
+        if ($path) {
             $this->lastAssets[] = $path;
         }
 
@@ -85,14 +86,14 @@ class AssetHandler
 
     /**
      * Add less file
-     * 
+     *
      * @param  string $file   File path
-     * @return object         AssetHandler
+     * @return AssetHandler
      * @since 1.0.0
      */
-    public function addLessFile($file)
+    public function addLessFile(string $file): AssetHandler
     {
-        if ($file && is_string($file) && file_exists($file)) {
+        if ($file && file_exists($file)) {
             $this->lessData['files'][] = $file;
         }
 
@@ -101,15 +102,15 @@ class AssetHandler
 
     /**
      * Add less dir
-     * 
+     *
      * @param  string $dir   Dir path
      * @param  string $url   Dir url
-     * @return object        AssetHandler
+     * @return AssetHandler
      * @since 1.0.0
      */
-    public function addLessDir($dir, $url = '')
+    public function addLessDir(string $dir, string $url = ''): AssetHandler
     {
-        if ($dir && is_string($dir) && file_exists($dir)) {
+        if ($dir && file_exists($dir)) {
             $this->lessData['dirs'][] = [
                 'dir' => $dir,
                 'url' => $url,
@@ -121,15 +122,15 @@ class AssetHandler
 
     /**
      * Add less function
-     * 
+     *
      * @param  string   $name     Name of function
      * @param  callable $method   Function
-     * @return object             AssetHandler
+     * @return AssetHandler
      * @since 1.0.0
      */
-    public function addLessFunction($name, callable $method)
+    public function addLessFunction(string $name, callable $method): AssetHandler
     {
-        if ($name && is_string($name)) {
+        if ($name) {
             $this->lessData['functions'][] = [
                 'name'   => $name,
                 'method' => $method,
@@ -141,15 +142,15 @@ class AssetHandler
 
     /**
      * Add less var
-     * 
+     *
      * @param  string $slug
      * @param  mix    $value
-     * @return object   AssetHandler
+     * @return AssetHandler
      * @since 1.0.0
      */
-    public function addLessVar($slug, $value = '')
+    public function addLessVar(string $slug, $value = ''): AssetHandler
     {
-        if ($slug && is_string($slug)) {
+        if ($slug) {
             $this->lessData['vars'][$slug] = $value;
         }
 
@@ -158,12 +159,12 @@ class AssetHandler
 
     /**
      * Add less vars
-     * 
+     *
      * @param array $vars   Pool of vars for LESS
-     * @return object       AssetHandler
+     * @return AssetHandler
      * @since 1.0.0
      */
-    public function addLessVars(array $vars)
+    public function addLessVars(array $vars): AssetHandler
     {
         if ($vars) {
             $this->lessData['vars'] = $vars;
@@ -174,11 +175,11 @@ class AssetHandler
 
     /**
      * Enroll assets
-     * 
-     * @return object   AssetHandler
+     *
+     * @return AssetHandler
      * @since 1.0.0
      */
-    public function enroll()
+    public function enroll(): AssetHandler
     {
         if (!empty($this->lastAssets)) {
             foreach ($this->lastAssets as $lastAsset) {
@@ -242,11 +243,11 @@ class AssetHandler
 
     /**
      * Dump assets
-     * 
-     * @return object   AssetHandler
+     *
+     * @return AssetHandler
      * @since 1.0.0
      */
-    public function dump()
+    public function dump(): AssetHandler
     {
         $this->assetManager->dump();
         return $this;
@@ -254,16 +255,16 @@ class AssetHandler
 
     /**
      * Localizes a registered script with data for a JavaScript variable
-     * 
+     *
      * @param  string $handle   The registered script handle you are attaching the data for
      * @param  string $name     The name of the variable which will contain the data
      * @param  array  $data     The data itself
      * @return object           AssetHandler
      * @since 1.0.0
      */
-    public function localize($handle, $name, array $data = [])
+    public function localize(string $handle, string $name, array $data = []): AssetHandler
     {
-        if ($handle && is_string($handle) && $name && is_string($name)) {
+        if ($handle && $name) {
             $this->assetManager->localize($handle, $name, $data);
         }
 

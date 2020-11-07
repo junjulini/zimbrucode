@@ -30,11 +30,12 @@ class ControlsRenderTwigExtension extends AbstractExtension
 {
     protected $__panel;
 
-    public function __construct(ControlManager $panel) {
+    public function __construct(ControlManager $panel)
+    {
         $this->__panel = $panel;
     }
 
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('render', [$this, '__ext_render'], ['needs_environment' => true, 'needs_context' => true, 'is_safe' => ['all']]),
@@ -51,7 +52,7 @@ class ControlsRenderTwigExtension extends AbstractExtension
                     try {
                         if ($customControlShell = $this->__panel->getModuleSetting('custom-control-shell')) {
                             $shell = new $customControlShell($this->__panel, $control);
-                
+
                             if (!($shell instanceof ControlShell)) {
                                 $shell = new ControlShell($this->__panel, $control);
                             }
@@ -78,7 +79,7 @@ class ControlsRenderTwigExtension extends AbstractExtension
         return $result;
     }
 
-    public function getName()
+    public function getName(): string
     {
         return 'controls_render';
     }

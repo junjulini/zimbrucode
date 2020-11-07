@@ -10,7 +10,7 @@
  */
 
 return [
-    'mode'            => [
+    'mode'             => [
         'meta'      => 'ZimbruCode\\Module\\MetaboxPanel\\Mode\\MetaMode',
         'meta-lite' => 'ZimbruCode\\Module\\MetaboxPanel\\Mode\\MetaLiteMode',
     ],

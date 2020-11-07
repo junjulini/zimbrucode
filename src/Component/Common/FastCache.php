@@ -11,9 +11,9 @@
 
 namespace ZimbruCode\Component\Common;
 
+use ZimbruCode\Component\Common\Tools;
 use ZimbruCode\Component\Core\Kernel;
 use ZimbruCode\Component\Handler\CacheHandler;
-use ZimbruCode\Component\Common\Tools;
 
 /**
  * Class : Fast cache
@@ -34,7 +34,8 @@ class FastCache
         $cacheID   = Kernel::getGlobal('core/component/fast-cache/id', 'fast-cache.cache');
         $extension = Kernel::getGlobal('core/component/fast-cache/extension', '.cache');
 
-        $cacheHandler  = new CacheHandler($cacheDir, $extension);
+        $cacheHandler = new CacheHandler($cacheDir, $extension);
+
         $this->cache   = $cacheHandler->getCacheDriver();
         $this->cacheID = $cacheID;
 
@@ -48,19 +49,15 @@ class FastCache
     /**
      * Add element data
      *
-     * @param  string $key     Element key
-     * @param  string $value   Element value
-     * @return void            This function does not return a value
+     * @param  string $key   Element key
+     * @param  mix $value    Element value
+     * @return void          This function does not return a value
      * @since 1.0.0
      */
-    public function add($key, $value = '')
+    public function add(string $key, $value = ''): void
     {
         if (!$key) {
-            throw new \RuntimeException(esc_html__('Cache key : empty.', 'zc'));
-        }
-
-        if (!is_string($key)) {
-            throw new \RuntimeException(esc_html__('Cache key : not string.', 'zc'));
+            throw new \RuntimeException('Cache key : empty.');
         }
 
         $this->data[$key] = $value;
@@ -69,20 +66,16 @@ class FastCache
 
     /**
      * Get element data
-     * 
+     *
      * @param  string  $key       Element key
      * @param  mix     $default   Element value
      * @return boolean            Element data
      * @since 1.0.0
      */
-    public function get($key, $default = false)
+    public function get(string $key, $default = false)
     {
         if (!$key) {
-            throw new \RuntimeException(esc_html__('Cache key : empty.', 'zc'));
-        }
-
-        if (!is_string($key)) {
-            throw new \RuntimeException(esc_html__('Cache key : not string.', 'zc'));
+            throw new \RuntimeException('Cache key : empty.');
         }
 
         return (isset($this->data[$key])) ? $this->data[$key] : $default;
@@ -90,23 +83,19 @@ class FastCache
 
     /**
      * Remove element
-     * 
+     *
      * @param  string $key   Element key
      * @return void          This function does not return a value
      * @since 1.0.0
      */
-    public function remove($key)
+    public function remove(string $key): void
     {
         if (!$key) {
-            throw new \RuntimeException(esc_html__('Cache key : empty.', 'zc'));
-        }
-
-        if (!is_string($key)) {
-            throw new \RuntimeException(esc_html__('Cache key : not string.', 'zc'));
+            throw new \RuntimeException('Cache key : empty.');
         }
 
         if (!isset($this->data[$key])) {
-            throw new \RuntimeException(sprintf(esc_html__('This element "%s" don\'t exist in cache data.', 'zc')));
+            throw new \RuntimeException("This element {$key} don't exist in cache data.");
         }
 
         unset($this->data[$key]);
@@ -115,22 +104,22 @@ class FastCache
 
     /**
      * Flush all data
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function flush()
+    public function flush(): void
     {
         $this->cache->delete($this->cacheID);
     }
 
     /**
      * Dump data
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function dump()
+    public function dump(): void
     {
         Tools::dump($this->data);
     }

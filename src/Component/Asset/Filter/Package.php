@@ -11,10 +11,11 @@
 
 namespace ZimbruCode\Component\Asset\Filter;
 
+use ZimbruCode\Component\Asset\Library\AssetData;
 use ZimbruCode\Component\Asset\Library\Filter;
 use ZimbruCode\Component\Asset\Library\NamespaceHandler;
-use ZimbruCode\Component\Handler\LibraryHandler;
 use ZimbruCode\Component\Core\Kernel;
+use ZimbruCode\Component\Handler\LibraryHandler;
 
 /**
  * Class : Filter - Package
@@ -27,12 +28,12 @@ class Package extends Filter
 {
     /**
      * Each asset
-     * 
+     *
      * @param  AssetData $asset   Asset data
      * @return void               This function does not return a value
      * @since 1.0.0
      */
-    protected function each($asset)
+    protected function each(AssetData $asset): void
     {
         if (!$asset->isFile() && !(new NamespaceHandler($asset->raw()))->is()) {
             if ($packages = $this->prepPackageByCondition($asset->raw())) {
@@ -71,17 +72,13 @@ class Package extends Filter
 
     /**
      * Preparing package by condition
-     * 
+     *
      * @param  string $package   Package name
-     * @return array             Package data
+     * @return array/bool        Package data
      * @since 1.0.0
      */
-    protected function prepPackageByCondition($package)
+    protected function prepPackageByCondition(string $package)
     {
-        if (!$package || !is_string($package)) {
-            return false;
-        }
-
         if (strpos($package, '|') !== false) {
             preg_match_all("/\|([^\|]*)\|/", $package, $matches);
 

@@ -11,8 +11,8 @@
 
 namespace ZimbruCode\Component\Core;
 
-use ZimbruCode\Component\Handler\LibraryHandler;
 use ZimbruCode\Component\Common\Tools;
+use ZimbruCode\Component\Handler\LibraryHandler;
 
 /**
  * Class : Global library
@@ -25,7 +25,7 @@ final class GlobalLibrary
 {
     /**
      * Global configs
-     * 
+     *
      * @since 1.0.0
      */
     public function __construct()
@@ -40,44 +40,42 @@ final class GlobalLibrary
 
     /**
      * Add package library
-     * 
+     *
      * @param  string $path   Path from this class
      * @return void           This function does not return a value
      * @since 1.0.0
      */
-    private function addPackageLibrary($path)
+    private function addPackageLibrary(string $path): void
     {
-        LibraryHandler::addPackages(require $path . '/config/asset-packages.php');
+        LibraryHandler::addPackages(require "{$path}/config/asset-packages.php");
     }
 
     /**
      * Add icon font library
-     * 
+     *
      * @param  string $path   Path from this class
      * @return void           This function does not return a value
      * @since 1.0.0
      */
-    private function addIconFontLibrary($path)
+    private function addIconFontLibrary(string $path): void
     {
-        LibraryHandler::addElement('icons/material-icons', $path . '/icons/material-icons-map.php');
-        LibraryHandler::addPackages(require $path . '/icons/font-icons-package.php');
+        LibraryHandler::addElement('icons/material-icons', "{$path}/icons/material-icons-map.php");
+        LibraryHandler::addPackages(require "{$path}/icons/font-icons-package.php");
     }
 
     /**
      * Add less file library
-     * 
+     *
      * @param  string $path   Path from this class
      * @param  string $url    URL from this class
      * @return void           This function does not return a value
      * @since 1.0.0
      */
-    private function addLessFileLibrary($path, $url)
+    private function addLessFileLibrary(string $path, string $url): void
     {
-        Kernel::addGlobalCache('asset/less/import-dirs/core',
-            [
-                'path' => $path . '/less',
-                'url'  => $url . '/less/',
-            ]
-        );
+        Kernel::addGlobalCache('asset/less/import-dirs/core', [
+            'path' => "{$path}/less",
+            'url'  => "{$url}/less/",
+        ]);
     }
 }

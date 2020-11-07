@@ -12,6 +12,7 @@
 namespace ZimbruCode\Module\Panel\Library\Traits;
 
 use ZimbruCode\Component\TemplateBridges\TwigTemplateBridge;
+use ZimbruCode\Module\Panel\Library\AssetHandler;
 use ZimbruCode\Module\Panel\Library\Shell\BaseShell;
 
 /**
@@ -27,35 +28,33 @@ trait UtilityTrait
 
     /**
      * Add custom shell function
-     * 
+     *
      * @param string   $name   Name of function
      * @param callable $method
-     * @param string   $type
+     * @param void
      * @since 1.0.0
      */
-    protected function addShellFunction($name, callable $method, $type = 'panel-base-shell')
+    protected function addShellFunction(string $name, callable $method, string $type = 'panel-base-shell'): void
     {
         $this->callback()->add($type, function ($shell) use ($name, $method) {
             $shell->$name = function (...$args) use ($method) {
                 return call_user_func_array($method, $args);
             };
         });
-
-        return false;
     }
 
     /**
      * Render
-     * 
+     *
      * @param  string  $template   Template path
      * @param  array   $vars       Additional vars
-     * @param  boolean $return     Return content or echo
+     * @param  bool    $return     Return content or echo
      * @return string              HTML output
      * @since 1.0.0
      */
-    protected function render($template = '', array $vars = [], $return = false, callable $renderCallback = null)
+    protected function render(string $template = '', array $vars = [], bool $return = false, callable $renderCallback = null)
     {
-        if ($template && is_string($template)) {
+        if ($template) {
             $shell = ($customBaseShell = $this->getModuleSetting('custom-base-shell')) ? new $customBaseShell($this) : new BaseShell($this);
             $this->callback()->run('panel-base-shell', $shell);
 
@@ -84,7 +83,7 @@ trait UtilityTrait
 
             $this->callback()->run('panel-render', $ttb);
 
-            if ($return) {
+            if ($return === true) {
                 return $ttb->render($template);
             } else {
                 echo $ttb->render($template);
@@ -94,16 +93,16 @@ trait UtilityTrait
 
     /**
      * Asset
-     * 
-     * @return object   AssetHandler
+     *
+     * @return AssetHandler
      * @since 1.0.0
      */
-    public function asset(...$assets)
+    public function asset(...$assets): AssetHandler
     {
         if ($assets) {
             $this->getModuleData('asset')->add($assets);
         }
-        
+
         return $this->getModuleData('asset');
     }
 }

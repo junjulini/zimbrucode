@@ -22,17 +22,17 @@ use ZimbruCode\Component\TemplateBridges\Helper\ShellKernel;
  */
 class QueryShell extends ShellKernel
 {
-    public function resetGlobal()
+    public function resetGlobal(): void
     {
         wp_reset_query();
     }
 
-    public function reset()
+    public function reset(): void
     {
         wp_reset_postdata();
     }
 
-    public function posts($query, $return = false)
+    public function posts($query, bool $return = false)
     {
         if ($return === true) {
             return query_posts($query);

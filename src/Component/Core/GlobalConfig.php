@@ -22,7 +22,7 @@ final class GlobalConfig
 {
     /**
      * Global configs
-     * 
+     *
      * @since 1.0.0
      */
     public function __construct()

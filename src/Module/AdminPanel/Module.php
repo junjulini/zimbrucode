@@ -25,11 +25,11 @@ class Module extends ModuleKernel
 {
     /**
      * Module setup
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function setup()
+    public function setup(): void
     {
         self::addGlobal('core/module/admin-panel/settings/page-title', self::getGlobal('app/name') . esc_html__(' Options', 'zc'));
         self::addGlobal('core/module/admin-panel/settings/menu-title', self::getGlobal('app/name'));

@@ -29,19 +29,19 @@ class CssConvertor
 
     /**
      * Add asset
-     * 
+     *
      * @param string $asset   Asset path
      * @return void           This function does not return a value
      * @since 1.0.0
      */
-    public function addAsset($asset)
+    public function addAsset(string $asset): void
     {
         if (!$asset) {
-            throw new \InvalidArgumentException(esc_html__('Asset is empty.', 'zc'));
+            throw new \InvalidArgumentException('Asset is empty.');
         }
 
         if (!file_exists($asset)) {
-            throw new \RuntimeException($asset . esc_html__(' - asset don\'t exist.', 'zc'));
+            throw new \RuntimeException("{$asset} - asset don't exist.");
         }
 
         $this->asset = $asset;
@@ -49,15 +49,15 @@ class CssConvertor
 
     /**
      * Add output
-     * 
+     *
      * @param string $output   Output file path
      * @return void            This function does not return a value
      * @since 1.0.0
      */
-    public function addOutput($output)
+    public function addOutput(string $output): void
     {
         if (!$output) {
-            throw new \InvalidArgumentException(esc_html__('Output is empty.', 'zc'));
+            throw new \InvalidArgumentException('Output is empty.');
         }
 
         $this->output = $output;
@@ -65,15 +65,15 @@ class CssConvertor
 
     /**
      * Add asset content
-     * 
+     *
      * @param string $content   Content of asset
      * @return void             This function does not return a value
      * @since 1.0.0
      */
-    public function add($content)
+    public function add(string $content): void
     {
         if (!$content) {
-            throw new \InvalidArgumentException(esc_html__('Content is empty', 'zc'));
+            throw new \InvalidArgumentException('Content is empty');
         }
 
         $this->content = $content;
@@ -81,14 +81,14 @@ class CssConvertor
 
     /**
      * Get asset content
-     * 
+     *
      * @return string   Asset content
      * @since 1.0.0
      */
-    protected function get()
+    protected function get(): string
     {
         if (!$this->asset) {
-            throw new \RuntimeException(esc_html__('Asset is empty.', 'zc'));
+            throw new \RuntimeException('Asset is empty.');
         }
 
         return ($this->content) ? $this->content : file_get_contents($this->asset);
@@ -96,15 +96,16 @@ class CssConvertor
 
     /**
      * Convert paths to relative paths
-     * 
+     *
      * @return string  New content
      * @since 1.0.0
      */
-    public function convertPathToRelative()
+    public function convertPathToRelative(): string
     {
         $content = $this->get();
 
         preg_match_all("/url\((.*?)\)/is", $content, $matches);
+
         if (!empty($matches[1])) {
             $data = [
                 'search'  => [],
@@ -135,16 +136,17 @@ class CssConvertor
 
     /**
      * Covert paths to base64 encoded data
-     * 
+     *
      * @return array   New content
      * @since 1.0.0
      */
-    public function convertPathToData()
+    public function convertPathToData(): array
     {
         $content = $this->get();
         $config  = Kernel::getGlobal('core/component/asset/css-convertor');
 
         preg_match_all("/url\((.*?)\)/is", $content, $matches);
+
         if (!empty($matches[1])) {
             $data = [
                 'search'  => [],

@@ -22,24 +22,24 @@ trait RequestHandlerTrait
 {
     /**
      * Post request
-     * 
+     *
      * @param  string $param
      * @return string
      * @since 1.0.0
      */
-    public static function rPost($param, $default = '')
+    public static function rPost(string $param, $default = ''): string
     {
         return !empty($_POST[$param]) ? $_POST[$param] : $default;
     }
 
     /**
      * Get request
-     * 
+     *
      * @param  string $param
      * @return string
      * @since 1.0.0
      */
-    public static function rGet($param, $default = '')
+    public static function rGet(string $param, $default = ''): string
     {
         return !empty($_GET[$param]) ? $_GET[$param] : $default;
     }

@@ -25,19 +25,19 @@ trait RenderTrait
 {
     /**
      * Render
-     * 
+     *
      * @param  string  $template   Template path
      * @param  array   $vars       Additional vars
-     * @param  boolean $return     Return content or echo
+     * @param  bool    $return     Return content or echo
      * @return string              HTML output
      * @since 1.0.0
      */
-    protected function render($template = '', array $vars = [], $return = false, callable $renderCallback = null)
+    protected function render(string $template = '', array $vars = [], bool $return = false, callable $renderCallback = null)
     {
-        if ($template && is_string($template)) {
+        if ($template) {
             $output = '';
 
-            $renderTemplate = function ($template, $locationPath) use ($vars, $renderCallback) {
+            $renderTemplate = function (string $template, string $locationPath) use ($vars, $renderCallback) {
                 $ttb = new TwigTemplateBridge;
                 $ttb->addLocationPath($locationPath);
                 $ttb->addCachePath(self::service('app-locator')->getCachePath('twig'));
@@ -71,7 +71,6 @@ trait RenderTrait
                 return $output;
             } else {
                 echo $output;
-                return false;
             }
         }
 

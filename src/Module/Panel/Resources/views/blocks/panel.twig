@@ -117,12 +117,14 @@
 
                                     {# If is panel parent section #}
                                     {% elseif manu.type == 'menuParentTab' %}
-                                        {% for sub_menu in manu.content if sub_menu.type == 'menuTab' and sub_menu.id %}
-                                            <li class="zc-panel-controls__section" data-section="section_{{ sub_menu.id }}">
-                                                <ul class="zc-panel-controls__list">
-                                                    {{ render(sub_menu.content) }}
-                                                </ul>
-                                            </li>
+                                        {% for sub_menu in manu.content %}
+                                            {% if sub_menu.type == 'menuTab' and sub_menu.id %}
+                                                <li class="zc-panel-controls__section" data-section="section_{{ sub_menu.id }}">
+                                                    <ul class="zc-panel-controls__list">
+                                                        {{ render(sub_menu.content) }}
+                                                    </ul>
+                                                </li>
+                                            {% endif %}
                                         {% endfor %}
                                     {% endif %}
 

@@ -11,6 +11,7 @@
 
 namespace ZimbruCode\Component\Asset\Filter;
 
+use ZimbruCode\Component\Asset\Library\AssetData;
 use ZimbruCode\Component\Asset\Library\Filter;
 use ZimbruCode\Component\Core\Kernel;
 
@@ -25,12 +26,12 @@ class CSS extends Filter
 {
     /**
      * Each asset
-     * 
+     *
      * @param  AssetData $asset   Asset data
      * @return void               This function does not return a value
      * @since 1.0.0
      */
-    public function each($asset)
+    public function each(AssetData $asset): void
     {
         if ($asset->info()->getExtension() == 'css') {
             $asset->type('css')

@@ -29,13 +29,13 @@ return [
         'styles'  => [],
         'scripts' => [
             'zimbrucode' => [
-                'path'    => call_user_func(function () use ($path) {
+                'path'    => (function () use ($path) {
                     if (Kernel::getEnvironment() == 'prod') {
                         return "{$path}/packages/zimbrucode/jquery.zimbrucode.min.js";
                     } else {
                         return "{$path}/packages/zimbrucode/jquery.zimbrucode.js";
                     }
-                }),
+                })(),
                 'version' => '1.0.0',
             ],
         ],

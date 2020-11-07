@@ -24,19 +24,15 @@ trait GlobalCacheHandlerTrait
 {
     /**
      * Add cache
-     * 
+     *
      * @param string $key     Cache key
      * @param mix    $value   Cache value
      * @since 1.0.0
      */
-    public static function addGlobalCache($key, $value = '')
+    public static function addGlobalCache(string $key, $value = '')
     {
         if (!$key) {
-            throw new \InvalidArgumentException(esc_html__('Global cache key is empty.', 'zc'));
-        }
-
-        if (!is_string($key)) {
-            throw new \InvalidArgumentException(esc_html__('Global cache key not string.', 'zc'));
+            throw new \InvalidArgumentException('Global cache key is empty.');
         }
 
         return Kernel::addGlobal("cache/$key", $value);
@@ -44,18 +40,14 @@ trait GlobalCacheHandlerTrait
 
     /**
      * Get cache value
-     * 
+     *
      * @param string $key   Cache key
      * @since 1.0.0
      */
-    public static function getGlobalCache($key, $default = false)
+    public static function getGlobalCache(string $key, $default = false)
     {
         if (!$key) {
-            throw new \InvalidArgumentException(esc_html__('Global cache key is empty.', 'zc'));
-        }
-
-        if (!is_string($key)) {
-            throw new \InvalidArgumentException(esc_html__('Global cache key not string.', 'zc'));
+            throw new \InvalidArgumentException('Global cache key is empty.');
         }
 
         return Kernel::getGlobal("cache/$key", $default);
@@ -63,18 +55,14 @@ trait GlobalCacheHandlerTrait
 
     /**
      * Remove cache value
-     * 
+     *
      * @param string $key   Cache key
      * @since 1.0.0
      */
-    public static function remGlobalCache($key)
+    public static function remGlobalCache(string $key): bool
     {
         if (!$key) {
-            throw new \InvalidArgumentException(esc_html__('Global cache key is empty.', 'zc'));
-        }
-
-        if (!is_string($key)) {
-            throw new \InvalidArgumentException(esc_html__('Global cache key not string.', 'zc'));
+            throw new \InvalidArgumentException('Global cache key is empty.');
         }
 
         return Kernel::remGlobal("cache/$key");
@@ -82,11 +70,11 @@ trait GlobalCacheHandlerTrait
 
     /**
      * Clear all cache values
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public static function flushGlobalCache()
+    public static function flushGlobalCache(): void
     {
         Kernel::addGlobal('cache', []);
     }

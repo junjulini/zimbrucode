@@ -12,7 +12,6 @@
 namespace ZimbruCode\Component\Asset\Library;
 
 use ZimbruCode\Component\Asset\Library\AssetDataCollector;
-use ZimbruCode\Component\Core\Kernel;
 
 /**
  * Class : Filter
@@ -28,14 +27,14 @@ abstract class Filter
 
     /**
      * Initialization of filter
-     * 
+     *
      * @param  AssetDataCollector $collector   Collector object
-     * @param  boolean            $single      Name of asset
+     * @param  string             $single      Name of asset
      * @param  callable|null      $callback    Additional callback
      * @return void                            This function does not return a value
      * @since 1.0.0
      */
-    final public function __init(AssetDataCollector $collector, $single = false, callable $callback = null)
+    final public function __init(AssetDataCollector $collector, string $single = null, callable $callback = null)
     {
         $this->collector = $collector;
         $this->callback  = $callback;
@@ -45,7 +44,7 @@ abstract class Filter
         }
 
         if (method_exists($this, 'each')) {
-            if ($single && is_string($single)) {
+            if ($single) {
                 if ($this->collector()->has($single)) {
                     $this->each($this->collector()->get($single));
                 }
@@ -59,19 +58,18 @@ abstract class Filter
 
     /**
      * Assets collector
-     * 
+     *
      * @return AssetDataCollector object
      * @since 1.0.0
      */
-    final protected function collector()
+    final protected function collector(): AssetDataCollector
     {
         return $this->collector;
     }
 
     /**
      * Run additional callback
-     * 
-     * @return function   Callback for additional manipulation with asset data
+     *
      * @since 1.0.0
      */
     final protected function callback(...$args)

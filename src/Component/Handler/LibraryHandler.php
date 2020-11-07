@@ -25,27 +25,27 @@ class LibraryHandler
 {
     /**
      * Add package
-     * 
+     *
      * @param string $name   Name of package
      * @param array  $source
      * @return void          This function does not return a value
      * @since 1.0.0
      */
-    public static function addPackage($name, array $source)
+    public static function addPackage(string $name, array $source)
     {
-        if ($name && is_string($name)) {
+        if ($name) {
             Kernel::addGlobalCache("library/package/{$name}", $source);
         }
     }
 
     /**
      * Add packages
-     * 
+     *
      * @param array $source
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public static function addPackages(array $source)
+    public static function addPackages(array $source): void
     {
         Kernel::addGlobalCache(
             'library/package',
@@ -58,14 +58,14 @@ class LibraryHandler
 
     /**
      * Get packages
-     * 
+     *
      * @param  string $name   Name of package
      * @return array
      * @since 1.0.0
      */
-    public static function getPackage($name)
+    public static function getPackage(string $name)
     {
-        if ($name && is_string($name)) {
+        if ($name) {
             return Kernel::getGlobalCache("library/package/{$name}");
         }
 
@@ -74,32 +74,32 @@ class LibraryHandler
 
     /**
      * Get packages
-     * 
+     *
      * @return array
      * @since 1.0.0
      */
-    public static function getPackages()
+    public static function getPackages(): array
     {
         return Kernel::getGlobalCache('library/package', []);
     }
 
     /**
      * Remove package
-     * 
+     *
      * @param  string $name   Name of package
      * @return void           This function does not return a value
      * @since 1.0.0
      */
-    public static function remPackage($name)
+    public static function remPackage(string $name): void
     {
-        if ($name && is_string($name)) {
+        if ($name) {
             Kernel::remGlobalCache("library/package/{$name}");
         }
     }
 
     /**
      * Remove packages
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
@@ -110,29 +110,29 @@ class LibraryHandler
 
     /**
      * Add element
-     * 
+     *
      * @param string $name     Name of element
      * @param string $source   Source of element
      * @return void            This function does not return a value
      * @since 1.0.0
      */
-    public static function addElement($name, $source)
+    public static function addElement(string $name, string $source): void
     {
-        if ($name && is_string($name) && $source) {
+        if ($name && $source) {
             Kernel::addGlobalCache("library/other/{$name}", $source);
         }
     }
 
     /**
      * Get element
-     * 
+     *
      * @param  string $name   Name of element
      * @return array          Source of element
      * @since 1.0.0
      */
-    public static function getElement($name)
+    public static function getElement(string $name)
     {
-        if ($name && is_string($name)) {
+        if ($name) {
             return Kernel::getGlobalCache("library/other/{$name}");
         }
 
@@ -141,14 +141,14 @@ class LibraryHandler
 
     /**
      * Remove element
-     * 
+     *
      * @param  string $name   Name of element
      * @return void           This function does not return a value
      * @since 1.0.0
      */
-    public static function remElement($name)
+    public static function remElement(string $name): void
     {
-        if ($name && is_string($name)) {
+        if ($name) {
             Kernel::remGlobalCache("library/other/{$name}");
         }
     }

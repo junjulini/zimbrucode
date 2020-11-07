@@ -37,7 +37,7 @@ class MenuShell extends ShellKernel
         }
     }
 
-    public function has($location)
+    public function has(string $location): bool
     {
         return has_nav_menu($location);
     }

@@ -28,7 +28,7 @@ class SidebarShell extends ShellKernel
      * @param mix $index   Name or ID of dynamic sidebar
      * @return void
      */
-    public function get($index = null)
+    public function get($index = null): void
     {
         dynamic_sidebar($index);
     }

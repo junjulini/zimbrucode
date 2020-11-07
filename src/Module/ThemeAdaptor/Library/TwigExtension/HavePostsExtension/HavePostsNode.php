@@ -23,41 +23,47 @@ use Twig\Compiler;
  */
 class HavePostsNode extends Node
 {
-    public function __construct(Node $body, $values, Node $else = null, $line, $tag = null)
+    public function __construct(Node $body, ?Node $values, ?Node $else, int $lineno, string $tag = null)
     {
+        $nodes = ['body' => $body];
+
         if ($values) {
-            parent::__construct(['body' => $body, 'values' => $values, 'else' => $else], [], $line, $tag);
-        } else {
-            parent::__construct(['body' => $body, 'else' => $else], [], $line, $tag);
+            $nodes['values'] = $values;
         }
+
+        if ($else !== null) {
+            $nodes['else'] = $else;
+        }
+
+        parent::__construct($nodes, [], $lineno, $tag);
     }
 
-    public function compile(Compiler $compiler)
+    public function compile(Compiler $compiler): void
     {
         $compiler->addDebugInfo($this);
 
-        if ($this->hasNode('values') && null !== $this->getNode('values')) {
+        if ($this->hasNode('values')) {
             $compiler->write('$args = ')->subcompile($this->getNode('values'))->raw(";\n");
         } else {
             $compiler->write('$args = false;' . "\n");
         }
 
         $compiler
-        ->write('if (!empty($args)) {' . "\n")
-            ->indent()
-            ->write('$query = ($args instanceof WP_Query) ? $args : new WP_Query($args);' . "\n")
-        ->outdent()
-        ->write('} else {' . "\n")
-            ->indent()
-            ->write('global $wp_query;' . "\n")
-            ->write('$query = $wp_query;' . "\n")
-        ->outdent()
-        ->write('}' . "\n")
-        ->write('if ($query->have_posts()) {' . "\n")
-            ->indent()
-            ->subcompile($this->getNode('body'));
+            ->write('if (!empty($args)) {' . "\n")
+                ->indent()
+                ->write('$query = ($args instanceof WP_Query) ? $args : new WP_Query($args);' . "\n")
+            ->outdent()
+            ->write('} else {' . "\n")
+                ->indent()
+                ->write('global $wp_query;' . "\n")
+                ->write('$query = $wp_query;' . "\n")
+            ->outdent()
+            ->write('}' . "\n")
+            ->write('if ($query->have_posts()) {' . "\n")
+                ->indent()
+                ->subcompile($this->getNode('body'));
 
-        if ($this->hasNode('else') && null !== $this->getNode('else')) {
+        if ($this->hasNode('else')) {
             $compiler->outdent()
                 ->write('} else {' . "\n")
                     ->indent()

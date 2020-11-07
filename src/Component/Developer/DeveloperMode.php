@@ -11,9 +11,9 @@
 
 namespace ZimbruCode\Component\Developer;
 
+use ZimbruCode\Component\Common\Tools;
 use ZimbruCode\Component\Core\Kernel;
 use ZimbruCode\Component\Debug\DebugController;
-use ZimbruCode\Component\Common\Tools;
 
 /**
  * Class : Developer mode
@@ -31,7 +31,7 @@ class DeveloperMode
     protected $memoryUsage;
     protected $system;
 
-    public function __construct($type, $title, $msg)
+    public function __construct(string $type, string $title, $msg)
     {
         $this->isDev  = Kernel::getGlobal('core/dev');
         $this->config = Kernel::getGlobal('core/dev-config');
@@ -42,7 +42,7 @@ class DeveloperMode
             $this->system      = new System;
         }
 
-        if ($type && is_string($type)) {
+        if ($type) {
             switch ($type) {
                 case 'setLog':
                     $this->addLogMessage($title, $msg);
@@ -62,73 +62,74 @@ class DeveloperMode
 
     /**
      * Timing
-     * 
+     *
      * @return object   TimingHelper
      * @since 1.0.0
      */
-    public function timing()
+    public function timing(): Timing
     {
         return $this->timing;
     }
 
     /**
      * Memory usage
-     * 
+     *
      * @return object   MemoryUsage
      * @since 1.0.0
      */
-    public function mem()
+    public function mem(): MemoryUsage
     {
         return $this->memoryUsage;
     }
 
     /**
      * System functions
-     * 
+     *
      * @return object   System
      * @since 1.0.0
      */
-    public function sys()
+    public function sys(): System
     {
         return $this->system;
     }
 
     /**
      * Set dump message on screen
-     * 
+     *
      * @param string $title   Title of message
      * @param array  $data    Data of message
      * @return void           This function does not return a value
      * @since 1.0.0
      */
-    public function dump($title = 'DEV-MSG', array $data)
+    public function dump(string $title = 'DEV-MSG', array $data): void
     {
         if (!$this->isDev) {
             return;
         }
 
-        $output = '------------------------ START : ' . $title . ' ------------------------';
+        $output = "------------------------ START : {$title} ------------------------";
         $output .= $data;
-        $output .= '------------------------ END : ' . $title . ' ------------------------';
+        $output .= "------------------------ END : {$title} ------------------------";
 
         Tools::dump($output);
     }
 
     /**
      * Add log message on developer bar
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function addLogMessage($title = '', $msg = '')
+    public function addLogMessage(string $title = '', $msg = ''): void
     {
         if (!$this->isDev || !$this->config['dev-log']) {
             return;
         }
 
         $color = '#a4adb5';
+
         if ($msg) {
-            DebugController::addBarLogMessage($msg, 'Log : ' . $title, $color);
+            DebugController::addBarLogMessage($msg, "Log : {$title}", $color);
         } else {
             DebugController::addBarLogMessage($title, 'Log', $color);
         }
@@ -136,19 +137,20 @@ class DeveloperMode
 
     /**
      * Add warning message on developer bar
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function addWarningMessage($title = '', $msg = '')
+    public function addWarningMessage(string $title = '', $msg = '')
     {
         if (!$this->isDev || !$this->config['dev-log']) {
             return;
         }
 
         $color = '#ffc42e';
+
         if ($msg) {
-            DebugController::addBarLogMessage($msg, 'Warning : ' . $title, $color);
+            DebugController::addBarLogMessage($msg, "Warning : {$title}", $color);
         } else {
             DebugController::addBarLogMessage($title, 'Warning', $color);
         }
@@ -156,19 +158,20 @@ class DeveloperMode
 
     /**
      * Add error message on developer bar
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function addErrorMessage($title = '', $msg = '')
+    public function addErrorMessage(string $title = '', $msg = ''): void
     {
         if (!$this->isDev || !$this->config['dev-log']) {
             return;
         }
 
         $color = '#fd6444';
+
         if ($msg) {
-            DebugController::addBarLogMessage($msg, 'Error : ' . $title, $color);
+            DebugController::addBarLogMessage($msg, "Error : {$title}", $color);
         } else {
             DebugController::addBarLogMessage($title, 'Error', $color);
         }
@@ -176,19 +179,20 @@ class DeveloperMode
 
     /**
      * Add info message on developer bar
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function addInfoMessage($title = '', $msg = '')
+    public function addInfoMessage(string $title = '', $msg = ''): void
     {
         if (!$this->isDev || !$this->config['dev-log']) {
             return;
         }
 
         $color = '#44a1fd';
+
         if ($msg) {
-            DebugController::addBarLogMessage($msg, 'Info : ' . $title, $color);
+            DebugController::addBarLogMessage($msg, "Info : {$title}", $color);
         } else {
             DebugController::addBarLogMessage($title, 'Info', $color);
         }

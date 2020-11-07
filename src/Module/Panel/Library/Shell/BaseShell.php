@@ -35,103 +35,103 @@ class BaseShell extends ShellKernel
 
     /**
      * Get module name
-     * 
+     *
      * @return string   Module name
      * @since 1.0.0
      */
-    public function getModuleName()
+    public function getModuleName(): string
     {
         return $this->panel->getModuleName();
     }
 
     /**
      * Get module namespace
-     * 
+     *
      * @return string   Module namespace
      * @since 1.0.0
      */
-    public function getModuleNamespace()
+    public function getModuleNamespace(): string 
     {
         return $this->panel->getModuleNamespace();
     }
 
     /**
      * Get module path
-     * 
+     *
      * @return string   Module path
      * @since 1.0.0
      */
-    public function getModulePath()
+    public function getModulePath(): string
     {
         return $this->panel->getModulePath();
     }
 
     /**
      * Get module URL
-     * 
+     *
      * @return string   Module URL
      * @since 1.0.0
      */
-    public function getModuleURL()
+    public function getModuleURL(): string
     {
         return $this->panel->getModuleURL();
     }
 
     /**
      * Get module setting
-     * 
+     *
      * @param  string $setting   Setting name
-     * @param  string $default   Default value
+     * @param  mix    $default   Default value
      * @return string/array      Settings or single setting
      * @since 1.0.0
      */
-    public function getModuleSetting($setting = '', $default = '')
+    public function getModuleSetting(string $setting = '', $default = '')
     {
         return $this->panel->getModuleSetting($setting, $default);
     }
 
     /**
      * Get build options
-     * 
+     *
      * @return array   Options
      * @since 1.0.0
      */
-    public function getBuildSettings()
+    public function getBuildSettings(): array
     {
         return $this->panel->getBuildSettings();
     }
 
     /**
      * Get mode
-     * 
+     *
      * @return string   Panel mode
      * @since 1.0.0
      */
-    public function getMode()
+    public function getMode(): string
     {
         return $this->panel->getMode();
     }
 
     /**
      * Get resource path
-     * 
+     *
      * @param  string $path   Additional part of path
      * @return string         Resource path
      * @since 1.0.0
      */
-    public function getModuleResourcePath($path = '')
+    public function getModuleResourcePath(string $path = ''): string
     {
         return $this->panel->getModuleResourcePath($path);
     }
 
     /**
      * Get resource URL
-     * 
+     *
      * @param  string $url   Additional part of URL
      * @return string        Resource URL
      * @since 1.0.0
      */
-    public function getModuleResourceURL($url = '')
+    public function getModuleResourceURL(string $url = ''): string
     {
         return $this->panel->getModuleResourceURL($url);
     }
@@ -139,10 +139,9 @@ class BaseShell extends ShellKernel
     /**
      * Debug
      *
-     * @return string  Empty
      * @since 1.0.0
      */
-    public function debug()
+    public function debug(): void
     {
         if (Kernel::getGlobal('core/module/panel/control-settings/debug-mode')) {
             $data = [
@@ -151,8 +150,6 @@ class BaseShell extends ShellKernel
             ];
 
             Tools::dump($data);
-        } else {
-            return '';
         }
     }
 

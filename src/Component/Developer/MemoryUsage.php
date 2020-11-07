@@ -29,11 +29,11 @@ class MemoryUsage
 
     /**
      * Start check memory usage
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function start($marker = '', $realUsage = true)
+    public function start(string $marker = '', bool $realUsage = true): void
     {
         self::$realUsage = $realUsage;
         self::$marker    = $marker;
@@ -42,22 +42,22 @@ class MemoryUsage
 
     /**
      * Memory usage in end position
-     * 
+     *
      * @return int   Memory
      * @since 1.0.0
      */
-    public function segs()
+    public function segs(): int
     {
         return memory_get_usage(self::$realUsage) - self::$start;
     }
 
     /**
      * Converted memory
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function display()
+    public function display(): void
     {
         if (Kernel::dev()) {
             Kernel::dev()->addInfoMessage(self::$marker, Tools::convertSize($this->segs()));

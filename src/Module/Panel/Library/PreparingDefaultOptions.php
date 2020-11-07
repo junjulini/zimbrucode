@@ -44,13 +44,13 @@ class PreparingDefaultOptions
      * Get control setting
      *
      * @param string $path      Path to a specific setting to extract
-     * @param string $default   Default value if setting not exist
+     * @param mix    $default   Default value if setting not exist
      * @return mix              Return setting or default value
      * @since 1.0.0
      */
-    public function get($path, $default = '')
+    public function get(string $path, $default = '')
     {
-        if ($path && is_string($path)) {
+        if ($path) {
             $output = Tools::getNode($this->control, $path, $default);
 
             if (is_int($output) || is_float($output)) {
@@ -70,7 +70,7 @@ class PreparingDefaultOptions
      * @return void             This function does not return a value
      * @since 1.0.0
      */
-    public function addSettings(array $settings)
+    public function addSettings(array $settings): void
     {
         $this->settings = $settings;
     }
@@ -82,9 +82,9 @@ class PreparingDefaultOptions
      * @return void
      * @since 1.0.0
      */
-    public function excludeControl($controlName)
+    public function excludeControl(string $controlName): void
     {
-        if ($controlName && is_string($controlName)) {
+        if ($controlName) {
             $this->exclude[] = $controlName;
         }
     }
@@ -96,7 +96,7 @@ class PreparingDefaultOptions
      * @return void               This function does not return a value
      * @since 1.0.0
      */
-    public function addChecker(callable $checker)
+    public function addChecker(callable $checker): void
     {
         $this->callback->add('additional-checker', $checker);
     }
@@ -109,9 +109,9 @@ class PreparingDefaultOptions
      * @return void           This function does not return a value
      * @since 1.0.0
      */
-    public function addOption($key, $value = '')
+    public function addOption(string $key, $value = ''): void
     {
-        if ($key && is_string($key)) {
+        if ($key) {
             $this->options[$key] = $value;
         }
     }
@@ -122,7 +122,7 @@ class PreparingDefaultOptions
      * @return array   Return prepared options
      * @since 1.0.0
      */
-    public function getOptions()
+    public function getOptions(): array
     {
         $this->search($this->settings);
         return $this->options;
@@ -135,7 +135,7 @@ class PreparingDefaultOptions
      * @return void               This function does not return a value
      * @since 1.0.0
      */
-    public function search(array $settings)
+    public function search(array $settings): void
     {
         foreach ($settings as $setting) {
             if (!is_array($setting)) {
@@ -171,7 +171,7 @@ class PreparingDefaultOptions
      * @return void
      * @since 1.0.0
      */
-    protected function partOfSearch($id, $type, $setting)
+    protected function partOfSearch(string $id, string $type, $setting): void
     {
         if ($id && $type && !in_array($type, $this->exclude)) {
             $this->addOption($id, $this->get('default', ''));

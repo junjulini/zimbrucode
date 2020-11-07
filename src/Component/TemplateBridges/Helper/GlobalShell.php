@@ -30,7 +30,7 @@ class GlobalShell
      * @return mix          function return after calling
      * @since 1.0.0
      */
-    public function __call($name, $args)
+    public function __call(string $name, array $args)
     {
         if (function_exists($name)) {
             $end = end($args);
@@ -68,11 +68,11 @@ class GlobalShell
      * Get global data from global var
      *
      * @param  string  $path      Base path
-     * @param  string  $default   Default value
-     * @return string             Return data
+     * @param  mix     $default   Default value
+     * @return mix                Return data
      * @since 1.0.0
      */
-    public function get($path, $default = false)
+    public function get(string $path, $default = false)
     {
         return Kernel::getGlobal($path, $default);
     }
@@ -81,11 +81,11 @@ class GlobalShell
      * Get cache value
      *
      * @param  string  $key       Cache key
-     * @param  string  $default   Default value
-     * @return string             Return data
+     * @param  mix     $default   Default value
+     * @return mix                Return data
      * @since 1.0.0
      */
-    public function cache($key, $default = false)
+    public function cache(string $key, $default = false)
     {
         return Kernel::getGlobal("cache/$key", $default);
     }
@@ -96,13 +96,13 @@ class GlobalShell
      * @return string   Slug name
      * @since 1.0.0
      */
-    public function varSlug()
+    public function varSlug(): string
     {
         return Kernel::getGlobalVarSlug();
     }
 
-    public function extern($key, $default = false)
+    public function extern(string $key, $default = false)
     {
-        return (isset($GLOBALS[$key])) ? $GLOBALS[$key] : $default;
+        return $GLOBALS[$key] ?? $default;
     }
 }

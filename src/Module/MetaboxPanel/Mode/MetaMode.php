@@ -12,9 +12,9 @@
 namespace ZimbruCode\Module\MetaboxPanel\Mode;
 
 use ZimbruCode\Component\Handler\AjaxHandler;
+use ZimbruCode\Module\MetaboxPanel\Helper\Backup;
 use ZimbruCode\Module\Panel\Library\Mode;
 use ZimbruCode\Module\Panel\Library\Traits\ControlTrait;
-use ZimbruCode\Module\MetaboxPanel\Helper\Backup;
 
 /**
  * Class : Meta mode
@@ -29,16 +29,16 @@ class MetaMode extends Mode
 
     /**
      * Mode setup
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function setup()
+    public function setup(): void
     {
         // Hooks
         $this->addAction('admin_menu', '__action_register_panel');
-        $this->addAction('save_post',  '__action_save_options');
-        $this->addAction('load-' . (isset($GLOBALS['pagenow']) ? $GLOBALS['pagenow'] : ''), '__action_preparing');
+        $this->addAction('save_post', '__action_save_options');
+        $this->addAction('load-' . ($GLOBALS['pagenow'] ?? ''), '__action_preparing');
 
         // Ajax
         $this->addAjax("zc/module/metabox_panel/reset_{$this->getModuleSetting('slug')}", '__ajax_options_reset');
@@ -55,7 +55,7 @@ class MetaMode extends Mode
      * @return void          Result of render
      * @since 1.0.0
      */
-    public function altRender($path, array $data = [])
+    public function altRender(string $path, array $data = []): string
     {
         return $this->render("@meta/${path}", $data, true, function ($ttb) {
             $ttb->addLocationPath($this->getModuleSetting('meta-module-resource') . '/views', 'meta');
@@ -64,11 +64,11 @@ class MetaMode extends Mode
 
     /**
      * Callback : Creates html structure for panel
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function __callback_html_structure()
+    public function __callback_html_structure(): void
     {
         if ($this->getModuleData('control') === false) {
             $this->initControls();
@@ -79,7 +79,7 @@ class MetaMode extends Mode
         $this->render('@meta/meta-mode.twig', [
             'nonce' => AjaxHandler::getNonce($this->getModuleSetting('nonce')),
             'id'    => get_the_ID(),
-        ], false, function($ttb) {
+        ], false, function ($ttb) {
             $ttb->addLocationPath($this->getModuleSetting('meta-module-resource') . '/views', 'meta');
         });
 
@@ -88,11 +88,11 @@ class MetaMode extends Mode
 
     /**
      * Action : Preparing controls & assets
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function __action_preparing()
+    public function __action_preparing(): void
     {
         if ($GLOBALS['pagenow'] == 'post.php' || $GLOBALS['pagenow'] == 'post-new.php') {
             if (isset($GLOBALS['typenow']) && in_array($GLOBALS['typenow'], $this->getModuleSetting('screen'))) {
@@ -108,11 +108,11 @@ class MetaMode extends Mode
 
     /**
      * Action : Enqueue styles and scripts for panel
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function __action_enqueue($hook)
+    public function __action_enqueue($hook): void
     {
         $this->callback()->run('panel-enqueue--before');
 
@@ -148,11 +148,11 @@ class MetaMode extends Mode
 
     /**
      * Action : Register panel
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function __action_register_panel()
+    public function __action_register_panel(): void
     {
         add_meta_box(
             "{$this->getGlobal('core/slug')}_{$this->getModuleSetting('slug')}",
@@ -166,12 +166,12 @@ class MetaMode extends Mode
 
     /**
      * Action : Panel options save
-     * 
+     *
      * @param  int $postID
      * @return mix   Post id or null
      * @since 1.0.0
      */
-    public function __action_save_options($postID)
+    public function __action_save_options(int $postID)
     {
         // Verify nonce
         if (!AjaxHandler::checkNonce(self::rPost('zc-panel-meta-mode-nonce'), $this->getModuleSetting('nonce'))) {
@@ -208,11 +208,11 @@ class MetaMode extends Mode
 
     /**
      * Ajax : Panel options reset
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function __ajax_options_reset()
+    public function __ajax_options_reset(): void
     {
         $ajax    = new AjaxHandler($this->getModuleSetting('nonce'));
         $events  = $this->getModuleSetting('events/reset');

@@ -30,14 +30,14 @@ class WPTemplateBridge
 
     /**
      * Add location for custom templates files
-     * 
+     *
      * @param string $location   Patch
      * @return void              This function does not return a value
      * @since 1.0.0
      */
-    public function addLocation($location)
+    public function addLocation(string $location): void
     {
-        if ($location && is_string($location)) {
+        if ($location) {
             $this->location = $location;
         }
     }
@@ -46,21 +46,21 @@ class WPTemplateBridge
      * Add custom templates
      *
      * @param array $templates   Templates list
-     * @return void              This function does not return a value
+     * @return array             This function does not return a value
      * @since 1.0.0
      */
-    public function add(array $templates)
+    public function add(array $templates): array
     {
         $this->templates = Tools::arrayMerge($this->templates, $templates);
     }
 
     /**
      * Register custom templates
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function register()
+    public function register(): void
     {
         // Set a filter to the attributes metabox to inject template into the cache.
         $this->addFilter('page_attributes_dropdown_pages_args', '__filter_register_templates');
@@ -76,7 +76,7 @@ class WPTemplateBridge
     /**
      * Filter : Adds our template to the pages cache in order to trick WordPress
      * into thinking the template file exists where it doesn't really exist.
-     * 
+     *
      * @since 1.0.0
      */
     public function __filter_register_templates($atts)
@@ -108,7 +108,7 @@ class WPTemplateBridge
 
     /**
      * Filter : Checks if the template is assigned to the page
-     * 
+     *
      * @param  string $template   Template file
      * @return string             New template file
      * @since 1.0.0

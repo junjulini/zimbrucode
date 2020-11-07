@@ -36,8 +36,8 @@ class AssetCache
     {
         // Set settings
         $this->settings = Kernel::getGlobal('core/component/asset/cache/settings');
-        $cacheDir  = Kernel::service('app-locator')->getCachePath(Kernel::getGlobal('core/component/asset/cache/dir', '/assets'));
-        $extension = Kernel::getGlobal('core/component/asset/cache/extension', '.cache');
+        $cacheDir       = Kernel::service('app-locator')->getCachePath(Kernel::getGlobal('core/component/asset/cache/dir', '/assets'));
+        $extension      = Kernel::getGlobal('core/component/asset/cache/extension', '.cache');
 
         $cacheHandler = new CacheHandler($cacheDir, $extension);
 
@@ -48,13 +48,13 @@ class AssetCache
 
     /**
      * Add setting
-     * 
+     *
      * @param string $setting   Setting key
      * @param string $value     New value
      * @return void             This function does not return a value
      * @since 1.0.0
      */
-    public function addSetting($setting, $value = '')
+    public function addSetting(string $setting, string $value = ''): void
     {
         if (!isset($this->settings[$setting])) {
             throw new \RuntimeException("{$setting} - this setting don't exist.");
@@ -65,83 +65,82 @@ class AssetCache
 
     /**
      * Set setting
-     * 
+     *
      * @param string $setting   Setting key
      * @since 1.0.0
      */
-    public function getSetting($setting)
+    public function getSetting(string $setting)
     {
-        return (isset($this->settings[$setting])) ? $this->settings[$setting] : false;
+        return $this->settings[$setting] ?? false;
     }
 
     /**
      * Add execute location ( For DEV )
-     * 
+     *
      * @param string $class   Class name
      * @since 1.0.0
      */
-    public function addExecuteLocation($class)
+    public function addExecuteLocation(string $class): string
     {
         if (!class_exists($class)) {
             throw new \InvalidArgumentException("{$class} - class don't exist.");
         }
 
         $this->executeLocation = (new \ReflectionClass($class))->getShortName();
+
         return $this->executeLocation;
     }
 
     /**
      * Add asset in cache
-     * 
+     *
      * @param string $asset   Path of file
      * @return void           This function does not return a value
      * @since 1.0.0
      */
-    public function addAsset($asset)
+    public function addAsset(string $asset): void
     {
         $this->assets[] = $asset;
     }
 
     /**
      * Add assets in cache
-     * 
+     *
      * @param array $asset   All path of files
      * @return void          This function does not return a value
      * @since 1.0.0
      */
-    public function addAssets(array $assets)
+    public function addAssets(array $assets): void
     {
         $this->assets = $assets;
     }
 
     /**
      * Add cache path
-     * 
+     *
      * @param string $path   Path of cache file
      * @return void          This function does not return a value
      * @since 1.0.0
      */
-    public function addPath($path = 'file.cache')
+    public function addPath(string $path = 'file.cache'): void
     {
-        if ($path && is_string($path)) {
+        if ($path) {
             $this->cacheID = $path;
         } else {
-            throw new \InvalidArgumentException('AssetCache : path is empty or is not string.');
+            throw new \InvalidArgumentException('AssetCache : path is empty.');
         }
     }
 
     /**
      * Add check function
-     * 
+     *
      * @param callable $callback   Function
      * @param string   $type       Type of check
      * @return void                This function does not return a value
      * @since 1.0.0
      */
-    public function addCheckFunction(callable $callback, $type = 'additional')
+    public function addCheckFunction(callable $callback, string $type = 'additional'): void
     {
-        if (!$type || !is_string($type)) return;
-
         switch ($type) {
             case 'asset':
                 $this->object['callback']->add('asset', $callback);
@@ -158,15 +157,13 @@ class AssetCache
 
     /**
      * Build cache
-     * 
+     *
      * @param  array $additional   Additional content
      * @return void                This function does not return a value
      * @since 1.0.0
      */
-    public function build(array $additional = [], $type = 'additional')
+    public function build(array $additional = [], string $type = 'additional'): void
     {
-        if (!$type || !is_string($type)) return;
-
         $content = [
             'assets'     => [],
             'additional' => [],
@@ -185,17 +182,15 @@ class AssetCache
         }
 
         $this->add($content);
-
-        return false;
     }
 
     /**
      * Check if need rebuild
-     * 
+     *
      * @return boolean   None
      * @since 1.0.0
      */
-    public function check()
+    public function check(): bool
     {
         if ($this->getSetting('check-only-dev') && !Kernel::dev()) {
             return false;
@@ -228,7 +223,7 @@ class AssetCache
             if (count($cache['assets']) != count($this->assets)) {
                 if (Kernel::dev()) {
                     $msg = "Asset - {$this->executeLocation}/Cache : ";
-                    $msg.= sprintf('Count is different - %d != %d', count($cache['assets']), count($this->assets));
+                    $msg .= sprintf('Count is different - %d != %d', count($cache['assets']), count($this->assets));
 
                     Kernel::dev()->addWarningMessage($msg);
                 }
@@ -251,7 +246,7 @@ class AssetCache
                 if ($asset['hash'] != @md5_file($cutPath)) {
                     if (Kernel::dev()) {
                         $msg = "Asset - {$this->executeLocation}/Cache : ";
-                        $msg.= sprintf('Hash is different - %s != %s', $asset['hash'], @md5_file($cutPath));
+                        $msg .= sprintf('Hash is different - %s != %s', $asset['hash'], @md5_file($cutPath));
 
                         Kernel::dev()->addWarningMessage($msg);
                     }
@@ -274,11 +269,11 @@ class AssetCache
 
     /**
      * Get cache content
-     * 
+     *
      * @return array cache   Content in array format
      * @since 1.0.0
      */
-    public function get()
+    public function get(): array
     {
         if (!$this->cacheID) {
             throw new \RuntimeException('Cache id : empty.');
@@ -293,11 +288,11 @@ class AssetCache
 
     /**
      * Check if exits cache file or APC key
-     * 
+     *
      * @return boolean   true/false
      * @since 1.0.0
      */
-    public function has()
+    public function has(): bool
     {
         if (!$this->cacheID) {
             throw new \RuntimeException('Cache id : empty.');
@@ -317,7 +312,7 @@ class AssetCache
      * @return void            This function does not return a value
      * @since 1.0.0
      */
-    public function add($content)
+    public function add(array $content): void
     {
         if (!$this->cacheID) {
             throw new \RuntimeException('Cache id : empty.');
@@ -332,11 +327,11 @@ class AssetCache
 
     /**
      * Remove cache
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function remove()
+    public function remove(): void
     {
         if (!$this->cacheID) {
             throw new \RuntimeException('Cache id : empty.');
@@ -351,16 +346,14 @@ class AssetCache
 
     /**
      * Check additional functions
-     * 
+     *
      * @param  array  $args   Cache data
      * @param  string $type   Type of check
-     * @return array          Results from check functions
+     * @return bool           Results from check functions
      * @since 1.0.0
      */
-    protected function checkAdditionalFunctions(array $args, $type = 'additional')
+    protected function checkAdditionalFunctions(array $args, string $type = 'additional'): bool
     {
-        if (!$type || !is_string($type)) return false;
-
         switch ($type) {
             case 'asset':
                 $type = 'asset';

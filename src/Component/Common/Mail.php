@@ -35,11 +35,11 @@ class Mail
 
     /**
      * Check if not error
-     * 
-     * @return boolean   Result
+     *
+     * @return bool   Result
      * @since 1.0.0
      */
-    protected function error()
+    protected function error(): bool
     {
         if (empty($this->to) || empty($this->subject) || empty($this->body) || empty($this->from) || empty($this->email)) {
             return true;
@@ -58,11 +58,11 @@ class Mail
 
     /**
      * Send mail
-     * 
-     * @return boolean   False / True
+     *
+     * @return bool   False / True
      * @since 1.0.0
      */
-    public function send()
+    public function send(): bool
     {
         if (!$this->error()) {
             $headers = "From: {$this->from} <{$this->email}>\r\n";

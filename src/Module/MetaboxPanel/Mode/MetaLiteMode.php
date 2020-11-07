@@ -28,25 +28,25 @@ class MetaLiteMode extends Mode
 
     /**
      * Mode setup
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function setup()
+    public function setup(): void
     {
         // Hooks
         $this->addAction('admin_menu', '__action_register_panel');
-        $this->addAction('save_post',  '__action_save_options');
-        $this->addAction('load-' . (isset($GLOBALS['pagenow']) ? $GLOBALS['pagenow'] : ''), '__action_preparing');
+        $this->addAction('save_post', '__action_save_options');
+        $this->addAction('load-' . ($GLOBALS['pagenow'] ?? ''), '__action_preparing');
     }
 
     /**
      * Callback : Creates html structure for panel
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function __callback_html_structure()
+    public function __callback_html_structure(): void
     {
         if ($this->getModuleData('control') === false) {
             $this->initControls();
@@ -57,7 +57,7 @@ class MetaLiteMode extends Mode
         $this->render('@meta/meta-lite-mode.twig', [
             'nonce' => AjaxHandler::getNonce($this->getModuleSetting('nonce')),
             'id'    => get_the_ID(),
-        ], false, function($ttb) {
+        ], false, function ($ttb) {
             $ttb->addLocationPath($this->getModuleSetting('meta-module-resource') . '/views', 'meta');
         });
 
@@ -66,11 +66,11 @@ class MetaLiteMode extends Mode
 
     /**
      * Action : Preparing controls & assets
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function __action_preparing()
+    public function __action_preparing(): void
     {
         if ($GLOBALS['pagenow'] == 'post.php' || $GLOBALS['pagenow'] == 'post-new.php') {
             if (isset($GLOBALS['typenow']) && in_array($GLOBALS['typenow'], $this->getModuleSetting('screen'))) {
@@ -86,11 +86,11 @@ class MetaLiteMode extends Mode
 
     /**
      * Action : Enqueue styles and scripts for panel
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function __action_enqueue($hook)
+    public function __action_enqueue($hook): void
     {
         $this->callback()->run('panel-enqueue--before');
 
@@ -128,11 +128,11 @@ class MetaLiteMode extends Mode
 
     /**
      * Action : Register panel
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function __action_register_panel()
+    public function __action_register_panel(): void
     {
         add_meta_box(
             "{$this->getGlobal('core/slug')}_{$this->getModuleSetting('slug')}",
@@ -146,12 +146,11 @@ class MetaLiteMode extends Mode
 
     /**
      * Action : Panel options save
-     * 
+     *
      * @param  int $postID
-     * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function __action_save_options($postID)
+    public function __action_save_options(int $postID)
     {
         // Verify nonce
         if (!AjaxHandler::checkNonce(self::rPost('zc-panel-meta-mode-nonce'), $this->getModuleSetting('nonce'))) {

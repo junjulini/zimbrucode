@@ -12,8 +12,8 @@
 namespace ZimbruCode\Module\MetaboxPanel\Helper;
 
 use ZimbruCode\Component\Core\Kernel;
-use ZimbruCode\Module\Panel\Library\Mode;
 use ZimbruCode\Component\Handler\AjaxHandler;
+use ZimbruCode\Module\Panel\Library\Mode;
 
 /**
  * Class : Metabox panel backup
@@ -24,12 +24,12 @@ use ZimbruCode\Component\Handler\AjaxHandler;
  */
 class Backup extends Kernel
 {
-    protected $mode = false;
+    protected $mode      = false;
     protected $backupKey = false;
 
     public function __construct(Mode $mode)
     {
-        $this->mode = $mode;
+        $this->mode      = $mode;
         $this->backupKey = $this->mode->getModuleSetting('backup/key');
 
         // Ajax
@@ -41,14 +41,14 @@ class Backup extends Kernel
      *
      * @param string $id     Item ID
      * @param string $name   Item name
-     * @return void
+     * @return string
      * @since 1.0.0
      */
-    protected function getItemContent($id, $name)
+    protected function getItemContent(string $id, string $name): string
     {
         return $this->mode->altRender('backup/item.twig', [
             'id'   => $id,
-            'name' => $name
+            'name' => $name,
         ]);
     }
 
@@ -60,7 +60,7 @@ class Backup extends Kernel
      * @return void                   This function does not return a value
      * @since 1.0.0
      */
-    protected function getContent($ajax, $pageType)
+    protected function getContent(AjaxHandler $ajax, string $pageType): void
     {
         $list  = '';
         $count = 0;
@@ -78,12 +78,12 @@ class Backup extends Kernel
         $content = $this->mode->altRender('backup/content.twig', [
             'count'  => $count,
             'active' => $active,
-            'list'   => $list
+            'list'   => $list,
         ]);
 
         $ajax->add('content', $content)->send();
     }
-    
+
     /**
      * Save backup
      *
@@ -92,7 +92,7 @@ class Backup extends Kernel
      * @return void                   This function does not return a value
      * @since 1.0.0
      */
-    protected function save($ajax, $pageType)
+    protected function save(AjaxHandler $ajax, string $pageType): void
     {
         if ($data = get_post_meta($ajax->post('id'))) {
             $backupName = md5($ajax->post('backup_name'));
@@ -134,9 +134,9 @@ class Backup extends Kernel
                         if (self::service('db')->add($this->backupKey, $data, true, false)) {
                             $ajax->add('result', 'success')
                                  ->add('change', [
-                                      'count' => count($data[$pageType]),
-                                      'item'  => $this->getItemContent($backupName, $ajax->post('backup_name')),
-                                  ])
+                                     'count' => count($data[$pageType]),
+                                     'item'  => $this->getItemContent($backupName, $ajax->post('backup_name')),
+                                 ])
                                  ->send();
                         } else {
                             $ajax->add('result', 'failure')
@@ -158,9 +158,9 @@ class Backup extends Kernel
                     if (self::service('db')->add($this->backupKey, $data, true, false)) {
                         $ajax->add('result', 'success')
                              ->add('change', [
-                                  'count' => 1,
-                                  'item'  => $this->getItemContent($backupName, $ajax->post('backup_name')),
-                              ])
+                                 'count' => 1,
+                                 'item'  => $this->getItemContent($backupName, $ajax->post('backup_name')),
+                             ])
                              ->send();
                     } else {
                         $ajax->add('result', 'failure')
@@ -188,7 +188,7 @@ class Backup extends Kernel
      * @return void                   This function does not return a value
      * @since 1.0.0
      */
-    protected function delete($ajax, $pageType)
+    protected function delete(AjaxHandler $ajax, string $pageType): void
     {
         if ($data = self::service('db')->get($this->backupKey)) {
             if (!empty($data[$pageType])) {
@@ -215,7 +215,7 @@ class Backup extends Kernel
      * @return void                   This function does not return a value
      * @since 1.0.0
      */
-    protected function deleteItem($ajax, $pageType)
+    protected function deleteItem(AjaxHandler $ajax, string $pageType): void
     {
         if ($data = self::service('db')->get($this->backupKey)) {
             if (!empty($data[$pageType][$ajax->post('backup_name')])) {
@@ -246,7 +246,7 @@ class Backup extends Kernel
      * @return void                   This function does not return a value
      * @since 1.0.0
      */
-    protected function restore($ajax, $pageType)
+    protected function restore(AjaxHandler $ajax, string $pageType): void
     {
         if ($data = self::service('db')->get($this->backupKey)) {
             if (!empty($data[$pageType][$ajax->post('backup_name')])) {
@@ -300,7 +300,7 @@ class Backup extends Kernel
 
     /**
      * Ajax : Backup
-     * 
+     *
      * @return void   This function does not return a value
      * @since 1.0.0
      */

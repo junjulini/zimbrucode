@@ -22,12 +22,12 @@ use ZimbruCode\Component\TemplateBridges\Helper\ShellKernel;
  */
 class GeneralShell extends ShellKernel
 {
-    public function getHomeURL($path = '/', $scheme = null)
+    public function getHomeURL(string $path = '/', $scheme = null): string
     {
         return esc_url(home_url($path, $scheme));
     }
 
-    public function isFrontPageOrHome()
+    public function isFrontPageOrHome(): bool
     {
         return is_front_page() || is_home();
     }

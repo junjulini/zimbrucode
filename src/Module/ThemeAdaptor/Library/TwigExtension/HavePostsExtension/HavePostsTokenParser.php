@@ -12,6 +12,7 @@
 namespace ZimbruCode\Module\ThemeAdaptor\Library\TwigExtension\HavePostsExtension;
 
 use Twig\Error\SyntaxError;
+use Twig\Node\Node;
 use Twig\Token;
 use Twig\TokenParser\AbstractTokenParser;
 
@@ -24,20 +25,23 @@ use Twig\TokenParser\AbstractTokenParser;
  */
 class HavePostsTokenParser extends AbstractTokenParser
 {
-    public function parse(Token $token)
+    public function parse(Token $token): Node
     {
         $stream = $this->parser->getStream();
-        $values = '';
+        $lineno = $token->getLine();
+
+        $values = null;
+        $else   = null;
+        $end    = false;
 
         if (!$stream->test(Token::BLOCK_END_TYPE)) {
             $values = $this->parser->getExpressionParser()->parseExpression();
         }
 
         $stream->expect(Token::BLOCK_END_TYPE);
-        $body = $this->parser->subparse([$this, 'decideHavePostsFork']);
-        $else = null;
 
-        $end = false;
+        $body = $this->parser->subparse([$this, 'decideHavePostsFork']);
+
         while (!$end) {
             switch ($stream->next()->getValue()) {
                 case 'else':
@@ -56,20 +60,20 @@ class HavePostsTokenParser extends AbstractTokenParser
 
         $stream->expect(Token::BLOCK_END_TYPE);
 
-        return new HavePostsNode($body, $values, $else, $token->getLine(), $this->getTag());
+        return new HavePostsNode($body, $values, $else, $lineno, $this->getTag());
     }
 
-    public function decideHavePostsFork(Token $token)
+    public function decideHavePostsFork(Token $token): bool
     {
         return $token->test(['else', 'endhaveposts']);
     }
 
-    public function decideHavePostsEnd(Token $token)
+    public function decideHavePostsEnd(Token $token): bool
     {
         return $token->test(['endhaveposts']);
     }
 
-    public function getTag()
+    public function getTag(): string
     {
         return 'haveposts';
     }

@@ -34,9 +34,9 @@ return [
 
     'filter'                    => [
         'less'      => [
-            'dev'               => false,
-            'search-point'      => 'resources/assets/less/',
-            'external-point'    => '/external/'
+            'dev'            => false,
+            'search-point'   => 'resources/assets/less/',
+            'external-point' => '/external/',
         ],
         'combine'   => [
             'js'             => [
@@ -52,7 +52,7 @@ return [
             'exclude-marker' => 'EXC',
         ],
         'namespace' => [
-            'namespace-symbol'  => '@_',
+            'namespace-symbol' => '@_',
             'global-namespace' => 'GLOBAL',
         ],
     ],

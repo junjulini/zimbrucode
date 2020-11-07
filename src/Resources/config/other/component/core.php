@@ -9,8 +9,7 @@
  * file that was distributed with this source code.
  */
 
-return
-[
+return [
     'module' => [
         'resource-dir' => "/Resources/",
         'module-name'  => 'Module',
