@@ -45,16 +45,34 @@ abstract class AppKernel extends Kernel
      */
     final public function __construct(string $slug, string $mode = 'theme', bool $dev = false, string $rootPath = '', bool $session = false, ClassLoader $composer)
     {
-        $this->__checkAppDuplicate($slug);                     // Checking doubling of application
-        $this->__initSession($session);                        // Session start
-        $this->__initGlobalConfigAndLibrary();                 // Initialization of global configs and global library
-        $this->__setEnvironment($dev);                         // Set DEV environment
-        $this->__setChmod();                                   // Set file/dir chmod from WP constants
-        self::addGlobalCache('app-instance', $this);           // Application instance
-        $this->__initServices('before', $composer, $rootPath); // Init Services
-        $this->__appConfig($mode);                             // App configs
+        // Checking doubling of application
+        $this->__checkAppDuplicate($slug);
 
-        // Other services
+        // Session start
+        $this->__initSession($session);
+
+        // Initialization of global configs
+        new GlobalConfig;
+
+        // Set DEV environment
+        $this->__setEnvironment($dev);
+
+        // Initialization of global library
+        new GlobalLibrary;
+
+        // Set file/dir chmod from WP constants
+        $this->__setChmod();
+
+        // Application instance
+        self::addGlobalCache('app-instance', $this);
+
+        // Initialization of services [mode : before]
+        $this->__initServices('before', $composer, $rootPath);
+
+        // Application configs
+        $this->__appConfig($mode);
+
+        // Initialization of services [mode : after]
         $this->__initServices('after');
 
         // Set modules namespace
@@ -63,9 +81,14 @@ abstract class AppKernel extends Kernel
         // Run setup
         $this->setup();
 
-        $this->__loadModules();      // Load modules from config file
-        $this->__initThemeAdaptor(); // Run theme adaptor
-        $this->__callbackAfter();    // Callback after load all modules
+        // Load modules from config file
+        $this->__loadModules();
+
+        // Run theme adaptor
+        $this->__initThemeAdaptor();
+
+        // Callback after load all modules
+        $this->__callbackAfter();
 
         // Load textdomain
         $this->addAction('init', function () {
