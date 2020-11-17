@@ -11,6 +11,7 @@
 
 namespace ZimbruCode\Component\Common;
 
+use Tracy\Debugger;
 use ZimbruCode\Component\Core\Kernel;
 
 /**
@@ -1046,7 +1047,7 @@ class Tools
     public static function dump($data): void
     {
         if (class_exists('\\Tracy\\Debugger')) {
-            Tracy\Debugger::dump($data);
+            Debugger::dump($data);
         } else {
             var_dump($data);
         }
