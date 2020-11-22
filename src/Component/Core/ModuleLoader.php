@@ -368,10 +368,10 @@ class ModuleLoader
      * Get module class
      *
      * @param  string $module   Module name
-     * @return string           Module class
+     * @return string/null      Module class
      * @since 1.0.0
      */
-    protected function getModuleClass(string $module): string
+    protected function getModuleClass(string $module): ?string
     {
         $moduleName = Kernel::getGlobal('core/component/core/module/module-name');
 
@@ -390,6 +390,8 @@ class ModuleLoader
                 return $class;
             }
         }
+
+        return null;
     }
 
     /**
