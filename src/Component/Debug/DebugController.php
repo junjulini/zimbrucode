@@ -47,6 +47,7 @@ class DebugController
             'dev'          => false,
             'maxDepth'     => 4,
             'maxLength'    => 150,
+            'editor'       => false,
         ];
 
         $args = Tools::arrayMerge($default, $args, 's');
@@ -59,6 +60,10 @@ class DebugController
         Debugger::$productionMode = ($args['dev']) ? false : true;
         Debugger::$maxDepth       = $args['maxDepth'];
         Debugger::$maxLength      = $args['maxLength'];
+
+        if ($args['editor'] && is_string($args['editor'])) {
+            Debugger::$editor = $args['editor'];
+        }
 
         Debugger::enable();
     }
