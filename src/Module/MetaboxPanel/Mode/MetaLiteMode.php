@@ -171,6 +171,10 @@ class MetaLiteMode extends Mode
             $options = $_POST;
 
             if ($options && is_array($options)) {
+
+                // Callback : Options save - before
+                $this->callback()->run('panel-options-save--before', $this, $postID, $options);
+
                 $prefix = self::getGlobal('core/module/panel/prefix-slug');
 
                 foreach ($options as $key => $value) {
@@ -179,9 +183,6 @@ class MetaLiteMode extends Mode
                     }
                 }
             }
-
-            // Callback : General data preparing
-            $this->callback()->run('panel-meta-save', $postID, $this);
         }
     }
 }

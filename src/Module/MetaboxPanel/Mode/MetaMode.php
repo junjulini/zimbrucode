@@ -192,6 +192,10 @@ class MetaMode extends Mode
             $options = $_POST;
 
             if ($options && is_array($options)) {
+
+                // Callback : Options save - before
+                $this->callback()->run('panel-options-save--before', $this, $postID, $options);
+
                 $prefix = self::getGlobal('core/module/panel/prefix-slug');
 
                 foreach ($options as $key => $value) {
@@ -200,9 +204,6 @@ class MetaMode extends Mode
                     }
                 }
             }
-
-            // Callback : General data preparing
-            $this->callback()->run('pane-meta-save', $postID, $this);
         }
     }
 
@@ -228,6 +229,9 @@ class MetaMode extends Mode
 
                     if (!$result) {
                         $result = true;
+
+                        // Callback : Options save - before
+                        $this->callback()->run('panel-options-reset--after', $this, $ajax->post('id'), $ajax);
                     }
                 }
             }
