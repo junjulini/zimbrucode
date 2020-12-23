@@ -193,21 +193,52 @@ class AssetManager
      * @param  string $handle   The registered script handle you are attaching the data for
      * @param  string $name     The name of the variable which will contain the data
      * @param  array  $data     The data itself
-     * @return void             This function does not return a value
+     * @return bool
      * @since 1.0.0
      */
-    public function localize(string $handle, string $name, array $data = []): void
+    public function localize(string $handle, string $name, array $data = []): ?bool
     {
         if ($handle && $name) {
             foreach ($this->collector->get() as $asset) {
-                if (strpos($asset->name(), $handle) !== false) {
-                    wp_localize_script($asset->name(), $name, $data);
-                    return;
+                if ($handle == $asset->url() || $handle == $asset->raw() || strpos($asset->name(), $handle) !== false) {
+                    return wp_localize_script($asset->name(), $name, $data);
                 }
             }
 
             throw new \InvalidArgumentException("Next script handle for \"localize\" function not found : {$handle}");
         }
+
+        return null;
+    }
+
+    public function addInlineScript(string $handle, string $data, string $position = 'after'): ?bool
+    {
+        if ($handle) {
+            foreach ($this->collector->get() as $asset) {
+                if ($handle == $asset->url() || $handle == $asset->raw() || strpos($asset->name(), $handle) !== false) {
+                    return wp_add_inline_script($asset->name(), $data, $position);
+                }
+            }
+
+            throw new \InvalidArgumentException("Next script handle for \"addInlineScript\" function not found : {$handle}");
+        }
+
+        return null;
+    }
+
+    public function addInlineStyle(string $handle, string $data): ?bool
+    {
+        if ($handle) {
+            foreach ($this->collector->get() as $asset) {
+                if ($handle == $asset->url() || $handle == $asset->raw() || strpos($asset->name(), $handle) !== false) {
+                    return wp_add_inline_style($asset->name(), $data);
+                }
+            }
+
+            throw new \InvalidArgumentException("Next style handle for \"addInlineStyle\" function not found : {$handle}");
+        }
+
+        return null;
     }
 
     /**
