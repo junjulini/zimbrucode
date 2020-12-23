@@ -31,7 +31,7 @@ trait ContentUtilityTrait
      * @return string            Return value of option
      * @since 1.0.0
      */
-    protected function getOIE(array $options = [], string $option = '', $default = '')
+    public function getOIE(array $options = [], string $option = '', $default = '')
     {
         if ($options && $option) {
             return (!empty($options[$option])) ? $options[$option] : $default;
@@ -74,7 +74,7 @@ trait ContentUtilityTrait
      * @param array $options   Mode options
      * @since 1.0.0
      */
-    protected function addOptions(array $options)
+    public function addOptions(array $options)
     {
         $prefix = self::getGlobal('core/module/panel/prefix-slug');
 
@@ -95,7 +95,7 @@ trait ContentUtilityTrait
      * @return bool             True if different
      * @since 1.0.0
      */
-    protected function isOptionsDifferent(array $options): bool
+    public function isOptionsDifferent(array $options): bool
     {
         $prefix = self::getGlobal('core/module/panel/prefix-slug');
 
@@ -115,7 +115,7 @@ trait ContentUtilityTrait
      * @return bool   Result of manipulation
      * @since 1.0.0
      */
-    protected function remOptions(): bool
+    public function remOptions(): bool
     {
         return self::service('db')->remove("module.panel.{$this->getModuleSetting('slug')}", true);
     }
@@ -127,7 +127,7 @@ trait ContentUtilityTrait
      * @return array          Mode options
      * @since 1.0.0
      */
-    protected function getOptions($default = ''): array
+    public function getOptions($default = ''): array
     {
         return self::service('db')->get("module.panel.{$this->getModuleSetting('slug')}", $default);
     }

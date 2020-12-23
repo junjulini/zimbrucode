@@ -15,17 +15,17 @@ use ZimbruCode\Component\Common\Callback;
 use ZimbruCode\Component\Common\Tools;
 
 /**
- * Class : Preparing default options
+ * Class : Settings handler
  *
  * @author  Junjulini
  * @package ZimbruCode
  * @since   ZimbruCode 1.0.0
  */
-class PreparingDefaultOptions
+class SettingsHandler
 {
-    protected $settings = [];
-    protected $options  = [];
+    protected $data     = [];
     protected $control  = [];
+    protected $settings = [];
     protected $callback;
 
     protected $exclude = [
@@ -33,11 +33,16 @@ class PreparingDefaultOptions
         'menuParentTab',
     ];
 
-    public $ignore = false;
+    protected $ignore = false;
 
     public function __construct()
     {
         $this->callback = new Callback;
+    }
+
+    public function ignore(bool $status): void
+    {
+        $this->ignore = $status;
     }
 
     /**
@@ -89,6 +94,11 @@ class PreparingDefaultOptions
         }
     }
 
+    public function addMainChecker(callable $checker): void
+    {
+        $this->callback->add('main-checker', $checker);
+    }
+
     /**
      * Add additional checker function
      *
@@ -96,36 +106,42 @@ class PreparingDefaultOptions
      * @return void               This function does not return a value
      * @since 1.0.0
      */
-    public function addChecker(callable $checker): void
+    public function addAdditionalChecker(callable $checker): void
     {
         $this->callback->add('additional-checker', $checker);
     }
 
     /**
-     * Add option
+     * Add data
      *
-     * @param string $key     Option key
-     * @param mix    $value   Option value
+     * @param string $key     Key
+     * @param mix    $value   Value
      * @return void           This function does not return a value
      * @since 1.0.0
      */
-    public function addOption(string $key, $value = ''): void
+    public function addData(string $key, $value = ''): void
     {
         if ($key) {
-            $this->options[$key] = $value;
+            $this->data[$key] = $value;
         }
     }
 
     /**
-     * Get default control options
+     * Get data
      *
-     * @return array   Return prepared options
+     * @return array   Return data
      * @since 1.0.0
      */
-    public function getOptions(): array
+    public function getData(): array
     {
         $this->search($this->settings);
-        return $this->options;
+        return $this->data;
+    }
+
+    public function flush()
+    {
+        $this->data    = [];
+        $this->control = [];
     }
 
     /**
@@ -150,10 +166,10 @@ class PreparingDefaultOptions
 
             if ($this->ignore === true) {
                 if (!$this->get('ignore')) {
-                    $this->partOfSearch($id, $type, $setting);
+                    $this->check($id, $type, $setting);
                 }
             } else {
-                $this->partOfSearch($id, $type, $setting);
+                $this->check($id, $type, $setting);
             }
 
             if ($content && is_array($content)) {
@@ -163,18 +179,18 @@ class PreparingDefaultOptions
     }
 
     /**
-     * Search part
+     * Check
      *
      * @param string $id
      * @param string $type
-     * @param mix    $setting
+     * @param array  $setting
      * @return void
      * @since 1.0.0
      */
-    protected function partOfSearch(string $id, string $type, $setting): void
+    protected function check(string $id, string $type, array $setting): void
     {
         if ($id && $type && !in_array($type, $this->exclude)) {
-            $this->addOption($id, $this->get('default', ''));
+            $this->callback->run('main-checker', $this, $setting);
         }
 
         $this->callback->run('additional-checker', $this, $setting);
