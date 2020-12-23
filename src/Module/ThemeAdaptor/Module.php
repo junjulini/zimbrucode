@@ -15,6 +15,7 @@ use Symfony\Component\Finder\Finder;
 use ZimbruCode\Component\Common\Tools;
 use ZimbruCode\Component\Core\ModuleKernel;
 use ZimbruCode\Module\ThemeAdaptor\Library\Render;
+use ZimbruCode\Module\ThemeAdaptor\Library\MVC;
 use ZimbruCode\Module\ThemeAdaptor\Library\TemplateFilesHandler;
 
 /**
@@ -90,9 +91,14 @@ class Module extends ModuleKernel
         }
     }
 
-    public function advancedRender(string $template, string $locationPath, bool $directRender = true, bool $directMode = false, $flush = true): Render
+    public function advancedRender(string $template, string $locationPath, bool $directMode = false, $flush = true): Render
     {
-        return new Render($template, $locationPath, $directRender, $directMode, $flush);
+        return new Render($template, $locationPath, $directMode, $flush);
+    }
+
+    public function mvc(string $template, string $locationPath): MVC
+    {
+        return new MVC($template, $locationPath);
     }
 
     public function __filter_register_templates($templates)
@@ -191,7 +197,7 @@ class Module extends ModuleKernel
         $template = apply_filters('zc/module/theme_adaptor/template', $template);
 
         if ($template) {
-            $this->advancedRender($template, $this->getModuleResourcePath('views'));
+            $this->mvc($template, $this->getModuleResourcePath('views'));
             return false;
         } else {
             return $wpTemplate;

@@ -11,9 +11,7 @@
 
 namespace ZimbruCode\Module\ThemeAdaptor\Library;
 
-use ZimbruCode\Component\Common\Tools;
 use ZimbruCode\Component\Core\Kernel;
-use ZimbruCode\Component\Handler\Traits\OptionHandlerTrait;
 use ZimbruCode\Component\TemplateBridges\TwigTemplateBridge;
 use ZimbruCode\Module\ThemeAdaptor\Library\Shell\GeneralShell;
 use ZimbruCode\Module\ThemeAdaptor\Library\Shell\MenuShell;
@@ -32,72 +30,42 @@ use ZimbruCode\Module\ThemeAdaptor\Library\TwigFunctions;
  */
 class Render
 {
-    use OptionHandlerTrait;
 
-    protected $__ttb;
-    protected $__data = [
-        'functions' => [],
-        'escapers'  => [],
-        'filters'   => [],
-        'template'  => false,
+    protected $ttb;
+    protected $flush;
+
+    protected $data = [
+        'functions'     => [],
+        'escapers'      => [],
+        'filters'       => [],
+        'template'      => '',
+        'location-path' => '',
     ];
 
-    protected $__eflush;
-
-    public function __construct(string $template, string $locationPath, bool $directRender = true, bool $directMode = false, bool $flush = true)
+    public function __construct(string $template, string $locationPath, bool $directMode = false, bool $flush = true)
     {
         if (!$template) {
             throw new \InvalidArgumentException('Template is empty.');
         }
 
-        $this->__ttb              = new TwigTemplateBridge;
-        $this->__data['template'] = $template;
-        $this->__flush            = $flush;
+        $this->ttb   = new TwigTemplateBridge;
+        $this->flush = $flush;
+
+        $this->data['template']      = $template;
+        $this->data['location-path'] = $locationPath;
 
         if ($directMode === false) {
-
-            // Set core views path
-            $this->addLocationPath($locationPath, 'core');
-
-            if (Tools::isChildTheme()) {
-
-                // Set child views path
-                if (file_exists($dir = wp_normalize_path(get_stylesheet_directory()) . '/views')) {
-                    $this->addLocationPath($dir);
-                }
-
-                if (!file_exists(Kernel::service('app-locator')->getViewPath())) {
-                    throw new \RuntimeException('App views dir don\'t exist.');
-                }
-
-                // Set views path
-                $this->addLocationPath(Kernel::service('app-locator')->getViewPath());
-
-                // Load model if exist
-                if (file_exists($model = wp_normalize_path(get_stylesheet_directory()) . '/models/' . str_replace('.twig', '.php', $this->__data['template']))) {
-                    require $model;
-                } elseif (file_exists($model = Kernel::service('app-locator')->getModelPath(str_replace('.twig', '.php', $this->__data['template'])))) {
-                    require $model;
-                }
-            } else {
-                if (!file_exists(Kernel::service('app-locator')->getViewPath())) {
-                    throw new \RuntimeException('App views dir don\'t exist.');
-                }
-
-                // Set views path
-                $this->addLocationPath(Kernel::service('app-locator')->getViewPath());
-
-                // Load model if exist
-                if (file_exists($model = Kernel::service('app-locator')->getModelPath(str_replace('.twig', '.php', $this->__data['template'])))) {
-                    require $model;
-                }
-            }
+            $this->addLocationPath($this->getLocationPath(), 'core');
         } else {
-            $this->addLocationPath($locationPath);
+            $this->addLocationPath($this->getLocationPath());
+            $this->setupEnvironment();
         }
+    }
 
+    public function setupEnvironment()
+    {
         if (Kernel::getGlobal('core/module/theme-adaptor/cache')) {
-            $this->__ttb->addCachePath(Kernel::service('app-locator')->getCachePath('twig'));
+            $this->ttb->addCachePath(Kernel::service('app-locator')->getCachePath('twig'));
         }
 
         // Default shells
@@ -111,43 +79,32 @@ class Render
         $this->gen     = $gs;
 
         // Default functions
-        new TwigFunctions($this->__ttb);
+        new TwigFunctions($this->ttb);
 
         // Add functions
-        foreach ($this->__data['functions'] as $name => $method) {
-            $this->__ttb->addFunction($name, $method);
+        foreach ($this->data['functions'] as $name => $method) {
+            $this->ttb->addFunction($name, $method);
         }
 
         // Add escapers
-        foreach ($this->__data['escapers'] as $name => $method) {
-            $this->__ttb->addEscaper($name, $method);
+        foreach ($this->data['escapers'] as $name => $method) {
+            $this->ttb->addEscaper($name, $method);
         }
 
         // Add filters
-        foreach ($this->__data['filters'] as $name => $method) {
-            $this->__ttb->addFilter($name, $method);
+        foreach ($this->data['filters'] as $name => $method) {
+            $this->ttb->addFilter($name, $method);
         }
-
-        // Filters
-        apply_filters('zc/module/theme_adaptor/twig/shell/post', $this->post);
-        apply_filters('zc/module/theme_adaptor/twig/shell/query', $this->query);
-        apply_filters('zc/module/theme_adaptor/twig/shell/sidebar', $this->sidebar);
-        apply_filters('zc/module/theme_adaptor/twig/shell/menu', $this->menu);
-        apply_filters('zc/module/theme_adaptor/twig/shell/general', $this->gen);
 
         // Action
-        do_action('zc/module/theme_adaptor/twig', $this->__ttb, $this->__data['template'], $locationPath);
+        do_action('zc/module/theme_adaptor/render', $this, $this->ttb);
 
         // Run loader & environment
-        $this->__ttb->addLoader();
-        $this->__ttb->addEnvironment();
+        $this->ttb->addLoader();
+        $this->ttb->addEnvironment();
 
         // Set extensions
-        new InitTwigExtensions($this->__ttb->getTWIG());
-
-        if ($directRender === true) {
-            $this->renderContent();
-        }
+        new InitTwigExtensions($this->ttb->getTWIG());
     }
 
     /**
@@ -159,7 +116,7 @@ class Render
      */
     public function __get($name)
     {
-        return $this->__ttb->getVar($name);
+        return $this->ttb->getVar($name);
     }
 
     /**
@@ -171,7 +128,18 @@ class Render
      */
     public function __set($name, $value)
     {
-        $this->__ttb->addVar($name, $value);
+        $this->ttb->addVar($name, $value);
+    }
+
+    /**
+     * Add var
+     *
+     * @param string $name    Name of var
+     * @since 1.0.0
+     */
+    public function getVar(string $name)
+    {
+        return $this->ttb->getVar($name);
     }
 
     /**
@@ -183,7 +151,7 @@ class Render
      */
     public function addVar(string $name, $value): void
     {
-        $this->__ttb->addVar($name, $value);
+        $this->ttb->addVar($name, $value);
     }
 
     /**
@@ -194,7 +162,7 @@ class Render
      */
     public function addVars(array $vars): void
     {
-        $this->__ttb->getVars($vars);
+        $this->ttb->addVars($vars);
     }
 
     /**
@@ -211,7 +179,7 @@ class Render
             throw new \InvalidArgumentException('Function name is empty.');
         }
 
-        $this->__data['functions'][$name] = $method;
+        $this->data['functions'][$name] = $method;
     }
 
     /**
@@ -228,7 +196,7 @@ class Render
             throw new \InvalidArgumentException('Escaper function name is empty.');
         }
 
-        $this->__data['escapers'][$name] = $method;
+        $this->data['escapers'][$name] = $method;
     }
 
     /**
@@ -245,7 +213,7 @@ class Render
             throw new \InvalidArgumentException('Filter function name is empty.');
         }
 
-        $this->__data['filters'][$name] = $method;
+        $this->data['filters'][$name] = $method;
     }
 
     /**
@@ -257,7 +225,17 @@ class Render
      */
     public function addLocationPath(string $path, string $namespace = null): void
     {
-        $this->__ttb->addLocationPath($path, $namespace);
+        $this->ttb->addLocationPath($path, $namespace);
+    }
+
+    public function getLocationPath(): string
+    {
+        return $this->data['location-path'];
+    }
+
+    public function getTemplate(): string 
+    {
+        return $this->data['template'];
     }
 
     /**
@@ -267,10 +245,10 @@ class Render
      */
     public function renderContent(): void
     {
-        if ($this->__flush === true) {
+        if ($this->flush === true) {
             flush();
         }
 
-        echo $this->__ttb->render($this->__data['template']);
+        echo $this->ttb->render($this->getTemplate());
     }
 }
