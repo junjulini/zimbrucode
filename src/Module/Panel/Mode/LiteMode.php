@@ -159,17 +159,18 @@ class LiteMode extends Mode
      */
     public function __ajax_save_options(): void
     {
-        $ajax = new AjaxHandler($this->getModuleSetting('nonce'));
+        $ajax    = new AjaxHandler($this->getModuleSetting('nonce'));
+        $options = json_decode(stripslashes($ajax->post('options')), true);
 
         // Callback : Options save - before
-        $this->callback()->run('panel-options-save--before', $this, $ajax);
+        $this->callback()->run('panel-options-save--before', $this, $ajax, $options);
 
-        if ($options = $ajax->post('options')) {
+        if ($options) {
             if ($this->isOptionsDifferent($options)) {
                 if ($this->addOptions($options)) {
 
                     // Callback : Options save - success
-                    $this->callback()->run('panel-options-save--success', $this, $ajax);
+                    $this->callback()->run('panel-options-save--success', $this, $ajax, $options);
 
                     $ajax->add(self::getGlobal('core/module/panel/settings/page/events/event-1'))->send();
                 } else {
@@ -199,6 +200,9 @@ class LiteMode extends Mode
         $result = $this->remOptions();
 
         if ($result) {
+            // Callback : Options reset - success
+            $this->callback()->run('panel-options-reset--success', $this, $ajax);
+
             $ajax->add(self::getGlobal('core/module/panel/settings/page/events/event-3'))->send();
         } else {
             $ajax->add(self::getGlobal('core/module/panel/settings/page/events/event-4'))->send();
