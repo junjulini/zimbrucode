@@ -197,8 +197,22 @@ class ScriptHandler
      */
     public static function clearCache(Event $event): void
     {
-        $root     = dirname($event->getComposer()->getConfig()->get('vendor-dir'));
-        $cacheDir = "{$root}/app/Resources/var/cache";
+        $root   = dirname($event->getComposer()->getConfig()->get('vendor-dir'));
+        $config = false;
+
+        if (file_exists("{$root}/config.json")) {
+            $config = @json_decode(@file_get_contents("{$root}/config.json"), true);
+
+            if (!is_array($config)) {
+                $event->getIO()->writeError('App config is not compatible.');
+                return;
+            }
+        } else {
+            $event->getIO()->writeError('App config file don\'t exist.');
+            return;
+        }
+
+        $cacheDir = "{$root}/../../uploads/{$config['app-slug']}/cache";
 
         $finder = new Finder;
         $fs     = new Filesystem();
@@ -221,8 +235,22 @@ class ScriptHandler
      */
     public static function clearVar(Event $event): void
     {
-        $root     = dirname($event->getComposer()->getConfig()->get('vendor-dir'));
-        $cacheDir = "{$root}/app/Resources/var";
+        $root   = dirname($event->getComposer()->getConfig()->get('vendor-dir'));
+        $config = false;
+
+        if (file_exists("{$root}/config.json")) {
+            $config = @json_decode(@file_get_contents("{$root}/config.json"), true);
+
+            if (!is_array($config)) {
+                $event->getIO()->writeError('App config is not compatible.');
+                return;
+            }
+        } else {
+            $event->getIO()->writeError('App config file don\'t exist.');
+            return;
+        }
+
+        $cacheDir = "{$root}/../../uploads/{$config['app-slug']}";
 
         $finder = new Finder;
         $fs     = new Filesystem();

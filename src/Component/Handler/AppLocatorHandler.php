@@ -13,7 +13,6 @@ namespace ZimbruCode\Component\Handler;
 
 use ZimbruCode\AppKernel;
 use ZimbruCode\Component\Common\Tools;
-use ZimbruCode\Component\Core\Kernel;
 
 /**
  * Class : Application locator handler
@@ -26,65 +25,91 @@ class AppLocatorHandler
 {
     protected $app;
 
-    public function __construct(AppKernel $app, string $rootPath)
+    public function __construct(AppKernel $app, string $rootPath, string $slug)
     {
         $this->app = $app;
 
         $mid = ($id = Tools::getMultiSiteID()) ? "{$id}/" : '';
-        $env = Kernel::getEnvironment() . '/';
+        $env = $this->app->getEnvironment() . '/';
 
         $reflected = new \ReflectionObject($app);
         $path      = dirname(wp_normalize_path($reflected->getFileName())) . '/';
-        Kernel::addGlobal('app/path', $path);
+        $this->app->addGlobal('app/path', $path);
 
         $url = Tools::getURL($path) . '/';
-        Kernel::addGlobal('app/url', $url);
+        $this->app->addGlobal('app/url', $url);
 
         // Root locations
         $rootPath = wp_normalize_path($rootPath);
-        Kernel::addGlobal('app/root-file', $rootPath);
-        Kernel::addGlobal('app/root-path', dirname($rootPath));
-        Kernel::addGlobal('app/root-url', Tools::getURL(dirname($rootPath)));
+        $this->app->addGlobal('app/root-file', $rootPath);
+        $this->app->addGlobal('app/root-path', dirname($rootPath));
+        $this->app->addGlobal('app/root-url', Tools::getURL(dirname($rootPath)));
 
         // Resource
-        $resource = Kernel::getGlobal('app/resource-dir');
-        Kernel::addGlobal('app/resource-path', $this->getPath($resource));
-        Kernel::addGlobal('app/resource-url', $this->getURL($resource));
-
-        // Var
-        $var = Kernel::getGlobal('app/var-dir');
-        Kernel::addGlobal('app/var-path', $this->getPath("{$var}{$mid}"));
-        Kernel::addGlobal('app/var-url', $this->getURL("{$var}{$mid}"));
-
-        // Cache
-        $cache = Kernel::getGlobal('app/cache-dir');
-        Kernel::addGlobal('app/cache-path', $this->getPath("{$var}{$mid}{$cache}{$env}"));
-        Kernel::addGlobal('app/cache-url', $this->getURL("{$var}{$mid}{$cache}{$env}"));
-
-        // Log
-        $log = Kernel::getGlobal('app/log-dir');
-        Kernel::addGlobal('app/log-path', $this->getPath("{$var}{$mid}{$log}"));
-        Kernel::addGlobal('app/log-url', $this->getURL("{$var}{$mid}{$log}"));
+        $resource = $this->app->getGlobal('app/resource-dir');
+        $this->app->addGlobal('app/resource-path', $this->getPath($resource));
+        $this->app->addGlobal('app/resource-url', $this->getURL($resource));
 
         // Asset
-        $asset = Kernel::getGlobal('app/asset-dir');
-        Kernel::addGlobal('app/asset-path', $this->getPath($asset));
-        Kernel::addGlobal('app/asset-url', $this->getURL($asset));
+        $asset = $this->app->getGlobal('app/asset-dir');
+        $this->app->addGlobal('app/asset-path', $this->getPath($asset));
+        $this->app->addGlobal('app/asset-url', $this->getURL($asset));
 
         // Config
-        $config = Kernel::getGlobal('app/config-dir');
-        Kernel::addGlobal('app/config-path', $this->getPath($config));
-        Kernel::addGlobal('app/config-url', $this->getURL($config));
+        $config = $this->app->getGlobal('app/config-dir');
+        $this->app->addGlobal('app/config-path', $this->getPath($config));
+        $this->app->addGlobal('app/config-url', $this->getURL($config));
 
         // Model
-        $model = Kernel::getGlobal('app/model-dir');
-        Kernel::addGlobal('app/model-path', $this->getPath($model));
-        Kernel::addGlobal('app/model-url', $this->getURL($model));
+        $model = $this->app->getGlobal('app/model-dir');
+        $this->app->addGlobal('app/model-path', $this->getPath($model));
+        $this->app->addGlobal('app/model-url', $this->getURL($model));
 
         // View
-        $view = Kernel::getGlobal('app/view-dir');
-        Kernel::addGlobal('app/view-path', $this->getPath($view));
-        Kernel::addGlobal('app/view-url', $this->getURL($view));
+        $view = $this->app->getGlobal('app/view-dir');
+        $this->app->addGlobal('app/view-path', $this->getPath($view));
+        $this->app->addGlobal('app/view-url', $this->getURL($view));
+
+        ################################################################################################################
+
+        // // Var
+        // $var = $this->app->getGlobal('app/var-dir');
+        // $this->app->addGlobal('app/var-path', $this->getPath("{$var}{$mid}"));
+        // $this->app->addGlobal('app/var-url', $this->getURL("{$var}{$mid}"));
+
+        // // Cache
+        // $cache = $this->app->getGlobal('app/cache-dir');
+        // $this->app->addGlobal('app/cache-path', $this->getPath("{$var}{$mid}{$cache}{$env}"));
+        // $this->app->addGlobal('app/cache-url', $this->getURL("{$var}{$mid}{$cache}{$env}"));
+
+        // // Log
+        // $log = $this->app->getGlobal('app/log-dir');
+        // $this->app->addGlobal('app/log-path', $this->getPath("{$var}{$mid}{$log}"));
+        // $this->app->addGlobal('app/log-url', $this->getURL("{$var}{$mid}{$log}"));
+
+        if ($slug) {
+            $uploadDir = wp_get_upload_dir();
+
+            if (isset($uploadDir['error']) && $uploadDir['error'] === false && $uploadDir['basedir'] && $uploadDir['baseurl']) {
+                $varsDirPath = wp_normalize_path("{$uploadDir['basedir']}/{$slug}");
+                $varsDirURL  = esc_url("{$uploadDir['baseurl']}/{$slug}");
+
+                // Var
+                $var = $this->app->getGlobal('app/var-dir');
+                $this->app->addGlobal('app/var-path', "{$varsDirPath}/{$mid}");
+                $this->app->addGlobal('app/var-url', "{$varsDirURL}/{$mid}");
+
+                // Cache
+                $cache = $this->app->getGlobal('app/cache-dir');
+                $this->app->addGlobal('app/cache-path', "{$varsDirPath}/{$mid}{$cache}{$env}");
+                $this->app->addGlobal('app/cache-url', "{$varsDirURL}/{$mid}{$cache}{$env}");
+
+                // Log
+                $log = $this->app->getGlobal('app/log-dir');
+                $this->app->addGlobal('app/log-path', "{$varsDirPath}/{$mid}{$log}");
+                $this->app->addGlobal('app/log-url', "{$varsDirURL}/{$mid}{$log}");
+            }
+        }
     }
 
     /**
@@ -95,7 +120,7 @@ class AppLocatorHandler
      */
     public function getName(): string
     {
-        return Kernel::getGlobal('app/name');
+        return $this->app->getGlobal('app/name');
     }
 
     /**
@@ -118,7 +143,7 @@ class AppLocatorHandler
      */
     public function getPath(string $path = ''): string
     {
-        return wp_normalize_path(Kernel::getGlobal('app/path') . $path);
+        return wp_normalize_path($this->app->getGlobal('app/path') . $path);
     }
 
     /**
@@ -129,7 +154,7 @@ class AppLocatorHandler
      */
     public function getURL(string $url = ''): string
     {
-        return esc_url(Kernel::getGlobal('app/url') . $url);
+        return esc_url($this->app->getGlobal('app/url') . $url);
     }
 
     /**
@@ -140,7 +165,7 @@ class AppLocatorHandler
      */
     public function getRootFilePath(): string
     {
-        return wp_normalize_path(Kernel::getGlobal('app/root-file'));
+        return wp_normalize_path($this->app->getGlobal('app/root-file'));
     }
 
     /**
@@ -152,7 +177,7 @@ class AppLocatorHandler
      */
     public function getRootPath(string $path = ''): string
     {
-        return wp_normalize_path(Kernel::getGlobal('app/root-path') . $path);
+        return wp_normalize_path($this->app->getGlobal('app/root-path') . $path);
     }
 
     /**
@@ -164,7 +189,7 @@ class AppLocatorHandler
      */
     public function getRootURL(string $url = ''): string
     {
-        return esc_url(Kernel::getGlobal('app/root-url') . $url);
+        return esc_url($this->app->getGlobal('app/root-url') . $url);
     }
 
     /**
@@ -176,7 +201,7 @@ class AppLocatorHandler
      */
     public function getResourcePath(string $path = ''): string
     {
-        return wp_normalize_path(Kernel::getGlobal('app/resource-path') . $path);
+        return wp_normalize_path($this->app->getGlobal('app/resource-path') . $path);
     }
 
     /**
@@ -188,7 +213,7 @@ class AppLocatorHandler
      */
     public function getResourceURL(string $url = ''): string
     {
-        return esc_url(Kernel::getGlobal('app/resource-url') . $url);
+        return esc_url($this->app->getGlobal('app/resource-url') . $url);
     }
 
     /**
@@ -200,7 +225,7 @@ class AppLocatorHandler
      */
     public function getVarPath(string $path = ''): string
     {
-        return wp_normalize_path(Kernel::getGlobal('app/var-path') . $path);
+        return wp_normalize_path($this->app->getGlobal('app/var-path') . $path);
     }
 
     /**
@@ -212,7 +237,7 @@ class AppLocatorHandler
      */
     public function getVarURL(string $url = ''): string
     {
-        return esc_url(Kernel::getGlobal('app/var-url') . $url);
+        return esc_url($this->app->getGlobal('app/var-url') . $url);
     }
 
     /**
@@ -224,7 +249,7 @@ class AppLocatorHandler
      */
     public function getCachePath(string $path = ''): string
     {
-        return wp_normalize_path(Kernel::getGlobal('app/cache-path') . $path);
+        return wp_normalize_path($this->app->getGlobal('app/cache-path') . $path);
     }
 
     /**
@@ -236,7 +261,7 @@ class AppLocatorHandler
      */
     public function getCacheURL(string $url = ''): string
     {
-        return esc_url(Kernel::getGlobal('app/cache-url') . $url);
+        return esc_url($this->app->getGlobal('app/cache-url') . $url);
     }
 
     /**
@@ -248,7 +273,7 @@ class AppLocatorHandler
      */
     public function getLogPath(string $path = ''): string
     {
-        return wp_normalize_path(Kernel::getGlobal('app/log-path') . $path);
+        return wp_normalize_path($this->app->getGlobal('app/log-path') . $path);
     }
 
     /**
@@ -260,7 +285,7 @@ class AppLocatorHandler
      */
     public function getLogURL(string $url = ''): string
     {
-        return esc_url(Kernel::getGlobal('app/log-url') . $url);
+        return esc_url($this->app->getGlobal('app/log-url') . $url);
     }
 
     /**
@@ -272,7 +297,7 @@ class AppLocatorHandler
      */
     public function getAssetPath(string $path = ''): string
     {
-        return wp_normalize_path(Kernel::getGlobal('app/asset-path') . $path);
+        return wp_normalize_path($this->app->getGlobal('app/asset-path') . $path);
     }
 
     /**
@@ -284,7 +309,7 @@ class AppLocatorHandler
      */
     public function getAssetURL(string $url = ''): string
     {
-        return esc_url(Kernel::getGlobal('app/asset-url') . $url);
+        return esc_url($this->app->getGlobal('app/asset-url') . $url);
     }
 
     /**
@@ -296,7 +321,7 @@ class AppLocatorHandler
      */
     public function getConfigPath(string $path = ''): string
     {
-        return wp_normalize_path(Kernel::getGlobal('app/config-path') . $path);
+        return wp_normalize_path($this->app->getGlobal('app/config-path') . $path);
     }
 
     /**
@@ -308,7 +333,7 @@ class AppLocatorHandler
      */
     public function getConfigURL(string $url = ''): string
     {
-        return esc_url(Kernel::getGlobal('app/config-url') . $url);
+        return esc_url($this->app->getGlobal('app/config-url') . $url);
     }
 
     /**
@@ -320,7 +345,7 @@ class AppLocatorHandler
      */
     public function getModelPath(string $path = ''): string
     {
-        return wp_normalize_path(Kernel::getGlobal('app/model-path') . $path);
+        return wp_normalize_path($this->app->getGlobal('app/model-path') . $path);
     }
 
     /**
@@ -332,7 +357,7 @@ class AppLocatorHandler
      */
     public function getModelURL(string $url = ''): string
     {
-        return esc_url(Kernel::getGlobal('app/model-url') . $url);
+        return esc_url($this->app->getGlobal('app/model-url') . $url);
     }
 
     /**
@@ -344,7 +369,7 @@ class AppLocatorHandler
      */
     public function getViewPath(string $path = ''): string
     {
-        return wp_normalize_path(Kernel::getGlobal('app/view-path') . $path);
+        return wp_normalize_path($this->app->getGlobal('app/view-path') . $path);
     }
 
     /**
@@ -356,6 +381,6 @@ class AppLocatorHandler
      */
     public function getViewURL(string $url = ''): string
     {
-        return esc_url(Kernel::getGlobal('app/view-url') . $url);
+        return esc_url($this->app->getGlobal('app/view-url') . $url);
     }
 }

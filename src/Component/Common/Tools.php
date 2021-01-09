@@ -535,7 +535,7 @@ class Tools
     }
 
     /**
-     * Get htmlentities -> json_encode | with ENT_QUOTES parameter
+     * Get htmlentities -> wp_json_encode | with ENT_QUOTES parameter
      *
      * @param  array  $array
      * @return string
@@ -543,7 +543,7 @@ class Tools
      */
     public static function getHJWEP(array $array): string
     {
-        return htmlentities(json_encode($array), ENT_QUOTES);
+        return htmlentities(wp_json_encode($array), ENT_QUOTES);
     }
 
     /**
@@ -696,24 +696,21 @@ class Tools
     {
         $output = '';
 
-        if ($path) {
-            $templateDir = wp_normalize_path(get_template_directory());
+        if ($path && ABSPATH) {
             $path        = ($path) ? $path : ((!empty(debug_backtrace()[0]['file'])) ? debug_backtrace()[0]['file'] : __FILE__);
             $path        = wp_normalize_path(realpath($path));
+            $templateDir = wp_normalize_path(ABSPATH);
 
             if (0 === strpos($path, $templateDir)) {
-                $url    = get_template_directory_uri();
                 $folder = str_replace($templateDir, '', $path);
 
                 if ('.' != $folder) {
-                    $url .= '/' . ltrim($folder, '/');
+                    $output = trim(get_site_url(null, $folder), '/');
                 }
-
-                $output = trim($url, '/');
             }
         }
 
-        return $output;
+        return esc_url($output);
     }
 
     /**
@@ -734,7 +731,7 @@ class Tools
             );
 
             $root = strstr(
-                wp_normalize_path(get_theme_root()),
+                wp_normalize_path(ABSPATH),
                 Kernel::getGlobal('core/component/path/search-point'),
                 true
             );
@@ -903,12 +900,12 @@ class Tools
         if ($filter === 'serialize') {
             $content = serialize($content);
         } elseif ($filter === 'json') {
-            $content = json_encode($content);
+            $content = wp_json_encode($content);
         }
 
         $dir = dirname($file);
         if (!is_dir($dir)) {
-            if (false === @mkdir($dir, Kernel::getGlobal('core/chmod-dir'), true)) {
+            if (false === wp_mkdir_p($dir)) {
                 throw new \RuntimeException("Unable to create the directory ({$dir})");
             }
         }
@@ -935,7 +932,7 @@ class Tools
             throw new \RuntimeException("E2 - Unable to create the file : ({$file})");
         }
 
-        @chmod($file, Kernel::getGlobal('core/chmod-file'));
+        @chmod($file, fileperms(ABSPATH . 'index.php') & 0777 | 0644);
 
         return true;
     }

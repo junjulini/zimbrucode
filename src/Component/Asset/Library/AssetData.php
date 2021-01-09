@@ -337,11 +337,23 @@ class AssetData
                 $fwSP = str_replace('/', '\/', $fwSP);
 
                 preg_match("/{$fwSP}(.*)/i", $fileURL, $output);
+
                 $output = strtolower($output[1]);
 
                 return ($withCoreSlug) ? Kernel::getGlobal('core/slug') . '/' . $output : $output;
             } else {
-                return basename($fileURL);
+                $rootURL = get_site_url();
+
+                if (0 === strpos($fileURL, $rootURL)) {
+                    $rootURL = str_replace('/app', '', $rootURL);
+                    $rootURL = rtrim($rootURL, '/');
+                    $output  = str_replace($rootURL . '/', '', $fileURL);
+                    $output  = strtolower($output);
+
+                    return ($withCoreSlug) ? Kernel::getGlobal('core/slug') . '/' . $output : $output;
+                } else {
+                    return basename($fileURL);
+                }
             }
         }
     }
