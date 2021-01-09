@@ -132,7 +132,7 @@ class TwigFunctions
     }
 
     /**
-     * Get htmlentities -> json_encode | with ENT_QUOTES parameter
+     * Get htmlentities -> wp_json_encode | with ENT_QUOTES parameter
      *
      * @param  array  $array
      * @since 1.0.0

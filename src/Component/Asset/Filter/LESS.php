@@ -149,7 +149,7 @@ class LESS extends Filter
                      ->addArgs($asset->getArgs());
 
             if (!empty($this->less->assetCache->get())) {
-                $versionPart = (integer) (substr(hexdec(md5(json_encode($this->less->assetCache->get()))), 0, 9) * 100000000);
+                $versionPart = (integer) (substr(hexdec(md5(wp_json_encode($this->less->assetCache->get()))), 0, 9) * 100000000);
                 $version     = Kernel::getGlobal('app/version') . '.' . $versionPart;
 
                 $newAsset->version($version);

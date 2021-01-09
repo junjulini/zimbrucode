@@ -237,7 +237,7 @@ class LessRender
         $this->data['key-name'] = $info->getBasename('.' . $ext = $info->getExtension());
 
         // Prep vars
-        $this->data['md5-vars'] = md5(json_encode($this->vars));
+        $this->data['md5-vars'] = md5(wp_json_encode($this->vars));
     }
 
     protected function initParser(): void
@@ -294,7 +294,7 @@ class LessRender
                 return true;
             }
 
-            $pf  = (empty($this->data['parsed-files'])) ? 0 : md5(json_encode($this->data['parsed-files']));
+            $pf  = (empty($this->data['parsed-files'])) ? 0 : md5(wp_json_encode($this->data['parsed-files']));
             $pfc = (empty($args['parsed-files'])) ? 0 : $args['parsed-files'];
 
             if ($pf != $pfc) {
@@ -332,7 +332,7 @@ class LessRender
                 $this->assetCache->addAssets($this->getAssets());
                 $this->assetCache->build([
                     'md5-vars'     => $this->data['md5-vars'],
-                    'parsed-files' => (empty($this->data['parsed-files']) ? 0 : md5(json_encode($this->data['parsed-files']))),
+                    'parsed-files' => (empty($this->data['parsed-files']) ? 0 : md5(wp_json_encode($this->data['parsed-files']))),
                 ]);
 
                 // Reset parser data
