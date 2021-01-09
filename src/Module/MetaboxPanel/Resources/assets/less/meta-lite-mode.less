@@ -52,6 +52,7 @@
     margin-right: 0;
     box-shadow: none !important;
     min-height: auto;
+    z-index: 1;
 
     &[data-width|="mode-3"] {
         position: relative;
@@ -102,4 +103,8 @@
         bottom: auto;
         top: auto;
     }
+}
+
+.edit-post-layout__metaboxes:not(:empty) {
+    padding-bottom: 24px;
 }

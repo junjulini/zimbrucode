@@ -70,6 +70,8 @@
 }
 
 .zc-panel {
+    z-index: 1;
+
     body.block-editor-page & {
         box-sizing: border-box;
     }
@@ -84,4 +86,8 @@
 
 .zc-metabox-panel-backup-button {
     line-height: 32px;
+}
+
+.edit-post-layout__metaboxes:not(:empty) {
+    padding-bottom: 24px;
 }
