@@ -29,12 +29,6 @@ return [
         'environment'  => false,
     ],
 
-    # Dir chmod
-    'chmod-dir'  => 0755,
-
-    # File chmod
-    'chmod-file' => 0644,
-
     # Module configs
     'module'     => require __DIR__ . '/other/module.php',
 
