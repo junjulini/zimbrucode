@@ -60,14 +60,11 @@ abstract class AppKernel extends Kernel
         // Initialization of global library
         new GlobalLibrary;
 
-        // Set file/dir chmod from WP constants
-        $this->__setChmod();
-
         // Application instance
         self::addGlobalCache('app-instance', $this);
 
         // Initialization of services [mode : before]
-        $this->__initServices('before', $composer, $rootPath);
+        $this->__initServices('before', $composer, $rootPath, $slug);
 
         // Application configs
         $this->__appConfig($mode);
@@ -158,18 +155,6 @@ abstract class AppKernel extends Kernel
     }
 
     /**
-     * Set file/dir chmod from WP constants
-     *
-     * @return void   This function does not return a value
-     * @since 1.0.0
-     */
-    private function __setChmod(): void
-    {
-        self::addGlobal('core/chmod-dir', (fileperms(ABSPATH) & 0777 | 0755));
-        self::addGlobal('core/chmod-file', (fileperms(ABSPATH . 'index.php') & 0777 | 0644));
-    }
-
-    /**
      * Init services
      *
      * @param string      $mode       Mode of loading services
@@ -178,11 +163,11 @@ abstract class AppKernel extends Kernel
      * @return void                   This function does not return a value
      * @since 1.0.0
      */
-    private function __initServices(string $mode = 'before', ClassLoader $composer = null, string $rootPath = null): void
+    private function __initServices(string $mode = 'before', ClassLoader $composer = null, string $rootPath = null, string $slug = ''): void
     {
         if ($mode === 'before') {
             self::service('composer', $composer);
-            self::service('app-locator', new AppLocatorHandler($this, $rootPath));
+            self::service('app-locator', new AppLocatorHandler($this, $rootPath, $slug));
         } elseif ($mode === 'after') {
             self::service('db', new DBHandler);
             self::service('fast-cache', new FastCache);
@@ -308,8 +293,10 @@ abstract class AppKernel extends Kernel
      */
     private function __loadModules(): void
     {
-        if (file_exists($this->getResourcePath('config/modules.php'))) {
-            if ($modules = require $this->getResourcePath('config/modules.php')) {
+        $file = self::service('app-locator')->getConfigPath('modules.php');
+
+        if (file_exists($file)) {
+            if ($modules = require $file) {
                 self::module($modules);
             }
         }
