@@ -28,29 +28,29 @@ class PostShell extends ShellKernel
         return $this->title();
     }
 
-    public function title(string $before = '', string $after = ''): void
+    public function title(int $postID = 0): void
     {
-        the_title($before, $after);
+        echo get_the_title($postID);
     }
 
-    public function content(): void
+    public function content(string $moreLinkText = null): void
     {
-        the_content();
+        the_content($moreLinkText);
     }
 
-    public function link(): void
+    public function link(int $postID = 0): void
     {
-        the_permalink();
+        the_permalink($postID);
     }
 
-    public function classes($class = '', $postID = null)
+    public function classes(string $class = '', $postID = null)
     {
         return join(' ', get_post_class($class, $postID));
     }
 
-    public function ID(): void
+    public function ID()
     {
-        the_ID();
+        return get_the_ID();
     }
 
     public function meta(string $meta, $id = null)
