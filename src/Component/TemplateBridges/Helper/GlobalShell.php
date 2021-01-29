@@ -101,7 +101,7 @@ class GlobalShell
         return Kernel::getGlobalVarSlug();
     }
 
-    public function extern(string $key, $default = false)
+    public function externVar(string $key, $default = false)
     {
         return $GLOBALS[$key] ?? $default;
     }
