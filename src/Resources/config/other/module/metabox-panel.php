@@ -10,16 +10,18 @@
  */
 
 return [
-    'mode'             => [
+    'mode'                => [
         'meta'      => 'ZimbruCode\\Module\\MetaboxPanel\\Mode\\MetaMode',
         'meta-lite' => 'ZimbruCode\\Module\\MetaboxPanel\\Mode\\MetaLiteMode',
     ],
 
-    'control-settings' => [
+    'control-settings'    => [
         'namespace' => 'ZimbruCode\\Module\\MetaboxPanel\\Controls\\',
     ],
 
-    'settings'         => [
+    'meta-container-slug' => "{$slug}_meta_panel_container",
+
+    'settings'            => [
         'slug'                 => 'default',
         'nonce'                => 'panel_mode__metabox',
         'screen'               => 'post',

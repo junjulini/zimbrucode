@@ -105,14 +105,26 @@ trait OptionHandlerTrait
      * @return string            Return meta data
      * @since 1.0.0
      */
-    public static function getMeta(string $meta, $default = '', int $id = null)
+    public static function getMeta(string $meta = null, $default = '', int $id = null)
     {
-        if ($meta) {
-            $id   = ($id) ? $id : get_the_ID();
-            $meta = '_' . Kernel::getGlobal('core/module/panel/prefix-slug') . $meta;
+        $id   = ($id) ? $id : get_the_ID();
+        $data = Kernel::getGlobalCache("meta-data/{$id}");
 
-            $value = get_post_meta($id, $meta, true);
-            return ($value !== '' && $value !== null) ? $value : $default;
+        if ($data === false) {
+            $metaContainerSlug = Kernel::getGlobal('core/module/metabox-panel/meta-container-slug');
+            $data = get_post_meta($id, "_{$metaContainerSlug}", true);
+
+            if ($data && is_array($data)) {
+                Kernel::addGlobalCache("meta-data/{$id}", $data);
+            } else {
+                return $default;
+            }
+        }
+
+        if ($meta) {
+            return (isset($data[$meta]) && $data[$meta] !== '') ? $data[$meta] : $default;
+        } else {
+            return $data;
         }
     }
 }

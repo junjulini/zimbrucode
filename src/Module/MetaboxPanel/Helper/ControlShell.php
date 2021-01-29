@@ -11,6 +11,8 @@
 
 namespace ZimbruCode\Module\MetaboxPanel\Helper;
 
+use ZimbruCode\Component\Core\Kernel;
+use ZimbruCode\Component\Handler\OptionHandler;
 use ZimbruCode\Module\Panel\Library\Shell\ControlShell as PanelControlShell;
 
 /**
@@ -32,10 +34,10 @@ class ControlShell extends PanelControlShell
      */
     public function option(string $option = null, $default = null)
     {
-        $option  = (isset($option)) ? "_{$option}" : "_{$this->ID()}";
+        $option  = $option ?? $this->ID();
+        $option  = str_replace(Kernel::getGlobal('core/module/panel/prefix-slug'), '', $option);
         $default = $default ?? $this->defaultValue();
-        $output  = get_post_meta(get_the_ID(), $option, true);
 
-        return ($output) ? $output : $default;
+        return OptionHandler::getMeta($option, $default);
     }
 }

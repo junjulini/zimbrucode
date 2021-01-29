@@ -175,12 +175,19 @@ class MetaLiteMode extends Mode
                 // Callback : Options save - before
                 $this->callback()->run('panel-options-save--before', $this, $postID, $options);
 
+                $output = [];
                 $prefix = self::getGlobal('core/module/panel/prefix-slug');
 
                 foreach ($options as $key => $value) {
                     if (strpos($key, $prefix) !== false) {
-                        update_post_meta($postID, "_{$key}", stripslashes_deep($value));
+                        $key = str_replace($prefix, '', $key);
+                        $output[$key] = stripslashes_deep($value);
                     }
+                }
+
+                if (!empty($output)) {
+                    $metaContainerSlug = self::getGlobal('core/module/metabox-panel/meta-container-slug');
+                    update_post_meta($postID, "_{$metaContainerSlug}", $output);
                 }
             }
         }
