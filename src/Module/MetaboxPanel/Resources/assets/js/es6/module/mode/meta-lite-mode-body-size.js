@@ -26,12 +26,12 @@ export default class MetaLiteModeBodySize extends Kernel {
     constructor() {
         super();
 
-        let panelWidth = $('.zc-panel').width();
+        let panelWidth = $('.zc-panel.zc-panel_mode_meta-lite').width();
         if (panelWidth > 0) {
             this.checkPanelWidth();
         } else {
             let interval = setInterval(() => {
-                panelWidth = $('.zc-panel').width();
+                panelWidth = $('.zc-panel.zc-panel_mode_meta-lite').width();
 
                 if (panelWidth > 0) {
                     clearInterval(interval);
@@ -53,7 +53,7 @@ export default class MetaLiteModeBodySize extends Kernel {
             mode = 'mode-3-';
         }
 
-        $('.zc-panel').attr('data-width', mode + width);
+        $('.zc-panel.zc-panel_mode_meta-lite').attr('data-width', mode + width);
 
         $(window).trigger('zc/panel/size-changed');
     }
@@ -65,6 +65,6 @@ export default class MetaLiteModeBodySize extends Kernel {
             }
         });
 
-        ro.observe($('.zc-panel').get(0));
+        ro.observe($('.zc-panel.zc-panel_mode_meta-lite').get(0));
     }
 }

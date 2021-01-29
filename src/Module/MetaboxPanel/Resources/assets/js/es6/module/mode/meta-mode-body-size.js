@@ -26,13 +26,13 @@ export default class MetaModeBodySize extends Kernel {
     constructor() {
         super();
 
-        let panelWidth = $('.zc-panel').width();
+        let panelWidth = $('.zc-panel.zc-panel_mode_meta').width();
         if (panelWidth > 0) {
             this.checkPanelWidth();
             this.metaHeight();
         } else {
             let interval = setInterval(() => {
-                panelWidth = $('.zc-panel').width();
+                panelWidth = $('.zc-panel.zc-panel_mode_meta').width();
 
                 if (panelWidth > 0) {
                     clearInterval(interval);
@@ -51,13 +51,13 @@ export default class MetaModeBodySize extends Kernel {
 
     metaHeight() {
         if (this.isDesktopMode()) {
-            $('.zc-panel').height('auto');
-            $('.zc-panel-controls').height('auto');
-            $('.zc-panel-submenu__scrollbar-container').height('auto');
+            $('.zc-panel.zc-panel_mode_meta').height('auto');
+            $('.zc-panel.zc-panel_mode_meta .zc-panel-controls').height('auto');
+            $('.zc-panel.zc-panel_mode_meta .zc-panel-submenu__scrollbar-container').height('auto');
         } else {
-            $('.zc-panel').height('100%');
-            $('.zc-panel-controls').height('100%');
-            $('.zc-panel-submenu__scrollbar-container').height('100%');
+            $('.zc-panel.zc-panel_mode_meta').height('100%');
+            $('.zc-panel.zc-panel_mode_meta .zc-panel-controls').height('100%');
+            $('.zc-panel.zc-panel_mode_meta .zc-panel-submenu__scrollbar-container').height('100%');
         }
     }
 
@@ -72,7 +72,7 @@ export default class MetaModeBodySize extends Kernel {
             mode = 'mode-3-';
         }
 
-        $('.zc-panel').attr('data-width', mode + width);
+        $('.zc-panel.zc-panel_mode_meta').attr('data-width', mode + width);
 
         $(window).trigger('zc/panel/size-changed');
     }
@@ -84,6 +84,6 @@ export default class MetaModeBodySize extends Kernel {
             }
         });
 
-        ro.observe($('.zc-panel').get(0));
+        ro.observe($('.zc-panel.zc-panel_mode_meta').get(0));
     }
 }

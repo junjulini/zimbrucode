@@ -31,12 +31,12 @@ zc.module.panel.addMode(($, panel) => {
     new BodySize;
 
     // Active section
-    const section = $('.zc-panel .zc-panel-controls__section');
+    const section = $('.zc-panel.zc-panel_mode_meta-lite .zc-panel-controls__section');
     panel.addCache('menu/current-section', section);
     $(window).trigger('zc/panel/menu/item-change-ICP', [section]);
 
     $('.zc-panel-template__panel-loading').hide(); // Hide panel loading text.
-    $('.zc-panel').css('visibility', 'visible');   // Full display panel.
+    $('.zc-panel.zc-panel_mode_meta-lite').css('visibility', 'visible');   // Full display panel.
 
     /**
      * Disable save button

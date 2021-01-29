@@ -41,7 +41,7 @@ zc.module.panel.addMode(($, panel) => {
     new Reset;    // Reset meta options.
 
     $('.zc-panel-template__panel-loading').hide(); // Hide panel loading text.
-    $('.zc-panel').css('visibility', 'visible');   // Full display panel.
+    $('.zc-panel.zc-panel_mode_meta').css('visibility', 'visible');   // Full display panel.
 
     /**
      * Disable save button
