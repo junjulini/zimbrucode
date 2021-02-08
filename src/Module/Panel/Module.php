@@ -14,7 +14,6 @@ namespace ZimbruCode\Module\Panel;
 use ZimbruCode\Component\Common\Tools;
 use ZimbruCode\Component\Core\ModuleKernel;
 use ZimbruCode\Module\Panel\Library\AssetHandler;
-use ZimbruCode\Module\Panel\Library\Traits\CallbackTrait;
 
 /**
  * Module : Panel
@@ -25,10 +24,6 @@ use ZimbruCode\Module\Panel\Library\Traits\CallbackTrait;
  */
 class Module extends ModuleKernel
 {
-    use CallbackTrait {
-        CallbackTrait::callback as public ;
-    }
-
     protected $__multiUse = true;
 
     /**
@@ -39,9 +34,6 @@ class Module extends ModuleKernel
      */
     public function setup(): void
     {
-        // Initialization of Callback
-        $this->callback();
-
         if ($this->getModuleSetting()) {
 
             // Check build settings if not empty
@@ -53,7 +45,7 @@ class Module extends ModuleKernel
 
             // Panel hook before
             do_action('zc/module/panel/setup_before', $this);
-            do_action("zc/module/panel/setup_before--{$this->getModuleSetting('slug', 'general')}", $this);
+            do_action("zc/module/panel/{$this->getModuleSetting('slug')}/setup_before", $this);
 
             // Preparing build settings
             $this->prepBuildSettings();
@@ -72,7 +64,7 @@ class Module extends ModuleKernel
 
             // Panel hook after
             do_action('zc/module/panel/setup_after', $this);
-            do_action("zc/module/panel/setup_after--{$this->getModuleSetting('slug', 'general')}", $this);
+            do_action("zc/module/panel/{$this->getModuleSetting('slug')}/setup_after", $this);
         }
     }
 
@@ -170,6 +162,7 @@ class Module extends ModuleKernel
         }
 
         $this->addModuleData("custom-mode/{$mode}", $class);
+
         return $this;
     }
 

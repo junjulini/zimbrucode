@@ -52,8 +52,8 @@ class LiteMode extends Mode
         $this->addAction('admin_menu', $action);
 
         // Ajax
-        $this->addAjax('zc/module/panel/save_' . $this->getModuleSetting('slug'), '__ajax_save_options');
-        $this->addAjax('zc/module/panel/reset_' . $this->getModuleSetting('slug'), '__ajax_reset_options');
+        $this->addAjax("zc/module/panel/save_{$this->getModuleSetting('slug')}",  '__ajax_save_options');
+        $this->addAjax("zc/module/panel/reset_{$this->getModuleSetting('slug')}", '__ajax_reset_options');
     }
 
     /**
@@ -64,12 +64,14 @@ class LiteMode extends Mode
      */
     public function __callback_html_structure(): void
     {
-        $this->callback()->run('panel-template--before');
+        do_action('zc/module/panel/mode/lite/template--before');
+        do_action("zc/module/panel/{$this->getModuleSetting('slug')}/mode/lite/template--before");
 
         // Render content
         $this->render('page-lite-mode.twig');
 
-        $this->callback()->run('panel-template--after');
+        do_action('zc/module/panel/mode/lite/template--after');
+        do_action("zc/module/panel/{$this->getModuleSetting('slug')}/mode/lite/template--after");
     }
 
     /**
@@ -80,7 +82,8 @@ class LiteMode extends Mode
      */
     public function __action_enqueue(): void
     {
-        $this->callback()->run('panel-enqueue--before');
+        do_action('zc/module/panel/mode/lite/enqueue--before');
+        do_action("zc/module/panel/{$this->getModuleSetting('slug')}/mode/lite/enqueue--before");
 
         // Assets
         $this->asset(
@@ -106,7 +109,8 @@ class LiteMode extends Mode
             'prefix-slug'           => self::getGlobal('core/module/panel/prefix-slug'),
         ]));
 
-        $this->callback()->run('panel-enqueue--after');
+        do_action('zc/module/panel/mode/lite/enqueue--after');
+        do_action("zc/module/panel/{$this->getModuleSetting('slug')}/mode/lite/enqueue--after");
     }
 
     /**
@@ -128,7 +132,8 @@ class LiteMode extends Mode
             $this->getModuleSetting('position')
         );
 
-        $this->callback()->run('panel-menu');
+        do_action('zc/module/panel/mode/lite/menu');
+        do_action("zc/module/panel/{$this->getModuleSetting('slug')}/mode/lite/menu");
     }
 
     /**
@@ -148,7 +153,8 @@ class LiteMode extends Mode
             [$this, '__callback_html_structure']
         );
 
-        $this->callback()->run('panel-submenu');
+        do_action('zc/module/panel/mode/lite/submenu');
+        do_action("zc/module/panel/{$this->getModuleSetting('slug')}/mode/lite/submenu");
     }
 
     /**
@@ -162,15 +168,17 @@ class LiteMode extends Mode
         $ajax    = new AjaxHandler($this->getModuleSetting('nonce'));
         $options = json_decode(stripslashes($ajax->post('options')), true);
 
-        // Callback : Options save - before
-        $this->callback()->run('panel-options-save--before', $this, $ajax, $options);
+        // Filter : Options save - before
+        $options = apply_filters('zc/module/panel/mode/lite/options_save--before', $options, $ajax, $this);
+        $options = apply_filters("zc/module/panel/{$this->getModuleSetting('slug')}/mode/lite/options_save--before", $options, $ajax, $this);
 
         if ($options) {
             if ($this->isOptionsDifferent($options)) {
                 if ($this->addOptions($options)) {
 
-                    // Callback : Options save - success
-                    $this->callback()->run('panel-options-save--success', $this, $ajax, $options);
+                    // Hook : Options save - success
+                    do_action('zc/module/panel/mode/lite/options_save--success', $options, $ajax, $this);
+                    do_action("zc/module/panel/{$this->getModuleSetting('slug')}/mode/lite/options_save--success", $options, $ajax, $this);
 
                     $ajax->add(self::getGlobal('core/module/panel/settings/page/events/event-1'))->send();
                 } else {
@@ -194,14 +202,16 @@ class LiteMode extends Mode
     {
         $ajax = new AjaxHandler($this->getModuleSetting('nonce'));
 
-        // Callback : Options reset - before
-        $this->callback()->run('panel-options-reset--before', $this, $ajax);
+        // Hook : Options reset - before
+        do_action('zc/module/panel/mode/lite/options_reset--before', $this, $ajax);
+        do_action("zc/module/panel/{$this->getModuleSetting('slug')}/mode/lite/options_reset--before", $this, $ajax);
 
         $result = $this->remOptions();
 
         if ($result) {
-            // Callback : Options reset - success
-            $this->callback()->run('panel-options-reset--success', $this, $ajax);
+            // Hook : Options reset - success
+            do_action('zc/module/panel/mode/lite/options_reset--success', $this, $ajax);
+            do_action("zc/module/panel/{$this->getModuleSetting('slug')}/mode/lite/options_reset--success", $this, $ajax);
 
             $ajax->add(self::getGlobal('core/module/panel/settings/page/events/event-3'))->send();
         } else {

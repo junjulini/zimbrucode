@@ -24,7 +24,7 @@ use ZimbruCode\Module\Panel\Library\Shell\BaseShell;
  */
 trait UtilityTrait
 {
-    use ContentUtilityTrait, CallbackTrait;
+    use ContentUtilityTrait;
 
     /**
      * Add custom shell function
@@ -34,9 +34,9 @@ trait UtilityTrait
      * @param void
      * @since 1.0.0
      */
-    protected function addShellFunction(string $name, callable $method, string $type = 'panel-base-shell'): void
+    protected function addShellFunction(string $name, callable $method, string $type = 'base_shell'): void
     {
-        $this->callback()->add($type, function ($shell) use ($name, $method) {
+        $this->addAction("zc/module/panel/{$this->getModuleSetting('slug')}/{$type}", function (object $shell) use ($name, $method): void {
             $shell->$name = function (...$args) use ($method) {
                 return call_user_func_array($method, $args);
             };
@@ -56,7 +56,9 @@ trait UtilityTrait
     {
         if ($template) {
             $shell = ($customBaseShell = $this->getModuleSetting('custom-base-shell')) ? new $customBaseShell($this) : new BaseShell($this);
-            $this->callback()->run('panel-base-shell', $shell);
+
+            do_action('zc/module/panel/base_shell', $shell);
+            do_action("zc/module/panel/{$this->getModuleSetting('slug')}/base_shell", $shell);
 
             $ttb = new TwigTemplateBridge;
 
@@ -81,7 +83,8 @@ trait UtilityTrait
                 $renderCallback($ttb);
             }
 
-            $this->callback()->run('panel-render', $ttb);
+            do_action('zc/module/panel/render', $ttb);
+            do_action("zc/module/panel/{$this->getModuleSetting('slug')}/render", $ttb);
 
             if ($return === true) {
                 return $ttb->render($template);

@@ -57,7 +57,7 @@ class Module extends ModuleKernel
 
         // Metabox Panel hook
         do_action('zc/module/metabox_panel/setup', $panel);
-        do_action("zc/module/metabox_panel/setup--{$this->getModuleSetting('slug')}", $panel);
+        do_action("zc/module/metabox_panel/{$this->getModuleSetting('slug')}/setup", $panel);
 
         // Setup module
         $panel->setup();

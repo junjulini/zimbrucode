@@ -36,8 +36,8 @@ class MetaMode extends Mode
     public function setup(): void
     {
         // Hooks
-        $this->addAction('admin_menu', '__action_register_panel');
-        $this->addAction('save_post', '__action_save_options');
+        $this->addAction('admin_menu',                          '__action_register_panel');
+        $this->addAction('save_post',                           '__action_save_options');
         $this->addAction('load-' . ($GLOBALS['pagenow'] ?? ''), '__action_preparing');
 
         // Ajax
@@ -58,7 +58,7 @@ class MetaMode extends Mode
     public function altRender(string $path, array $data = []): string
     {
         return $this->render("@meta/${path}", $data, true, function ($ttb) {
-            $ttb->addLocationPath($this->getModuleSetting('meta-module-resource') . '/views', 'meta');
+            $ttb->addLocationPath("{$this->getModuleSetting('meta-module-resource')}/views", 'meta');
         });
     }
 
@@ -74,7 +74,8 @@ class MetaMode extends Mode
             $this->initControls();
         }
 
-        $this->callback()->run('panel-template--before');
+        do_action('zc/module/metabox_panel/mode/meta/template--before');
+        do_action("zc/module/metabox_panel/{$this->getModuleSetting('slug')}/mode/meta/template--before");
 
         $this->render('@meta/meta-mode.twig', [
             'nonce' => AjaxHandler::getNonce($this->getModuleSetting('nonce')),
@@ -83,7 +84,8 @@ class MetaMode extends Mode
             $ttb->addLocationPath($this->getModuleSetting('meta-module-resource') . '/views', 'meta');
         });
 
-        $this->callback()->run('panel-template--after');
+        do_action('zc/module/metabox_panel/mode/meta/template--after');
+        do_action("zc/module/metabox_panel/{$this->getModuleSetting('slug')}/mode/meta/template--after");
     }
 
     /**
@@ -94,7 +96,7 @@ class MetaMode extends Mode
      */
     public function __action_preparing(): void
     {
-        if ($GLOBALS['pagenow'] == 'post.php' || $GLOBALS['pagenow'] == 'post-new.php') {
+        if (isset($GLOBALS['pagenow']) && ($GLOBALS['pagenow'] == 'post.php' || $GLOBALS['pagenow'] == 'post-new.php')) {
             if (isset($GLOBALS['typenow']) && in_array($GLOBALS['typenow'], $this->getModuleSetting('screen'))) {
 
                 // Initialization of controls
@@ -114,7 +116,8 @@ class MetaMode extends Mode
      */
     public function __action_enqueue($hook): void
     {
-        $this->callback()->run('panel-enqueue--before');
+        do_action('zc/module/metabox_panel/mode/meta/enqueue--before');
+        do_action("zc/module/metabox_panel/{$this->getModuleSetting('slug')}/mode/meta/enqueue--before");
 
         $this->asset()->addLessVar('hide_header', $this->getModuleSetting('hide-header'));
         $mmr = $this->getModuleSetting('meta-module-resource');
@@ -143,7 +146,8 @@ class MetaMode extends Mode
             'backup-pop-up-title'   => esc_html__('Backup', 'zc'),
         ]));
 
-        $this->callback()->run('panel-enqueue--after');
+        do_action('zc/module/metabox_panel/mode/meta/enqueue--after');
+        do_action("zc/module/metabox_panel/{$this->getModuleSetting('slug')}/mode/meta/enqueue--after");
     }
 
     /**
@@ -193,8 +197,9 @@ class MetaMode extends Mode
 
             if ($options && is_array($options)) {
 
-                // Callback : Options save - before
-                $this->callback()->run('panel-options-save--before', $this, $postID, $options);
+                // Filter : Options save - before
+                $options = apply_filters('zc/module/metabox_panel/mode/meta/options_save--before', $options, $postID, $this);
+                $options = apply_filters("zc/module/metabox_panel/{$this->getModuleSetting('slug')}/mode/meta/options_save--before", $options, $postID, $this);
 
                 $output = [];
                 $prefix = self::getGlobal('core/module/panel/prefix-slug');
@@ -237,8 +242,9 @@ class MetaMode extends Mode
                     if (!$result) {
                         $result = true;
 
-                        // Callback : Options save - before
-                        $this->callback()->run('panel-options-reset--after', $this, $ajax->post('id'), $ajax);
+                        // Hook : Options reset - success
+                        do_action('zc/module/metabox_panel/mode/meta/options_reset--success', $this, $ajax);
+                        do_action("zc/module/metabox_panel/{$this->getModuleSetting('slug')}/mode/meta/options_reset--success", $this, $ajax);
                     }
                 }
             }

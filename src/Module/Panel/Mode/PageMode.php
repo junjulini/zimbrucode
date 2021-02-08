@@ -70,7 +70,8 @@ class PageMode extends Mode
      */
     public function __callback_html_structure(): void
     {
-        $this->callback()->run('panel-template--before');
+        do_action('zc/module/panel/mode/page/template--before');
+        do_action("zc/module/panel/{$this->getModuleSetting('slug')}/mode/page/template--before");
 
         ?>
         <section class="zc-panel-template">
@@ -85,7 +86,8 @@ class PageMode extends Mode
         </section>
         <?php
 
-        $this->callback()->run('panel-template--after');
+        do_action('zc/module/panel/mode/page/template--after');
+        do_action("zc/module/panel/{$this->getModuleSetting('slug')}/mode/page/template--after");
     }
 
     /**
@@ -96,7 +98,8 @@ class PageMode extends Mode
      */
     public function __action_enqueue(): void
     {
-        $this->callback()->run('panel-enqueue--before');
+        do_action('zc/module/panel/mode/page/enqueue--before');
+        do_action("zc/module/panel/{$this->getModuleSetting('slug')}/mode/page/enqueue--before");
 
         // Assets
         $this->asset(
@@ -122,7 +125,8 @@ class PageMode extends Mode
             'prefix-slug'           => self::getGlobal('core/module/panel/prefix-slug'),
         ]));
 
-        $this->callback()->run('panel-enqueue--after');
+        do_action('zc/module/panel/mode/page/enqueue--after');
+        do_action("zc/module/panel/{$this->getModuleSetting('slug')}/mode/page/enqueue--after");
     }
 
     /**
@@ -144,7 +148,8 @@ class PageMode extends Mode
             $this->getModuleSetting('position')
         );
 
-        $this->callback()->run('panel-menu');
+        do_action('zc/module/panel/mode/page/menu');
+        do_action("zc/module/panel/{$this->getModuleSetting('slug')}/mode/page/menu");
     }
 
     /**
@@ -164,7 +169,8 @@ class PageMode extends Mode
             [$this, '__callback_html_structure']
         );
 
-        $this->callback()->run('panel-submenu');
+        do_action('zc/module/panel/mode/page/submenu');
+        do_action("zc/module/panel/{$this->getModuleSetting('slug')}/mode/page/submenu");
     }
 
     /**
@@ -303,15 +309,17 @@ class PageMode extends Mode
         $ajax    = new AjaxHandler($this->getModuleSetting('nonce'));
         $options = json_decode(stripslashes($ajax->post('options')), true);
 
-        // Callback : Options save - before
-        $this->callback()->run('panel-options-save--before', $this, $ajax, $options);
+        // Filter : Options save - before
+        $options = apply_filters('zc/module/panel/mode/page/options_save--before', $options, $ajax, $this);
+        $options = apply_filters("zc/module/panel/{$this->getModuleSetting('slug')}/mode/page/options_save--before", $options, $ajax, $this);
 
         if ($options) {
             if ($this->isOptionsDifferent($options)) {
                 if ($this->addOptions($options)) {
 
-                    // Callback : Options save - success
-                    $this->callback()->run('panel-options-save--success', $this, $ajax, $options);
+                    // Hook : Options save - success
+                    do_action('zc/module/panel/mode/page/options_save--success', $options, $ajax, $this);
+                    do_action("zc/module/panel/{$this->getModuleSetting('slug')}/mode/page/options_save--success", $options, $ajax, $this);
 
                     $ajax->add(self::getGlobal('core/module/panel/settings/page/events/event-1'))->send();
                 } else {
@@ -335,14 +343,16 @@ class PageMode extends Mode
     {
         $ajax = new AjaxHandler($this->getModuleSetting('nonce'));
 
-        // Callback : Options reset - before
-        $this->callback()->run('panel-options-reset--before', $this, $ajax);
+        // Hook : Options reset - before
+        do_action('zc/module/panel/mode/page/options_reset--before', $this, $ajax);
+        do_action("zc/module/panel/{$this->getModuleSetting('slug')}/mode/page/options_reset--before", $this, $ajax);
 
         $result = $this->remOptions();
 
         if ($result) {
-            // Callback : Options reset - success
-            $this->callback()->run('panel-options-reset--success', $this, $ajax);
+            // Hook : Options reset - success
+            do_action('zc/module/panel/mode/page/options_reset--success', $this, $ajax);
+            do_action("zc/module/panel/{$this->getModuleSetting('slug')}/mode/page/options_reset--success", $this, $ajax);
 
             $ajax->add(self::getGlobal('core/module/panel/settings/page/events/event-3'))->send();
         } else {

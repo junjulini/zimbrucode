@@ -13,7 +13,6 @@ namespace ZimbruCode\Module\Panel\Library;
 
 use ZimbruCode\Component\Common\Tools;
 use ZimbruCode\Component\Core\ModuleKernel;
-use ZimbruCode\Module\Panel\Library\Traits\CallbackTrait;
 use ZimbruCode\Module\Panel\Library\Traits\ContentUtilityTrait;
 
 /**
@@ -25,7 +24,7 @@ use ZimbruCode\Module\Panel\Library\Traits\ContentUtilityTrait;
  */
 abstract class ControlKernel extends ModuleKernel
 {
-    use ContentUtilityTrait, CallbackTrait;
+    use ContentUtilityTrait;
 
     /**
      * Get control path
@@ -60,13 +59,13 @@ abstract class ControlKernel extends ModuleKernel
      * @return void          This function does not return a value
      * @since 1.0.0
      */
-    protected function addShellFunction(string $name, string $method, string $type = 'panel-control-shell'): void // TODO: Posibil de scimbat denumirea
+    protected function addShellFunction(string $name, string $method, string $type = 'control_shell'): void // TODO: Posibil de scimbat denumirea
     {
         if (!is_callable($method)) {
             $method = [$this, $method];
         }
 
-        $this->callback()->add($type, function ($shell) use ($name, $method) {
+        $this->addAction("zc/module/panel/{$this->getModuleSetting('slug')}/{$type}", function (object $shell) use ($name, $method): void {
             $shell->$name = function (...$args) use ($method) {
                 return call_user_func_array($method, $args);
             };
@@ -84,7 +83,7 @@ abstract class ControlKernel extends ModuleKernel
     protected function addTemplateVar(string $name, $value = ''): void
     {
         if ($name) {
-            $this->callback()->add('panel-render', function ($ttb) use ($name, $value) {
+            $this->addAction("zc/module/panel/{$this->getModuleSetting('slug')}/render", function (object $ttb) use ($name, $value): void {
                 $ttb->addVar($name, $value);
             });
         }

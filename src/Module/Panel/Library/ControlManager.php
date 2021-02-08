@@ -13,7 +13,6 @@ namespace ZimbruCode\Module\Panel\Library;
 
 use ZimbruCode\Component\Common\Tools;
 use ZimbruCode\Component\Core\ModuleKernel;
-use ZimbruCode\Module\Panel\Library\Traits\CallbackTrait;
 use ZimbruCode\Module\Panel\Library\Traits\ContentUtilityTrait;
 use ZimbruCode\Module\Panel\Library\TwigContextController;
 use ZimbruCode\Module\Panel\Library\TwigExtension\ControlsRenderTwigExtension;
@@ -27,7 +26,7 @@ use ZimbruCode\Module\Panel\Library\TwigExtension\ControlsRenderTwigExtension;
  */
 class ControlManager extends ModuleKernel
 {
-    use ContentUtilityTrait, CallbackTrait;
+    use ContentUtilityTrait;
 
     protected $controls   = [];
     protected $namespaces = [];
@@ -41,7 +40,7 @@ class ControlManager extends ModuleKernel
     public function setup(): void
     {
         // Set Twig extension
-        $this->callback()->add('panel-render', function ($ttb) {
+        $this->addAction("zc/module/panel/{$this->getModuleSetting('slug')}/render", function (object $ttb): void {
             $ttb->addExtension(new ControlsRenderTwigExtension($this));
         });
 
@@ -148,7 +147,8 @@ class ControlManager extends ModuleKernel
             }
         }
 
-        $this->callback()->run('panel-control-manager', $settings, $this);
+        do_action('zc/module/panel/control_manager', $settings, $this);
+        do_action("zc/module/panel/{$this->getModuleSetting('slug')}/control_manager", $settings, $this);
     }
 
     /**
@@ -164,7 +164,7 @@ class ControlManager extends ModuleKernel
         $this->addControl($type, $this->loadModulePart($control, false, $type));
 
         if (method_exists($this->getControl($type), 'each')) {
-            $this->addFilter("zc/module/panel/control/{$type}", function (array $context) use ($type) {
+            $this->addFilter("zc/module/panel/control/{$type}", function (array $context) use ($type): array {
                 $this->getControl($type)->each(new TwigContextController($context));
 
                 return $context;
@@ -189,7 +189,7 @@ class ControlManager extends ModuleKernel
         }
 
         // Set load path
-        $this->callback()->add('panel-render', function ($ttb) use ($type) {
+        $this->addAction("zc/module/panel/{$this->getModuleSetting('slug')}/render", function (object $ttb) use ($type): void {
             $controlDir = self::getGlobal('core/module/panel/control-settings/template-dir');
             $ttb->addLocationPath($this->getControl($type)->getControlPath($controlDir), $type);
         });

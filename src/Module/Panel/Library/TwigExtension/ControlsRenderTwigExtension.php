@@ -60,7 +60,8 @@ class ControlsRenderTwigExtension extends AbstractExtension
                             $shell = new ControlShell($this->__panel, $control);
                         }
 
-                        $this->__panel->callback()->run('panel-control-shell', $shell);
+                        do_action('zc/module/panel/control_shell', $shell);
+                        do_action("zc/module/panel/{$this->__panel->getModuleSetting('slug')}/control_shell", $shell);
 
                         $file               = Kernel::getGlobal('core/module/panel/control-settings/template-file');
                         $template           = "@{$shell->type()}/{$file}";
