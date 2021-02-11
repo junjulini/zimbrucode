@@ -47,6 +47,7 @@ class AssetNamespace extends Filter
                 $this->prepNamespace($collectors);
             }
 
+            $this->callback($this->collector(), $asset);
             $this->collector()->remove($asset->raw());
         }
     }

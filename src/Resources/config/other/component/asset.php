@@ -23,7 +23,7 @@ return [
         'name'    => '',
         'url'     => '',
         'deps'    => [],
-        'version' => $version,
+        'version' => '',
         'media'   => false,
         'footer'  => false,
     ],
@@ -49,7 +49,6 @@ return [
                 'minify'     => false,
                 'convert'    => true,
             ],
-            'exclude-marker' => 'EXC',
         ],
         'namespace' => [
             'namespace-symbol' => '@_',

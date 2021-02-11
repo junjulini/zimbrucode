@@ -72,7 +72,7 @@ class LESS extends Filter
      */
     protected function each(AssetData $asset): void
     {
-        if ($asset->info()->getExtension() == 'less') {
+        if ($asset->fileType() == 'less') {
             $output = $this->getOutput($asset);
 
             $asset->name($asset->generateName());
@@ -140,20 +140,15 @@ class LESS extends Filter
             // Render sources
             $this->less->render();
 
-            $newAsset = $this->collector()->add($this->less->output, false)
+            $newAsset = $this->collector()
+                             ->add($this->less->output, false)
                              ->get($this->less->output);
 
-            $newAsset->name($newAsset->generateName())
-                     ->url(Tools::getURL($this->less->output))
-                     ->type('css')
-                     ->addArgs($asset->getArgs());
-
-            if (!empty($this->less->assetCache->get())) {
-                $versionPart = (integer) (substr(hexdec(md5(wp_json_encode($this->less->assetCache->get()))), 0, 9) * 100000000);
-                $version     = Kernel::getGlobal('app/version') . '.' . $versionPart;
-
-                $newAsset->version($version);
-            }
+            $newAsset->addData($asset->getData())
+                     ->type('css', true)
+                     ->name($newAsset->generateName(), true)
+                     ->url(Tools::getURL($this->less->output), true)
+                     ->version($newAsset->dynamicVersion(), true);
 
             $this->callback('less-3', $this->collector(), $newAsset);
             $this->collector()->remove($asset->raw());

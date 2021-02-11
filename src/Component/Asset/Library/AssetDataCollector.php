@@ -53,53 +53,59 @@ class AssetDataCollector
     /**
      * Run filter
      *
-     * @param  Filter        $filter     Filter object
-     * @param  string        $single     Run filter only for concrete asset. Name of asset
-     * @param  callable|null $callback   Additional callback
-     * @return void                      This function does not return a value
+     * @param  Filter        $filter      Filter object
+     * @param  string        $assetName   Run filter only for concrete asset. Name of asset
+     * @param  callable|null $callback    Additional callback
+     * @return void                       This function does not return a value
      * @since 1.0.0
      */
-    public function filter(Filter $filter, string $single = null, callable $callback = null): void
+    public function filter(Filter $filter, string $assetName = null, callable $callback = null): void
     {
-        $filter->__init($this, $single, $callback);
+        $filter->__init($this, $assetName, $callback);
     }
 
     /**
      * Registers an asset to the current asset data collector
      *
-     * @param string   $asset                The asset name
+     * @param string   $assetName            The asset name
      * @param bool     $autoFilter           Preparing through default filters
      * @param callable $callback             Callback for additional manipulations with assets
      * @throws \InvalidArgumentException     If the asset name is invalid
      * @since 1.0.0
      */
-    public function add(string $asset, bool $autoFilter = false, callable $callback = null): AssetDataCollector
+    public function add($asset, bool $autoFilter = false, callable $callback = null): AssetDataCollector
     {
-        if ($asset) {
-            $args = [];
+        if (is_string($asset) || is_array($asset)) {
+            $assetData = new AssetData($asset, $this->location);
 
-            preg_match_all('/{(.*?)}/i', $asset, $output);
-            if (!empty($output[1])) {
-                $args  = $output[1];
-                $asset = str_replace($output[0], '', $asset);
-            }
-
-            $this->addRaw($asset, new AssetData($asset, $this->location));
-
-            if (!empty($args)) {
-                $this->get($asset)->addArgs($args);
-            }
+            $this->addRaw($assetData->raw(), $assetData);
 
             if ($autoFilter) {
-                $this->filter(new CSS, $asset, $callback);
-                $this->filter(new JavaScript, $asset, $callback);
-                $this->filter(new AssetNamespace, $asset, $callback);
-                $this->filter(new Package, $asset, $callback);
-                $this->filter(new LESS, $asset, $callback);
-                $this->filter(new Registered, $asset, $callback);
+                $this->filter(new CSS, $assetData->raw(), $callback);
+                $this->filter(new JavaScript, $assetData->raw(), $callback);
+                $this->filter(new AssetNamespace, $assetData->raw(), $callback);
+                $this->filter(new Package, $assetData->raw(), $callback);
+                $this->filter(new LESS, $assetData->raw(), $callback);
+                $this->filter(new Registered, $assetData->raw(), $callback);
             }
         } else {
-            throw new \InvalidArgumentException('Asset is empty or not string.');
+            throw new \InvalidArgumentException('Asset is empty or not string/array');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Add raw asset data
+     *
+     * @param string    $assetName   Asset name
+     * @param AssetData $assetData   Asset data
+     * @since 1.0.0
+     */
+    public function addRaw(string $assetName, AssetData $assetData): AssetDataCollector
+    {
+        if ($assetName) {
+            $this->data[$assetName] = $assetData;
         }
 
         return $this;
@@ -201,21 +207,5 @@ class AssetDataCollector
         }
 
         return $default;
-    }
-
-    /**
-     * Add raw asset data
-     *
-     * @param string    $asset       Asset ID
-     * @param AssetData $assetData   Asset data
-     * @since 1.0.0
-     */
-    public function addRaw(string $asset, AssetData $assetData): AssetDataCollector
-    {
-        if ($asset) {
-            $this->data[$asset] = $assetData;
-        }
-
-        return $this;
     }
 }

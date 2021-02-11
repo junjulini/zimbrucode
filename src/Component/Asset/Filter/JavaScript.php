@@ -13,7 +13,6 @@ namespace ZimbruCode\Component\Asset\Filter;
 
 use ZimbruCode\Component\Asset\Library\AssetData;
 use ZimbruCode\Component\Asset\Library\Filter;
-use ZimbruCode\Component\Core\Kernel;
 
 /**
  * Class : Filter - JavaScript
@@ -33,12 +32,12 @@ class JavaScript extends Filter
      */
     public function each(AssetData $asset): void
     {
-        if ($asset->info()->getExtension() == 'js') {
-            $asset->type('js')
-                  ->name($asset->generateName())
-                  ->url($asset->getURL())
-                  ->version(Kernel::getGlobal('app/version'))
-                  ->footer(true);
+        if ($asset->fileType() == 'js') {
+            $asset->type('js', true)
+                  ->name($asset->generateName(), true)
+                  ->url($asset->getURL(), true)
+                  ->version($asset->dynamicVersion(), true)
+                  ->footer(true, true);
 
             $this->callback($this->collector(), $asset);
         }

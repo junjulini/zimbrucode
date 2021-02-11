@@ -235,8 +235,8 @@ class AssetHandler
             }
         }
 
-        $this->assetManager->add($this->assets)
-             ->enroll('Panel - ' . ucfirst($this->module->getModuleSetting('slug')));
+        $this->assetManager->addAssets($this->assets)
+                           ->enroll('Panel - ' . ucfirst($this->module->getModuleSetting('slug')));
 
         return $this;
     }

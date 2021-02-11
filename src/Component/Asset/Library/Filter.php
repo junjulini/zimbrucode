@@ -29,12 +29,12 @@ abstract class Filter
      * Initialization of filter
      *
      * @param  AssetDataCollector $collector   Collector object
-     * @param  string             $single      Name of asset
+     * @param  string             $assetName   Name of asset
      * @param  callable|null      $callback    Additional callback
      * @return void                            This function does not return a value
      * @since 1.0.0
      */
-    final public function __init(AssetDataCollector $collector, string $single = null, callable $callback = null)
+    final public function __init(AssetDataCollector $collector, string $assetName = null, callable $callback = null)
     {
         $this->collector = $collector;
         $this->callback  = $callback;
@@ -44,13 +44,13 @@ abstract class Filter
         }
 
         if (method_exists($this, 'each')) {
-            if ($single) {
-                if ($this->collector()->has($single)) {
-                    $this->each($this->collector()->get($single));
+            if ($assetName) {
+                if ($this->collector()->has($assetName)) {
+                    $this->each($this->collector()->get($assetName));
                 }
             } else {
-                foreach ($this->collector()->get() as $asset) {
-                    $this->each($asset);
+                foreach ($this->collector()->get() as $assetData) {
+                    $this->each($assetData);
                 }
             }
         }

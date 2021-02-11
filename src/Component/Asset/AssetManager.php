@@ -11,6 +11,7 @@
 
 namespace ZimbruCode\Component\Asset;
 
+use ZimbruCode\Component\Asset\Filter\Combine;
 use ZimbruCode\Component\Asset\Library\AssetData;
 use ZimbruCode\Component\Asset\Library\AssetDataCollector;
 use ZimbruCode\Component\Asset\Library\Filter;
@@ -80,22 +81,27 @@ class AssetManager
      *
      * @since 1.0.0
      */
-    public function add(...$assets): AssetManager
+    public function add($asset, callable $callback = null): AssetManager
+    {
+        if ($asset) {
+            $this->collector->add($asset, $this->autoFilter(), $callback);
+        }
+
+        return $this;
+    }
+
+    public function addAssets(array $assets): AssetManager
     {
         if ($assets) {
             foreach ($assets as $asset) {
-                if (is_array($asset)) {
-                    foreach ($asset as $afc) {
-                        $callback = (!empty($this->callbacks[$afc])) ? $this->callbacks[$afc] : null;
-                        $this->collector->add($afc, $this->autoFilter, $callback);
-                    }
+                if (is_array($asset) && !empty($asset['raw']) && is_string($asset['raw'])) {
+                    $callback = $this->callbacks[$asset['raw']] ?? null;
                 } else {
-                    $callback = (!empty($this->callbacks[$asset])) ? $this->callbacks[$asset] : null;
-                    $this->collector->add($asset, $this->autoFilter, $callback);
+                    $callback = $this->callbacks[$asset] ?? null;
                 }
+
+                $this->collector->add($asset, $this->autoFilter(), $callback);
             }
-        } else {
-            throw new \InvalidArgumentException('No assets.');
         }
 
         return $this;
@@ -119,9 +125,10 @@ class AssetManager
      * @param string $asset   The asset name
      * @since 1.0.0
      */
-    public function remove(string $asset): bool
+    public function remove(string $asset): AssetManager
     {
-        return $this->collector->remove($asset);
+        $this->collector->remove($asset);
+        return $this;
     }
 
     /**
@@ -135,9 +142,25 @@ class AssetManager
         return $this;
     }
 
-    public function filter(Filter $filter, bool $single = false, callable $callback = null): AssetManager
+    public function filter(Filter $filter, string $assetName = null, callable $callback = null): AssetManager
     {
-        $this->collector->filter($filter, $single, $callback);
+        $this->collector->filter($filter, $assetName, $callback);
+        return $this;
+    }
+
+    public function combine(string $name): AssetManager
+    {
+        if ($this->collector->get() && $name && !Kernel::dev()) {
+            $callback = function (object $collector, array $data) use ($name): array{
+                $data['settings']['js']['outputName']  = $name;
+                $data['settings']['css']['outputName'] = $name;
+
+                return $data;
+            };
+
+            $this->filter(new Combine, null, $callback);
+        }
+
         return $this;
     }
 
@@ -147,9 +170,10 @@ class AssetManager
      * @return void
      * @since 1.0.0
      */
-    public function dump(): void
+    public function dump(): AssetManager
     {
         Tools::dump($this->collector);
+        return $this;
     }
 
     /**
@@ -159,7 +183,7 @@ class AssetManager
      * @return void               This function does not return a value
      * @since 1.0.0
      */
-    public function enroll(string $logTitle = ''): void
+    public function enroll(string $logTitle = ''): AssetManager
     {
         if (Kernel::dev()) {
             Kernel::dev()->addLogMessage("Asset : {$logTitle}", $this->collector->get());
@@ -174,6 +198,8 @@ class AssetManager
                 wp_enqueue_script($asset->name());
             }
         }
+
+        return $this;
     }
 
     /**
@@ -182,9 +208,10 @@ class AssetManager
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function enrollAsNamespace(string $namespace = ''): void
+    public function enrollAsNamespace(string $namespace = ''): AssetManager
     {
         $this->nh->add($namespace, $this->collector);
+        return $this;
     }
 
     /**
@@ -196,49 +223,46 @@ class AssetManager
      * @return bool
      * @since 1.0.0
      */
-    public function localize(string $handle, string $name, array $data = []): ?bool
+    public function localize(string $handle, string $name, array $data = []): AssetManager
     {
         if ($handle && $name) {
             foreach ($this->collector->get() as $asset) {
                 if ($handle == $asset->url() || $handle == $asset->raw() || strpos($asset->name(), $handle) !== false) {
-                    return wp_localize_script($asset->name(), $name, $data);
+                    wp_localize_script($asset->name(), $name, $data);
+                    return $this;
                 }
             }
 
             throw new \InvalidArgumentException("Next script handle for \"localize\" function not found : {$handle}");
         }
-
-        return null;
     }
 
-    public function addInlineScript(string $handle, string $data, string $position = 'after'): ?bool
+    public function addInlineScript(string $handle, string $data, string $position = 'after'): AssetManager
     {
         if ($handle) {
             foreach ($this->collector->get() as $asset) {
                 if ($handle == $asset->url() || $handle == $asset->raw() || strpos($asset->name(), $handle) !== false) {
-                    return wp_add_inline_script($asset->name(), $data, $position);
+                    wp_add_inline_script($asset->name(), $data, $position);
+                    return $this;
                 }
             }
 
             throw new \InvalidArgumentException("Next script handle for \"addInlineScript\" function not found : {$handle}");
         }
-
-        return null;
     }
 
-    public function addInlineStyle(string $handle, string $data): ?bool
+    public function addInlineStyle(string $handle, string $data): AssetManager
     {
         if ($handle) {
             foreach ($this->collector->get() as $asset) {
                 if ($handle == $asset->url() || $handle == $asset->raw() || strpos($asset->name(), $handle) !== false) {
-                    return wp_add_inline_style($asset->name(), $data);
+                    wp_add_inline_style($asset->name(), $data);
+                    return $this;
                 }
             }
 
             throw new \InvalidArgumentException("Next style handle for \"addInlineStyle\" function not found : {$handle}");
         }
-
-        return null;
     }
 
     /**

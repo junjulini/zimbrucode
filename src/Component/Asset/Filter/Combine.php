@@ -55,13 +55,11 @@ class Combine extends Filter
         $this->varPath          = Kernel::service('app-locator')->getVarPath("assets/{$env}");
         $this->cacheExt         = Kernel::getGlobal('core/component/asset/cache/extension', '.cache');
 
-        $exc = $this->data['settings']['exclude-marker'];
-
         foreach ($this->collector()->get() as $asset) {
-            if ($asset->type() == 'css' && Tools::isLocalURL($asset->url()) && !$asset->hasArg($exc)) {
+            if ($asset->type() == 'css' && Tools::isLocalURL($asset->url())) {
                 $this->data['assets']['css'][] = $asset;
                 $this->collector()->remove($asset->raw());
-            } elseif ($asset->type() == 'js' && Tools::isLocalURL($asset->url()) && !$asset->hasArg($exc)) {
+            } elseif ($asset->type() == 'js' && Tools::isLocalURL($asset->url())) {
                 $this->data['assets']['js'][] = $asset;
                 $this->collector()->remove($asset->raw());
             }
@@ -108,10 +106,6 @@ class Combine extends Filter
                 return true;
             }
 
-            if (empty($args['version'])) {
-                return true;
-            }
-
             return false;
         });
 
@@ -127,9 +121,7 @@ class Combine extends Filter
         }
 
         if ($this->cache->check()) {
-            $this->cache->build([
-                'version' => Kernel::getGlobal('app/version') . '.' . Tools::getRandomNumber(),
-            ]);
+            $this->cache->build();
 
             $outputContent = '';
 
@@ -158,7 +150,7 @@ class Combine extends Filter
 
                 $data = [
                     'between' => (0 != $n ? "\n\n\n" : ''),
-                    'comment' => "/*\n* {$asset->name()} : v{$asset->version()}\n*/\n\n",
+                    'comment' => "/*\n* {$asset->name()} : v{$asset->dynamicVersion()}\n*/\n\n",
                     'content' => $content,
                 ];
 
@@ -172,7 +164,7 @@ class Combine extends Filter
         $asset->type('css')
               ->name($asset->generateName())
               ->url($asset->getURL())
-              ->version($this->cache->get()['additional']['version']);
+              ->version($asset->dynamicVersion());
     }
 
     /**
@@ -203,10 +195,6 @@ class Combine extends Filter
                 return true;
             }
 
-            if (empty($args['version'])) {
-                return true;
-            }
-
             return false;
         });
 
@@ -222,9 +210,7 @@ class Combine extends Filter
         }
 
         if ($this->cache->check()) {
-            $this->cache->build([
-                'version' => Kernel::getGlobal('app/version') . '.' . Tools::getRandomNumber(),
-            ]);
+            $this->cache->build();
 
             $outputContent = '';
 
@@ -247,7 +233,7 @@ class Combine extends Filter
 
                 $data = [
                     'between' => (0 != $n ? "\n\n\n" : ''),
-                    'comment' => "/*\n* {$asset->name()} : v{$asset->version()}\n*/\n\n",
+                    'comment' => "/*\n* {$asset->name()} : v{$asset->dynamicVersion()}\n*/\n\n",
                     'content' => $content,
                 ];
 
@@ -261,7 +247,7 @@ class Combine extends Filter
         $asset->type('js')
               ->name($asset->generateName())
               ->url($asset->getURL())
-              ->version($this->cache->get()['additional']['version'])
+              ->version($asset->dynamicVersion())
               ->footer(true);
     }
 }

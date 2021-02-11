@@ -13,7 +13,6 @@ namespace ZimbruCode\Component\Asset\Filter;
 
 use ZimbruCode\Component\Asset\Library\AssetData;
 use ZimbruCode\Component\Asset\Library\Filter;
-use ZimbruCode\Component\Core\Kernel;
 
 /**
  * Class : Filter - CSS
@@ -33,11 +32,11 @@ class CSS extends Filter
      */
     public function each(AssetData $asset): void
     {
-        if ($asset->info()->getExtension() == 'css') {
-            $asset->type('css')
-                  ->name($asset->generateName())
-                  ->url($asset->getURL())
-                  ->version(Kernel::getGlobal('app/version'));
+        if ($asset->fileType() == 'css') {
+            $asset->type('css', true)
+                  ->name($asset->generateName(), true)
+                  ->url($asset->getURL(), true)
+                  ->version($asset->dynamicVersion(), true);
 
             $this->callback($this->collector(), $asset);
         }

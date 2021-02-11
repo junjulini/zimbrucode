@@ -29,12 +29,49 @@ class AssetData
     protected $data;
     protected $location;
 
-    public function __construct(string $asset, LocationDetector $location)
+    public function __construct($asset, LocationDetector $location)
     {
-        $this->raw  = $asset;
-        $this->info = new \SplFileInfo($this->raw);
-        $this->data = Kernel::getGlobal('core/component/asset/default-data');
+        if ($asset) {
+            if (is_string($asset)) {
+                $this->raw  = $asset;
+                $this->data = Kernel::getGlobal('core/component/asset/default-data');
+            } elseif (is_array($asset) && !empty($asset['raw']) && is_string($asset['raw'])) {
+                $this->raw  = $asset['raw'];
+                $this->data = Kernel::getGlobal('core/component/asset/default-data');
 
+                if (isset($asset['type'])) {
+                    $this->type($asset['type']);
+                }
+
+                if (isset($asset['name'])) {
+                    $this->name($asset['name']);
+                }
+
+                if (isset($asset['url'])) {
+                    $this->url($asset['url']);
+                }
+
+                if (isset($asset['deps'])) {
+                    $this->deps($asset['deps']);
+                }
+
+                if (isset($asset['version'])) {
+                    $this->version($asset['version']);
+                }
+
+                if (isset($asset['media'])) {
+                    $this->media($asset['media']);
+                }
+
+                if (isset($asset['footer'])) {
+                    $this->footer($asset['footer']);
+                }
+            } else {
+                throw new \InvalidArgumentException('Asset is empty or not string/array or asset[\'raw\'] is empty');
+            }
+        }
+
+        $this->info     = new \SplFileInfo($this->raw);
         $this->location = $location;
     }
 
@@ -45,9 +82,17 @@ class AssetData
      * @return string|AssetData   Asset type
      * @since 1.0.0
      */
-    public function type(string $type = '')
+    public function type(string $type = '', bool $check = false)
     {
         if ($type) {
+            if ($check === true) {
+                if (empty($this->data['type'])) {
+                    $this->data['type'] = $type;
+                }
+
+                return $this;
+            }
+
             $this->data['type'] = $type;
             return $this;
         }
@@ -62,9 +107,17 @@ class AssetData
      * @return string|AssetData   Asset name
      * @since 1.0.0
      */
-    public function name(string $name = '')
+    public function name(string $name = '', bool $check = false)
     {
         if ($name) {
+            if ($check === true) {
+                if (empty($this->data['name'])) {
+                    $this->data['name'] = $name;
+                }
+
+                return $this;
+            }
+
             $this->data['name'] = $name;
             return $this;
         }
@@ -79,9 +132,17 @@ class AssetData
      * @return string|AssetData   Asset url
      * @since 1.0.0
      */
-    public function url(string $url = '')
+    public function url(string $url = '', bool $check = false)
     {
         if ($url) {
+            if ($check === true) {
+                if (empty($this->data['url'])) {
+                    $this->data['url'] = $url;
+                }
+
+                return $this;
+            }
+
             $this->data['url'] = $url;
             return $this;
         }
@@ -96,9 +157,17 @@ class AssetData
      * @return array|AssetData   Asset deps
      * @since 1.0.0
      */
-    public function deps(array $deps = [])
+    public function deps(array $deps = [], bool $check = false)
     {
         if ($deps) {
+            if ($check === true) {
+                if (empty($this->data['deps'])) {
+                    $this->data['deps'] = $deps;
+                }
+
+                return $this;
+            }
+
             $this->data['deps'] = $deps;
             return $this;
         }
@@ -113,9 +182,17 @@ class AssetData
      * @return string|AssetData   Asset version
      * @since 1.0.0
      */
-    public function version(string $version = '')
+    public function version(string $version = '', bool $check = false)
     {
         if ($version) {
+            if ($check === true) {
+                if (empty($this->data['version'])) {
+                    $this->data['version'] = $version;
+                }
+
+                return $this;
+            }
+
             $this->data['version'] = $version;
             return $this;
         }
@@ -130,9 +207,17 @@ class AssetData
      * @return bool|AssetData   Asset media
      * @since 1.0.0
      */
-    public function media(bool $media = null)
+    public function media(bool $media = null, bool $check = false)
     {
         if ($media !== null) {
+            if ($check === true) {
+                if (empty($this->data['media'])) {
+                    $this->data['media'] = $media;
+                }
+
+                return $this;
+            }
+
             $this->data['media'] = $media;
             return $this;
         }
@@ -147,9 +232,17 @@ class AssetData
      * @return bool|AssetData   Asset footer
      * @since 1.0.0
      */
-    public function footer(bool $footer = null)
+    public function footer(bool $footer = null, bool $check = false)
     {
         if ($footer !== null) {
+            if ($check === true) {
+                if (empty($this->data['footer'])) {
+                    $this->data['footer'] = $footer;
+                }
+
+                return $this;
+            }
+
             $this->data['footer'] = $footer;
             return $this;
         }
@@ -191,6 +284,18 @@ class AssetData
         return $this->info;
     }
 
+    public function dynamicVersion()
+    {
+        $version = Kernel::getGlobal('app/version');
+        $hash    = hash_file('adler32', $this->getPath());
+
+        if ($hash) {
+            $version = "{$version}.{$hash}";
+        }
+
+        return $version;
+    }
+
     /**
      * Check if asset is file
      *
@@ -200,6 +305,11 @@ class AssetData
     public function isFile(): bool
     {
         return ($this->info->getExtension()) ? true : false;
+    }
+
+    public function fileType()
+    {
+        return ($this->type()) ? $this->type() : $this->info()->getExtension();
     }
 
     /**
@@ -228,54 +338,21 @@ class AssetData
         return Tools::getURL($this->getPath());
     }
 
+    public function addData(array $data): AssetData
+    {
+        $this->data = $data;
+        return $this;
+    }
+
     /**
      * Asset data
      *
      * @return array   All asset data
      * @since 1.0.0
      */
-    public function getAssetData(): array
+    public function getData(): array
     {
         return $this->data;
-    }
-
-    /**
-     * Add additional arguments
-     *
-     * @param array $args   List of arguments
-     * @since 1.0.0
-     */
-    public function addArgs(array $args): AssetData
-    {
-        $this->data['args'] = $args;
-        return $this;
-    }
-
-    /**
-     * Get additional arguments
-     *
-     * @return array   Additional arguments
-     * @since 1.0.0
-     */
-    public function getArgs(): array
-    {
-        return (!empty($this->data['args'])) ? $this->data['args'] : [];
-    }
-
-    /**
-     * Check if asset has additional argument
-     *
-     * @param  string $arg   Argument name
-     * @return bool           True of False
-     * @since 1.0.0
-     */
-    public function hasArg(string $arg): bool
-    {
-        if ($arg) {
-            return in_array($arg, $this->getArgs());
-        }
-
-        return false;
     }
 
     /**
@@ -303,11 +380,7 @@ class AssetData
      */
     public function getAdditionalData(string $id)
     {
-        if ($id) {
-            return (!empty($this->data['additional-data'][$id])) ? $this->data['additional-data'][$id] : false;
-        }
-
-        return false;
+        return $this->data['additional-data'][$id] ?? false;
     }
 
     /**
