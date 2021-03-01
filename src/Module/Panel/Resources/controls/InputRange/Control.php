@@ -35,7 +35,8 @@ class Control extends ControlKernel
         ]);
 
         // Custom template function
-        $this->addShellFunction('gridMark', '__callback_grid_mark');
+        $this->addShellFunction('gridMark',     '__callback_grid_mark');
+        $this->addShellFunction('trackPercent', '__callback_track_percent');
     }
 
     public function __callback_grid_mark($value, $step)
@@ -46,5 +47,11 @@ class Control extends ControlKernel
         }
 
         return 0;
+    }
+
+    public function __callback_track_percent($value, $min, $max)
+    {
+        $value = str_replace(['px', '%'], '', $value);
+        return (($value - $min) * 100) / ($max - $min);
     }
 }

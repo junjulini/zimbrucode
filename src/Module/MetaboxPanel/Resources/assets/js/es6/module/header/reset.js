@@ -72,9 +72,9 @@ export default class Reset extends Kernel {
     successConfirm(popup, response) {
         popup.remContent();
         popup.appendContent(zc.tpl(TPL__reset_popup_notification, {
-            type: response.type,
-            title: response.title,
-            content: response.content
+            type: response.type ?? 'error',
+            title: response.title ?? 'Error',
+            content: response.content ?? 'Unknown error'
         }));
         popup.showContent();
 
@@ -86,9 +86,9 @@ export default class Reset extends Kernel {
     neutralConfirm(popup, response) {
         popup.remContent();
         popup.appendContent(zc.tpl(TPL__reset_popup_notification, {
-            type: response.type,
-            title: response.title,
-            content: response.content,
+            type: response.type ?? 'error',
+            title: response.title ?? 'Error',
+            content: response.content ?? 'Unknown error',
             var_exit: this.getVar('exit')
         }));
         popup.showContent();

@@ -24,10 +24,10 @@ trait RequestHandlerTrait
      * Post request
      *
      * @param  string $param
-     * @return string
+     * @return mix
      * @since 1.0.0
      */
-    public static function rPost(string $param, $default = ''): string
+    public static function rPost(string $param, $default = '')
     {
         return !empty($_POST[$param]) ? $_POST[$param] : $default;
     }
@@ -36,10 +36,10 @@ trait RequestHandlerTrait
      * Get request
      *
      * @param  string $param
-     * @return string
+     * @return mix
      * @since 1.0.0
      */
-    public static function rGet(string $param, $default = ''): string
+    public static function rGet(string $param, $default = '')
     {
         return !empty($_GET[$param]) ? $_GET[$param] : $default;
     }

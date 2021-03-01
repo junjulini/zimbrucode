@@ -31,10 +31,10 @@ class Control extends ControlKernel
     public function setup(): void
     {
         $this->localize([
-            'remove' => __('Remove', 'zc'),
+            'remove' => esc_html__('Remove', 'zc'),
         ]);
 
-        $this->addAction('admin_enqueue_scripts', function () {
+        $this->addAction('admin_enqueue_scripts', function (): void {
             wp_enqueue_media();
         });
     }

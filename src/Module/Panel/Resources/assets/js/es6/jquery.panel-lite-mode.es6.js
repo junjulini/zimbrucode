@@ -34,9 +34,11 @@ zc.module.panel.addMode(($, panel) => {
         panel.ifChanged();           // Check if some changes was made
         panel.tooltip();             // Init tooltip
 
-        new BodySize;                // Panel body size.
-        new OptionHandler;           // Save/Reset => .
-        new QuickLinks;              // Initialization of panel button "Quick Links".
+        new BodySize;                 // Panel body size.
+        const oh = new OptionHandler; // Save/Reset => .
+        new QuickLinks;               // Initialization of panel button "Quick Links".
+
+        panel.addCache('option-handler', oh);
 
         // Active section
         const section = $('.zc-panel .zc-panel-controls__section');

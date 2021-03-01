@@ -50,7 +50,7 @@ class ZimbruCode {
      * @since 1.0.0
      */
     addModule(name, module) {
-        this.moduleData[name] = {};
+        this.initModuleData(name);
         this.module[name] = new module($);
     }
 

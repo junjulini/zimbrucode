@@ -31,8 +31,7 @@
             {% if lbc %}
                 {% set trackPercent = control.settings.lb %}
             {% else %}
-                {% set trackPercent = ((value - min) * 100) / (max - min) %}
-                {% set trackPercent = 'background-size: ' ~ trackPercent ~ '% 100%;' %}
+                {% set trackPercent = 'background-size: ' ~ control.trackPercent(value, min, max) ~ '% 100%;' %}
             {% endif %}
 
             {% set mark = (max - min) / 4 %}

@@ -57,7 +57,7 @@ class MetaMode extends Mode
      */
     public function altRender(string $path, array $data = []): string
     {
-        return $this->render("@meta/${path}", $data, true, function ($ttb) {
+        return $this->render("@meta/${path}", $data, true, function (object $ttb): void {
             $ttb->addLocationPath("{$this->getModuleSetting('meta-module-resource')}/views", 'meta');
         });
     }
@@ -212,8 +212,7 @@ class MetaMode extends Mode
                 }
 
                 if (!empty($output)) {
-                    $metaContainerSlug = self::getGlobal('core/module/metabox-panel/meta-container-slug');
-                    update_post_meta($postID, "_{$metaContainerSlug}", $output);
+                    update_post_meta($postID, "_{$this->getGlobal('core/module/metabox-panel/meta-container-slug')}", $output);
                 }
             }
         }
@@ -227,35 +226,17 @@ class MetaMode extends Mode
      */
     public function __ajax_options_reset(): void
     {
-        $ajax    = new AjaxHandler($this->getModuleSetting('nonce'));
-        $events  = $this->getModuleSetting('events/reset');
-        $options = get_post_meta($ajax->post('id'));
+        $ajax = new AjaxHandler($this->getModuleSetting('nonce'));
 
-        if ($options && is_array($options)) {
-            $result = false;
-            $prefix = self::getGlobal('core/module/panel/prefix-slug');
+        if (delete_post_meta($ajax->post('id'), "_{$this->getGlobal('core/module/metabox-panel/meta-container-slug')}")) {
 
-            foreach ($options as $key => $value) {
-                if (strpos($key, $prefix) !== false) {
-                    delete_post_meta($ajax->post('id'), $key);
+            // Hook : Options reset - success
+            do_action('zc/module/metabox_panel/mode/meta/options_reset--success', $this, $ajax);
+            do_action("zc/module/metabox_panel/{$this->getModuleSetting('slug')}/mode/meta/options_reset--success", $this, $ajax);
 
-                    if (!$result) {
-                        $result = true;
-
-                        // Hook : Options reset - success
-                        do_action('zc/module/metabox_panel/mode/meta/options_reset--success', $this, $ajax);
-                        do_action("zc/module/metabox_panel/{$this->getModuleSetting('slug')}/mode/meta/options_reset--success", $this, $ajax);
-                    }
-                }
-            }
-
-            if ($result) {
-                $ajax->add($events['success'])->send();
-            } else {
-                $ajax->add($events['failure'])->send();
-            }
+            $ajax->add($this->getModuleSetting('events/reset/success'))->send();
         } else {
-            $ajax->add($events['failure'])->send();
+            $ajax->add($this->getModuleSetting('events/reset/failure'))->send();
         }
     }
 }

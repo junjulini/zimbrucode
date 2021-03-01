@@ -99,13 +99,13 @@
         padding: 0;
         overflow: hidden;
         border-bottom: 5px solid #ffffff;
-        border-radius: 5px;
+        border-radius: 3px;
     }
 
     // Type : Group
     &_type_group {
         border: 1px solid @accent-color__1;
-        border-radius: 5px;
+        border-radius: 3px;
         position: relative;
         background: @bg-color__2;
 
@@ -118,7 +118,7 @@
                 border: 1px solid @accent-color__1;
                 border-bottom: none;
                 padding: 3px 7px 0px 7px;
-                border-radius: 5px 5px 0px 0px;
+                border-radius: 3px 3px 0px 0px;
                 height: 8px;
                 line-height: 1;
             }
@@ -139,7 +139,7 @@
     // Type : Accent group
     &_type_accent-group {
         border: 1px solid @accent-color__1;
-        border-radius: 5px;
+        border-radius: 3px;
         position: relative;
         background: @bg-color__2;
 
@@ -166,8 +166,8 @@
     }
 
     &__controls-list {
-        display: table;
-        width: 100%;
+        display: flex;
+        flex-direction: column;
     }
 
     // Type : Column

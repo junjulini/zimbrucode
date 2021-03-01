@@ -94,88 +94,75 @@ class Backup extends Kernel
      */
     protected function save(AjaxHandler $ajax, string $pageType): void
     {
-        if ($data = get_post_meta($ajax->post('id'))) {
+        if ($metaData = get_post_meta($ajax->post('id'), "_{$this->getGlobal('core/module/metabox-panel/meta-container-slug')}", true)) {
             $backupName = md5($ajax->post('backup_name'));
-            $filtered   = [];
 
-            foreach ($data as $metaKey => $metaValue) {
-                if (strpos($metaKey, self::getGlobal('core/module/panel/prefix-slug')) !== false) {
-                    $filtered[$metaKey] = get_post_meta($ajax->post('id'), $metaKey, true);
-                }
-            }
+            if ($data = self::service('db')->get($this->backupKey)) {
+                if (!empty($data[$pageType][$backupName])) {
+                    if ($data[$pageType][$backupName]['data'] != $metaData) {
+                        $data[$pageType][$backupName]['data'] = $metaData;
 
-            if ($filtered) {
-                if ($data = self::service('db')->get($this->backupKey)) {
-                    if (!empty($data[$pageType][$backupName])) {
-                        if ($data[$pageType][$backupName]['data'] != $filtered) {
-                            $data[$pageType][$backupName]['data'] = $filtered;
-
-                            // If has but different data
-                            if (self::service('db')->add($this->backupKey, $data, true, false)) {
-                                $ajax->add('result', 'success')
-                                     ->send();
-                            } else {
-                                $ajax->add('result', 'failure')
-                                     ->add('result_msg', 'Backup/Save - Error : 1')
-                                     ->send();
-                            }
+                        // If has but different data
+                        if (self::service('db')->add($this->backupKey, $data, true, false)) {
+                            $ajax->add('result', 'success')
+                                 ->send();
                         } else {
                             $ajax->add('result', 'failure')
-                                 ->add('result_msg', 'Backup/Save - Error : 2')
+                                 ->add('result_msg', 'Backup/Save - Error : 1')
                                  ->send();
                         }
                     } else {
-                        $data[$pageType][$backupName] = [
-                            'name' => $ajax->post('backup_name'),
-                            'data' => $filtered,
-                        ];
-
-                        // If not has
-                        if (self::service('db')->add($this->backupKey, $data, true, false)) {
-                            $ajax->add('result', 'success')
-                                 ->add('change', [
-                                     'count' => count($data[$pageType]),
-                                     'item'  => $this->getItemContent($backupName, $ajax->post('backup_name')),
-                                 ])
-                                 ->send();
-                        } else {
-                            $ajax->add('result', 'failure')
-                                 ->add('result_msg', 'Backup/Save - Error : 3')
-                                 ->send();
-                        }
+                        $ajax->add('result', 'failure')
+                             ->add('result_msg', 'Backup/Save - Error : 2')
+                             ->send();
                     }
                 } else {
-                    $data = [
-                        $pageType => [
-                            $backupName => [
-                                'name' => $ajax->post('backup_name'),
-                                'data' => $filtered,
-                            ],
-                        ],
+                    $data[$pageType][$backupName] = [
+                        'name' => $ajax->post('backup_name'),
+                        'data' => $metaData,
                     ];
 
-                    // If data is empty
+                    // If not has
                     if (self::service('db')->add($this->backupKey, $data, true, false)) {
                         $ajax->add('result', 'success')
                              ->add('change', [
-                                 'count' => 1,
-                                 'item'  => $this->getItemContent($backupName, $ajax->post('backup_name')),
+                                'count' => count($data[$pageType]),
+                                'item'  => $this->getItemContent($backupName, $ajax->post('backup_name')),
                              ])
                              ->send();
                     } else {
                         $ajax->add('result', 'failure')
-                             ->add('result_msg', 'Backup/Save - Error : 4')
+                             ->add('result_msg', 'Backup/Save - Error : 3')
                              ->send();
                     }
                 }
             } else {
-                $ajax->add('result', 'failure')
-                     ->add('result_msg', 'Backup/Save - Error : 5')
-                     ->send();
+                $data = [
+                    $pageType => [
+                        $backupName => [
+                            'name' => $ajax->post('backup_name'),
+                            'data' => $metaData,
+                        ],
+                    ],
+                ];
+
+                // If data is empty
+                if (self::service('db')->add($this->backupKey, $data, true, false)) {
+                    $ajax->add('result', 'success')
+                         ->add('change', [
+                            'count' => 1,
+                            'item'  => $this->getItemContent($backupName, $ajax->post('backup_name')),
+                         ])
+                         ->send();
+                } else {
+                    $ajax->add('result', 'failure')
+                         ->add('result_msg', 'Backup/Save - Error : 4')
+                         ->send();
+                }
             }
         } else {
             $ajax->add('result', 'failure')
-                 ->add('result_msg', 'Backup/Save - Error : 6')
+                 ->add('result_msg', 'Backup/Save - Error : 5')
                  ->send();
         }
     }
@@ -252,33 +239,8 @@ class Backup extends Kernel
             if (!empty($data[$pageType][$ajax->post('backup_name')])) {
                 $bdData = $data[$pageType][$ajax->post('backup_name')]['data'];
 
-                // Delete items who not in backup
-                if ($metaData = get_post_meta($ajax->post('id'))) {
-                    $filtered = [];
-
-                    foreach ($metaData as $metaKey => $metaValue) {
-                        if (strpos($metaKey, self::getGlobal('core/module/panel/prefix-slug')) !== false) {
-                            $filtered[$metaKey] = $metaValue;
-                        }
-                    }
-
-                    foreach ($bdData as $bdKey => $bdValue) {
-                        if (isset($filtered[$bdKey])) {
-                            unset($filtered[$bdKey]);
-                        }
-                    }
-
-                    if ($filtered) {
-                        foreach ($filtered as $metaKey => $metaValue) {
-                            delete_post_meta($ajax->post('id'), $metaKey);
-                        }
-                    }
-                }
-
                 // Restore backup
-                foreach ($bdData as $bdKey => $bdValue) {
-                    update_post_meta($ajax->post('id'), $bdKey, stripslashes_deep($bdValue));
-                }
+                update_post_meta($ajax->post('id'), "_{$this->getGlobal('core/module/metabox-panel/meta-container-slug')}", $bdData);
 
                 $events = $this->mode->getModuleSetting('events/backup');
                 $ajax->add('result', 'success')
@@ -306,9 +268,8 @@ class Backup extends Kernel
      */
     public function __ajax_backup()
     {
-        $ajax = new AjaxHandler($this->mode->getModuleSetting('nonce'));
-
-        $pageType = $this->mode->getModuleData('meta/page');
+        $ajax     = new AjaxHandler($this->mode->getModuleSetting('nonce'));
+        $pageType = implode('_', $this->mode->getModuleSetting('screen'));
 
         switch ($ajax->post('type')) {
 

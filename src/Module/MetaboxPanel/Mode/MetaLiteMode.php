@@ -58,7 +58,7 @@ class MetaLiteMode extends Mode
         $this->render('@meta/meta-lite-mode.twig', [
             'nonce' => AjaxHandler::getNonce($this->getModuleSetting('nonce')),
             'id'    => get_the_ID(),
-        ], false, function ($ttb) {
+        ], false, function (object $ttb): void {
             $ttb->addLocationPath($this->getModuleSetting('meta-module-resource') . '/views', 'meta');
         });
 
@@ -98,7 +98,7 @@ class MetaLiteMode extends Mode
         do_action("zc/module/metabox_panel/{$this->getModuleSetting('slug')}/mode/lite/enqueue--before");
 
         $handle = self::dop('jquery.panel', 'jquery.panel.min');
-        $result = array_filter(wp_scripts()->queue, function ($var) use ($handle) {
+        $result = array_filter(wp_scripts()->queue, function (string $var) use ($handle) {
             return strpos($var, $handle) !== false;
         });
 
@@ -191,8 +191,7 @@ class MetaLiteMode extends Mode
                 }
 
                 if (!empty($output)) {
-                    $metaContainerSlug = self::getGlobal('core/module/metabox-panel/meta-container-slug');
-                    update_post_meta($postID, "_{$metaContainerSlug}", $output);
+                    update_post_meta($postID, "_{$this->getGlobal('core/module/metabox-panel/meta-container-slug')}", $output);
                 }
             }
         }

@@ -90,9 +90,11 @@ zc.module.panel.addMode(($, panel) => {
             panel.tooltip();             // Init tooltip
             panel.menu();                // Panel menu.
 
-            new BodySize;                // Panel body size.
-            new OptionHandler;           // Save/Reset function.
-            new QuickLinks;              // Initialization of panel button "Quick Links".
+            new BodySize;                 // Panel body size.
+            const oh = new OptionHandler; // Save/Reset function.
+            new QuickLinks;               // Initialization of panel button "Quick Links".
+
+            panel.addCache('option-handler', oh);
 
             setTimeout(() => {
                 $('.zc-panel-template__panel-loading').hide();  // Hide panel loading text.

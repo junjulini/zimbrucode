@@ -26,16 +26,10 @@ class TwigFunctions
     public function __construct(TwigTemplateBridge $ttb)
     {
         $ttb->addFunction('option', [$this, '__callback_option']);
-        $ttb->addFunction('meta', [$this, '__callback_meta']);
     }
 
-    public function __callback_option(string $option, $default = '', $ao = false)
+    public function __callback_option(string $option, $default = '', bool $ao = false)
     {
         return OptionHandler::getOption($option, $default, $ao);
-    }
-
-    public function __callback_meta(string $meta = null, $default = '', int $id = null)
-    {
-        return OptionHandler::getMeta($meta, $default, $id);
     }
 }

@@ -330,4 +330,33 @@ class DBHandler
     {
         Tools::dump($this->data);
     }
+
+    public function getAllData()
+    {
+        $output   = false;
+        $suppress = Kernel::service('wpdb')->suppress_errors();
+        $data     = Kernel::service('wpdb')->get_results("SELECT name, value, autoload FROM {$this->tableName}");
+
+        $this->checkError();
+
+        if ($data) {
+            foreach ((array) $data as $item) {
+                if (is_serialized($item->value)) {
+                    $output[$item->name] = [
+                        'data'     => unserialize($item->value),
+                        'autoload' => $item->autoload
+                    ];
+                } else {
+                    $output[$item->name] = [
+                        'data'     => $item->value,
+                        'autoload' => $item->autoload
+                    ];
+                }
+            }
+        }
+
+        Kernel::service('wpdb')->suppress_errors($suppress);
+
+        return $output;
+    }
 }

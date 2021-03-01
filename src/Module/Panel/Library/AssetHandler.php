@@ -187,7 +187,7 @@ class AssetHandler
             }
         }
 
-        $callbackForLessRender = function ($type = '', $collector, $less) {
+        $callbackForLessRender = function (string $type = '', object $collector, object $less): void {
             if (isset($type)) {
                 if ($type == 'less-2') {
                     if (!empty($this->lessData['files'])) {

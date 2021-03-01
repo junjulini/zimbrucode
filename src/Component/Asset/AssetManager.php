@@ -151,7 +151,7 @@ class AssetManager
     public function combine(string $name): AssetManager
     {
         if ($this->collector->get() && $name && !Kernel::dev()) {
-            $callback = function (object $collector, array $data) use ($name): array{
+            $callback = function (object $collector, array $data) use ($name): array {
                 $data['settings']['js']['outputName']  = $name;
                 $data['settings']['css']['outputName'] = $name;
 

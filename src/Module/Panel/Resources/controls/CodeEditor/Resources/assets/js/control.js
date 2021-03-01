@@ -25,16 +25,21 @@ zc.module.panel.addControl(function($, panel) {
     // ACE Editor
     $(window).on('zc/panel/menu/item-change-ICP', function(event, section) {
         section.find('.ace-editor').each(function(index, el) {
-            var area = el,
-                editor = $(el).attr('data-editor'),
+            var editor = $(el).data('editor'),
                 aceEditor = ace.edit(editor);
 
-            aceEditor.setTheme('ace/theme/' + $(el).attr('data-theme'));
-            aceEditor.getSession().setMode('ace/mode/' + $(el).attr('data-mode'));
+            aceEditor.setTheme('ace/theme/' + $(el).data('theme'));
+            aceEditor.getSession().setMode('ace/mode/' + $(el).data('mode'));
+
+            if ($(el).data('readonly') == 'yes') {
+                aceEditor.setReadOnly(true);
+            }
 
             aceEditor.on('change', function(e) {
-                $('#' + area.id).val(aceEditor.getSession().getValue()).change();
+                $(el).val(aceEditor.getSession().getValue()).change();
             });
+
+            $(el).data('zc-ace', aceEditor);
 
             window.zcPanel_Control_aceEditor.push(aceEditor);
         });

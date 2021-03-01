@@ -43,18 +43,21 @@ zc.module.panel.addControl(function($, panel, global) {
 
         // When a file is selected, grab the URL and set it as the text field's value
         frame.on('select', function(event) {
-            var attachment = frame.state().get('selection').first().toJSON(),
-                id = button.attr('id'),
-                image = attachment.sizes.large || attachment;
+            var attachment = frame.state().get('selection').first().toJSON();
 
-            button.parent().find('input[name='+ id +']').val(attachment.url).change();
-            button.parent().find('input[name='+ id +'--large_image]').val(image.url).change();
-            button.parent().find('input[name='+ id +'--id]').val(attachment.id).change();
-            button.parent().find('.zc-panel-control-upload__image-container').remove();
-            button.parent().append('<div class="zc-panel-control-upload__image-container">\
-                                        <i title="'+ global.remove +'" class="zc-panel-control-upload__icon-close zc-icon-clear"></i>\
-                                        <img src="' + image.url + '" alt="Image" class="zc-panel-control-upload__image" />\
-                                    </div>');
+            if (attachment.type == 'image') {
+                var id = button.attr('id');
+                var image = attachment.sizes.large || attachment;
+
+                button.parent().find('input[name='+ id +']').val(attachment.url).change();
+                button.parent().find('input[name='+ id +'--large_image]').val(image.url).change();
+                button.parent().find('input[name='+ id +'--id]').val(attachment.id).change();
+                button.parent().find('.zc-panel-control-upload__image-container').remove();
+                button.parent().append('<div class="zc-panel-control-upload__image-container">\
+                                            <i title="'+ global.remove +'" class="zc-panel-control-upload__icon-close zc-icon-clear"></i>\
+                                            <img src="' + image.url + '" alt="Image" class="zc-panel-control-upload__image" />\
+                                        </div>');
+            }
         });
     });
 

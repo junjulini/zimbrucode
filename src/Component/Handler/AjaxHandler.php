@@ -69,10 +69,10 @@ class AjaxHandler
      * Post control
      *
      * @param  string $param
-     * @return string
+     * @return mix
      * @since 1.0.0
      */
-    public function post(string $param, $default = ''): string
+    public function post(string $param, $default = '')
     {
         return Kernel::rPost($param, $default);
     }
@@ -81,10 +81,10 @@ class AjaxHandler
      * Get control
      *
      * @param  string $param
-     * @return string
+     * @return mix
      * @since 1.0.0
      */
-    public function get(string $param, $default = ''): string
+    public function get(string $param, $default = '')
     {
         return Kernel::rGet($param, $default);
     }

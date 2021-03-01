@@ -43,18 +43,18 @@ trait OptionHandlerTrait
      * Get option value
      *
      * @param  string $option    Option name
-     * @param  string $default   Default value
-     * @param  string $ao        Name of alternative option
-     * @return string            Return option value if exist
+     * @param  mix    $default   Default value
+     * @param  bool   $ao        Alternative option
+     * @return mix               Return option value if exist
      * @since 1.0.0
      */
-    public static function getOption(string $option, $default = '', string $ao = '')
+    public static function getOption(string $option, $default = '', bool $ao = false)
     {
         if (!$ao) {
             $value = Kernel::service('db')->get(self::__prepOption($option), null);
             return ($value !== '' && $value !== null) ? $value : $default;
         } else {
-            return get_option($ao, $default);
+            return get_option($option, $default);
         }
     }
 
@@ -63,31 +63,19 @@ trait OptionHandlerTrait
      *
      * @param  string  $option   Option of app
      * @param  mix     $type     Type of function
-     * @param  string  $ao       Name of alternative option
+     * @param  bool    $ao       Alternative option
      * @return boolean           Return true or false
      * @since 1.0.0
      */
-    public static function hasOption(string $option, $type = false, string $ao = ''): bool
+    public static function hasOption(string $option, $type = false, bool $ao = false): bool
     {
         if ($option) {
             if (!$type) {
-                if (!$ao) {
-                    return (self::getOption($option)) ? true : false;
-                } else {
-                    return (!empty(self::getOption($option, '', true))) ? true : false;
-                }
+                return (self::getOption($option, '', $ao)) ? true : false;
             } elseif ($type === true) {
-                if (!$ao) {
-                    return (self::getOption($option) === true) ? true : false;
-                } else {
-                    return (self::getOption($option, '', true) === true) ? true : false;
-                }
+                return (self::getOption($option, '', $ao) === true) ? true : false;
             } elseif (is_string($type)) {
-                if (!$ao) {
-                    return (self::getOption($option) == $type) ? true : false;
-                } else {
-                    return (self::getOption($option, '', true) == $type) ? true : false;
-                }
+                return (self::getOption($option, '', $ao) == $type) ? true : false;
             } else {
                 return false;
             }

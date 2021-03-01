@@ -29,7 +29,7 @@ return [
         'styles'  => [],
         'scripts' => [
             'zimbrucode' => [
-                'path'    => (function () use ($path) {
+                'path'    => (function () use ($path): string {
                     if (Kernel::getEnvironment() == 'prod') {
                         return "{$path}/packages/zimbrucode/jquery.zimbrucode.min.js";
                     } else {

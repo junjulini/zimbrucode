@@ -72,43 +72,45 @@ class AppLocatorHandler
 
         ################################################################################################################
 
-        // // Var
-        // $var = $this->app->getGlobal('app/var-dir');
-        // $this->app->addGlobal('app/var-path', $this->getPath("{$var}{$mid}"));
-        // $this->app->addGlobal('app/var-url', $this->getURL("{$var}{$mid}"));
-
-        // // Cache
-        // $cache = $this->app->getGlobal('app/cache-dir');
-        // $this->app->addGlobal('app/cache-path', $this->getPath("{$var}{$mid}{$cache}{$env}"));
-        // $this->app->addGlobal('app/cache-url', $this->getURL("{$var}{$mid}{$cache}{$env}"));
-
-        // // Log
-        // $log = $this->app->getGlobal('app/log-dir');
-        // $this->app->addGlobal('app/log-path', $this->getPath("{$var}{$mid}{$log}"));
-        // $this->app->addGlobal('app/log-url', $this->getURL("{$var}{$mid}{$log}"));
-
-        if ($slug) {
-            $uploadDir = wp_get_upload_dir();
-
-            if (isset($uploadDir['error']) && $uploadDir['error'] === false && $uploadDir['basedir'] && $uploadDir['baseurl']) {
-                $varsDirPath = wp_normalize_path("{$uploadDir['basedir']}/{$slug}");
-                $varsDirURL  = esc_url("{$uploadDir['baseurl']}/{$slug}");
-
-                // Var
-                $var = $this->app->getGlobal('app/var-dir');
-                $this->app->addGlobal('app/var-path', "{$varsDirPath}/{$mid}");
-                $this->app->addGlobal('app/var-url', "{$varsDirURL}/{$mid}");
-
-                // Cache
-                $cache = $this->app->getGlobal('app/cache-dir');
-                $this->app->addGlobal('app/cache-path', "{$varsDirPath}/{$mid}{$cache}{$env}");
-                $this->app->addGlobal('app/cache-url', "{$varsDirURL}/{$mid}{$cache}{$env}");
-
-                // Log
-                $log = $this->app->getGlobal('app/log-dir');
-                $this->app->addGlobal('app/log-path', "{$varsDirPath}/{$mid}{$log}");
-                $this->app->addGlobal('app/log-url', "{$varsDirURL}/{$mid}{$log}");
+        if ($this->app->getGlobal('app/var-upload-mode') === true) {
+            if ($slug) {
+                $uploadDir = wp_get_upload_dir();
+    
+                if (isset($uploadDir['error']) && $uploadDir['error'] === false && $uploadDir['basedir'] && $uploadDir['baseurl']) {
+                    $varsDirPath = wp_normalize_path("{$uploadDir['basedir']}/{$slug}");
+                    $varsDirURL  = esc_url("{$uploadDir['baseurl']}/{$slug}");
+    
+                    // Var
+                    $var = $this->app->getGlobal('app/var-dir');
+                    $this->app->addGlobal('app/var-path', "{$varsDirPath}/{$mid}");
+                    $this->app->addGlobal('app/var-url', "{$varsDirURL}/{$mid}");
+    
+                    // Cache
+                    $cache = $this->app->getGlobal('app/cache-dir');
+                    $this->app->addGlobal('app/cache-path', "{$varsDirPath}/{$mid}{$cache}{$env}");
+                    $this->app->addGlobal('app/cache-url', "{$varsDirURL}/{$mid}{$cache}{$env}");
+    
+                    // Log
+                    $log = $this->app->getGlobal('app/log-dir');
+                    $this->app->addGlobal('app/log-path', "{$varsDirPath}/{$mid}{$log}");
+                    $this->app->addGlobal('app/log-url', "{$varsDirURL}/{$mid}{$log}");
+                }
             }
+        } else {
+            // Var
+            $var = $this->app->getGlobal('app/var-dir');
+            $this->app->addGlobal('app/var-path', $this->getPath("{$var}{$mid}"));
+            $this->app->addGlobal('app/var-url', $this->getURL("{$var}{$mid}"));
+
+            // Cache
+            $cache = $this->app->getGlobal('app/cache-dir');
+            $this->app->addGlobal('app/cache-path', $this->getPath("{$var}{$mid}{$cache}{$env}"));
+            $this->app->addGlobal('app/cache-url', $this->getURL("{$var}{$mid}{$cache}{$env}"));
+
+            // Log
+            $log = $this->app->getGlobal('app/log-dir');
+            $this->app->addGlobal('app/log-path', $this->getPath("{$var}{$mid}{$log}"));
+            $this->app->addGlobal('app/log-url', $this->getURL("{$var}{$mid}{$log}"));
         }
     }
 

@@ -57,9 +57,9 @@ class PageMode extends Mode
         }
 
         // Ajax
-        $this->addAjax('zc/module/panel/content_' . $this->getModuleSetting('slug'), '__ajax_load_panel_content');
-        $this->addAjax('zc/module/panel/save_' . $this->getModuleSetting('slug'), '__ajax_save_options');
-        $this->addAjax('zc/module/panel/reset_' . $this->getModuleSetting('slug'), '__ajax_reset_options');
+        $this->addAjax("zc/module/panel/content_{$this->getModuleSetting('slug')}", '__ajax_load_panel_content');
+        $this->addAjax("zc/module/panel/save_{$this->getModuleSetting('slug')}",    '__ajax_save_options');
+        $this->addAjax("zc/module/panel/reset_{$this->getModuleSetting('slug')}",   '__ajax_reset_options');
     }
 
     /**

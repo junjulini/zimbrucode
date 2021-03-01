@@ -37,7 +37,7 @@ trait RenderTrait
         if ($template) {
             $output = '';
 
-            $renderTemplate = function (string $template, string $locationPath) use ($vars, $renderCallback) {
+            $renderTemplate = function (string $template, string $locationPath) use ($vars, $renderCallback): ?string {
                 $ttb = new TwigTemplateBridge;
                 $ttb->addLocationPath($locationPath);
                 $ttb->addCachePath(self::service('app-locator')->getCachePath('twig'));
@@ -71,6 +71,7 @@ trait RenderTrait
                 return $output;
             } else {
                 echo $output;
+                return null;
             }
         }
 

@@ -41,37 +41,37 @@ class TwigEscaper
         $ttb->addEscaper('wp_rel_nofollow', [$this, '__callback_wp_rel_nofollow']);
     }
 
-    public function __callback_esc_url(Environment $env, ?string $string): string 
+    public function __callback_esc_url(Environment $env, ?string $string): ?string
     {
         return esc_url($string);
     }
 
-    public function __callback_esc_url_raw(Environment $env, ?string $string): string
+    public function __callback_esc_url_raw(Environment $env, ?string $string): ?string
     {
         return esc_url_raw($string);
     }
 
-    public function __callback_esc_html(Environment $env, ?string $string): string
+    public function __callback_esc_html(Environment $env, ?string $string): ?string
     {
         return esc_html($string);
     }
 
-    public function __callback_esc_js(Environment $env, ?string $string): string
+    public function __callback_esc_js(Environment $env, ?string $string): ?string
     {
         return esc_js($string);
     }
 
-    public function __callback_esc_textarea(Environment $env, ?string $string): string
+    public function __callback_esc_textarea(Environment $env, ?string $string): ?string
     {
         return esc_textarea($string);
     }
 
-    public function __callback_esc_attr(Environment $env, ?string $string): string
+    public function __callback_esc_attr(Environment $env, ?string $string): ?string
     {
         return esc_attr($string);
     }
 
-    public function __callback_wp_kses_post(Environment $env, ?string $string): string
+    public function __callback_wp_kses_post(Environment $env, ?string $string): ?string
     {
         return wp_kses_post($string);
     }

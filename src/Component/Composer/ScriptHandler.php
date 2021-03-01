@@ -26,6 +26,8 @@ use ZimbruCode\Component\Asset\Utility\RemoteMinify;
  */
 class ScriptHandler
 {
+    private static $__VAR_UPLOAD_MODE = false;
+
     /**
      * Install theme script
      *
@@ -212,12 +214,16 @@ class ScriptHandler
             return;
         }
 
-        $cacheDir = "{$root}/../../uploads/{$config['app-slug']}/cache";
+        if (self::$__VAR_UPLOAD_MODE === true) {
+            $dir = "{$root}/../../uploads/{$config['app-slug']}/cache";
+        } else {
+            $dir = "{$root}/app/Resources/var/cache";
+        }
 
         $finder = new Finder;
-        $fs     = new Filesystem();
+        $fs     = new Filesystem;
 
-        foreach ($finder->in($cacheDir)->depth('== 0') as $item) {
+        foreach ($finder->in($dir)->depth('== 0') as $item) {
             try {
                 $fs->remove($item->getPathname());
             } catch (IOExceptionInterface $e) {
@@ -250,12 +256,16 @@ class ScriptHandler
             return;
         }
 
-        $cacheDir = "{$root}/../../uploads/{$config['app-slug']}";
+        if (self::$__VAR_UPLOAD_MODE === true) {
+            $dir = "{$root}/../../uploads/{$config['app-slug']}";
+        } else {
+            $dir = "{$root}/app/Resources/var";
+        }
 
         $finder = new Finder;
-        $fs     = new Filesystem();
+        $fs     = new Filesystem;
 
-        foreach ($finder->in($cacheDir)->depth('== 0') as $item) {
+        foreach ($finder->in($dir)->depth('== 0') as $item) {
             try {
                 $fs->remove($item->getPathname());
             } catch (IOExceptionInterface $e) {

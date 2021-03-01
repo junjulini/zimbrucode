@@ -67,7 +67,7 @@ zc.module.panel.addControl(function($, panel, global) {
             control.frame.close();
         }
 
-        control.frame = wp.media.frames.frame = wp.media({
+        control.frame = wp.media({
             title: global['window-title-1'],
             button: {
                 text: global['window-text-1'],
@@ -83,17 +83,19 @@ zc.module.panel.addControl(function($, panel, global) {
             var list = $this.parent().find('.zc-panel-control-gallery-type__list');
 
             if (data && $.isArray(data)) {
-                $.when($.each(data, function (index, attachment) { 
-                    list.append(
-                        '<li class="zc-panel-control-gallery-type__item" data-id="'+ attachment.id +'">\
-                            <img src="'+ attachment.sizes.thumbnail.url +'" width="80" height="80" class="zc-panel-control-gallery-type__image-preview">\
-                            <button title="'+ global['button-title-1'] +'" class="zc-panel-control-gallery-type__item-button zc-panel-control-gallery-type__item-button_change-image">\
-                                <i class="zc-panel-control-gallery-type__item-button-icon zc-icon-brush"></i>\
-                            </button>\
-                            <button title="'+ global['button-title-2'] +'" class="zc-panel-control-gallery-type__item-button zc-panel-control-gallery-type__item-button_remove-image">\
-                                <i class="zc-panel-control-gallery-type__item-button-icon zc-icon-close"></i>\
-                            </button>\
-                        </li>');
+                $.when($.each(data, function (index, attachment) {
+                    if (attachment.type == 'image') {
+                        list.append(
+                            '<li class="zc-panel-control-gallery-type__item" data-id="'+ attachment.id +'">\
+                                <img src="'+ attachment.sizes.thumbnail.url +'" width="80" height="80" class="zc-panel-control-gallery-type__image-preview">\
+                                <button title="'+ global['button-title-1'] +'" class="zc-panel-control-gallery-type__item-button zc-panel-control-gallery-type__item-button_change-image">\
+                                    <i class="zc-panel-control-gallery-type__item-button-icon zc-icon-brush"></i>\
+                                </button>\
+                                <button title="'+ global['button-title-2'] +'" class="zc-panel-control-gallery-type__item-button zc-panel-control-gallery-type__item-button_remove-image">\
+                                    <i class="zc-panel-control-gallery-type__item-button-icon zc-icon-close"></i>\
+                                </button>\
+                            </li>');
+                    }
                 })).then(function() {
                     control.parseData($this.parent());
                 });
@@ -116,7 +118,7 @@ zc.module.panel.addControl(function($, panel, global) {
             control.frame.close();
         }
 
-        control.frame = wp.media.frames.frame = wp.media({
+        control.frame = wp.media({
             title: global['window-title-2'],
             button: {
                 text: global['window-text-2'],
@@ -130,9 +132,11 @@ zc.module.panel.addControl(function($, panel, global) {
         control.frame.on('select', function() {
             var attachment = control.frame.state().get('selection').first().toJSON();
 
-            $this.parent().data('id', attachment.id);
-            $this.parent().find('.zc-panel-control-gallery-type__image-preview').attr('src', attachment.sizes.thumbnail.url);
-            control.parseData(container);
+            if (attachment.type == 'image') {
+                $this.parent().data('id', attachment.id);
+                $this.parent().find('.zc-panel-control-gallery-type__image-preview').attr('src', attachment.sizes.thumbnail.url);
+                control.parseData(container);
+            }
         });
 
         control.frame.open();

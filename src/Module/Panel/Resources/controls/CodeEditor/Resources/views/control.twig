@@ -27,6 +27,7 @@
         data-editor="{{ control.ID }}-editor"
         data-mode="{{ control.settings.mode|default('css') }}"
         data-theme="{{ control.settings.theme|default('chrome') }}"
+        data-readonly="{{ control.settings.readonly|default('off') }}"
         {{ control.ignore }}
         autocomplete="off">{{ control.option }}</textarea>
     <pre id="{{ control.ID }}-editor" class="ace-editor-area">{{ control.option }}</pre>

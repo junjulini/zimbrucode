@@ -29,10 +29,23 @@ export default class OptionHandler extends Kernel {
     constructor() {
         super();
 
-        this.dn = new DirectNotification;
+        this.dn  = new DirectNotification;
+        this.tpl = TPL__reset_popup_notification;
 
         this.save();
         this.reset();
+    }
+
+    showLoading() {
+        $('.zc-panel-save-starter-button').hide();
+        $('.zc-panel-loading-starter-button').show();
+        $('.zc-panel-reset-starter-button').prop('disabled', true).addClass('zc-panel-header__controller-button_disabled');
+    }
+
+    hideLoading() {
+        $('.zc-panel-save-starter-button').show();
+        $('.zc-panel-loading-starter-button').hide();
+        $('.zc-panel-reset-starter-button').prop('disabled', false).removeClass('zc-panel-header__controller-button_disabled');
     }
 
     save() {
@@ -40,18 +53,6 @@ export default class OptionHandler extends Kernel {
             $(window).trigger('zc/panel/save/start');
 
             const priv = {};
-
-            priv.showLoading = () => {
-                $this.hide();
-                $('.zc-panel-loading-starter-button').show();
-                $('.zc-panel-reset-starter-button').prop('disabled', true).addClass('zc-panel-header__controller-button_disabled');
-            };
-
-            priv.hideLoading = () => {
-                $this.show();
-                $('.zc-panel-loading-starter-button').hide();
-                $('.zc-panel-reset-starter-button').prop('disabled', false).removeClass('zc-panel-header__controller-button_disabled');
-            };
 
             priv.prepOptions = () => {
                 const options = {};
@@ -78,7 +79,7 @@ export default class OptionHandler extends Kernel {
                 return options;
             };
 
-            priv.showLoading();
+            this.showLoading();
 
             zc.ajax({
                 data: {
@@ -88,7 +89,7 @@ export default class OptionHandler extends Kernel {
                 },
                 error: (jqXHR, textStatus) => {
                     $(window).trigger('zc/panel/save/error');
-                    this.errorCheck('Panel : Save settings', jqXHR);
+                    this.errorCheck('Panel : Save options', jqXHR);
                 },
                 success: (response) => {
                     $(window).trigger('zc/panel/save/success-start');
@@ -98,14 +99,12 @@ export default class OptionHandler extends Kernel {
                     };
 
                     this.dn.add(response.type, response.title, response.content, 3000, reload);
-
-                    priv.hideLoading();
+                    this.hideLoading();
 
                     if (response.type === 'success') {
+                        this.addCache('changed', false);
                         $(window).trigger('zc/panel/save/success-response');
                     }
-
-                    this.addCache('changed', false);
 
                     $(window).trigger('zc/panel/save/success-end');
                 }
@@ -132,7 +131,7 @@ export default class OptionHandler extends Kernel {
                         },
                         error: (jqXHR, textStatus) => {
                             $(window).trigger('zc/panel/reset/error');
-                            this.errorCheck('Panel : Reset settings', jqXHR);
+                            this.errorCheck('Panel : Reset options', jqXHR);
                         },
                         before: () => {
                             popup.hideContent();
@@ -143,7 +142,7 @@ export default class OptionHandler extends Kernel {
 
                             if (response.type === 'success') {
                                 popup.remContent();
-                                popup.appendContent(zc.tpl(TPL__reset_popup_notification, {
+                                popup.appendContent(zc.tpl(this.tpl, {
                                     type: response.type,
                                     title: response.title,
                                     content: response.content
@@ -154,10 +153,12 @@ export default class OptionHandler extends Kernel {
                                     location.reload();
                                 }, 2000);
 
+                                this.addCache('changed', false);
+
                                 $(window).trigger('zc/panel/reset/success-success');
                             } else if (response.type === 'info') {
                                 popup.remContent();
-                                popup.appendContent(zc.tpl(TPL__reset_popup_notification, {
+                                popup.appendContent(zc.tpl(this.tpl, {
                                     type: response.type,
                                     title: response.title,
                                     content: response.content,
@@ -168,7 +169,7 @@ export default class OptionHandler extends Kernel {
                                 $(window).trigger('zc/panel/reset/success-info');
                             } else {
                                 popup.remContent();
-                                popup.appendContent(zc.tpl(TPL__reset_popup_notification, {
+                                popup.appendContent(zc.tpl(this.tpl, {
                                     type: 'error',
                                     title: 'Error',
                                     content: 'AJAX / LOGIN / PHP Error',
@@ -185,8 +186,6 @@ export default class OptionHandler extends Kernel {
 
                                 popup.close();
                             });
-
-                            this.addCache('changed', false);
 
                             $(window).trigger('zc/panel/reset/success-end');
                         }

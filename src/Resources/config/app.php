@@ -53,6 +53,8 @@ return [
     'model-dir'              => 'Resources/models/',
     'view-dir'               => 'Resources/views/',
 
+    'var-upload-mode'        => false,
+
     # app network site delimiter
     'network-site-delimiter' => 'network-site-',
 ];

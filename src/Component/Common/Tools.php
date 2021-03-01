@@ -123,13 +123,7 @@ class Tools
     public static function arrayDiff($array1, $array2): bool
     {
         if (is_array($array1) && is_array($array2)) {
-            foreach ($array1 as $key => $value) {
-                if ($array2[$key] !== $value) {
-                    return true;
-                }
-            }
-
-            return false;
+            return (strcmp(json_encode($array1), json_encode($array2)) !== 0);
         } else {
             return ($array1 !== $array2);
         }
@@ -725,18 +719,7 @@ class Tools
         $output = '';
 
         if ($url) {
-            $path = strstr(
-                wp_normalize_path(wp_make_link_relative($url)),
-                Kernel::getGlobal('core/component/path/search-point')
-            );
-
-            $root = strstr(
-                wp_normalize_path(ABSPATH),
-                Kernel::getGlobal('core/component/path/search-point'),
-                true
-            );
-
-            $output = $root . $path;
+            $output = wp_normalize_path($_SERVER['DOCUMENT_ROOT'] . wp_make_link_relative($url));
         } else {
             $output = (!empty(debug_backtrace()[0]['file'])) ? wp_normalize_path(dirname(debug_backtrace()[0]['file'])) : wp_normalize_path(__DIR__);
         }

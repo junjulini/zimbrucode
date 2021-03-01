@@ -39,7 +39,7 @@ class Control extends ControlKernel
         $set = \_WP_Editors::parse_settings($id, []);
         \_WP_Editors::editor_settings($id, $set);
 
-        $this->addAction('admin_enqueue_scripts', function () {
+        $this->addAction('admin_enqueue_scripts', function (): void {
             wp_enqueue_media();
         });
     }
