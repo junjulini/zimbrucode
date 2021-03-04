@@ -87,18 +87,18 @@ class Module extends ModuleKernel
 
         if ($this->templates) {
             $this->addFilter('theme_page_templates', '__filter_register_templates', 20, 4);
-            $this->addFilter('template_include', '__filter_register_templates_files', 11);
+            $this->addFilter('template_include',     '__filter_register_templates_files', 11);
         }
     }
 
-    public function advancedRender(string $template, string $locationPath, bool $directMode = false, $flush = true): Render
+    public function advancedRender(...$args): Render
     {
-        return new Render($template, $locationPath, $directMode, $flush);
+        return new Render(...$args);
     }
 
-    public function mvc(string $template, string $locationPath): MVC
+    public function mvc(...$args): MVC
     {
-        return new MVC($template, $locationPath);
+        return new MVC(...$args);
     }
 
     public function __filter_register_templates($templates)

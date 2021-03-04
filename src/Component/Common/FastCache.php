@@ -78,7 +78,7 @@ class FastCache
             throw new \RuntimeException('Cache key : empty.');
         }
 
-        return (isset($this->data[$key])) ? $this->data[$key] : $default;
+        return $this->data[$key] ?? $default;
     }
 
     /**

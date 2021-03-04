@@ -72,9 +72,9 @@ class AjaxHandler
      * @return mix
      * @since 1.0.0
      */
-    public function post(string $param, $default = '')
+    public function post(...$args)
     {
-        return Kernel::rPost($param, $default);
+        return Kernel::rPost(...$args);
     }
 
     /**
@@ -84,9 +84,9 @@ class AjaxHandler
      * @return mix
      * @since 1.0.0
      */
-    public function get(string $param, $default = '')
+    public function get(...$args)
     {
-        return Kernel::rGet($param, $default);
+        return Kernel::rGet(...$args);
     }
 
     /**

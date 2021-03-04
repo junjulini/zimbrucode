@@ -115,9 +115,9 @@ class MVC
      * @param mix    $value   Value of var
      * @since 1.0.0
      */
-    public function addVar(string $name, $value): void
+    public function addVar(...$args): void
     {
-        $this->__render->addVar($name, $value);
+        $this->__render->addVar(...$args);
     }
 
     /**
@@ -139,9 +139,9 @@ class MVC
      * @return void               This function does not return a value
      * @since 1.0.0
      */
-    public function addFunction(string $name, callable $method): void
+    public function addFunction(...$args): void
     {
-        $this->__render->addFunction($name, $method);
+        $this->__render->addFunction(...$args);
     }
 
     /**
@@ -152,9 +152,9 @@ class MVC
      * @return void               This function does not return a value
      * @since 1.0.0
      */
-    public function addEscaper(string $name, callable $method): void
+    public function addEscaper(...$args): void
     {
-        $this->__render->addEscaper($name, $method);
+        $this->__render->addEscaper(...$args);
     }
 
     /**
@@ -165,9 +165,9 @@ class MVC
      * @return void               This function does not return a value
      * @since 1.0.0
      */
-    public function addFilter(string $name, callable $method): void
+    public function addFilter(...$args): void
     {
-        $this->__render->addFilter($name, $method);
+        $this->__render->addFilter(...$args);
     }
 
     public function getEnvironment(): string
@@ -190,23 +190,23 @@ class MVC
         return Kernel::module($config);
     }
 
-    public function service(string $service, $handler = false)
+    public function service(...$args)
     {
-        return Kernel::service($service, $handler);
+        return Kernel::service(...$args);
     }
 
-    public function dop($value1, $value2)
+    public function dop(...$args)
     {
-        return Kernel::dop($value1, $value2);
+        return Kernel::dop(...$args);
     }
 
-    public function getGlobal(string $path, $default = false)
+    public function getGlobal(...$args)
     {
-        return Kernel::getGlobal($path, $default);
+        return Kernel::getGlobal(...$args);
     }
 
-    public function ifG(string $path, $value1, $value2)
+    public function ifG(...$args)
     {
-        return Kernel::ifG($path, $value1, $value2);
+        return Kernel::ifG(...$args);
     }
 }

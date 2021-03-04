@@ -142,9 +142,9 @@ class AssetManager
         return $this;
     }
 
-    public function filter(Filter $filter, string $assetName = null, callable $callback = null): AssetManager
+    public function filter(...$args): AssetManager
     {
-        $this->collector->filter($filter, $assetName, $callback);
+        $this->collector->filter(...$args);
         return $this;
     }
 

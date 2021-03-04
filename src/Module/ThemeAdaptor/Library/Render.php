@@ -149,9 +149,9 @@ class Render
      * @param mix    $value   Value of var
      * @since 1.0.0
      */
-    public function addVar(string $name, $value): void
+    public function addVar(...$args): void
     {
-        $this->ttb->addVar($name, $value);
+        $this->ttb->addVar(...$args);
     }
 
     /**
@@ -223,9 +223,9 @@ class Render
      * @param string  $namespace   Namespace of templates
      * @since 1.0.0
      */
-    public function addLocationPath(string $path, string $namespace = null): void
+    public function addLocationPath(...$args): void
     {
-        $this->ttb->addLocationPath($path, $namespace);
+        $this->ttb->addLocationPath(...$args);
     }
 
     public function getLocationPath(): string

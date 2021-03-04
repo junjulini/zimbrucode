@@ -85,9 +85,9 @@ class BaseShell extends ShellKernel
      * @return string/array      Settings or single setting
      * @since 1.0.0
      */
-    public function getModuleSetting(string $setting = '', $default = '')
+    public function getModuleSetting(...$args)
     {
-        return $this->panel->getModuleSetting($setting, $default);
+        return $this->panel->getModuleSetting(...$args);
     }
 
     /**

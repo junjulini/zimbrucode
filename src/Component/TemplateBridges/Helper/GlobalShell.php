@@ -72,9 +72,9 @@ class GlobalShell
      * @return mix                Return data
      * @since 1.0.0
      */
-    public function get(string $path, $default = false)
+    public function get(...$args)
     {
-        return Kernel::getGlobal($path, $default);
+        return Kernel::getGlobal(...$args);
     }
 
     /**

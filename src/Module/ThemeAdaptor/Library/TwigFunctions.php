@@ -28,8 +28,8 @@ class TwigFunctions
         $ttb->addFunction('option', [$this, '__callback_option']);
     }
 
-    public function __callback_option(string $option, $default = '', bool $ao = false)
+    public function __callback_option(...$args)
     {
-        return OptionHandler::getOption($option, $default, $ao);
+        return OptionHandler::getOption(...$args);
     }
 }

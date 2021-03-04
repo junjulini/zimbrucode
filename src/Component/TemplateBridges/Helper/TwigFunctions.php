@@ -73,24 +73,24 @@ class TwigFunctions
      * Post control
      *
      * @param  string $param
-     * @return string
+     * @return mix
      * @since 1.0.0
      */
-    public function __callback_r_post(string $param, $default = ''): string
+    public function __callback_r_post(...$args)
     {
-        return Kernel::rPost($param, $default);
+        return Kernel::rPost(...$args);
     }
 
     /**
      * Get control
      *
      * @param  string $param
-     * @return string
+     * @return mix
      * @since 1.0.0
      */
-    public function __callback_r_get(string $param, $default = ''): string
+    public function __callback_r_get(...$args)
     {
-        return Kernel::rGet($param, $default);
+        return Kernel::rGet(...$args);
     }
 
     /**
@@ -111,9 +111,9 @@ class TwigFunctions
      * @param  string  $default   Default value
      * @since 1.0.0
      */
-    public function __callback_get_session(string $path, $default = false)
+    public function __callback_get_session(...$args)
     {
-        return Kernel::getSession($path, $default);
+        return Kernel::getSession(...$args);
     }
 
     /**
