@@ -1,28 +1,31 @@
 {
-  "name": "zimbrucode",
-  "version": "1.0.0",
-  "description": "ZimbruCode FrameWork",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [
-    "wordpress",
-    "framework"
-  ],
-  "author": "Junjulini",
-  "license": "GPL-3.0",
-  "dependencies": {
-    "@babel/core": "^7.12.10",
-    "@babel/preset-env": "^7.12.11",
-    "babel-loader": "^8.2.2",
-    "gulp": "^4.0.2",
-    "gulp-notify": "^3.2.0",
-    "gulp-plumber": "^1.2.1",
-    "gulp-rename": "^2.0.0",
-    "gulp-uglify": "^3.0.2",
-    "html-loader": "^0.5.5",
-    "vinyl-named": "^1.1.0",
-    "webpack-stream": "^6.1.2"
-  }
+    "name": "zimbrucode",
+    "version": "1.0.0",
+    "description": "ZimbruCode FrameWork",
+    "author": "Junjulini",
+    "homepage": "https://junjulini.com",
+    "license": "GPL-3.0",
+    "keywords": [
+        "wordpress",
+        "framework"
+    ],
+    "devDependencies": {
+        "@babel/core": "^7.12.10",
+        "@babel/preset-env": "^7.12.11",
+        "babel-loader": "^8.2.2",
+        "gulp": "^4.0.2",
+        "gulp-notify": "^3.2.0",
+        "gulp-plumber": "^1.2.1",
+        "gulp-rename": "^2.0.0",
+        "gulp-uglify": "^3.0.2",
+        "html-loader": "^0.5.5",
+        "vinyl-named": "^1.1.0",
+        "webpack-stream": "^6.1.2"
+    },
+    "scripts": {
+        "build": "gulp",
+        "build:w": "gulp build:w",
+        "build:es6": "gulp build:es6",
+        "build:control": "gulp build:control"
+    }
 }

@@ -56,7 +56,7 @@ function compES6(isWatch) {
     return gulp.src(`${startDir}/**/*.es6.js`)
         .pipe(plumber({
             errorHandler: notify.onError(err => ({
-                title: 'Comp:ES6 WebPack',
+                title: 'Build:ES6 WebPack',
                 message: err.message
             }))
         }))
@@ -75,15 +75,15 @@ function compES6(isWatch) {
         .pipe(gulp.dest(startDir));
 }
 
-gulp.task('comp:es6', () => {
+gulp.task('build:es6', () => {
     return compES6(false);
 });
 
-gulp.task('comp:control', () => {
+gulp.task('build:control', () => {
     return gulp.src(`${startDir}/**/control.js`)
         .pipe(plumber({
             errorHandler: notify.onError(err => ({
-                title: 'Comp:Control',
+                title: 'Build:Control',
                 message: () => {
                     let msg = err.message;
                     let file = err.fileName;
@@ -101,13 +101,13 @@ gulp.task('comp:control', () => {
         .pipe(gulp.dest(startDir));
 });
 
-gulp.task('comp:w', gulp.series(gulp.parallel(
+gulp.task('build:w', gulp.series(gulp.parallel(
     () => {
         compES6(true);
     },
     () => {
-        gulp.watch(`${startDir}/**/control.js`, gulp.series('comp:control'));
+        gulp.watch(`${startDir}/**/control.js`, gulp.series('build:control'));
     }
 )));
 
-gulp.task('default', gulp.series('comp:es6', 'comp:control'));
+gulp.task('default', gulp.series('build:es6', 'build:control'));
