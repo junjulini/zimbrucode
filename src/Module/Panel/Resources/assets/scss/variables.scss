@@ -1,0 +1,42 @@
+
+/*
+ * This file is part of the ZimbruCode package.
+ *
+ * (c) Junjulini
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+/*
+ * SCSS : Panel : Variables
+ *
+ * @author  Junjulini
+ * @package ZimbruCode
+ * @since   ZimbruCode 1.0.0
+ */
+
+// Import ZC : Global vars
+@import '@zc/variables.scss';
+
+// General
+$panel__min-height   : 500px;
+$panel__shadow-color : rgba(0, 0, 0, 0.15);
+
+// Menu
+$panel_menu__width        : 235px;
+$panel_menu__full-width   : 470px;
+$panel_menu__shadow-color : rgba(0, 0, 0, 0.26);
+$panel_menu__border-color : rgba(0, 0, 0, 0.1);
+$panel_menu__text-active-color   : #dcdcdc;
+$panel_menu__text-bg-hover-color : rgba(0, 0, 0, 0.1);
+$panel_menu__pointer-tab-color   : #7f868e;
+
+// Header
+$panel_header__height : 56px;
+$panel_header__button-text-color       : #b4b7bd;
+$panel_header__button-hover-color      : #4f5559;
+$panel_header__button-hover-text-color : #d4d5d6;
+
+// Footer
+$panel_footer__height : $panel_header__height;

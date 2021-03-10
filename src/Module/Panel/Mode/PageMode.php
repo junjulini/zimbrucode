@@ -109,7 +109,7 @@ class PageMode extends Mode
             'tipsy',
             self::dop('jquery.panel.js', 'jquery.panel.min.js'),
             self::dop('jquery.panel-page-mode.js', 'jquery.panel-page-mode.min.js'),
-            'mode/page-mode.less'
+            'mode/page-mode.scss'
         )->enroll()->localize(self::dop('jquery.panel.js', 'jquery.panel.min.js'), 'zcPanelVars', $this->mergeControlsLocalizeVars([
             'slug'                  => $this->getModuleSetting('slug'),
             'mode'                  => $this->getMode(),

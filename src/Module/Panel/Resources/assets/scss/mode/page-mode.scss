@@ -1,0 +1,110 @@
+
+/*
+ * This file is part of the ZimbruCode package.
+ *
+ * (c) Junjulini
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+/*
+ * SCSS : Panel/Mode : Page mode
+ *
+ * @author  Junjulini
+ * @package ZimbruCode
+ * @since   ZimbruCode 1.0.0
+ */
+
+// Import panel styles
+@import 'styles.scss';
+
+// Import ZC : Popup
+@import '@zc/popup.scss';
+
+// Import ZC : Loading
+@import '@zc/loading.scss';
+
+// Import blocks
+@import 'blocks/header/quick-links.scss';         // Block : Quick links
+@import 'blocks/header/direct-notification.scss'; // Block : Direct notification
+@import 'blocks/header/popup-notification.scss';  // Block : Popup notification
+
+#wpbody-content {
+    background: none;
+    min-height: inherit;
+    max-height: inherit;
+}
+
+.zc-panel-template {
+    margin-top: 20px;
+
+    &__panel-loading {
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+
+    &__panel-loading-content {
+        position: absolute;
+        @include center-abs;
+        width: 200px;
+        height: 25px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    &__panel-loading-value {
+        font-weight: 700;
+        margin-bottom: 3px;
+    }
+
+    &__panel-loading-progress {
+        width: 100%;
+        height: 5px;
+        background: #ffffff;
+        border-radius: 3px;
+        overflow: hidden;
+    }
+
+    &__panel-loading-progress-total {
+        height: 5px;
+        width: 0%;
+        background: $accent-color__1;
+    }
+}
+
+.zc-panel-loading-starter-button {
+    display: none;
+    cursor: not-allowed;
+    width: 73px;
+
+    &:hover {
+        background: $alt-color__bg-2;
+        color: $panel_header__button-text-color;
+    }
+
+    &__loading-spinner {
+        margin-left: 11px;
+    }
+}
+
+.zc-panel-save-starter-button {
+    &:hover {
+        background: $accent-color__3;
+        color: #ffffff;
+    }
+}
+
+.zc-panel-reset-starter-button {
+    &:hover {
+        background: $accent-color__4;
+        color: #ffffff;
+    }
+}

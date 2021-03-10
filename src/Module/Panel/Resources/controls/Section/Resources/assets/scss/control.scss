@@ -1,0 +1,288 @@
+
+/*
+ * This file is part of the ZimbruCode package.
+ *
+ * (c) Junjulini
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+/*
+ * Control SCSS : Section
+ *
+ * @author  Junjulini
+ * @package ZimbruCode
+ * @since   ZimbruCode 1.0.0
+ */
+
+@import '@zc/grid.scss';
+
+.zc-panel-control-section {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    &_separator {
+        border-bottom: 2px dashed $accent-color__2 !important;
+        padding-bottom: 50px !important;
+        margin-bottom: 30px;
+    }
+
+    // Type : Simple
+    &_type_simple {
+        position: relative;
+
+        > .zc-panel-control-section {
+            &__title {
+                margin-bottom: 8px;
+                font-weight: 500;
+                color: $text-color__alt;
+                text-transform: uppercase;
+                line-height: 1;
+                cursor: default;
+            }
+
+            &__container {
+                background: #ffffff;
+                padding: 20px;
+                box-shadow: 0 1px 2px 0 $bg-color__box-shadow__1;
+                background-repeat: no-repeat;
+            }
+
+            &__close {
+                position: absolute;
+                right: 0;
+                border: none;
+                width: 30px;
+                height: 16px;
+                padding: 0;
+                margin: 0;
+                outline: none;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: flex-end;
+                background: transparent;
+                padding-right: 5px;
+
+                &:before {
+                    content: '';
+                    width: 0;
+                    height: 0;
+                    border-style: solid;
+                    border-width: 0 4px 5px 4px;
+                    border-color: transparent transparent $text-color__alt transparent;
+                    @include def-transition(border-color);
+                }
+
+                &:hover:before {
+                    border-color: transparent transparent $accent-color__2 transparent;
+                }
+            }
+        }
+    }
+
+    &_closed &__close {
+        &:before {
+            border-width: 5px 4px 0 4px;
+            border-color: $accent-color__4 transparent transparent transparent;
+        }
+
+        &:hover:before {
+            border-color: $accent-color__2 transparent transparent transparent;
+        }
+    }
+
+    &_closed &__container {
+        height: 0px;
+        padding: 0;
+        overflow: hidden;
+        border-bottom: 5px solid #ffffff;
+        border-radius: 3px;
+    }
+
+    // Type : Group
+    &_type_group {
+        border: 1px solid $accent-color__1;
+        border-radius: 3px;
+        position: relative;
+        background: $bg-color__2;
+        margin-top: 10px;
+
+        > .zc-panel-control-section {
+            &__title-container {
+                position: absolute;
+                top: -12px;
+                left: 12px;
+                background: $bg-color__2;
+                border: 1px solid $accent-color__1;
+                border-bottom: none;
+                padding: 3px 7px 0px 7px;
+                border-radius: 3px 3px 0px 0px;
+                height: 8px;
+                line-height: 1;
+            }
+
+            &__container {
+                padding: 20px;
+            }
+        }
+
+        .zc-panel-control-section__title {
+            font-size: 11px;
+            text-transform: uppercase;
+            color: $accent-color__1;
+            font-weight: 500;
+        }
+    }
+
+    // Type : Accent group
+    &_type_accent-group {
+        border: 1px solid $accent-color__1;
+        border-radius: 3px;
+        position: relative;
+        background: $bg-color__2;
+
+        &:before, &:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 0 10px 10px 10px;
+            border-color: transparent transparent $bg-color__2 transparent;
+            top: -10px;
+            left: 20px;
+        }
+
+        &:before {
+            top: -11px;
+            border-color: transparent transparent #379478 transparent;
+        }
+
+        > .zc-panel-control-section__container {
+            padding: 20px;
+        }
+    }
+
+    &__controls-list {
+        display: flex;
+        flex-direction: column;
+    }
+
+    // Type : Column
+    &_type_column {
+        .zc-grid {
+            > div {
+                box-sizing: border-box;
+            }
+        }
+
+        .zc-panel-controls {
+            &__item {
+                margin-bottom: 10px;
+                width: 100%;
+                padding: 0;
+                border: none;
+                flex-direction: column;
+    
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
+
+            &__item-section {
+                margin-right: 0;
+                width: 100%;
+            }
+        }
+    }
+
+    // Mode : Clean desc & Clean
+    &_mode_clean-desc, &_mode_clean {
+        .zc-panel-controls {
+            &__item-title, &__item-description {
+                display: none;
+            }
+        }
+
+        .zc-panel-help {
+            display: none;
+        }
+    }
+
+    // Mode : Little desc & Little
+    &_mode_little-desc, &_mode_little {
+        .zc-panel-controls {
+            &__item-section_type_description {
+                .zc-panel[data-width|="mode-1"] & {
+                    margin-bottom: 5px;
+                }
+            }
+
+            &__item-description {
+                display: none;
+            }
+
+            &__item-title {
+                margin: 0;
+                margin-bottom: 3px;
+                font-size: 12px;
+                color: $text-color__all;
+                @include truncate;
+    
+                .zc-panel[data-width|="mode-1"] &,
+                .zc-panel[data-width*="mode-2-40"] &,
+                .zc-panel[data-width*="mode-2-41"] &,
+                .zc-panel[data-width*="mode-2-42"] &,
+                .zc-panel[data-width*="mode-2-43"] &,
+                .zc-panel[data-width*="mode-2-44"] &,
+                .zc-panel[data-width*="mode-2-45"] &,
+                .zc-panel[data-width*="mode-2-46"] &,
+                .zc-panel[data-width*="mode-2-47"] &,
+                .zc-panel[data-width*="mode-2-48"] &,
+                .zc-panel[data-width*="mode-2-49"] &,
+                .zc-panel[data-width*="mode-2-50"] &,
+                .zc-panel[data-width*="mode-2-51"] &,
+                .zc-panel[data-width*="mode-2-52"] &,
+                .zc-panel[data-width*="mode-2-53"] &,
+                .zc-panel[data-width*="mode-2-54"] &,
+                .zc-panel[data-width*="mode-2-55"] &,
+                .zc-panel[data-width*="mode-2-56"] &,
+                .zc-panel[data-width*="mode-2-57"] & {
+                    font-size: 12px;
+                }
+            }
+        }
+
+        .zc-panel-help__starter {
+            right: 0 !important;
+        }
+    }
+
+    // Mode : Big desc & Big
+    &_mode_big-desc, &_mode_big {
+        .zc-panel-controls {
+            &__item-description {
+                margin-bottom: 5px;
+                display: block;
+                color: $text-color__all;
+                font-size: 13px;
+                @include truncate;
+            }
+
+            &__item-title {
+                margin: 0;
+                margin-bottom: 2px;
+                color: $text-color__title;
+                font-size: 13px;
+                @include truncate;
+            }
+        }
+
+        .zc-panel-help__starter {
+            right: 0 !important;
+        }
+    }
+}

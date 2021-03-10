@@ -2,7 +2,14 @@
     "name": "junjulini/zimbrucode",
     "type": "library",
     "description": "ZimbruCode : WordPress Framework",
-    "keywords": ["framework", "wordpress", "less", "zimbrucode", "zc", "zcode"],
+    "keywords": [
+        "framework",
+        "wordpress",
+        "scss",
+        "zimbrucode",
+        "zc",
+        "zcode"
+    ],
     "homepage": "https://junjulini.com",
     "license": "GPL-3.0",
     "authors": [
@@ -19,6 +26,7 @@
         "twig/twig": "^3.1",
         "tracy/tracy": "^2.7",
         "doctrine/cache": "^1.10",
+        "scssphp/scssphp": "^1.4",
         "symfony/finder": "^5.1",
         "symfony/filesystem": "^5.1",
         "matthiasmullie/minify": "^1.3"

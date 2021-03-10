@@ -1,0 +1,120 @@
+
+/*
+ * This file is part of the ZimbruCode package.
+ *
+ * (c) Junjulini
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+/*
+ * Control SCSS : Msg
+ *
+ * @author  Junjulini
+ * @package ZimbruCode
+ * @since   ZimbruCode 1.0.0
+ */
+
+.zc-panel-control-msg {
+    position: relative;
+    width: 100%;
+    background: #ffe3e3;
+    color: white;
+    border-radius: 3px;
+    border: 1px solid #e4aeae;
+    box-sizing: border-box;
+
+    &_mode_error {
+        background: #ffe3e3;
+        border: 1px solid #e4aeae;
+    }
+
+    &_mode_error &__icon {
+        color: #e08c8c;
+
+        &:not([class*="zc-icon-"])::before {
+            @include icon(highlight_off);
+        }
+    }
+
+    &_mode_info {
+        background: #ddf1ff;
+        border: 1px solid #98c8e8;
+    }
+
+    &_mode_info &__icon {
+        color: #77b3da;
+
+        &:not([class*="zc-icon-"])::before {
+            @include icon(error_outline);
+        }
+    }
+
+    &_mode_success {
+        background: #cff3d7;
+        border: 1px solid #93dca2;
+    }
+
+    &_mode_success &__icon {
+        color: $accent-color__3;
+
+        &:not([class*="zc-icon-"])::before {
+            @include icon(check);
+        }
+    }
+
+    &_mode_warning {
+        background: #fff0c3;
+        border: 1px solid #ffd966;
+    }
+
+    &_mode_warning &__icon {
+        color: #f7c839;
+
+        &:not([class*="zc-icon-"])::before {
+            @include icon(warning);
+        }
+    }
+
+    *::selection {
+        background: #ffffff;
+        color: #3C3C3C;
+    }
+
+    &__icon-container {
+        width: 60px;
+        height: 100%;
+        position: absolute;
+    }
+
+    &__icon {
+        font-size: 37px;
+        height: 37px;
+        width: 37px;
+        position: absolute;
+        margin: auto;
+        top: 8px;
+        left: 0;
+        right: 0;
+        color: #e08c8c;
+    }
+
+    &__content {
+        padding: 6px 6px 11px 60px;
+        width: auto !important;
+    }
+
+    &__title {
+        color: $text-color__title;
+        margin: 5px 0 10px 0;
+        font-size: 15px;
+        font-weight: 500;
+    }
+
+    &__text {
+        margin: 0;
+        color: #636363;
+        font-size: 13px;
+    }
+}

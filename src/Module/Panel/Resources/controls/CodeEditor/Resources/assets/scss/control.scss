@@ -1,0 +1,41 @@
+
+/*
+ * This file is part of the ZimbruCode package.
+ *
+ * (c) Junjulini
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+/*
+ * Control SCSS : Code editor
+ *
+ * @author  Junjulini
+ * @package ZimbruCode
+ * @since   ZimbruCode 1.0.0
+ */
+
+.zc-panel  {
+    .ace-editor-area {
+        height: 350px;
+
+        .ace-wrapper {
+            position: static;
+        }
+        .ace_editor {
+            height: 200px;
+        }
+        .ace_gutter {
+            z-index: 1 !important;
+        }
+        &.ace-chrome {
+            border: 1px solid $bg-color__border__2;
+            margin: 0;
+        }
+    }
+
+    .ace-editor.hide {
+        display: none;
+    }
+}

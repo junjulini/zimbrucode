@@ -98,7 +98,7 @@ class ScriptHandler
             'app/Resources/config/modules.php',
             'app/Resources/views/index.twig',
             'app/Resources/assets/js/script.js',
-            'app/Resources/assets/less/style.less',
+            'app/Resources/assets/scss/style.scss',
         ];
 
         foreach ($files as $file) {
@@ -176,7 +176,7 @@ class ScriptHandler
             'app/Resources/config/core.php',
             'app/Resources/config/modules.php',
             'app/Resources/assets/js/script.js',
-            'app/Resources/assets/less/style.less',
+            'app/Resources/assets/scss/style.scss',
         ];
 
         foreach ($files as $file) {
@@ -408,7 +408,7 @@ class ScriptHandler
                 $fs->copy(realpath(__DIR__ . '/../../Resources/skeleton/control/Control.php'), "{$moduleDir}/{$data['module']}/Resources/controls/{$data['control']}/Control.php");
                 $fs->copy(realpath(__DIR__ . '/../../Resources/skeleton/control/Resources/views/control.twig'), "{$moduleDir}/{$data['module']}/Resources/controls/{$data['control']}/Resources/views/control.twig");
                 $fs->copy(realpath(__DIR__ . '/../../Resources/skeleton/control/Resources/assets/js/control.js'), "{$moduleDir}/{$data['module']}/Resources/controls/{$data['control']}/Resources/assets/js/control.js");
-                $fs->copy(realpath(__DIR__ . '/../../Resources/skeleton/control/Resources/assets/less/control.less'), "{$moduleDir}/{$data['module']}/Resources/controls/{$data['control']}/Resources/assets/less/control.less");
+                $fs->copy(realpath(__DIR__ . '/../../Resources/skeleton/control/Resources/assets/scss/control.scss'), "{$moduleDir}/{$data['module']}/Resources/controls/{$data['control']}/Resources/assets/scss/control.scss");
 
                 $search = [
                     '{APP-NAME}',
@@ -446,7 +446,7 @@ class ScriptHandler
                     'Control.php',
                     'Resources/views/control.twig',
                     'Resources/assets/js/control.js',
-                    'Resources/assets/less/control.less',
+                    'Resources/assets/scss/control.scss',
                 ];
 
                 foreach ($files as $file) {

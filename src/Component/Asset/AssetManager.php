@@ -282,42 +282,42 @@ class AssetManager
     }
 
     /**
-     * Add less vars
+     * Add scss vars
      *
-     * @param  string $assetName  Name of LESS file
-     * @param  array  $vars       Vars for LESS Render
+     * @param  string $assetName  Name of SCSS file
+     * @param  array  $vars       Vars for SCSS Render
      * @since 1.0.0
      */
-    public function addLessVars(string $assetName, array $vars): AssetManager
+    public function addScssVars(string $assetName, array $vars): AssetManager
     {
         if ($assetName && $vars) {
             $assetName = str_replace('/', '\\', $assetName);
 
-            $this->collector->addGlobal("less-vars/{$assetName}", $vars);
+            $this->collector->addGlobal("scss-vars/{$assetName}", $vars);
         }
 
         return $this;
     }
 
     /**
-     * Add global less vars
+     * Add global scss vars
      *
-     * @param array  $vars          Vars for LESS Render
-     * @param string $assetName     Name of LESS file
+     * @param array  $vars          Vars for SCSS Render
+     * @param string $assetName     Name of SCSS file
      * @param string $restriction   Restriction : vars for app/admin mode
      * @since 1.0.0
      */
-    public function addGlobalLessVars(array $vars, string $assetName = '', string $restriction = 'app'): AssetManager
+    public function addGlobalScssVars(array $vars, string $assetName = '', string $restriction = 'app'): AssetManager
     {
         if ($vars) {
-            $globalVars   = Kernel::getGlobalCache('asset/less/vars', []);
+            $globalVars   = Kernel::getGlobalCache('asset/scss/vars', []);
             $globalVars[] = [
                 'vars'        => $vars,
                 'asset-name'  => $assetName,
                 'restriction' => $restriction,
             ];
 
-            Kernel::addGlobalCache('asset/less/vars', $globalVars);
+            Kernel::addGlobalCache('asset/scss/vars', $globalVars);
         }
 
         return $this;

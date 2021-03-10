@@ -1,0 +1,141 @@
+
+/*
+ * This file is part of the ZimbruCode package.
+ *
+ * (c) Junjulini
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+/*
+ * SCSS : MetaboxPanel : Middle viewport
+ * 
+ * @author  Junjulini
+ * @package ZimbruCode
+ * @since   ZimbruCode 1.0.0
+ */
+
+.zc-panel[data-width*="mode-3-78"],
+.zc-panel[data-width*="mode-3-79"],
+.zc-panel[data-width*="mode-3-80"],
+.zc-panel[data-width*="mode-3-81"],
+.zc-panel[data-width*="mode-3-82"],
+.zc-panel[data-width*="mode-3-83"],
+.zc-panel[data-width*="mode-3-84"],
+.zc-panel[data-width*="mode-3-85"],
+.zc-panel[data-width*="mode-3-86"],
+.zc-panel[data-width*="mode-3-87"],
+.zc-panel[data-width*="mode-3-88"],
+.zc-panel[data-width*="mode-3-89"],
+.zc-panel[data-width*="mode-3-90"],
+.zc-panel[data-width*="mode-3-91"],
+.zc-panel[data-width*="mode-3-92"],
+.zc-panel[data-width*="mode-3-93"],
+.zc-panel[data-width*="mode-3-94"],
+.zc-panel[data-width*="mode-3-95"],
+.zc-panel[data-width*="mode-3-96"],
+.zc-panel[data-width*="mode-3-97"],
+.zc-panel[data-width*="mode-3-98"] {
+    height: 100% !important;
+    overflow: hidden;
+
+    .zc-panel-menu {
+        overflow: hidden;
+        width: $panel_menu__width;
+        background: $alt-color__bg-1;
+
+        &_submenu-active {
+            .zc-panel-menu__container {
+                @include translateX(-$panel_menu__width);
+            }
+        }
+
+        &__container {
+            @include def-transition(transform);
+            box-shadow: none !important;
+            display: table;
+        }
+    }
+
+    .zc-panel-submenu {
+        border-right: none !important;
+        background: $alt-color__bg-1 !important;
+
+        &__header-section_mode_desktop {
+            display: none;
+        }
+
+        &__header-section_mode_mobile {
+            background: $alt-color__bg-1 !important;
+            border-bottom: 1px solid $panel_menu__border-color;
+            cursor: pointer;
+            box-sizing: border-box;
+            display: flex !important;
+        }
+
+        &__header-icon {
+            color: $alt-color__text !important;
+            top: 1px;
+        }
+
+        &__header-section-title {
+            color: $alt-color__text !important;
+            margin-right: 0 !important;
+            margin-left: 5px !important;
+            @include def-transition(color);
+            cursor: pointer;
+
+            &:hover {
+                color: $alt-color__text !important;
+            }
+        }
+
+        &__container {
+            border-right: none !important;
+            background: $alt-color__bg-1 !important;
+        }
+
+        &__item {
+            &_type_simple {
+                .zc-panel-submenu__item-icon,
+                .zc-panel-submenu__item-title {
+                    color: $alt-color__text !important;
+                }
+            }
+
+            &_active, &_type_simple:hover {
+                background: $alt-color__bg-2 !important;
+
+                .zc-panel-submenu__item-icon,
+                .zc-panel-submenu__item-title {
+                    color: $panel_menu__text-active-color !important;
+                }
+            }
+
+            &_type_delimiter {
+                border-bottom: 1px solid $panel_menu__border-color !important;
+            }
+
+            &_type_text .zc-panel-submenu__item-text {
+                color: $alt-color__text !important;
+            }
+        }
+    }
+
+    .zc-panel-content {
+        box-shadow: -10px 0 17px -5px $panel_menu__shadow-color;
+
+        &_submenu-active {
+            margin-left: $panel_menu__width !important;
+
+            .zc-panel-header {
+                border: none;
+            }
+        }
+
+        .zc-panel-controls {
+            min-height: $panel__min-height;
+        }
+    }
+}

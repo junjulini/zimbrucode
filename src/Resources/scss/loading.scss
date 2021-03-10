@@ -1,0 +1,41 @@
+
+/*
+ * This file is part of the ZimbruCode package.
+ *
+ * (c) Junjulini
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+.zc-loading-spinner {
+    width: 30px;
+    height: 10px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 5px;
+
+    &__bounce {
+        width: 10px;
+        height: 10px;
+        background-color: $bg-color__loading;
+        border-radius: 100%;
+        animation: zc-loading-spinner-bouncedelay 1.4s infinite ease-in-out both;
+
+        &_mode_1 {
+            animation-delay: -0.32s;
+        }
+
+        &_mode_2 {
+            animation-delay: -0.16s;
+        }
+    }
+
+    @keyframes zc-loading-spinner-bouncedelay {
+        0%, 80%, 100% { 
+            @include scale(0);
+        } 40% { 
+            @include scale(1.0);
+        }
+    }
+}

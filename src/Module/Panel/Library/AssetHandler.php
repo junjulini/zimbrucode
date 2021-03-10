@@ -26,7 +26,7 @@ class AssetHandler
 {
     protected $assets     = [];
     protected $lastAssets = [];
-    protected $lessData   = [
+    protected $scssData   = [
         'files'     => [],
         'dirs'      => [],
         'vars'      => [],
@@ -42,10 +42,10 @@ class AssetHandler
         $this->assetManager = new AssetManager(true, $this->module->getModulePath());
 
         $resourceDir = Kernel::getGlobal('core/component/core/module/resource-dir');
-        $path        = "{$this->module->getModulePath()}{$resourceDir}/assets/less";
-        $url         = "{$this->module->getModuleURL()}{$resourceDir}/assets/less";
+        $path        = "{$this->module->getModulePath()}{$resourceDir}/assets/scss";
+        $url         = "{$this->module->getModuleURL()}{$resourceDir}/assets/scss";
 
-        $this->addLessDir($path, $url);
+        $this->addScssDir($path, $url);
     }
 
     /**
@@ -85,53 +85,49 @@ class AssetHandler
     }
 
     /**
-     * Add less file
+     * Add scss file
      *
      * @param  string $file   File path
      * @return AssetHandler
      * @since 1.0.0
      */
-    public function addLessFile(string $file): AssetHandler
+    public function addScssFile(string $file): AssetHandler
     {
         if ($file && file_exists($file)) {
-            $this->lessData['files'][] = $file;
+            $this->scssData['files'][] = $file;
         }
 
         return $this;
     }
 
     /**
-     * Add less dir
+     * Add scss dir
      *
      * @param  string $dir   Dir path
-     * @param  string $url   Dir url
      * @return AssetHandler
      * @since 1.0.0
      */
-    public function addLessDir(string $dir, string $url = ''): AssetHandler
+    public function addScssDir(string $dir): AssetHandler
     {
         if ($dir && file_exists($dir)) {
-            $this->lessData['dirs'][] = [
-                'dir' => $dir,
-                'url' => $url,
-            ];
+            $this->scssData['dirs'][] = $dir;
         }
 
         return $this;
     }
 
     /**
-     * Add less function
+     * Add scss function
      *
      * @param  string   $name     Name of function
      * @param  callable $method   Function
      * @return AssetHandler
      * @since 1.0.0
      */
-    public function addLessFunction(string $name, callable $method): AssetHandler
+    public function addScssFunction(string $name, callable $method): AssetHandler
     {
         if ($name) {
-            $this->lessData['functions'][] = [
+            $this->scssData['functions'][] = [
                 'name'   => $name,
                 'method' => $method,
             ];
@@ -141,33 +137,33 @@ class AssetHandler
     }
 
     /**
-     * Add less var
+     * Add scss var
      *
      * @param  string $slug
      * @param  mix    $value
      * @return AssetHandler
      * @since 1.0.0
      */
-    public function addLessVar(string $slug, $value = ''): AssetHandler
+    public function addScssVar(string $slug, $value = ''): AssetHandler
     {
         if ($slug) {
-            $this->lessData['vars'][$slug] = $value;
+            $this->scssData['vars'][$slug] = $value;
         }
 
         return $this;
     }
 
     /**
-     * Add less vars
+     * Add scss vars
      *
-     * @param array $vars   Pool of vars for LESS
+     * @param array $vars   Pool of vars for SCSS
      * @return AssetHandler
      * @since 1.0.0
      */
-    public function addLessVars(array $vars): AssetHandler
+    public function addScssVars(array $vars): AssetHandler
     {
         if ($vars) {
-            $this->lessData['vars'] = $vars;
+            $this->scssData['vars'] = $vars;
         }
 
         return $this;
@@ -187,51 +183,49 @@ class AssetHandler
             }
         }
 
-        $callbackForLessRender = function (string $type = '', object $collector, object $less): void {
+        $callbackForScssRender = function (string $type = '', object $collector, object $scss): void {
             if (isset($type)) {
-                if ($type == 'less-2') {
-                    if (!empty($this->lessData['files'])) {
-                        foreach ($this->lessData['files'] as $file) {
-                            $less->addFile($file);
+                if ($type == 'scss-2') {
+                    if (!empty($this->scssData['files'])) {
+                        foreach ($this->scssData['files'] as $file) {
+                            $scss->addFile($file);
                         }
                     }
 
-                    if (!empty($this->lessData['dirs'])) {
-                        foreach ($this->lessData['dirs'] as $dirData) {
-                            $less->addDir($dirData['dir'], $dirData['url']);
+                    if (!empty($this->scssData['dirs'])) {
+                        foreach ($this->scssData['dirs'] as $dir) {
+                            $scss->addDir($dir);
                         }
                     }
 
-                    if (!empty($this->lessData['functions'])) {
-                        foreach ($this->lessData['functions'] as $functionData) {
-                            $less->addFunction($functionData['name'], $functionData['method']);
+                    if (!empty($this->scssData['functions'])) {
+                        foreach ($this->scssData['functions'] as $functionData) {
+                            $scss->addFunction($functionData['name'], $functionData['method']);
                         }
                     }
 
-                    if (!empty($this->lessData['vars'])) {
-                        foreach ($this->lessData['vars'] as $slug => $var) {
-                            $less->vars[$slug] = $var;
+                    if (!empty($this->scssData['vars'])) {
+                        foreach ($this->scssData['vars'] as $slug => $var) {
+                            $scss->vars[$slug] = $var;
                         }
                     }
 
                     $env        = Kernel::getEnvironment();
-                    $outputFile = basename($less->output);
+                    $outputFile = basename($scss->output);
                     $panelMode  = strtolower($this->module->getModuleSetting('mode', 'page'));
                     $panelSlug  = strtolower($this->module->getModuleSetting('slug', 'undefined'));
 
-                    $path   = "module.panel.{$panelMode}.{$panelSlug}/$outputFile";
-                    $cache  = "{$less->output}.{$path}";
-                    $output = Kernel::service('app-locator')->getVarPath("assets/{$env}/{$path}");
+                    $scss->output = Kernel::service('app-locator')->getVarPath("assets/{$env}/module.panel.{$panelMode}.{$panelSlug}/{$outputFile}");
 
-                    $less->cache  = $cache;
-                    $less->output = $output;
+                    $info        = new \SplFileInfo($scss->output);
+                    $scss->cache = "{$info->getPath()}/{$info->getBasename('.' . $info->getExtension())}.cache";
                 }
             }
         };
 
         foreach ($this->assets as $asset) {
-            if ((new \SplFileInfo($asset))->getExtension() == 'less') {
-                $this->assetManager->addCallback($asset, $callbackForLessRender);
+            if ((new \SplFileInfo($asset))->getExtension() == 'scss') {
+                $this->assetManager->addCallback($asset, $callbackForScssRender);
             }
         }
 

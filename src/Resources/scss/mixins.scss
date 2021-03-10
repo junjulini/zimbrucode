@@ -1,0 +1,300 @@
+
+/*
+ * This file is part of the ZimbruCode package.
+ *
+ * (c) Junjulini
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+@import '@zc/icons-list.scss';
+@import '@zc/variables.scss';
+
+// Word-break
+@mixin word-break {
+    word-break: break-all;
+    word-break: break-word; // Non standard for webkit
+    hyphens: auto;
+}
+
+// Linear-gradient
+@mixin linear-gradient($direction : to bottom, $startColor : #000, $endColor : #EEE) {
+    background : $startColor;
+    background : linear-gradient($direction, $startColor, $endColor);
+}
+
+// Gradient
+@mixin gradient($startColor : #eee, $endColor : white) {
+    @include linear-gradient(to bottom, $startColor, $endColor);
+}
+
+// Horizontal-gradient
+@mixin horizontal-gradient($startColor : #eee, $endColor : white) {
+    @include linear-gradient(to left, $startColor, $endColor);
+}
+
+// Radial-gradient
+@mixin radial-gradient($hvPosition : center center, $shapeSize : circle cover, $startColor : #ffffff, $endColor : #000000) {
+    background : $startColor;
+    background : radial-gradient($hvPosition, $shapeSize, $startColor, $endColor)
+}
+
+// Default transition
+@mixin def-transition($property) {
+    transition: $property $transition-duration;
+}
+
+// Skew
+@mixin skew($x : 35deg, $y : 0deg) {
+    transform : skew($x, $y);
+}
+
+@mixin skewX($x : 35deg) {
+    transform: skewX($x);
+}
+
+@mixin skewY($y : 35deg) {
+    transform: skewY($y);
+}
+
+// Scale
+@mixin scale($scale : 1) {
+    transform: scale($scale);
+}
+
+@mixin scaleX($scale : 1) {
+    transform: scaleX($scale);
+}
+
+@mixin scaleY($scale : 1) {
+    transform: scaleY($scale);
+}
+
+// Rotate
+@mixin rotate($angle : 35deg) {
+    transform: rotate($angle); 
+}
+
+// Rotate 3D
+@mixin rotate3d($deg1 : 35deg, $deg2 : 35deg, $deg3 : 35deg) {
+    transform: rotateX($deg1) rotateY($deg2) rotateZ($deg3);
+    transform-style: preserve-3d;
+}
+
+// Translate
+@mixin translate($x : 10px, $y : 10px) {
+    transform: translate($x, $y);
+}
+
+// Translate X
+@mixin translateX($x : 10px) {
+    transform: translateX($x);
+}
+
+// Translate Y
+@mixin translateY($y : 10px) {
+    transform: translateY($y);
+}
+
+// Translate Z
+@mixin translateZ($y : 10px) {
+    transform: translateZ($y);
+}
+
+// Translate 3D
+@mixin translate3d($x : 0, $y : 0, $z : 0) {
+    transform: translate3d($x, $y, $z);
+}
+
+// 3D Transform
+@mixin transform3D($z : 300, $deg : 180deg) {
+    perspective: $z;
+    transform: rotateY($deg);
+    transform-style: preserve-3d;
+}
+
+// Columns
+@mixin columns($nb : 4, $width: 100px, $gap : 10px) {
+    -webkit-column-count : $nb;  -webkit-column-width : $width; -webkit-column-gap : $gap;
+       -moz-column-count : $nb;     -moz-column-width : $width;    -moz-column-gap : $gap;
+         -o-column-count : $nb;       -o-column-width : $width;      -o-column-gap : $gap;
+        -ms-column-count : $nb;      -ms-column-width : $width;     -ms-column-gap : $gap;
+            column-count : $nb;          column-width : $width;         column-gap : $gap;
+}
+
+// Cubic
+$easeInCubic     :  cubic-bezier(0.550, 0.055, 0.675, 0.190);
+$easeOutCubic    :  cubic-bezier(0.215, 0.610, 0.355, 1.000);
+$easeInOutCubic  :  cubic-bezier(0.645, 0.045, 0.355, 1.000);
+
+// Circ
+$easeInCirc      :  cubic-bezier(0.600, 0.040, 0.980, 0.335);
+$easeOutCirc     :  cubic-bezier(0.075, 0.820, 0.165, 1.000);
+$easeInOutCirc   :  cubic-bezier(0.785, 0.135, 0.150, 0.860);
+
+// Expo
+$easeInExpo      :  cubic-bezier(0.950, 0.050, 0.795, 0.035);
+$easeOutExpo     :  cubic-bezier(0.190, 1.000, 0.220, 1.000);
+$easeInOutExpo   :  cubic-bezier(1.000, 0.000, 0.000, 1.000);
+
+// Quad
+$easeInQuad      :  cubic-bezier(0.550, 0.085, 0.680, 0.530);
+$easeOutQuad     :  cubic-bezier(0.250, 0.460, 0.450, 0.940);
+$easeInOutQuad   :  cubic-bezier(0.455, 0.030, 0.515, 0.955);
+
+// Quart
+$easeInQuart     :  cubic-bezier(0.895, 0.030, 0.685, 0.220);
+$easeOutQuart    :  cubic-bezier(0.165, 0.840, 0.440, 1.000);
+$easeInOutQuart  :  cubic-bezier(0.770, 0.000, 0.175, 1.000);
+
+// Quint
+$easeInQuint     :  cubic-bezier(0.755, 0.050, 0.855, 0.060);
+$easeOutQuint    :  cubic-bezier(0.230, 1.000, 0.320, 1.000);
+$easeInOutQuint  :  cubic-bezier(0.860, 0.000, 0.070, 1.000);
+
+// Sine
+$easeInSine      :  cubic-bezier(0.470, 0.000, 0.745, 0.715);
+$easeOutSine     :  cubic-bezier(0.390, 0.575, 0.565, 1.000);
+$easeInOutSine   :  cubic-bezier(0.445, 0.050, 0.550, 0.950);
+
+// Back
+$easeInBack      :  cubic-bezier(0.600, -0.280, 0.735, 0.045);
+$easeOutBack     :  cubic-bezier(0.175,  0.885, 0.320, 1.275);
+$easeInOutBack   :  cubic-bezier(0.680, -0.550, 0.265, 1.550);
+
+// Filtres
+@mixin filter-blur($value : 2px) {
+    filter          : blur($value);
+    -webkit-filter  : blur($value);
+}
+
+@mixin filter-contrast($value : 150%) {
+    filter          : contrast($value);
+    -webkit-filter  : contrast($value);
+}
+
+@mixin filter-grayscale($value : 100%) {
+    filter          : grayscale($value);
+    -webkit-filter  : grayscale($value);
+}
+
+@mixin filter-sepia($value : 100%) {
+    filter          : sepia($value);
+    -webkit-filter  : sepia($value);
+}
+
+// Placeholder color
+@mixin placeholder-color($color : '') {
+    @if $color {
+        // WebKit browsers
+        &::-webkit-input-placeholder {
+            color: $color;
+        }
+
+        // Mozilla Firefox 19+
+        &::-moz-placeholder {
+            color: $color;
+        }
+
+        // Internet Explorer 10+
+        &:-ms-input-placeholder {
+            color: $color;
+        }
+    }
+}
+
+// Appearance
+@mixin appearance($type : textfield) {
+       -moz-appearance : $type;
+    -webkit-appearance : $type;
+            appearance : $type;
+}
+
+// Center horizontal
+@mixin center-h {
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+// Center content
+@mixin center-block {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+// Center display table
+@mixin center-table {
+    display: table;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+// Center absolute
+@mixin center-abs {
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+// Center display flex
+@mixin center-flex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+// User select
+@mixin user-select($type : none) {
+    -webkit-user-select : $type;
+            user-select : $type;
+}
+
+// Grab cursor
+@mixin grab-cursor($grabbing : false) {
+    @if $grabbing {
+        cursor: -webkit-grabbing;
+        cursor: -moz-grabbing;
+        cursor: grabbing;
+    } @else {
+        cursor: -webkit-grab;
+        cursor: -moz-grab;
+        cursor: grab;
+    }
+}
+
+// Truncate String with Ellipsis
+@mixin truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+// Set font icon
+@mixin icon($icon) {
+    font-family: 'Material Icons' !important;
+    font-weight: normal;
+    font-style: normal;
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: 'liga';
+    @include icon-content($icon);
+}
+
+// Set cont icon : only content
+@mixin icon-content($icon) {
+    content : map-get($icons-list, $icon);
+}

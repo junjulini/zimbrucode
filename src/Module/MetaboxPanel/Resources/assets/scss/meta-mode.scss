@@ -1,0 +1,93 @@
+
+/*
+ * This file is part of the ZimbruCode package.
+ *
+ * (c) Junjulini
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+/*
+ * SCSS : MetaboxPanel : Meta mode
+ * 
+ * @author  Junjulini
+ * @package ZimbruCode
+ * @since   ZimbruCode 1.0.0
+ */
+
+// Import panel styles
+@import 'styles.scss';
+
+// Import ZC : Popup
+@import '@zc/popup.scss';
+
+// Import ZC : Loading
+@import '@zc/loading.scss';
+
+// Import blocks
+@import 'blocks/header/popup-notification.scss';  // Block : Popup notification
+
+@import 'panel-blocks/panel.scss';                // Meta-Block : Panel
+
+@import 'panel-blocks/menu.scss';                 // Meta-Block : Menu
+@import 'panel-blocks/menu/submenu.scss';         // Meta-Block : Submenu
+
+@import 'panel-blocks/header.scss';               // Meta-Block : Header
+@import 'panel-blocks/header/backup.scss';        // Meta-Block : Backup
+
+@import 'panel-blocks/content.scss';              // Meta-Block : Content
+@import 'panel-blocks/content/controls.scss';     // Meta-Block : Controls
+
+// Import meta middle viewport
+@import 'middle-viewport.scss';
+
+[id*="zc_"] {
+    > .postbox-header > h2 {
+        border-bottom: none !important;
+    }
+
+    > .inside {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+}
+
+.zc-panel-template {
+    position: relative;
+
+    &__panel-loading {
+        overflow-y: auto;
+        display: inline-block;
+        width: 100%;
+        min-height: 100px;
+    }
+
+    &__loading-spinner {
+        position: absolute;
+        @include center-abs;
+    }
+}
+
+.zc-panel {
+    z-index: 1;
+
+    body.block-editor-page & {
+        box-sizing: border-box;
+    }
+}
+
+.zc-metabox-panel-reset-button {
+    &:hover {
+        background: $accent-color__4;
+        color: #ffffff;
+    }
+}
+
+.zc-metabox-panel-backup-button {
+    line-height: 32px;
+}
+
+.edit-post-layout__metaboxes:not(:empty) {
+    padding-bottom: 24px;
+}

@@ -171,11 +171,11 @@ class ControlManager extends ModuleKernel
             });
         }
 
-        // Set less asset
-        $asset = self::getGlobal('core/module/panel/control-settings/assets/less-file');
+        // Set scss asset
+        $asset = self::getGlobal('core/module/panel/control-settings/assets/scss-file');
         $asset = $this->getControl($type)->getControlPath($asset);
 
-        $this->getModuleData('asset')->addLessFile($asset);
+        $this->getModuleData('asset')->addScssFile($asset);
 
         // Set js asset
         if (self::dev()) {

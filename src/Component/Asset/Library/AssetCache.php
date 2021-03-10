@@ -175,9 +175,8 @@ class AssetCache
 
         foreach ($this->assets as $asset) {
             $content['assets'][] = [
-                'path'       => Tools::cutServerPartFromPath($asset),
-                'hash'       => @md5_file($asset),
-                'additional' => (($type === 'asset') ? $additional : [])
+                'path' => Tools::cutServerPartFromPath($asset),
+                'hash' => @md5_file($asset),
             ];
         }
 
@@ -251,10 +250,6 @@ class AssetCache
                         Kernel::dev()->addWarningMessage($msg);
                     }
 
-                    return true;
-                }
-
-                if ($this->checkAdditionalFunctions($asset['additional'], 'asset')) {
                     return true;
                 }
             }

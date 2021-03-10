@@ -21,7 +21,7 @@ return [
         'template-dir'  => '/Resources/views',
         'template-file' => 'control.twig',
         'assets'        => [
-            'less-file'   => '/Resources/assets/less/control.less',
+            'scss-file'   => '/Resources/assets/scss/control.scss',
             'js-file'     => '/Resources/assets/js/control.js',
             'min-js-file' => '/Resources/assets/js/control.min.js',
         ],

@@ -1,0 +1,114 @@
+
+/*
+ * This file is part of the ZimbruCode package.
+ *
+ * (c) Junjulini
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+/*
+ * Control SCSS : Gallery
+ *
+ * @author  Junjulini
+ * @package ZimbruCode
+ * @since   ZimbruCode 1.0.0
+ */
+
+.zc-panel-control-gallery-type {
+    &__button {
+        outline: none;
+        @include center-flex;
+        min-width: 100px;
+        height: 32px;
+        padding: 0 6px;
+        margin: 0;
+        border: 1px solid rgba(0 ,0, 0, 0.04);
+        border-radius: 3px;
+        background: $accent-color__1;
+        color: #ffffff;
+        font-weight: 500;
+        cursor: pointer;
+        text-transform: uppercase;
+        @include def-transition(background);
+
+        &:hover {
+            background: #65CCAD;
+        }
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    &__list {
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 20px;
+
+        .ui-sortable-placeholder {
+            background: $bg-color__2 !important;
+            width: 88px;
+            height: 88px;
+            border: 1px dashed $bg-color__border__1 !important;
+            visibility: visible !important;
+            box-sizing: border-box;
+        }
+    }
+
+    &__item {
+        margin: 0 10px 10px 0;
+        position: relative;
+        width: 88px;
+        height: 88px;
+        border: 1px solid $bg-color__border__1;
+        background: $bg-color__2;
+        padding: 3px;
+        box-sizing: border-box;
+    }
+
+    &__image-preview {
+        @include grab-cursor;
+
+        &:active {
+            @include grab-cursor(true);
+        }
+    }
+
+    &__item-button {
+        position: absolute;
+        text-decoration: none;
+        top: 24px;
+        right: 3px;
+        width: 20px;
+        height: 20px;
+        background: $bg-color__1;
+        font-size: 13px;
+        color: $text-color__all;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        outline: none;
+        @include def-transition(all);
+        @include center-flex;
+
+        &_change-image:hover {
+            color: #ffffff;
+            background: $accent-color__2;
+        }
+
+        &_remove-image:hover {
+            color: #ffffff;
+            background: $accent-color__4;
+        }
+
+        &:last-child {
+            top: 3px;
+        }
+    }
+
+    &__item-button-icon {
+        position: relative;
+    }
+}

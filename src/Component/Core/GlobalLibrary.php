@@ -11,7 +11,6 @@
 
 namespace ZimbruCode\Component\Core;
 
-use ZimbruCode\Component\Common\Tools;
 use ZimbruCode\Component\Handler\LibraryHandler;
 
 /**
@@ -23,6 +22,8 @@ use ZimbruCode\Component\Handler\LibraryHandler;
  */
 final class GlobalLibrary
 {
+    private $path;
+
     /**
      * Global configs
      *
@@ -30,52 +31,46 @@ final class GlobalLibrary
      */
     public function __construct()
     {
-        $path = wp_normalize_path(realpath(__DIR__ . '/../../Resources'));
-        $url  = Tools::getURL($path);
+        $this->path = wp_normalize_path(realpath(__DIR__ . '/../../Resources'));
 
-        $this->addPackageLibrary($path);
-        $this->addIconFontLibrary($path);
-        $this->addLessFileLibrary($path, $url);
+        $this->addPackageLibrary();
+        $this->addIconFontLibrary();
+        $this->addScssNamespace();
     }
 
     /**
      * Add package library
      *
-     * @param  string $path   Path from this class
-     * @return void           This function does not return a value
+     * @return void   This function does not return a value
      * @since 1.0.0
      */
-    private function addPackageLibrary(string $path): void
+    private function addPackageLibrary(): void
     {
-        LibraryHandler::addPackages(require "{$path}/config/asset-packages.php");
+        $path = $this->path;
+        LibraryHandler::addPackages(require "{$this->path}/config/asset-packages.php");
     }
 
     /**
      * Add icon font library
      *
-     * @param  string $path   Path from this class
-     * @return void           This function does not return a value
+     * @return void   This function does not return a value
      * @since 1.0.0
      */
-    private function addIconFontLibrary(string $path): void
+    private function addIconFontLibrary(): void
     {
-        LibraryHandler::addElement('icons/material-icons', "{$path}/icons/material-icons-map.php");
-        LibraryHandler::addPackages(require "{$path}/icons/font-icons-package.php");
+        $path = $this->path;
+        LibraryHandler::addElement('icons/material-icons', "{$this->path}/icons/material-icons-list.php");
+        LibraryHandler::addPackages(require "{$this->path}/icons/font-icons-package.php");
     }
 
     /**
-     * Add less file library
+     * Add SCSS namespaces
      *
-     * @param  string $path   Path from this class
-     * @param  string $url    URL from this class
-     * @return void           This function does not return a value
+     * @return void   This function does not return a value
      * @since 1.0.0
      */
-    private function addLessFileLibrary(string $path, string $url): void
+    private function addScssNamespace(): void
     {
-        Kernel::addGlobalCache('asset/less/import-dirs/core', [
-            'path' => "{$path}/less",
-            'url'  => "{$url}/less/",
-        ]);
+        Kernel::addGlobalCache('asset/scss/namespace/zc', "{$this->path}/scss");
     }
 }

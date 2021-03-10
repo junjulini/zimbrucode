@@ -1,0 +1,269 @@
+
+/*
+ * This file is part of the ZimbruCode package.
+ *
+ * (c) Junjulini
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+// Import ZC : Global vars
+@import '@zc/variables.scss';
+
+// Import ZC : Mixins
+@import '@zc/mixins.scss';
+
+@mixin button() {
+    &__button {
+        @include center-flex;
+        outline: none;
+        min-width: 100px;
+        height: 32px;
+        padding: 0 6px;
+        margin: 0;
+        border: 1px solid $bg-color__border__1;
+        border-radius: 3px;
+        background: $bg-color__1;
+        color: $text-color__all;
+        font-weight: 500;
+        cursor: pointer;
+        text-transform: uppercase;
+        @include def-transition(all);
+        font-size: 13px;
+
+        &:hover {
+            background: #ffffff;
+            color: $accent-color__2;
+        }
+
+        &:focus {
+            outline: none;
+        }
+
+        &:first-child {
+            margin-right: 10px
+        }
+
+        &_active {
+            background: $accent-color__1;
+            color: #ffffff;
+            border: 1px solid rgba(0 ,0, 0, 0.04);
+
+            &:hover {
+                background: #69D4B4;
+                color: #ffffff;
+            }
+        }
+    }
+}
+
+// Popup styles
+.zc-popup {
+    position: fixed;
+    background: rgba(41, 41, 41, 0.8);
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 999999999999;
+
+    &_no-padding {
+        .zc-popup__content {
+            padding: 0;
+        }
+    }
+
+    *::selection {
+        background: $accent-color__1;
+        color: #ffffff;
+    }
+
+    &__window {
+        min-height: 200px;
+        background: #ffffff;
+        position: fixed;
+        left: 10%;
+        right: 10%;
+        top: 10%;
+        bottom: 10%;
+        margin: auto;
+        overflow: hidden;
+        box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2);
+        animation: zc-show .3s 1;
+        font-family: $default-font !important;
+
+        &_close {
+            animation: zc-hide .3s 1;
+        }
+
+        // ScrollBar
+        > .zc-scrollbar {
+            top: 45px !important;
+        }
+
+        // Media : Width 668px
+        @media screen and (max-width: 668px) {
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+        }
+    }
+
+    &__overflow-hidden {
+        overflow: hidden;
+    }
+
+    &__header {
+        display: flex;
+        z-index: 1;
+        align-items: center;
+        width: 100%;
+        position: relative;
+        height: 35px;
+        background: $alt-color__bg-1;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.40);
+    }
+
+    &__title {
+        font-size: 14px;
+        color: $alt-color__text;
+        font-weight: 500;
+        padding-left: 15px;
+        cursor: default;
+    }
+
+    &__close {
+        @include center-flex;
+        cursor: pointer;
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 29px;
+        height: 35px;
+        font-size: 18px;
+        color: rgba(255, 255, 255, 0.5);
+        border-left: 1px solid rgba(0, 0, 0 ,0.1);
+        @include def-transition(background);
+
+        &:hover {
+            background: $alt-color__bg-2;
+        }
+    }
+
+    &__loading {
+        position: absolute;
+        @include center-abs;
+        width: 40px;
+        height: 10px;
+        display: none;
+    }
+
+    &__content {
+        display: none;
+        padding: 10px 20px;
+        padding-top: 0;
+        color: $text-color__all;
+    }
+}
+
+// Popup : Confirm & Alert
+.zc-confirm, .zc-alert {
+    position: absolute;
+    @include center-abs;
+    @include center-flex;
+    flex-direction: column;
+
+    &__container {
+        height: 100%;
+        width: 100%;
+        @include center-flex;
+    }
+
+    &__text {
+        font-size: 15px;
+        display: block;
+        margin: 0;
+        padding: 10px 5px;
+        text-align: center;
+
+        b {
+            font-weight: 600;
+            color: $text-color__title;
+        }
+    }
+
+    &__footer {
+        background: $bg-color__2;
+        border-top: 1px solid $bg-color__border__2;
+        width: 100%;
+        @include center-flex;
+        padding: 10px 0;
+    }
+
+    @include button();
+}
+
+// Popup : Prompt
+.zc-prompt {
+    position: absolute;
+    @include center-abs;
+    @include center-flex;
+    flex-direction: column;
+
+    &__container {
+        height: 100%;
+        width: 100%;
+        @include center-flex;
+        flex-direction: column;
+    }
+
+    &__text {
+        font-size: 15px;
+        display: block;
+        margin: 0;
+        padding: 10px 5px;
+
+        b {
+            font-weight: 600;
+            color: $text-color__title;
+        }
+    }
+
+    &__input {
+        width: 100%;
+        margin: 0;
+        border: 1px solid $bg-color__border__1 !important;
+        background-color: #ffffff !important;
+        border-radius: 3px !important;
+        box-shadow: inset 0 1px 1px 0 $bg-color__box-shadow__1 !important;
+        padding: 7px !important;
+        color: $text-color__all !important;
+        font-size: 13px;
+        line-height: normal !important;
+        outline: none;
+        height: 33px !important;
+        min-height: 33px !important;
+        @include appearance(none !important);
+        max-width: 300px;
+
+        &:focus {
+            outline: none !important;
+            border-color: $accent-color__2 !important;
+            box-shadow: 0 0 5px 0 rgba(44, 151, 222, 0.2) !important;
+        }
+
+        @include placeholder-color($text-color__placeholder);
+    }
+
+    &__footer {
+        background: $bg-color__2;
+        border-top: 1px solid $bg-color__border__2;
+        width: 100%;
+        @include center-flex;
+        padding: 10px 0;
+    }
+
+    @include button();
+}

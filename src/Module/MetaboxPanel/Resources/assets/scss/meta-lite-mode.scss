@@ -1,0 +1,110 @@
+
+/*
+ * This file is part of the ZimbruCode package.
+ *
+ * (c) Junjulini
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+/*
+ * SCSS : MetaboxPanel : Meta lite mode
+ * 
+ * @author  Junjulini
+ * @package ZimbruCode
+ * @since   ZimbruCode 1.0.0
+ */
+
+// Import panel styles
+@import 'styles.scss';
+
+// Import ZC : Popup
+@import '@zc/popup.scss';
+
+// Import ZC : Loading
+@import '@zc/loading.scss';
+
+[id*="zc_"] {
+    > .inside {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+}
+
+.zc-panel-template {
+    position: relative;
+
+    body.block-editor-page & {
+        border: 1px solid #e2e4e7;
+        border-bottom: none;
+        border-top: none;
+    }
+
+    &__panel-loading {
+        @include center-abs;
+        margin-top: 50px;
+        display: table;
+    }
+}
+
+.zc-panel {
+    margin-right: 0;
+    box-shadow: none !important;
+    min-height: auto;
+    z-index: 1;
+
+    &[data-width|="mode-3"] {
+        position: relative;
+        left: auto;
+        right: auto;
+        top: auto;
+        bottom: auto;
+        min-height: auto;
+    }
+}
+
+.zc-panel-content {
+    position: relative;
+    top: auto;
+    bottom: auto;
+    left: 0 !important;
+    right: auto;
+    margin-left: 0 !important;
+    box-shadow: none !important;
+    transform: none !important;
+
+    .zc-scrollbar {
+        position: relative;
+        overflow: visible !important;
+    }
+
+    .zc-panel[data-width|="mode-3"] & {
+        margin-left: $panel_menu__width;
+        position: relative;
+        top: auto;
+        bottom: auto;
+        left: 0 !important;
+        right: auto;
+
+        &_submenu-active {
+            margin-left: $panel_menu__full-width;
+        }
+    }
+}
+
+.zc-panel-controls {
+    position: relative;
+    top: auto;
+    bottom: auto;
+
+    .zc-panel[data-width|="mode-3"] & {
+        position: relative;
+        bottom: auto;
+        top: auto;
+    }
+}
+
+.edit-post-layout__metaboxes:not(:empty) {
+    padding-bottom: 24px;
+}

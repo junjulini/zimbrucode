@@ -90,16 +90,14 @@ abstract class ControlKernel extends ModuleKernel
     }
 
     /**
-     * Add less var
+     * Add scss var
      *
-     * @param  string $slug
-     * @param  mix    $value
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    protected function addLessVar(string $slug, $value = ''): void
+    protected function addScssVar(...$args): void
     {
-        $this->getModuleData('asset')->addLessVar($slug, $value);
+        $this->getModuleData('asset')->addScssVar(...$args);
     }
 
     /**

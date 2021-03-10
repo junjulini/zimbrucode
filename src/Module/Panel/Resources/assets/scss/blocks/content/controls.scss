@@ -1,0 +1,202 @@
+
+/*
+ * This file is part of the ZimbruCode package.
+ *
+ * (c) Junjulini
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+/*
+ * SCSS : Panel/Blocks/Content : Controls
+ *
+ * @author  Junjulini
+ * @package ZimbruCode
+ * @since   ZimbruCode 1.0.0
+ */
+
+.zc-panel-controls {
+    width: 100%;
+    height: 100%;
+    background: $bg-color__3;
+    overflow: hidden;
+    display: inline-block;
+
+    .zc-panel[data-width|="mode-3"] & {
+        position: absolute;
+        height: auto !important;
+        top: $panel_header__height;
+        bottom: $panel_footer__height;
+    }
+
+    .zc-panel[data-width|="mode-1"] &, .zc-panel[data-width|="mode-2"] & {
+        .zc-scrollbar {
+           position: relative !important; 
+        }
+    }
+
+    &__close-block {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 100;
+        display: none;
+
+        &_active {
+            display: block;
+        }
+    }
+
+    &__sections {
+        margin: 20px;
+
+        .zc-scrollbar_active & {
+            margin-right: 7px;
+        }
+
+        .zc-panel[data-width|="mode-1"] & {
+            margin: 10px;
+        }
+    }
+
+    &__section {
+        display: none;
+
+        &_active {
+            display: block;
+        }
+    }
+
+    &__list {
+        max-width: 100%;
+    }
+
+    &__item {
+        margin: 0;
+        margin-bottom: 20px;
+        padding-bottom: 20px;
+        display: flex;
+        width: 100%;
+        border-bottom: 1px solid $bg-color__border__2;
+
+        .zc-panel[data-width|="mode-1"] & {
+            flex-direction: column;
+        }
+
+        &_full {
+            flex-direction: column;
+
+            .zc-panel-controls__item-section_type_description, 
+            .zc-panel-controls__item-section_type_content {
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .zc-panel-controls__item-section_type_description {
+                margin-bottom: 20px;
+            }
+        }
+
+        &_show {
+            display: flex;
+        }
+
+        &_hide {
+            display: none;
+        }
+
+        &_hide-border-line {
+            border-bottom: none !important;
+            padding-bottom: 0 !important;
+        }
+
+        &_accent-border {
+            border-bottom-width: 3px;
+        }
+
+        &:last-child:not(.zc-panel-controls__item_show-border-line-last), &_hide-border-line-last {
+            border-bottom: none !important;
+            padding-bottom: 0 !important;
+            margin-bottom: 0 !important;
+        }
+    }
+
+    &__item-section {
+        width: 50%;
+        max-width: 350px;
+
+        &_type_description {
+            position: relative;
+            margin-right: 20px;
+
+            .zc-panel[data-width|="mode-1"] & {
+                width: 100%;
+                max-width: 100%;
+                margin-bottom: 20px;
+                margin-right: 0;
+            }
+        }
+
+        &_type_content {
+            .zc-panel[data-width|="mode-1"] & {
+                width: 100%;
+                max-width: 100%;
+            }
+        }
+    }
+
+    &__item-title {
+        margin: 0;
+        margin-bottom: 10px;
+        font-size: 14.5px;
+        color: $text-color__title;
+        display: block;
+        font-weight: 500;
+        cursor: default;
+
+        .zc-panel[data-width|="mode-1"] &,
+        .zc-panel[data-width*="mode-2-40"] &,
+        .zc-panel[data-width*="mode-2-41"] &,
+        .zc-panel[data-width*="mode-2-42"] &,
+        .zc-panel[data-width*="mode-2-43"] &,
+        .zc-panel[data-width*="mode-2-44"] &,
+        .zc-panel[data-width*="mode-2-45"] &,
+        .zc-panel[data-width*="mode-2-46"] &,
+        .zc-panel[data-width*="mode-2-47"] &,
+        .zc-panel[data-width*="mode-2-48"] &,
+        .zc-panel[data-width*="mode-2-49"] &,
+        .zc-panel[data-width*="mode-2-50"] &,
+        .zc-panel[data-width*="mode-2-51"] &,
+        .zc-panel[data-width*="mode-2-52"] &,
+        .zc-panel[data-width*="mode-2-53"] &,
+        .zc-panel[data-width*="mode-2-54"] &,
+        .zc-panel[data-width*="mode-2-55"] &,
+        .zc-panel[data-width*="mode-2-56"] &,
+        .zc-panel[data-width*="mode-2-57"] & {
+            font-size: 16px;
+        }
+    }
+
+    &__item-description {
+        font-size: 13px;
+        margin: 0;
+        padding: 0;
+        display: block;
+        font-weight: 400;
+
+        > b, > strong {
+            background: $bg-color__1;
+            padding: 0 5px 2px 5px;
+        }
+
+        > a {
+            color: $accent-color__1;
+            @include def-transition(color);
+
+            &:hover {
+                color: $accent-color__2;
+            }
+        }
+    }
+}

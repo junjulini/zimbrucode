@@ -119,7 +119,7 @@ class MetaMode extends Mode
         do_action('zc/module/metabox_panel/mode/meta/enqueue--before');
         do_action("zc/module/metabox_panel/{$this->getModuleSetting('slug')}/mode/meta/enqueue--before");
 
-        $this->asset()->addLessVar('hide_header', $this->getModuleSetting('hide-header'));
+        $this->asset()->addScssVar('hide_header', $this->getModuleSetting('hide-header'));
         $mmr = $this->getModuleSetting('meta-module-resource');
 
         // Assets
@@ -130,7 +130,7 @@ class MetaMode extends Mode
             'tipsy',
             self::dop('jquery.panel.js', 'jquery.panel.min.js'),
             self::dop("{$mmr}/assets/js/jquery.meta-mode.js", "{$mmr}/assets/js/jquery.meta-mode.min.js"),
-            "{$mmr}/assets/less/meta-mode.less"
+            "{$mmr}/assets/scss/meta-mode.scss"
         )->enroll()->localize(self::dop('jquery.panel.js', 'jquery.panel.min.js'), 'zcPanelVars', $this->mergeControlsLocalizeVars([
             'slug'                  => $this->getModuleSetting('slug'),
             'mode'                  => $this->getMode(),

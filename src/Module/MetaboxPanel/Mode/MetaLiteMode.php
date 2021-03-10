@@ -112,7 +112,7 @@ class MetaLiteMode extends Mode
             'tipsy',
             self::dop('jquery.panel.js', 'jquery.panel.min.js'),
             self::dop("{$mmr}/assets/js/jquery.meta-lite-mode.js", "{$mmr}/assets/js/jquery.meta-lite-mode.min.js"),
-            "{$mmr}/assets/less/meta-lite-mode.less"
+            "{$mmr}/assets/scss/meta-lite-mode.scss"
         );
 
         // Assets enroll

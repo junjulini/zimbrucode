@@ -14,7 +14,7 @@ return [
         'resources' => '/Resources/',
         'css'       => '/assets/css/',
         'js'        => '/assets/js/',
-        'less'      => '/assets/less/',
+        'scss'      => '/assets/scss/',
         'image'     => '/assets/image/',
     ],
 
@@ -33,9 +33,9 @@ return [
     'default-javascript-footer' => true,
 
     'filter'                    => [
-        'less'      => [
+        'scss'      => [
             'dev'            => false,
-            'search-point'   => 'resources/assets/less/',
+            'search-point'   => 'resources/assets/scss/',
             'external-point' => '/external/',
         ],
         'combine'   => [

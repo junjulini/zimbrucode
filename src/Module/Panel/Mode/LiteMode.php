@@ -93,7 +93,7 @@ class LiteMode extends Mode
             'tipsy',
             self::dop('jquery.panel.js', 'jquery.panel.min.js'),
             self::dop('jquery.panel-lite-mode.js', 'jquery.panel-lite-mode.min.js'),
-            'mode/lite-mode.less'
+            'mode/lite-mode.scss'
         )->enroll()->localize(self::dop('jquery.panel.js', 'jquery.panel.min.js'), 'zcPanelVars', $this->mergeControlsLocalizeVars([
             'slug'                  => $this->getModuleSetting('slug'),
             'mode'                  => $this->getMode(),

@@ -14,7 +14,7 @@ namespace ZimbruCode\Component\Asset\Library;
 use ZimbruCode\Component\Asset\Filter\AssetNamespace;
 use ZimbruCode\Component\Asset\Filter\CSS;
 use ZimbruCode\Component\Asset\Filter\JavaScript;
-use ZimbruCode\Component\Asset\Filter\LESS;
+use ZimbruCode\Component\Asset\Filter\SCSS;
 use ZimbruCode\Component\Asset\Filter\Package;
 use ZimbruCode\Component\Asset\Filter\Registered;
 use ZimbruCode\Component\Asset\Library\Filter;
@@ -85,7 +85,7 @@ class AssetDataCollector
                 $this->filter(new JavaScript, $assetData->raw(), $callback);
                 $this->filter(new AssetNamespace, $assetData->raw(), $callback);
                 $this->filter(new Package, $assetData->raw(), $callback);
-                $this->filter(new LESS, $assetData->raw(), $callback);
+                $this->filter(new SCSS, $assetData->raw(), $callback);
                 $this->filter(new Registered, $assetData->raw(), $callback);
             }
         } else {
