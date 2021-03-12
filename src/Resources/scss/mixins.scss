@@ -189,17 +189,12 @@ $easeInOutBack   :  cubic-bezier(0.680, -0.550, 0.265, 1.550);
     @if $color {
         // WebKit browsers
         &::-webkit-input-placeholder {
-            color: $color;
+            color: $color !important;
         }
 
         // Mozilla Firefox 19+
         &::-moz-placeholder {
-            color: $color;
-        }
-
-        // Internet Explorer 10+
-        &:-ms-input-placeholder {
-            color: $color;
+            color: $color !important;
         }
     }
 }

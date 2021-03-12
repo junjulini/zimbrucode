@@ -39,12 +39,12 @@ return [
             'external-point' => '/external/',
         ],
         'combine'   => [
-            'js'             => [
+            'js'  => [
                 'outputName'  => 'app/combine-file',
                 'minify'      => false,
                 'minify-type' => 'local', // "local" or "remote"
             ],
-            'css'            => [
+            'css' => [
                 'outputName' => 'app/combine-file',
                 'minify'     => false,
                 'convert'    => true,
@@ -81,8 +81,8 @@ return [
     ],
 
     'remote-minify'             => [
-        'css-server' => 'https://cssminifier.com/raw',
-        'js-server'  => 'https://javascript-minifier.com/raw',
+        'css-server' => '',
+        'js-server'  => '',
     ],
 
     'fw-search-point'           => 'zimbrucode/src/',
