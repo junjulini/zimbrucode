@@ -53,10 +53,17 @@ zc.module.panel.addControl(function($, panel, global) {
                 g.settings.input.on('input', function(event) {
                     event.preventDefault();
                     /* Act on the event */
-        
+
                     var value = $(this).val();
-        
-                    if (value.match(/^\d+$/) && value >= g.settings.min && value <= g.settings.max) {
+                    var rule  = '';
+
+                    if (!isNaN(g.settings.step) && g.settings.step.toString().indexOf('.') != -1) {
+                        rule = /^-?\d*(\.\d+)?$/;
+                    } else {
+                        rule = /^\d+$/;
+                    }
+
+                    if (value.match(rule) && value >= g.settings.min && value <= g.settings.max) {
                         g.settings.ifChangeCallback.call(this, value);
                     } else {
                         g.settings.ifErrorCallback.call(this, value);
