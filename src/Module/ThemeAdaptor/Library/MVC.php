@@ -31,9 +31,26 @@ class MVC
 
     protected $__render;
 
-    public function __construct(string $template, string $locationPath)
+    public function __construct(string $template, string $TA_ViewPath, array $additionalData = [])
     {
-        $this->__render = new Render($template, $locationPath);
+        $this->__render = new Render($template);
+        $this->__render->addLocationPath($TA_ViewPath, 'core');
+
+        // Additional vars
+        if (!empty($additionalData['vars']) && is_array($additionalData['vars'])) {
+            $this->addVars($additionalData['vars']);
+        }
+
+        // Additional functions
+        if (!empty($additionalData['functions']) && is_array($additionalData['functions'])) {
+            foreach ($additionalData['functions'] as $name => $method) {
+                $this->addFunction($name, $method);
+            }
+        }
+
+        $this->addFunction('dfd', function ($id) {
+            return wc_get_product1($id);
+        });
 
         if (Tools::isChildTheme()) {
 
@@ -128,7 +145,7 @@ class MVC
      */
     public function addVars(array $vars): void
     {
-        $this->__render->getVars($vars);
+        $this->__render->addVars($vars);
     }
 
     /**

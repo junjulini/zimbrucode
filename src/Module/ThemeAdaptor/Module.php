@@ -96,9 +96,9 @@ class Module extends ModuleKernel
         return new Render(...$args);
     }
 
-    public function mvc(...$args): MVC
+    public function mvc(string $template, array $additionalData = []): MVC
     {
-        return new MVC(...$args);
+        return new MVC($template, $this->getModuleResourcePath('views'), $additionalData);
     }
 
     public function __filter_register_templates($templates)
@@ -197,7 +197,7 @@ class Module extends ModuleKernel
         $template = apply_filters('zc/module/theme_adaptor/template', $template);
 
         if ($template) {
-            $this->mvc($template, $this->getModuleResourcePath('views'));
+            $this->mvc($template);
             return false;
         } else {
             return $wpTemplate;

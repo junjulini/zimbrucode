@@ -30,19 +30,17 @@ use ZimbruCode\Module\ThemeAdaptor\Library\TwigFunctions;
  */
 class Render
 {
-
     protected $ttb;
     protected $flush;
 
     protected $data = [
-        'functions'     => [],
-        'escapers'      => [],
-        'filters'       => [],
-        'template'      => '',
-        'location-path' => '',
+        'functions' => [],
+        'escapers'  => [],
+        'filters'   => [],
+        'template'  => '',
     ];
 
-    public function __construct(string $template, string $locationPath, bool $directMode = false, bool $flush = true)
+    public function __construct(string $template, string $locationPath = '', bool $flush = true)
     {
         if (!$template) {
             throw new \InvalidArgumentException('Template is empty.');
@@ -51,13 +49,10 @@ class Render
         $this->ttb   = new TwigTemplateBridge;
         $this->flush = $flush;
 
-        $this->data['template']      = $template;
-        $this->data['location-path'] = $locationPath;
+        $this->data['template'] = $template;
 
-        if ($directMode === false) {
-            $this->addLocationPath($this->getLocationPath(), 'core');
-        } else {
-            $this->addLocationPath($this->getLocationPath());
+        if ($locationPath) {
+            $this->addLocationPath($locationPath);
             $this->setupEnvironment();
         }
     }
@@ -233,7 +228,7 @@ class Render
         return $this->data['location-path'];
     }
 
-    public function getTemplate(): string 
+    public function getTemplate(): string
     {
         return $this->data['template'];
     }

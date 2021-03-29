@@ -178,7 +178,7 @@ class TwigTemplateBridge
      */
     public function addVars(array $vars): void
     {
-        $this->data['vars'] = $vars;
+        $this->data['vars'] = Tools::arrayMerge($this->data['vars'], $vars);
     }
 
     /**
