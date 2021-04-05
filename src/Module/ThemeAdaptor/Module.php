@@ -59,10 +59,19 @@ class Module extends ModuleKernel
             foreach ((new Finder)->files()->in($dir) as $file) {
                 if (strpos($file->getBasename(), $prefix) !== false) {
                     $path = wp_normalize_path($file->getPathname());
+
+                    if (!preg_match('|Template Name:(.*)$|mi', file_get_contents($path), $header)) {
+                        continue;
+                    }
+
+                    if (empty($header[1]) || $header[1] == ' ') {
+                        continue;
+                    }
+
                     $hash = $slug . '_template_' . md5($path);
 
                     $this->templates[$hash] = [
-                        'name' => ucfirst(str_replace([$prefix, '-', '_'], ['', ' ', ' '], $file->getBasename('.twig'))),
+                        'name' => $header[1],
                         'file' => $path,
                     ];
                 }
@@ -74,10 +83,19 @@ class Module extends ModuleKernel
                 foreach ((new Finder)->files()->in($dir) as $file) {
                     if (strpos($file->getBasename(), $prefix) !== false) {
                         $path = wp_normalize_path($file->getPathname());
+
+                        if (!preg_match('|Template Name:(.*)$|mi', file_get_contents($path), $header)) {
+                            continue;
+                        }
+    
+                        if (empty($header[1]) || $header[1] == ' ') {
+                            continue;
+                        }
+
                         $hash = $slug . '_template_' . md5($path);
 
                         $this->templates[$hash] = [
-                            'name' => ucfirst(str_replace([$prefix, '-', '_'], ['', ' ', ' '], $file->getBasename('.twig'))),
+                            'name' => $header[1],
                             'file' => $path,
                         ];
                     }
