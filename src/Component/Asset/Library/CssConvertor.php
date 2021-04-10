@@ -116,14 +116,16 @@ class CssConvertor
                 $clean = str_replace(['"', "'"], '', $item);
 
                 if (Tools::isLocalURL($clean) || Tools::isLocalPath($clean)) {
+                    $path = Tools::getPath($clean);
+
                     $data['search'][]  = $clean;
-                    $absPath           = Tools::getPath($clean);
-                    $data['replace'][] = Tools::getRelativePath($this->output, $absPath);
+                    $data['replace'][] = Tools::getRelativePath($this->output, $path);
                 } elseif (strpos($clean, 'data:') === false && !Tools::isURL($clean)) {
-                    if (strpos($clean, '/')) {
+                    $path = realpath(dirname($this->asset) . '/' . $clean);
+
+                    if ($path) {
                         $data['search'][]  = $clean;
-                        $absPath           = dirname($this->asset) . '/' . $clean;
-                        $data['replace'][] = Tools::getRelativePath($this->output, $absPath);
+                        $data['replace'][] = Tools::getRelativePath($this->output, $path);
                     }
                 }
             }

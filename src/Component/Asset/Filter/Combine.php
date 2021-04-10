@@ -87,7 +87,7 @@ class Combine extends Filter
      */
     protected function prepCSSAssets(): void
     {
-        $output  = "{$this->varPath}/{$this->data['settings']['css']['outputName']}.css";
+        $output  = "{$this->varPath}/{$this->data['settings']['css']['output-name']}.css";
         $minify  = $this->data['settings']['css']['minify'];
         $convert = $this->data['settings']['css']['convert'];
 
@@ -176,7 +176,7 @@ class Combine extends Filter
     protected function prepJavaScriptAssets(): void
     {
         $suffix     = ($this->data['settings']['js']['minify']) ? '.min.js' : '.js';
-        $output     = $this->varPath . '/' . $this->data['settings']['js']['outputName'] . $suffix;
+        $output     = $this->varPath . '/' . $this->data['settings']['js']['output-name'] . $suffix;
         $minify     = $this->data['settings']['js']['minify'];
         $minifyType = $this->data['settings']['js']['minify-type'];
 

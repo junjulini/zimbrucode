@@ -40,14 +40,14 @@ return [
         ],
         'combine'   => [
             'js'  => [
-                'outputName'  => 'app/combine-file',
+                'output-name' => 'app/combine-file',
                 'minify'      => false,
                 'minify-type' => 'local', // "local" or "remote"
             ],
             'css' => [
-                'outputName' => 'app/combine-file',
-                'minify'     => false,
-                'convert'    => true,
+                'output-name' => 'app/combine-file',
+                'minify'      => false,
+                'convert'     => true,
             ],
         ],
         'namespace' => [
