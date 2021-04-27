@@ -186,9 +186,9 @@ class PageMode extends Mode
         $title  = "<span class=\"ab-icon {$this->getModuleSetting('menu-icon')}\"></span>";
         $title .= "<span class=\"ab-label\">{$this->getModuleSetting('menu-title')}</span>";
 
-        $menuItems = [];
+        $menuItems = self::service('fast-cache')->get('module/panel/bar-render', []);
 
-        if (!$menuItems = self::service('fast-cache')->get('module/panel/bar-render')) {
+        if (!$menuItems) {
             foreach ($this->getBuildSettings() as $setting) {
                 if (!isset($setting['type'])) {
                     continue;

@@ -37,7 +37,12 @@ class ScssCompiler
     public $dev    = false; // When DEV is true, cache sys. not used
 
     // Other
-    protected $data = [];
+    protected $data = [
+        'custom-dirs'      => [],
+        'namespaces'       => [],
+        'additional-files' => [],
+        'functions'        => [],
+    ];
 
     /**
      * Add import directory
@@ -139,14 +144,15 @@ class ScssCompiler
         $assetCache->addSetting('check-asset-count', false);
         $assetCache->addPath($cachePath);
 
-        $md5Vars         = md5(wp_json_encode($this->vars));
+        $md5Vars = md5(wp_json_encode($this->vars));
+        $md5AF   = md5(wp_json_encode($this->data['additional-files']));
         $executeLocation = $assetCache->addExecuteLocation(__CLASS__);
 
         // Callback : Check output file if exist and vars if is different
-        $assetCache->addCheckFunction(function (array $args) use ($outputPath, $executeLocation, $md5Vars): bool {
+        $assetCache->addCheckFunction(function (array $args) use ($outputPath, $md5Vars, $md5AF, $executeLocation): bool {
             if (!file_exists($outputPath)) {
                 if (Kernel::dev()) {
-                    $msg = "Asset - {$executeLocation}/Cache : Additional checking functions : {$outputPath} : file output not found.";
+                    $msg = "Asset - {$executeLocation}/Cache : Additional checking : {$outputPath} : output file not found.";
                     Kernel::dev()->addWarningMessage($msg);
                 }
 
@@ -155,7 +161,16 @@ class ScssCompiler
 
             if (empty($args['md5-vars']) || $args['md5-vars'] != $md5Vars) {
                 if (Kernel::dev()) {
-                    $msg = "Asset - {$executeLocation}/Cache : Additional checking functions : SCSS vars is different.";
+                    $msg = "Asset - {$executeLocation}/Cache : Additional checking : The list of vars is different.";
+                    Kernel::dev()->addWarningMessage($msg);
+                }
+
+                return true;
+            }
+
+            if (empty($args['md5-af']) || $args['md5-af'] != $md5AF) {
+                if (Kernel::dev()) {
+                    $msg = "Asset - {$executeLocation}/Cache : Additional checking : The list of additional files is different.";
                     Kernel::dev()->addWarningMessage($msg);
                 }
 
@@ -325,6 +340,7 @@ class ScssCompiler
             $assetCache->addAssets($parsedFiles);
             $assetCache->build([
                 'md5-vars' => $md5Vars,
+                'md5-af'   => $md5AF,
             ]);
         }
 
