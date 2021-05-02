@@ -18,8 +18,7 @@
 
 'use strict';
 
-zc.module.panel.addControl(function($, panel) {
-
+zc.module.panel.addControl(($, panel) => {
     $('.zc-panel-control-tab').on('click', '.zc-panel-control-tab__element', function(event) {
         event.preventDefault();
         /* Act on the event */
@@ -28,7 +27,6 @@ zc.module.panel.addControl(function($, panel) {
         $(this).addClass('zc-panel-control-tab__element_active');
 
         $(this).parent().parent().find('.zc-panel-control-tab__section_active').removeClass('zc-panel-control-tab__section_active');
-        $(this).parent().parent().find('.zc-panel-control-tab__section[data-id="' + $(this).data('id') + '"]').addClass('zc-panel-control-tab__section_active');
+        $(this).parent().parent().find(`.zc-panel-control-tab__section[data-id="${$(this).data('id')}"]`).addClass('zc-panel-control-tab__section_active');
     });
-
 });

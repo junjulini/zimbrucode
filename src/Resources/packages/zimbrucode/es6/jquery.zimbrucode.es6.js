@@ -51,7 +51,7 @@ class ZimbruCode {
      */
     addModule(name, module) {
         this.initModuleData(name);
-        this.module[name] = new module($);
+        this.module[name] = module($);
     }
 
     /**

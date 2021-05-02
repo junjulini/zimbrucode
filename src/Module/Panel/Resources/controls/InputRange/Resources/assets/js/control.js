@@ -18,17 +18,16 @@
 
 'use strict';
 
-zc.module.panel.addControl(function($, panel, global) {
-
-    var control = {};
+zc.module.panel.addControl(($, panel, global) => {
+    const control = {};
 
     control.containerLBClass      = 'zc-panel-control-range__container_lb';
     control.leftIndicatorClass    = 'zc-panel-control-range__indicator_left';
     control.currentIndicatorClass = 'zc-panel-control-range__indicator_current';
     control.rightIndicatorClass   = 'zc-panel-control-range__indicator_right';
 
-    control.inputNumber = function (settings) {
-        var internFunctions = {
+    control.inputNumber = (settings) => {
+        const internFunctions = {
             settings: {
                 input: false,
                 buttonInc: false,
@@ -36,10 +35,10 @@ zc.module.panel.addControl(function($, panel, global) {
                 min: 1,
                 max: 100,
                 step: 1,
-                ifIncCallback: function () {},
-                ifDecCallback: function () {},
-                ifChangeCallback: function () {},
-                ifErrorCallback: function () {}
+                ifIncCallback:    () => {},
+                ifDecCallback:    () => {},
+                ifChangeCallback: () => {},
+                ifErrorCallback:  () => {}
             },
     
             addSettings: function(settings) {
@@ -48,14 +47,14 @@ zc.module.panel.addControl(function($, panel, global) {
             },
     
             manualInput: function() {
-                var g = this;
+                const g = this;
     
                 g.settings.input.on('input', function(event) {
                     event.preventDefault();
                     /* Act on the event */
 
-                    var value = $(this).val();
-                    var rule  = '';
+                    let value = $(this).val();
+                    let rule  = '';
 
                     if (!isNaN(g.settings.step) && g.settings.step.toString().indexOf('.') != -1) {
                         rule = /^-?\d*(\.\d+)?$/;
@@ -72,7 +71,7 @@ zc.module.panel.addControl(function($, panel, global) {
             },
     
             manualScroll: function() {
-                var g = this;
+                const g = this;
     
                 g.settings.input.on('wheel', function(event) {
                     if ($(this).is(':focus')) {
@@ -101,17 +100,17 @@ zc.module.panel.addControl(function($, panel, global) {
             },
     
             buttonInc: function () {
-                var g = this;
-                var to = null;
-                var int = null;
+                const g = this;
+                let to  = null;
+                let int = null;
             
-                g.settings.buttonInc.on('mousedown', function (event) {
+                g.settings.buttonInc.on('mousedown', (event) => {
                     event.preventDefault();
                     /* Act on the event */
 
                     $(g.settings.input).blur();
         
-                    var value = g.settings.input.val();
+                    let value = g.settings.input.val();
 
                     value = parseFloat(value) + parseFloat(g.settings.step);
                     value = zc.round(value, 3);
@@ -120,8 +119,8 @@ zc.module.panel.addControl(function($, panel, global) {
                         g.settings.ifIncCallback.call(this, value);
                     }
         
-                    to = setTimeout(function () {
-                        int = setInterval(function () {
+                    to = setTimeout(() => {
+                        int = setInterval(() => {
                             
                             value = parseFloat(value) + parseFloat(g.settings.step);
                             value = zc.round(value, 3);
@@ -132,24 +131,24 @@ zc.module.panel.addControl(function($, panel, global) {
         
                         }, 75);
                     }, 500);
-                }).on('mouseup', function () {
+                }).on('mouseup', () => {
                     clearTimeout(to);
                     clearInterval(int);
                 });
             },
     
             buttonDec: function() {
-                var g = this;
-                var to = null;
-                var int = null;
+                const g = this;
+                let to  = null;
+                let int = null;
     
-                g.settings.buttonDec.on('mousedown', function (event) {
+                g.settings.buttonDec.on('mousedown', (event) => {
                     event.preventDefault();
                     /* Act on the event */
 
                     $(g.settings.input).blur();
         
-                    var value = g.settings.input.val();
+                    let value = g.settings.input.val();
                     
                     value = parseFloat(value) - parseFloat(g.settings.step);
                     value = zc.round(value, 3);
@@ -158,8 +157,8 @@ zc.module.panel.addControl(function($, panel, global) {
                         g.settings.ifDecCallback.call(this, value);
                     }
         
-                    to = setTimeout(function () {
-                        int = setInterval(function () {
+                    to = setTimeout(() => {
+                        int = setInterval(() => {
                             
                             value = parseFloat(value) - parseFloat(g.settings.step);
                             value = zc.round(value, 3);
@@ -170,7 +169,7 @@ zc.module.panel.addControl(function($, panel, global) {
         
                         }, 75);
                     }, 500);
-                }).on('mouseup', function () {
+                }).on('mouseup', () => {
                     clearTimeout(to);
                     clearInterval(int);
                 });
@@ -184,7 +183,7 @@ zc.module.panel.addControl(function($, panel, global) {
         internFunctions.buttonDec();
     };
 
-    control.inputRange = function(el, mode) {
+    control.inputRange = (el, mode) => {
         zc.inputRange(mode, {
             el: el,
             settings: el.data('settings'),
@@ -196,13 +195,13 @@ zc.module.panel.addControl(function($, panel, global) {
         });
     };
 
-    control.initManualRange = function(el) {
-        var settings = el.data('settings'),
-            titleRangeError = zc.strReplace(['{MIN}', '{MAX}'], [min, max], global['title-range-error']),
+    control.initManualRange = (el) => {
+        let settings = el.data('settings'),
             manualRange = el.parent().parent().find('.zc-panel-control-range__manual-range'),
             min = settings.min || 0,
             max = settings.max || 0,
-            step = settings.step || 1;
+            step = settings.step || 1,
+            titleRangeError = zc.strReplace(['{MIN}', '{MAX}'], [min, max], global['title-range-error']);
 
         control.inputNumber({
             input: manualRange.find('.zc-panel-control-range__manual-range_type_text'),
@@ -211,7 +210,7 @@ zc.module.panel.addControl(function($, panel, global) {
             min: min,
             max: max,
             step: step,
-            ifIncCallback: function (value) {
+            ifIncCallback: (value) => {
                 manualRange.find('.zc-panel-control-range__manual-range_type_text').removeClass('zc-panel-control-range__manual-range_bad-value');
                 manualRange.find('.zc-panel-control-range__manual-range_type_text').attr('title', '');
                 manualRange.find('.zc-panel-control-range__manual-range_type_text').val(value).change();
@@ -219,7 +218,7 @@ zc.module.panel.addControl(function($, panel, global) {
                 control.inputRange(el, 'live');
                 panel.enableSaveButton();
             },
-            ifDecCallback: function (value) {
+            ifDecCallback: (value) => {
                 manualRange.find('.zc-panel-control-range__manual-range_type_text').removeClass('zc-panel-control-range__manual-range_bad-value');
                 manualRange.find('.zc-panel-control-range__manual-range_type_text').attr('title', '');
                 manualRange.find('.zc-panel-control-range__manual-range_type_text').val(value).change();
@@ -227,14 +226,14 @@ zc.module.panel.addControl(function($, panel, global) {
                 control.inputRange(el, 'live');
                 panel.enableSaveButton();
             },
-            ifChangeCallback: function (value) {
+            ifChangeCallback: (value) => {
                 manualRange.find('.zc-panel-control-range__manual-range_type_text').removeClass('zc-panel-control-range__manual-range_bad-value');
                 manualRange.find('.zc-panel-control-range__manual-range_type_text').attr('title', '');
                 el.val(value).change();
                 control.inputRange(el, 'live');
                 panel.enableSaveButton();
             },
-            ifErrorCallback: function (value) {
+            ifErrorCallback: (value) => {
                 manualRange.find('.zc-panel-control-range__manual-range_type_text').addClass('zc-panel-control-range__manual-range_bad-value');
                 manualRange.find('.zc-panel-control-range__manual-range_type_text').attr('title', titleRangeError);
                 panel.disableSaveButton();
@@ -242,8 +241,8 @@ zc.module.panel.addControl(function($, panel, global) {
         });
     };
 
-    var observer = new IntersectionObserver(function(entries, observer) {
-        entries.forEach(function(entry) {
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
             if (entry.intersectionRatio > 0) {
                 if (!$(entry.target).hasClass('zc-panel-control-range__input_activated')) {
                     $(entry.target).addClass('zc-panel-control-range__input_activated');
@@ -258,9 +257,9 @@ zc.module.panel.addControl(function($, panel, global) {
         threshold: 0.25
     });
 
-    $(window).on('zc/panel/menu/item-change-ICP', function(event, section) {
+    $(window).on('zc/panel/menu/item-change-ICP', (event, section) => {
         if (section) {
-            section.find('.zc-panel-control-range__input').each(function(index, el) {
+            section.find('.zc-panel-control-range__input').each((index, el) => {
                 observer.observe(el);
             });
         }

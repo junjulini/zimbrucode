@@ -18,15 +18,15 @@
 
 'use strict';
 
-zc.module.panel.addControl(function($, panel) {
+zc.module.panel.addControl(($, panel) => {
 
     window.zcPanel_Control_aceEditor = [];
 
     // ACE Editor
-    $(window).on('zc/panel/menu/item-change-ICP', function(event, section) {
-        section.find('.ace-editor').each(function(index, el) {
-            var editor = $(el).data('editor'),
-                aceEditor = ace.edit(editor);
+    $(window).on('zc/panel/menu/item-change-ICP', (event, section) => {
+        section.find('.ace-editor').each((index, el) => {
+            const editor = $(el).data('editor'),
+                  aceEditor = ace.edit(editor);
 
             aceEditor.setTheme('ace/theme/' + $(el).data('theme'));
             aceEditor.getSession().setMode('ace/mode/' + $(el).data('mode'));
@@ -35,7 +35,7 @@ zc.module.panel.addControl(function($, panel) {
                 aceEditor.setReadOnly(true);
             }
 
-            aceEditor.on('change', function(e) {
+            aceEditor.on('change', (e) => {
                 $(el).val(aceEditor.getSession().getValue()).change();
             });
 

@@ -18,8 +18,7 @@
 
 'use strict';
 
-zc.module.panel.addControl(function($, panel) {
-
+zc.module.panel.addControl(($, panel) => {
     $('.zc-panel').on('click', '.zc-panel-control-checkbox__element', function(event) {
         if ($(this).hasClass('zc-panel-control-checkbox__element_active')) {
             $(this).removeClass('zc-panel-control-checkbox__element_active');
@@ -29,5 +28,4 @@ zc.module.panel.addControl(function($, panel) {
             $(this).parent().find('input[type=hidden]').val('on').change();
         }
     });
-
 });

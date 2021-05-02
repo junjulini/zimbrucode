@@ -18,13 +18,11 @@
 
 'use strict';
 
-zc.module.panel.addControl(function($, panel) {
-
+zc.module.panel.addControl(($, panel) => {
     $('.zc-panel-control-toggle').on('click', '.zc-panel-control-toggle__header, .zc-panel-control-toggle__title-container', function(event) {
         event.preventDefault();
         /* Act on the event */
 
         $(this).parent().toggleClass('zc-panel-control-toggle_closed');
     });
-
 });

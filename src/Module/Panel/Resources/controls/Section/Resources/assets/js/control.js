@@ -18,7 +18,7 @@
 
 'use strict';
 
-zc.module.panel.addControl(function($, panel) {
+zc.module.panel.addControl(($, panel) => {
     $('.zc-panel').on('click', '.zc-panel-control-section__close', function(event) {
         event.preventDefault();
         /* Act on the event */

@@ -18,7 +18,7 @@
 
 'use strict';
 
-zc.module.panel.addControl(function($, panel) {
+zc.module.panel.addControl(($, panel) => {
     $('.zc-panel').on('click', '.zc-panel-control-radio__item-element', function(event) {
         event.preventDefault();
         /* Act on the event */
@@ -34,7 +34,7 @@ zc.module.panel.addControl(function($, panel) {
         event.preventDefault();
         /* Act on the event */
 
-        var el = $(this).parent().parent().find('.zc-panel-control-radio__item-element');
+        const el = $(this).parent().parent().find('.zc-panel-control-radio__item-element');
 
         if (!el.hasClass('zc-panel-control-radio__item-element_active')) {
             $(this).parent().parent().parent().find('.zc-panel-control-radio__item-element_active').removeClass('zc-panel-control-radio__item-element_active');

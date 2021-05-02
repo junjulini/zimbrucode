@@ -18,13 +18,13 @@
 
 'use strict';
 
-zc.module.panel.addControl(function($, panel) {
-    var control = {};
+zc.module.panel.addControl(($, panel) => {
+    const control = {};
 
-    control.initColorPicker = function(el) {
-        var settings = el.data('settings') || {};
+    control.initColorPicker = (el) => {
+        const settings = el.data('settings') || {};
 
-        var defaults = {
+        const defaults = {
             size: 2,
             animationSpeed: 0,
             multipleInstances: true,
@@ -39,7 +39,7 @@ zc.module.panel.addControl(function($, panel) {
                 {r: 110, g: 193, b: 102, a: 1},
                 {r: 89, g: 79, b: 79, a: 1}
             ],
-            renderEC: function(colors, mode, options, color) {
+            renderEC: (colors, mode, options, color) => {
                 $(options.patch).parent().find('.zc-panel-control-colorpicker__live-color').css('background', color);
                 $(options.patch).val(color).change();
             }
@@ -48,8 +48,8 @@ zc.module.panel.addControl(function($, panel) {
         el.zcColorPicker($.extend({}, defaults, settings));
     };
 
-    var observer = new IntersectionObserver(function(entries, observer) {
-        entries.forEach(function(entry) {
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
             if (entry.intersectionRatio > 0) {
                 if (!$(entry.target).hasClass('zc-panel-control-colorpicker__input_activated')) {
                     $(entry.target).addClass('zc-panel-control-colorpicker__input_activated');
@@ -63,9 +63,9 @@ zc.module.panel.addControl(function($, panel) {
         threshold: 0.25
     });
 
-    $(window).on('zc/panel/menu/item-change-ICP', function(event, section) {
+    $(window).on('zc/panel/menu/item-change-ICP', (event, section) => {
         if (section) {
-            section.find('.zc-panel-control-colorpicker__input').each(function(index, el) {
+            section.find('.zc-panel-control-colorpicker__input').each((index, el) => {
                 observer.observe(el);
             });
         }

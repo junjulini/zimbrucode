@@ -18,20 +18,17 @@
 
 'use strict';
 
-zc.module.panel.addControl(function($, panel, global) {
-    var control = {};
+zc.module.panel.addControl(($, panel, global) => {
+    const control = {};
 
     control.frame = '';
 
-    control.parseData = function(container) {
+    control.parseData = (container) => {
         if (container && container !== undefined) {
-            var data = [];
-
-            console.log(container);
-            
+            const data = [];
 
             container.find('.zc-panel-control-gallery-type__item').each(function(index, el) {
-                var id = $(this).data('id');
+                const id = $(this).data('id');
 
                 if (id && id !== undefined) {
                     data.push(id);
@@ -44,7 +41,7 @@ zc.module.panel.addControl(function($, panel, global) {
         }
     };
 
-    control.makeSortable = function() {
+    control.makeSortable = () => {
         $('.zc-panel-control-gallery-type__list').sortable({
             opacity: 0.6,
             revert: 300,
@@ -61,7 +58,7 @@ zc.module.panel.addControl(function($, panel, global) {
         event.preventDefault();
         /* Act on the event */
 
-        var $this = $(this);
+        const $this = $(this);
 
         if (control.frame) {
             control.frame.close();
@@ -78,25 +75,25 @@ zc.module.panel.addControl(function($, panel, global) {
             multiple: 'add'
         });
 
-        control.frame.on('select', function() {
-            var data = control.frame.state().get('selection').toJSON();
-            var list = $this.parent().find('.zc-panel-control-gallery-type__list');
+        control.frame.on('select', () => {
+            const data = control.frame.state().get('selection').toJSON();
+            const list = $this.parent().find('.zc-panel-control-gallery-type__list');
 
             if (data && $.isArray(data)) {
-                $.when($.each(data, function (index, attachment) {
+                $.when($.each(data, (index, attachment) => {
                     if (attachment.type == 'image') {
                         list.append(
-                            '<li class="zc-panel-control-gallery-type__item" data-id="'+ attachment.id +'">\
-                                <img src="'+ attachment.sizes.thumbnail.url +'" width="80" height="80" class="zc-panel-control-gallery-type__image-preview">\
-                                <button title="'+ global['button-title-1'] +'" class="zc-panel-control-gallery-type__item-button zc-panel-control-gallery-type__item-button_change-image">\
-                                    <i class="zc-panel-control-gallery-type__item-button-icon zc-icon-brush"></i>\
-                                </button>\
-                                <button title="'+ global['button-title-2'] +'" class="zc-panel-control-gallery-type__item-button zc-panel-control-gallery-type__item-button_remove-image">\
-                                    <i class="zc-panel-control-gallery-type__item-button-icon zc-icon-close"></i>\
-                                </button>\
-                            </li>');
+                            `<li class="zc-panel-control-gallery-type__item" data-id="${attachment.id}">
+                                <img src="${attachment.sizes.thumbnail.url}" width="80" height="80" class="zc-panel-control-gallery-type__image-preview">
+                                <button title="${global['button-title-1']}" class="zc-panel-control-gallery-type__item-button zc-panel-control-gallery-type__item-button_change-image">
+                                    <i class="zc-panel-control-gallery-type__item-button-icon zc-icon-brush"></i>
+                                </button>
+                                <button title="${global['button-title-2']}" class="zc-panel-control-gallery-type__item-button zc-panel-control-gallery-type__item-button_remove-image">
+                                    <i class="zc-panel-control-gallery-type__item-button-icon zc-icon-close"></i>
+                                </button>
+                            </li>`);
                     }
-                })).then(function() {
+                })).then(() => {
                     control.parseData($this.parent());
                 });
             }
@@ -111,8 +108,8 @@ zc.module.panel.addControl(function($, panel, global) {
         event.preventDefault();
         /* Act on the event */
 
-        var $this = $(this);
-        var container = $(this).parent().parent().parent();
+        const $this = $(this);
+        const container = $(this).parent().parent().parent();
 
         if (control.frame) {
             control.frame.close();
@@ -129,8 +126,8 @@ zc.module.panel.addControl(function($, panel, global) {
             multiple: false
         });
 
-        control.frame.on('select', function() {
-            var attachment = control.frame.state().get('selection').first().toJSON();
+        control.frame.on('select', () => {
+            const attachment = control.frame.state().get('selection').first().toJSON();
 
             if (attachment.type == 'image') {
                 $this.parent().data('id', attachment.id);
@@ -147,7 +144,7 @@ zc.module.panel.addControl(function($, panel, global) {
         event.preventDefault();
         /* Act on the event */
 
-        var container = $(this).parent().parent().parent();
+        const container = $(this).parent().parent().parent();
 
         $(this).parent().animate({
             opacity: 0

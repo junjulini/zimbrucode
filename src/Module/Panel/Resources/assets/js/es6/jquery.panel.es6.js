@@ -36,8 +36,7 @@ zc.addModule('panel', ($) => {
             }
 
             panel.checkBrowserCompatibility();
-
-            new panel.mode($, panel);
+            panel.mode($, panel);
         } catch (error) {
             if ($('.zc-panel-template').length > 0) {
                 $('.zc-panel-template').empty().append(`<div class="error notice"><p><b>${panel.getVar('browser-error-title')}</b> : ${error}</p></div>`);

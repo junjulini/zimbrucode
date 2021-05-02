@@ -10,22 +10,13 @@
         "framework"
     ],
     "devDependencies": {
-        "@babel/core": "^7.12.10",
-        "@babel/preset-env": "^7.12.11",
-        "babel-loader": "^8.2.2",
-        "gulp": "^4.0.2",
-        "gulp-notify": "^3.2.0",
-        "gulp-plumber": "^1.2.1",
-        "gulp-rename": "^2.0.0",
-        "gulp-uglify": "^3.0.2",
-        "html-loader": "^0.5.5",
-        "vinyl-named": "^1.1.0",
-        "webpack-stream": "^6.1.2"
+        "glob": "^7.1.6",
+        "html-loader": "^2.1.2",
+        "webpack": "^5.36.1",
+        "webpack-cli": "^4.6.0"
     },
     "scripts": {
-        "build": "gulp",
-        "build:w": "gulp build:w",
-        "build:es6": "gulp build:es6",
-        "build:control": "gulp build:control"
+        "build": "webpack --config webpack.config.js",
+        "build:w": "webpack --watch --config webpack.config.js"
     }
 }
