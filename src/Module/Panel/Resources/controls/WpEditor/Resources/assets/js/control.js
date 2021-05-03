@@ -83,7 +83,7 @@ zc.module.panel.addControl(($, panel) => {
 
     setTimeout(() => {
         if (window.location.href.indexOf('post.php') == -1) {
-            $('.zc-panel .wp-editor-area').each((index, el) => {
+            $('.zc-panel .wp-editor-area').each(function (index, el) {
                 if (window.tinyMCEPreInit.mceInit.content === undefined) {
                     control.initWpEditor($(this));
                 }
