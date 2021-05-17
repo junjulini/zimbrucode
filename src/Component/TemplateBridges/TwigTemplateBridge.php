@@ -331,7 +331,8 @@ class TwigTemplateBridge
         $cache      = ($this->cachePath) ? new FilesystemCache($this->cachePath, FilesystemCache::FORCE_BYTECODE_INVALIDATION) : false;
         $this->twig = new Environment($this->getLoader(), [
             'cache'       => $cache,
-            'auto_reload' => Kernel::dop(true, false),
+            //'auto_reload' => Kernel::dop(true, false),
+            'auto_reload' => true,
         ]);
 
         // Set functions
