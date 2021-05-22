@@ -322,4 +322,13 @@ class AssetManager
 
         return $this;
     }
+
+    public function addScssNamespace(string $namespace, string $location): AssetManager
+    {
+        if ($namespace && $location) {
+            Kernel::addGlobalCache("asset/scss/namespace/{$namespace}", $location);
+        }
+
+        return $this;
+    }
 }
