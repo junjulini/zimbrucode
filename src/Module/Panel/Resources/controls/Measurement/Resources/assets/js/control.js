@@ -35,7 +35,7 @@ zc.module.panel.addControl(($, panel, global) => {
             if (el.find('.zc-panel-control-measurement__container').hasClass('zc-panel-control-measurement__container_only')) {
                 el.find('.zc-panel-control-measurement__unit').text(unit);
             } else {
-                el.find('.zc-panel-control-measurement__select').val(unit).change().trigger("chosen:updated");;
+                el.find('.zc-panel-control-measurement__select').val(unit).change().trigger('chosen:updated');
             }
         } else {
             el.addClass('zc-panel-control-measurement_no-unit');

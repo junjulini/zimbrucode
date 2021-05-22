@@ -18,8 +18,8 @@
 
 'use strict';
 
-zc.module.panel.addControl(function($, panel, global) {
-    $('.zc-panel').on('', '', function(event) {
+zc.module.panel.addControl(($, panel, global) => {
+    $('.zc-panel').on('', '', (event) => {
         event.preventDefault();
         /* Act on the event */
 

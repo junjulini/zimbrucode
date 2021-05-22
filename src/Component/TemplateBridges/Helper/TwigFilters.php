@@ -61,7 +61,7 @@ class TwigFilters
     public function __callback_json_decode(string $json): array
     {
         if ($json) {
-            $data = json_decode($json);
+            $data = json_decode($json, true);
 
             return (json_last_error() == JSON_ERROR_NONE) ? $data : [];
         }
