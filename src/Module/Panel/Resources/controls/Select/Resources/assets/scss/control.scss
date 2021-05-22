@@ -118,6 +118,10 @@
                         background: $accent-color__1;
                         color: #ffffff;
                     }
+
+                    &.disabled-result {
+                        color: #ccc;
+                    }
                 }
             }
         }
