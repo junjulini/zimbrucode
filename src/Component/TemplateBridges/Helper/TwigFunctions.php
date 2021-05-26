@@ -33,20 +33,21 @@ class TwigFunctions
         $ttb->addFunction('_n_noop',  '_n_noop');
         $ttb->addFunction('_nx_noop', '_nx_noop');
 
-        $ttb->addFunction('translate',              'translate');
+        $ttb->addFunction('translate',               'translate');
         $ttb->addFunction('translate_nooped_plural', 'translate_nooped_plural');
 
-        $ttb->addFunction('to_string',   [$this, '__callback_to_string']);
-        $ttb->addFunction('action',      [$this, '__callback_action']);
-        $ttb->addFunction('filter',      [$this, '__callback_filter']);
-        $ttb->addFunction('fn',          [$this, '__callback_fn']);
-        $ttb->addFunction('r_post',      [$this, '__callback_r_post']);
-        $ttb->addFunction('r_get',       [$this, '__callback_r_get']);
-        $ttb->addFunction('dev',         [$this, '__callback_dev']);
-        $ttb->addFunction('get_session', [$this, '__callback_get_session']);
-        $ttb->addFunction('dump',        [$this, '__callback_dump']);
-        $ttb->addFunction('get_HJWEP',   [$this, '__callback_get_HJWEP']);
-        $ttb->addFunction('is_assoc',    [$this, '__callback_is_assoc']);
+        $ttb->addFunction('to_string',    [$this, '__callback_to_string']);
+        $ttb->addFunction('action',       [$this, '__callback_action']);
+        $ttb->addFunction('filter',       [$this, '__callback_filter']);
+        $ttb->addFunction('fn',           [$this, '__callback_fn']);
+        $ttb->addFunction('r_post',       [$this, '__callback_r_post']);
+        $ttb->addFunction('r_get',        [$this, '__callback_r_get']);
+        $ttb->addFunction('dev',          [$this, '__callback_dev']);
+        $ttb->addFunction('get_session',  [$this, '__callback_get_session']);
+        $ttb->addFunction('dump',         [$this, '__callback_dump']);
+        $ttb->addFunction('get_HJWEP',    [$this, '__callback_get_HJWEP']);
+        $ttb->addFunction('is_assoc',     [$this, '__callback_is_assoc']);
+        $ttb->addFunction('do_shortcode', [$this, '__callback_do_shortcode']);
     }
 
     public function __callback_to_string($value): string
@@ -122,7 +123,7 @@ class TwigFunctions
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function __callback_dump(...$args)
+    public function __callback_dump(...$args): void
     {
         if (class_exists('\\Tracy\\Debugger')) {
             array_map('Tracy\Debugger::dump', $args);
@@ -149,5 +150,10 @@ class TwigFunctions
         }
 
         return Tools::arrayIsAssoc($array);
+    }
+
+    public function __callback_do_shortcode(string $content, bool $ignoreHtml = false): void
+    {
+        echo do_shortcode($content, $ignoreHtml);
     }
 }
