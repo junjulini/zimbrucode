@@ -109,8 +109,8 @@ class AppLocatorHandler
 
             // Log
             $log = $this->app->getGlobal('app/log-dir');
-            $this->app->addGlobal('app/log-path', $this->getPath("{$var}{$mid}{$log}"));
-            $this->app->addGlobal('app/log-url', $this->getURL("{$var}{$mid}{$log}"));
+            $this->app->addGlobal('app/log-path', $this->getPath("{$resource}{$mid}{$log}"));
+            $this->app->addGlobal('app/log-url', $this->getURL("{$resource}{$mid}{$log}"));
         }
     }
 

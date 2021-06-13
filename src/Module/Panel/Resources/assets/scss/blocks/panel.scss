@@ -46,6 +46,14 @@
         font-weight: 500;
     }
 
+    code {
+        color: #e83e8c;
+        word-wrap: break-word;
+        font-size: 85%;
+        border-radius: 3px;
+        background: $bg-color__1;
+    }
+
     *::selection {
         background: $accent-color__1;
         color: #ffffff;
