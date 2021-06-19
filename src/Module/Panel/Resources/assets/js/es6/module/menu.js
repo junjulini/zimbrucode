@@ -78,9 +78,9 @@ export default class Menu extends Kernel {
         const menuItem = $(`.zc-panel-menu li[data-menu-item-id="${menuItemID}"]`);
 
         // Add icon
-        const titleIconClass = menuItem.find('i').first().attr('class').match(/\bzc-icon-\S+/g)[0];
+        const titleIconClass = menuItem.find('i').first().attr('class').match(/\bzc-icon\S+/g)[0];
         $('.zc-panel-header__title-icon').removeClass((index, className) => {
-            return (className.match(/\bzc-icon-\S+/g) || []).join(' ');
+            return (className.match(/\bzc-icon\S+/g) || []).join(' ');
         }).addClass(titleIconClass);
 
         // Add title

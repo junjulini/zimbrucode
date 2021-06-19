@@ -35,8 +35,8 @@
                         {% if menu.type == 'menuTab' and menu.id %}
 
                             <li class="zc-panel-menu__item zc-panel-menu__item_type_simple" data-menu-item-id="section_{{ menu.id }}">
-                                {% if menu.ico %}
-                                    <i class="zc-panel-menu__item-icon {{ menu.ico }}"></i>
+                                {% if menu.icon %}
+                                    <i class="zc-panel-menu__item-icon {{ menu.icon }}"></i>
                                 {% endif %}
                                 <span class="zc-panel-menu__item-title">{{ menu.title }}</span>
                             </li>
@@ -44,8 +44,8 @@
                         {# If is parent type #}
                         {% elseif menu.type == 'menuParentTab' and menu.id %}
                             <li class="zc-panel-menu__item zc-panel-menu__item_type_parent zc-panel-menu__item_type_simple" data-menu-container-id="{{ menu.id }}">
-                                {% if menu.ico %}
-                                    <i class="zc-panel-menu__item-icon {{ menu.ico }}"></i>
+                                {% if menu.icon %}
+                                    <i class="zc-panel-menu__item-icon {{ menu.icon }}"></i>
                                 {% endif %}
                                 <span class="zc-panel-menu__item-title">{{ menu.title }}</span>
                                 <i class="zc-panel-menu__item-icon zc-panel-menu__item-icon_pointer zc-icon-chevron-right"></i>
@@ -75,8 +75,8 @@
                 {% if menu.type == 'menuParentTab' and menu.id %}
                     <li class="zc-panel-submenu__container" data-menu-container-id="{{ menu.id }}">
                         <header class="zc-panel-submenu__header-section zc-panel-submenu__header-section_mode_desktop">
-                            {% if menu.ico %}
-                                <i class="zc-panel-submenu__header-icon {{ menu.ico }}"></i>
+                            {% if menu.icon %}
+                                <i class="zc-panel-submenu__header-icon {{ menu.icon }}"></i>
                             {% endif %}
                             <span class="zc-panel-submenu__header-section-title">{{ menu.title }}</span>
                         </header>
@@ -96,8 +96,8 @@
                                         {% if sub_menu.type == 'menuTab' and sub_menu.id %}
                                             
                                             <li class="zc-panel-submenu__item zc-panel-submenu__item_type_simple" data-menu-item-id="section_{{ sub_menu.id }}">
-                                                {% if sub_menu.ico %}
-                                                    <i class="zc-panel-submenu__item-icon {{ sub_menu.ico }}"></i>
+                                                {% if sub_menu.icon %}
+                                                    <i class="zc-panel-submenu__item-icon {{ sub_menu.icon }}"></i>
                                                 {% endif %}
                                                 <span class="zc-panel-submenu__item-title">{{ sub_menu.title }}</span>
                                             </li>
