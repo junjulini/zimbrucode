@@ -136,12 +136,14 @@ class Module extends ModuleKernel
 
     public function __filter_register_templates_files($template)
     {
-        $templates = get_post_meta(get_the_ID(), '_wp_page_template');
+        if (is_singular()) {
+            $templates = get_post_meta(get_the_ID(), '_wp_page_template');
 
-        if (!empty($templates)) {
-            foreach ($templates as $templateHash) {
-                if (isset($this->templates[$templateHash])) {
-                    $template = $this->templates[$templateHash]['file'];
+            if (!empty($templates)) {
+                foreach ($templates as $templateHash) {
+                    if (isset($this->templates[$templateHash])) {
+                        $template = $this->templates[$templateHash]['file'];
+                    }
                 }
             }
         }
