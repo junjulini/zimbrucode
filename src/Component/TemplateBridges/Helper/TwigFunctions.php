@@ -152,7 +152,7 @@ class TwigFunctions
         return Tools::arrayIsAssoc($array);
     }
 
-    public function __callback_do_shortcode(string $content, bool $ignoreHtml = false): void
+    public function __callback_do_shortcode(?string $content = '', bool $ignoreHtml = false): void
     {
         echo do_shortcode($content, $ignoreHtml);
     }
