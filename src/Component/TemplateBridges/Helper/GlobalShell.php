@@ -33,34 +33,36 @@ class GlobalShell
     public function __call(string $name, array $args)
     {
         if (function_exists($name)) {
-            $end = end($args);
+            $lastArg = end($args);
 
-            if (!empty($end) && $end == '{R}') {
-                array_pop($args);
-
-                ob_start();
-                $output = call_user_func_array($name, $args);
-                ob_end_clean();
-
-                return $output;
-            } elseif (!empty($end) && $end == '{E}') {
-                array_pop($args);
-
-                call_user_func_array($name, $args);
-
-                return '';
-            } elseif (!empty($end) && $end == '{ER}') {
-                array_pop($args);
-
-                ob_start();
-                call_user_func_array($name, $args);
-                $output = ob_get_contents();
-                ob_end_clean();
-
-                return $output;
-            } else {
-                return call_user_func_array($name, $args);
+            if (!empty($lastArg)) {
+                if ($lastArg === '{R}') {
+                    array_pop($args);
+    
+                    ob_start();
+                    $output = call_user_func_array($name, $args);
+                    ob_end_clean();
+    
+                    return $output;
+                } elseif ($lastArg === '{E}') {
+                    array_pop($args);
+    
+                    call_user_func_array($name, $args);
+    
+                    return '';
+                } elseif ($lastArg === '{ER}') {
+                    array_pop($args);
+    
+                    ob_start();
+                    call_user_func_array($name, $args);
+                    $output = ob_get_contents();
+                    ob_end_clean();
+    
+                    return $output;
+                }
             }
+
+            return call_user_func_array($name, $args);
         }
     }
 

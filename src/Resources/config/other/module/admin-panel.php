@@ -19,6 +19,8 @@ return [
         'position'           => 3,
         'parent-slug'        => '',
 
+        'bar-render-title'   => esc_html__('Admin panel', 'zc'),
+
         'panel-title'        => esc_html__('Dashboard', 'zc'),
         'panel-title-icon'   => 'zc-icon-polymer',
 

@@ -183,8 +183,8 @@ class PageMode extends Mode
     {
         $slug   = self::getGlobal('core/slug') . '-' . $this->getModuleSetting('slug');
         $target = (!is_admin()) ? '_blank' : '';
-        $title  = "<span class=\"ab-icon {$this->getModuleSetting('menu-icon')}\"></span>";
-        $title .= "<span class=\"ab-label\">{$this->getModuleSetting('menu-title')}</span>";
+        $title  = "<span class=\"ab-icon dashicons-admin-settings\" style=\"padding-top: 6px;\"></span>";
+        $title .= "<span class=\"ab-label\">{$this->getModuleSetting('bar-render-title')}</span>";
 
         $menuItems = self::service('fast-cache')->get('module/panel/bar-render', []);
 

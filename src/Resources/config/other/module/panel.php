@@ -51,6 +51,8 @@ return [
             'sub-menu'             => false,
             'parent-slug'          => false,
 
+            'bar-render-title'     => esc_html__('Test panel', 'zc'),
+
             'panel-title'          => esc_html__('Dashboard', 'zc'),
             'panel-title-icon'     => 'zc-icon-polymer',
 
