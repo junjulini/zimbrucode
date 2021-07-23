@@ -58,7 +58,9 @@ class ControlManager extends ModuleKernel
         Tools::addPsr4($this->namespaces);
 
         foreach ($this->getBuildSettings() as $settings) {
-            $this->search($settings);
+            if (is_array($settings)) {
+                $this->search($settings);
+            }
         }
     }
 
