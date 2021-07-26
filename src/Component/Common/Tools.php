@@ -276,124 +276,113 @@ class Tools
     /**
      * Image resize
      *
-     * @param  integer  $attachID   ID of attach
-     * @param  string   $imgURL     URL of image
+     * @param  mix      $image   ID or URL
+     * @param  bool     $isURL
      * @param  integer  $width
      * @param  integer  $height
      * @param  bool     $crop
-     * @return string               URL of resized image
+     * @return string            URL of resized image
      * @since 1.0.0
      */
-    public static function resizeImg(int $attachID = null, string $imgURL = '', int $width = 9999, int $height = 9999, bool $crop = false)
+    public static function resizeImg($image, bool $isURL = false, int $width = 9999, int $height = 9999, bool $crop = false)
     {
         $filePath = $imageSrc = $extension = $noExtPath = '';
 
-        if ($width !== 'full') {
+        if ($isURL === false) {
+            $imageSrc = wp_get_attachment_image_src($image, 'full');
+            $filePath = get_attached_file($image);
+        } else {
+            $filePath = parse_url($image);
+            $filePath = $_SERVER['DOCUMENT_ROOT'] . $filePath['path'];
+            $origSize = getimagesize($filePath);
 
-            // This is an attachment, so we have the ID
-            if ($attachID) {
-                $imageSrc = wp_get_attachment_image_src($attachID, 'full');
-                $filePath = get_attached_file($attachID);
+            $imageSrc[0] = $image;
+            $imageSrc[1] = $origSize[0];
+            $imageSrc[2] = $origSize[1];
+        }
 
-                // This is not an attachment, let's use the image url
-            } elseif ($imgURL) {
-                $filePath = parse_url($imgURL);
-                $filePath = $_SERVER['DOCUMENT_ROOT'] . $filePath['path'];
-                $origSize = getimagesize($filePath);
+        if ($imageSrc) {
+            $fileInfo = pathinfo($filePath);
 
-                $imageSrc[0] = $imgURL;
-                $imageSrc[1] = $origSize[0];
-                $imageSrc[2] = $origSize[1];
+            if (isset($fileInfo['extension'])) {
+                $extension = ".{$fileInfo['extension']}";
             }
 
-            if ($imageSrc) {
-                $fileInfo = pathinfo($filePath);
+            if (isset($fileInfo['dirname']) && isset($fileInfo['filename'])) {
+                $noExtPath = "{$fileInfo['dirname']}/{$fileInfo['filename']}";
+            }
 
-                if (isset($fileInfo['extension'])) {
-                    $extension = ".{$fileInfo['extension']}";
-                }
+            $croppedImgPath = "{$noExtPath}-{$width}x{$height}{$extension}";
 
-                if (isset($fileInfo['dirname']) && isset($fileInfo['filename'])) {
-                    $noExtPath = "{$fileInfo['dirname']}/{$fileInfo['filename']}";
-                }
+            // checking if the file size is larger than the target size
+            // if it is smaller or the same size, stop right here and return
+            if ($imageSrc[1] > $width || $imageSrc[2] > $height) {
 
-                $croppedImgPath = "{$noExtPath}-{$width}x{$height}{$extension}";
-
-                // checking if the file size is larger than the target size
-                // if it is smaller or the same size, stop right here and return
-                if ($imageSrc[1] > $width || $imageSrc[2] > $height) {
-
-                    // the file is larger, check if the resized version already exists (for $crop = true but will also work for $crop = false if the sizes match)
-                    if (file_exists($croppedImgPath)) {
-                        $croppedImgURL = str_replace(basename($imageSrc[0]), basename($croppedImgPath), $imageSrc[0]);
-                        $finalImage    = [
-                            'url'    => $croppedImgURL,
-                            'width'  => $width,
-                            'height' => $height,
-                        ];
-
-                        return $finalImage;
-                    }
-
-                    // $crop = false
-                    if ($crop === false) {
-
-                        // calculate the size proportionally
-                        $proportionalSize = wp_constrain_dimensions($imageSrc[1], $imageSrc[2], $width, $height);
-                        $resizedImgPath   = "{$noExtPath}-{$proportionalSize[0]}x{$proportionalSize[1]}{$extension}";
-
-                        // checking if the file already exists
-                        if (file_exists($resizedImgPath)) {
-                            $resizedImgURL = str_replace(basename($imageSrc[0]), basename($resizedImgPath), $imageSrc[0]);
-                            $finalImage    = [
-                                'url'    => $resizedImgURL,
-                                'width'  => $proportionalSize[0],
-                                'height' => $proportionalSize[1],
-                            ];
-
-                            return $finalImage;
-                        }
-                    }
-
-                    // no cache files - let's finally resize it
-                    $img = wp_get_image_editor($filePath);
-                    if (!is_wp_error($img)) {
-                        $img->resize($width, $height, $crop);
-                        $savedImg = $img->save();
-                    }
-
-                    if ($savedImg['file']) {
-                        $newImg = str_replace(basename($imageSrc[0]), $savedImg['file'], $imageSrc[0]);
-                    } else {
-                        $newImg = $imageSrc[0];
-                    }
-
-                    // resized output
-                    $finalImage = [
-                        'url'    => $newImg,
-                        'width'  => $savedImg['width'],
-                        'height' => $savedImg['height'],
+                // the file is larger, check if the resized version already exists (for $crop = true but will also work for $crop = false if the sizes match)
+                if (file_exists($croppedImgPath)) {
+                    $croppedImgURL = str_replace(basename($imageSrc[0]), basename($croppedImgPath), $imageSrc[0]);
+                    $finalImage    = [
+                        'url'    => $croppedImgURL,
+                        'width'  => $width,
+                        'height' => $height,
                     ];
 
                     return $finalImage;
                 }
 
-                // default output - without resizing
+                // $crop = false
+                if ($crop === false) {
+
+                    // calculate the size proportionally
+                    $proportionalSize = wp_constrain_dimensions($imageSrc[1], $imageSrc[2], $width, $height);
+                    $resizedImgPath   = "{$noExtPath}-{$proportionalSize[0]}x{$proportionalSize[1]}{$extension}";
+
+                    // checking if the file already exists
+                    if (file_exists($resizedImgPath)) {
+                        $resizedImgURL = str_replace(basename($imageSrc[0]), basename($resizedImgPath), $imageSrc[0]);
+                        $finalImage    = [
+                            'url'    => $resizedImgURL,
+                            'width'  => $proportionalSize[0],
+                            'height' => $proportionalSize[1],
+                        ];
+
+                        return $finalImage;
+                    }
+                }
+
+                // no cache files - let's finally resize it
+                $img = wp_get_image_editor($filePath);
+                if (!is_wp_error($img)) {
+                    $img->resize($width, $height, $crop);
+                    $savedImg = $img->save();
+                }
+
+                if ($savedImg['file']) {
+                    $newImg = str_replace(basename($imageSrc[0]), $savedImg['file'], $imageSrc[0]);
+                } else {
+                    $newImg = $imageSrc[0];
+                }
+
+                // resized output
                 $finalImage = [
-                    'url'    => $imageSrc[0],
-                    'width'  => $imageSrc[1],
-                    'height' => $imageSrc[2],
+                    'url'    => $newImg,
+                    'width'  => $savedImg['width'],
+                    'height' => $savedImg['height'],
                 ];
 
                 return $finalImage;
-            } else {
-                return ['url' => ''];
             }
+
+            // default output - without resizing
+            $finalImage = [
+                'url'    => $imageSrc[0],
+                'width'  => $imageSrc[1],
+                'height' => $imageSrc[2],
+            ];
+
+            return $finalImage;
         } else {
-            // this is an attachment, so we have the ID
-            if ($attachID) {
-                return wp_get_attachment_image_src($attachID, 'full');
-            }
+            return ['url' => ''];
         }
     }
 
