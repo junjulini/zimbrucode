@@ -288,7 +288,7 @@ class ModuleLoader
                     }
 
                     break;
-                case 'front-end':
+                case 'not-admin':
                     if (!is_admin()) {
                         return $this->prepModuleData();
                     }

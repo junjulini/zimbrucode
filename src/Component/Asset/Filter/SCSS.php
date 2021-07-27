@@ -117,7 +117,7 @@ class SCSS extends Filter
                             if (is_admin()) {
                                 $run = true;
                             }
-                        } elseif ($restriction === 'app') {
+                        } elseif ($restriction === 'not-admin') {
                             if (!is_admin()) {
                                 $run = true;
                             }
