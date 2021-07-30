@@ -38,12 +38,12 @@ class Cookie
         switch ($filter) {
             case 'serialize':
                 $raw = unserialize($_COOKIE[$name]);
-                return ($raw !== null) ? $raw : $default;
+                return $raw ?: $default;
                 break;
 
             case 'json':
                 $raw = json_decode(stripslashes($_COOKIE[$name]));
-                return ($raw !== null) ? $raw : $default;
+                return $raw ?: $default;
                 break;
 
             default:

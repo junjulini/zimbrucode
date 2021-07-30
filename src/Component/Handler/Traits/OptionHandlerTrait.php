@@ -73,9 +73,9 @@ trait OptionHandlerTrait
             if (!$type) {
                 return (self::getOption($option, '', $ao)) ? true : false;
             } elseif ($type === true) {
-                return (self::getOption($option, '', $ao) === true) ? true : false;
+                return (self::getOption($option, '', $ao) === true);
             } elseif (is_string($type)) {
-                return (self::getOption($option, '', $ao) == $type) ? true : false;
+                return (self::getOption($option, '', $ao) == $type);
             } else {
                 return false;
             }
@@ -95,7 +95,7 @@ trait OptionHandlerTrait
      */
     public static function getMeta(string $meta = null, $default = '', int $id = null)
     {
-        $id   = ($id) ? $id : get_the_ID();
+        $id   = $id ?: get_the_ID();
         $data = Kernel::getGlobalCache("meta-data/{$id}");
 
         if ($data === false) {

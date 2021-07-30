@@ -91,7 +91,7 @@ class CssConvertor
             throw new \RuntimeException('Asset is empty.');
         }
 
-        return ($this->content) ? $this->content : file_get_contents($this->asset);
+        return $this->content ?: file_get_contents($this->asset);
     }
 
     /**

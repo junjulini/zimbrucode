@@ -564,7 +564,7 @@ class Tools
 
         $extension = strtolower(pathinfo($image, PATHINFO_EXTENSION));
 
-        return (in_array($extension, $extensions) and in_array($mime, $mimes)) ? true : false;
+        return (in_array($extension, $extensions) and in_array($mime, $mimes));
     }
 
     /**
@@ -683,7 +683,7 @@ class Tools
         $output = '';
 
         if ($path && ABSPATH) {
-            $path        = ($path) ? $path : ((!empty(debug_backtrace()[0]['file'])) ? debug_backtrace()[0]['file'] : __FILE__);
+            $path        = $path ?: ((!empty(debug_backtrace()[0]['file'])) ? debug_backtrace()[0]['file'] : __FILE__);
             $path        = wp_normalize_path(realpath($path));
             $templateDir = wp_normalize_path(ABSPATH);
 
@@ -732,7 +732,7 @@ class Tools
             $path        = wp_normalize_path($path);
             $templateDir = wp_normalize_path($_SERVER['DOCUMENT_ROOT']);
 
-            return (0 === strpos($path, $templateDir)) ? true : false;
+            return (0 === strpos($path, $templateDir));
         }
 
         return false;
@@ -772,7 +772,7 @@ class Tools
 
             $path = wp_normalize_path($path);
 
-            return (strpos($path, $root) !== false) ? true : false;
+            return (strpos($path, $root) !== false);
         }
 
         return false;
@@ -788,7 +788,7 @@ class Tools
     public static function isLocalURL(string $url): bool
     {
         if ($url) {
-            return (strpos($url, get_site_url()) !== false) ? true : false;
+            return (strpos($url, get_site_url()) !== false);
         }
 
         return false;
@@ -823,8 +823,9 @@ class Tools
                 // Fetch the key and value string.
                 $i = 0;
                 foreach (['key', 'value1', 'value2', 'value3'] as $var) {
-                    $$var = isset($match[++$i]) ? $match[$i] : '';
+                    $$var = $match[$i] ?: '';
                 }
+
                 $value = stripslashes(substr($value1, 1, -1)) . stripslashes(substr($value2, 1, -1)) . $value3;
 
                 // Parse array syntax.

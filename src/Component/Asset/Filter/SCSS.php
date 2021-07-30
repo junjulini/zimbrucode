@@ -101,7 +101,7 @@ class SCSS extends Filter
             if (!empty($vars)) {
                 foreach ($vars as $item) {
                     if (!empty($item['vars'])) {
-                        $restriction = (isset($item['restriction'])) ? $item['restriction'] : '';
+                        $restriction = $item['restriction'] ?? '';
 
                         if (!empty($item['asset-name']) && is_string($item['asset-name'])) {
                             $assetName = str_replace('\\', '/', $item['asset-name']);

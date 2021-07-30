@@ -58,7 +58,7 @@ class NamespaceHandler
      */
     public function is(): bool
     {
-        return (substr($this->namespace, 0, 2) == $this->namespaceSymbol) ? true : false;
+        return (substr($this->namespace, 0, 2) == $this->namespaceSymbol);
     }
 
     /**

@@ -309,7 +309,7 @@ class AssetData
 
     public function fileType()
     {
-        return ($this->type()) ? $this->type() : $this->info()->getExtension();
+        return $this->type() ?: $this->info()->getExtension();
     }
 
     /**

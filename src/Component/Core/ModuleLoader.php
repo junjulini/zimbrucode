@@ -407,7 +407,7 @@ class ModuleLoader
         if ($mode === 'init') {
             $this->isGroup = true;
         } else if ($mode === 'check') {
-            return ($this->isGroup === true) ? true : false;
+            return ($this->isGroup === true);
         } else if ($mode === 'add') {
             $this->group[] = $module;
         } else if ($mode === 'run') {
