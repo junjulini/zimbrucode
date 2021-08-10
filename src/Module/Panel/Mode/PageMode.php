@@ -166,7 +166,8 @@ class PageMode extends Mode
             $this->getModuleSetting('menu-title'),
             $this->getModuleSetting('capability'),
             $this->getModuleSetting('menu-slug'),
-            [$this, '__callback_html_structure']
+            [$this, '__callback_html_structure'],
+            $this->getModuleSetting('position')
         );
 
         do_action('zc/module/panel/mode/page/submenu');

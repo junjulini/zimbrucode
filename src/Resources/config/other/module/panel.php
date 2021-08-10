@@ -42,7 +42,7 @@ return [
         'page'      => [
             'slug'                 => 'test',
             'nonce'                => 'panel_mode__page',
-            'capability'           => 'edit_themes',
+            'capability'           => 'edit_theme_options',
             'page-title'           => 'Test panel',
             'menu-title'           => 'Test panel',
             'menu-slug'            => 'test_panel',
@@ -126,7 +126,7 @@ return [
         'page-lite' => [
             'slug'                 => 'test_panel',
             'nonce'                => 'panel_mode__page_lite',
-            'capability'           => 'edit_themes',
+            'capability'           => 'edit_theme_options',
             'page-title'           => 'Test panel',
             'menu-title'           => 'Test panel',
             'menu-slug'            => 'test_panel',

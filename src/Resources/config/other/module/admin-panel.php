@@ -14,7 +14,7 @@ return [
         'mode'               => 'page',
         'slug'               => 'admin',
         'nonce'              => 'panel_mode__admin',
-        'capability'         => 'edit_themes',
+        'capability'         => 'edit_theme_options',
         'menu-icon'          => 'dashicons-hammer',
         'position'           => 3,
         'parent-slug'        => '',
