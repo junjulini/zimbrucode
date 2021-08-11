@@ -1,1 +1,1 @@
-Experimental WP Framework based on PSR patterns, TWIG, SCSS, ES6+
+WordPress Framework based on PSR patterns, TWIG, SCSS, ES6+

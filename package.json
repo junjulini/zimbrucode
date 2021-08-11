@@ -1,13 +1,15 @@
 {
     "name": "zimbrucode",
     "version": "1.0.0",
-    "description": "ZimbruCode FrameWork",
+    "description": "ZimbruCode Framework",
     "author": "Junjulini",
-    "homepage": "https://junjulini.com",
+    "homepage": "https://github.com/junjulini/zimbrucode",
     "license": "GPL-2.0",
     "keywords": [
+        "framework",
         "wordpress",
-        "framework"
+        "zimbrucode",
+        "zc"
     ],
     "devDependencies": {
         "glob": "^7.1.6",
