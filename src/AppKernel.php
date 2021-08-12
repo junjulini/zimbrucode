@@ -25,7 +25,7 @@ use ZimbruCode\Component\Handler\DBHandler;
  *
  * @author  Junjulini
  * @package ZimbruCode
- * @since   ZimbruCode 1.0.0
+ * @since   ZimbruCode 1.0.1
  */
 abstract class AppKernel extends Kernel
 {
@@ -248,7 +248,7 @@ abstract class AppKernel extends Kernel
      * Set default app configs
      *
      * @return void   This function does not return a value
-     * @since 1.0.0
+     * @since 1.0.1
      */
     private function __defaultAppConfig(): void
     {

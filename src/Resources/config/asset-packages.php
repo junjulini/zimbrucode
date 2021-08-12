@@ -36,7 +36,7 @@ return [
                         return "{$path}/packages/zimbrucode/jquery.zimbrucode.js";
                     }
                 })(),
-                'version' => '1.0.0',
+                'version' => '1.0.1',
             ],
         ],
     ],

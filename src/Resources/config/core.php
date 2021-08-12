@@ -10,7 +10,7 @@
  */
 
 return [
-    'version'    => ($version = '1.0.0'),
+    'version'    => ($version = '1.0.1'),
     'slug'       => ($slug = 'zc'),
     'name'       => 'ZimbruCode',
 
