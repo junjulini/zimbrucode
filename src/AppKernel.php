@@ -256,11 +256,17 @@ abstract class AppKernel extends Kernel
         if (self::getGlobal('app/mode') === 'theme') {
             $pref = self::getGlobal('core/slug');
 
+            $td = wp_get_theme();
+
+            if ($td->parent()) {
+                $td = $td->parent();
+            }
+
             // Theme details
-            self::addGlobalCache('theme-details', ($td = wp_get_theme()));
+            self::addGlobalCache('theme-details', $td);
 
             // Theme name
-            self::addGlobal('app/name', ($tn = $td->get('Name')));
+            self::addGlobal('app/name', $td->get('Name'));
 
             // Theme slug
             self::addGlobal('app/slug', $pref . '_' . str_replace(['-', ' '], '_', strtolower($td->get('Name'))));
