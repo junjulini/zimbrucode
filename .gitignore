@@ -1,4 +1,7 @@
 node_modules/
+composer.lock
+package-lock.json
 ehthumbs.db
 Thumbs.db
+_DelSyncFiles
 .*
