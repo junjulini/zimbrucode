@@ -19,7 +19,7 @@ use ZimbruCode\Component\TemplateBridges\TwigTemplateBridge;
  *
  * @author  Junjulini
  * @package ZimbruCode
- * @since   ZimbruCode 1.0.0
+ * @since   ZimbruCode 1.0.2
  */
 trait RenderTrait
 {
