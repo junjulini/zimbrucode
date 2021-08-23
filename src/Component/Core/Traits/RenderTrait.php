@@ -30,7 +30,7 @@ trait RenderTrait
      * @param  array   $vars       Additional vars
      * @param  bool    $return     Return content or echo
      * @return string              HTML output
-     * @since 1.0.0
+     * @since 1.0.2
      */
     protected function render(string $template = '', array $vars = [], bool $return = false, callable $renderCallback = null)
     {
@@ -58,9 +58,13 @@ trait RenderTrait
             if (Tools::isLocalPath($template) && file_exists($template)) {
                 $output = $renderTemplate(basename($template), dirname($template));
             } else {
-                $locationPath = $this->getModulePath() . self::getGlobal('core/component/core/module/resource-dir') . '/views';
+                $locationPath = '';
 
-                if (method_exists($this, 'getModulePath') && file_exists("{$locationPath}/{$template}")) {
+                if (method_exists($this, 'getModulePath')) {
+                    $locationPath = $this->getModulePath() . self::getGlobal('core/component/core/module/resource-dir') . '/views';
+                }
+
+                if (file_exists("{$locationPath}/{$template}")) {
                     $output = $renderTemplate($template, $locationPath);
                 } elseif (file_exists(self::service('app-locator')->getViewPath($template))) {
                     $output = $renderTemplate($template, self::service('app-locator')->getViewPath());
