@@ -11,7 +11,6 @@
 
 namespace ZimbruCode\Component\Developer;
 
-use ZimbruCode\Component\Common\Tools;
 use ZimbruCode\Component\Core\Kernel;
 
 /**
@@ -19,7 +18,7 @@ use ZimbruCode\Component\Core\Kernel;
  *
  * @author  Junjulini
  * @package ZimbruCode
- * @since   ZimbruCode 1.0.0
+ * @since   ZimbruCode 1.0.3
  */
 class MemoryUsage
 {
@@ -55,12 +54,12 @@ class MemoryUsage
      * Converted memory
      *
      * @return void   This function does not return a value
-     * @since 1.0.0
+     * @since 1.0.3
      */
     public function display(): void
     {
         if (Kernel::dev()) {
-            Kernel::dev()->addInfoMessage(self::$marker, Tools::convertSize($this->segs()));
+            Kernel::dev()->addInfoMessage(self::$marker, size_format($this->segs()));
         }
     }
 }

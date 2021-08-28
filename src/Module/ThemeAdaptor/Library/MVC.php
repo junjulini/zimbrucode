@@ -23,7 +23,7 @@ use ZimbruCode\Component\Handler\Traits\SessionHandlerTrait;
  *
  * @author  Junjulini
  * @package ZimbruCode
- * @since   ZimbruCode 1.0.0
+ * @since   ZimbruCode 1.0.3
  */
 class MVC
 {
@@ -47,10 +47,6 @@ class MVC
                 $this->addFunction($name, $method);
             }
         }
-
-        $this->addFunction('dfd', function ($id) {
-            return wc_get_product1($id);
-        });
 
         if (Tools::isChildTheme()) {
 

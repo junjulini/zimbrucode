@@ -19,7 +19,7 @@ use ZimbruCode\Component\Core\Kernel;
  *
  * @author  Junjulini
  * @package ZimbruCode
- * @since   ZimbruCode 1.0.0
+ * @since   ZimbruCode 1.0.3
  */
 class Tools
 {
@@ -614,20 +614,6 @@ class Tools
         }
 
         return str_replace(' ', $replace, $input);
-    }
-
-    /**
-     * Convertor size
-     *
-     * @param  integer $size
-     * @return string
-     * @since 1.0.0
-     */
-    public static function convertSize(int $size): string
-    {
-        $unit = ['Bits', 'Kb', 'Mb', 'Gb', 'Tb', 'Pb'];
-
-        return @round($size / pow(1024, ($i = floor(log($size, 1024)))), 2) . ' ' . $unit[$i];
     }
 
     /**
