@@ -64,28 +64,14 @@
     }
 
     &[data-width|="mode-3"] {
+        position: sticky;
         min-height: $panel__min-height;
-        position: fixed;
-        left: 180px;
-        right: 0px;
-        top: 52px;
-        bottom: 42px;
-
-        &.zc-panel_wp-menu-folded {
-            left: 56px;
-        }
+        height: calc(100vh - 94px);
 
         &.zc-panel_disable-height-fixed {
             position: relative;
-            left: auto;
-            right: auto;
-            top: auto !important;
-            bottom: auto;
+            height: auto;
         }
-    }
-
-    &[data-width|="mode-1"], &[data-width|="mode-2"] {
-        top: auto !important;
     }
 }
 
