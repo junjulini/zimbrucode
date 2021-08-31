@@ -10,6 +10,8 @@
  */
 
 return [
+    'db-name'          => 'module.panel',
+
     'mode'             => [
         'page'      => 'ZimbruCode\\Module\\Panel\\Mode\\PageMode',
         'page-lite' => 'ZimbruCode\\Module\\Panel\\Mode\\LiteMode',

@@ -24,13 +24,13 @@ use ZimbruCode\Module\Panel\Library\Mode;
  */
 class Backup extends Kernel
 {
-    protected $mode      = false;
-    protected $backupKey = false;
+    protected $mode         = false;
+    protected $backupDbName = false;
 
     public function __construct(Mode $mode)
     {
-        $this->mode      = $mode;
-        $this->backupKey = $this->mode->getModuleSetting('backup/key');
+        $this->mode         = $mode;
+        $this->backupDbName = $this->mode->getModuleSetting('backup/db-name');
 
         // Ajax
         $this->addAjax("zc/module/metabox_panel/backup_{$this->mode->getModuleSetting('slug')}", '__ajax_backup');
@@ -65,7 +65,7 @@ class Backup extends Kernel
         $list  = '';
         $count = 0;
 
-        if ($data = self::service('db')->get($this->backupKey)) {
+        if ($data = self::service('db')->get($this->backupDbName)) {
             if (!empty($data[$pageType])) {
                 $count = count($data[$pageType]);
                 foreach ($data[$pageType] as $key => $value) {
@@ -97,13 +97,13 @@ class Backup extends Kernel
         if ($metaData = get_post_meta($ajax->post('id'), "_{$this->getGlobal('core/module/metabox-panel/meta-container-slug')}", true)) {
             $backupName = md5($ajax->post('backup_name'));
 
-            if ($data = self::service('db')->get($this->backupKey)) {
+            if ($data = self::service('db')->get($this->backupDbName)) {
                 if (!empty($data[$pageType][$backupName])) {
                     if ($data[$pageType][$backupName]['data'] != $metaData) {
                         $data[$pageType][$backupName]['data'] = $metaData;
 
                         // If has but different data
-                        if (self::service('db')->add($this->backupKey, $data, true, false)) {
+                        if (self::service('db')->add($this->backupDbName, $data, true, false)) {
                             $ajax->add('result', 'success')
                                  ->send();
                         } else {
@@ -123,11 +123,11 @@ class Backup extends Kernel
                     ];
 
                     // If not has
-                    if (self::service('db')->add($this->backupKey, $data, true, false)) {
+                    if (self::service('db')->add($this->backupDbName, $data, true, false)) {
                         $ajax->add('result', 'success')
                              ->add('change', [
-                                'count' => count($data[$pageType]),
-                                'item'  => $this->getItemContent($backupName, $ajax->post('backup_name')),
+                                 'count' => count($data[$pageType]),
+                                 'item'  => $this->getItemContent($backupName, $ajax->post('backup_name')),
                              ])
                              ->send();
                     } else {
@@ -147,11 +147,11 @@ class Backup extends Kernel
                 ];
 
                 // If data is empty
-                if (self::service('db')->add($this->backupKey, $data, true, false)) {
+                if (self::service('db')->add($this->backupDbName, $data, true, false)) {
                     $ajax->add('result', 'success')
                          ->add('change', [
-                            'count' => 1,
-                            'item'  => $this->getItemContent($backupName, $ajax->post('backup_name')),
+                             'count' => 1,
+                             'item'  => $this->getItemContent($backupName, $ajax->post('backup_name')),
                          ])
                          ->send();
                 } else {
@@ -177,11 +177,11 @@ class Backup extends Kernel
      */
     protected function delete(AjaxHandler $ajax, string $pageType): void
     {
-        if ($data = self::service('db')->get($this->backupKey)) {
+        if ($data = self::service('db')->get($this->backupDbName)) {
             if (!empty($data[$pageType])) {
                 $data[$pageType] = [];
 
-                if (self::service('db')->add($this->backupKey, $data, true, false)) {
+                if (self::service('db')->add($this->backupDbName, $data, true, false)) {
                     $ajax->add('result', 'success')->send();
                 } else {
                     $ajax->add('result', 'failure')->send();
@@ -204,11 +204,11 @@ class Backup extends Kernel
      */
     protected function deleteItem(AjaxHandler $ajax, string $pageType): void
     {
-        if ($data = self::service('db')->get($this->backupKey)) {
+        if ($data = self::service('db')->get($this->backupDbName)) {
             if (!empty($data[$pageType][$ajax->post('backup_name')])) {
                 unset($data[$pageType][$ajax->post('backup_name')]);
 
-                if (self::service('db')->add($this->backupKey, $data, true, false)) {
+                if (self::service('db')->add($this->backupDbName, $data, true, false)) {
                     $ajax->add('result', 'success')
                          ->add('count', count($data[$pageType]))
                          ->send();
@@ -235,7 +235,7 @@ class Backup extends Kernel
      */
     protected function restore(AjaxHandler $ajax, string $pageType): void
     {
-        if ($data = self::service('db')->get($this->backupKey)) {
+        if ($data = self::service('db')->get($this->backupDbName)) {
             if (!empty($data[$pageType][$ajax->post('backup_name')])) {
                 $bdData = $data[$pageType][$ajax->post('backup_name')]['data'];
 

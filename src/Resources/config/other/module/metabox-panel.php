@@ -36,7 +36,7 @@ return [
         'panel-backup-button'  => true,
 
         'backup'               => [
-            'key' => 'module.metabox_panel.backup',
+            'db-name' => 'module.metabox_panel.backup',
         ],
 
         'custom-control-shell' => 'ZimbruCode\\Module\\MetaboxPanel\\Helper\\ControlShell',

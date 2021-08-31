@@ -32,7 +32,7 @@ trait OptionHandlerTrait
     private static function __prepOption(string $option): string
     {
         if (strrpos($option, '/') === false) {
-            $slug   = 'module.panel.' . Kernel::getGlobal('core/module/admin-panel/settings/slug') . '/';
+            $slug   = Kernel::getGlobal('core/module/panel/db-name') .'.'. Kernel::getGlobal('core/module/admin-panel/settings/slug') . '/';
             $option = $slug . $option;
         }
 

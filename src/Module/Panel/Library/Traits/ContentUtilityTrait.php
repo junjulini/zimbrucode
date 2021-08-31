@@ -85,7 +85,9 @@ trait ContentUtilityTrait
             $options[$key] = stripslashes_deep($option);
         }
 
-        return self::service('db')->add("module.panel.{$this->getModuleSetting('slug')}", $options, true);
+        $dbName = self::getGlobal('core/module/panel/db-name');
+
+        return self::service('db')->add("{$dbName}.{$this->getModuleSetting('slug')}", $options, true);
     }
 
     /**
@@ -117,7 +119,8 @@ trait ContentUtilityTrait
      */
     public function remOptions(): bool
     {
-        return self::service('db')->remove("module.panel.{$this->getModuleSetting('slug')}", true);
+        $dbName = self::getGlobal('core/module/panel/db-name');
+        return self::service('db')->remove("{$dbName}.{$this->getModuleSetting('slug')}", true);
     }
 
     /**
@@ -129,7 +132,8 @@ trait ContentUtilityTrait
      */
     public function getOptions($default = ''): array
     {
-        return self::service('db')->get("module.panel.{$this->getModuleSetting('slug')}", $default);
+        $dbName = self::getGlobal('core/module/panel/db-name');
+        return self::service('db')->get("{$dbName}.{$this->getModuleSetting('slug')}", $default);
     }
 
     /**
@@ -149,7 +153,9 @@ trait ContentUtilityTrait
                 $option = str_replace($prefix, '', $option);
             }
 
-            return self::service('db')->get("module.panel.{$this->getModuleSetting('slug')}/{$option}", $default);
+            $dbName = self::getGlobal('core/module/panel/db-name');
+
+            return self::service('db')->get("{$dbName}.{$this->getModuleSetting('slug')}/{$option}", $default);
         }
     }
 }
