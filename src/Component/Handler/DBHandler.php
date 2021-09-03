@@ -26,13 +26,18 @@ class DBHandler
     protected $data      = [];
     protected $tableName = false;
 
-    public function __construct()
+    public function __construct(string $tableName = '')
     {
         if (!$slug = esc_sql(Kernel::getGlobal('app/slug'))) {
             throw new \RuntimeException('App slug not defined.');
         }
 
-        $this->tableName = Kernel::service('wpdb')->prefix . $slug;
+        if ($tableName) {
+            $this->tableName = Kernel::service('wpdb')->prefix . $slug .'_'. $tableName;
+        } else {
+            $this->tableName = Kernel::service('wpdb')->prefix . $slug;
+        }
+
         $check = strcasecmp(Kernel::service('wpdb')->get_var("SHOW TABLES LIKE '{$this->tableName}'"), $this->tableName);
 
         $this->checkError();
