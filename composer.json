@@ -12,10 +12,15 @@
     "license": "GPL-2.0",
     "authors": [
         {
-            "name": "Junjulini",
-            "homepage": "https://junjulini.com"
+            "name": "C.R",
+            "homepage": "https://github.com/const513",
+            "role": "Developer"
         }
     ],
+    "support": {
+        "issues": "https://github.com/junjulini/zimbrucode/issues",
+        "source": "https://github.com/junjulini/zimbrucode"
+      },
     "require": {
         "php": ">=7.2.5",
         "twig/twig": "^3.1",
