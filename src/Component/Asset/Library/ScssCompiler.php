@@ -249,7 +249,7 @@ class ScssCompiler
             }
 
             // Vars
-            $compiler->setVariables($this->vars);
+            $compiler->addVariables($this->vars);
 
             // Preparing import dirs
             $importDirs = Kernel::getGlobalCache('asset/scss/import-dirs', []);
@@ -268,20 +268,20 @@ class ScssCompiler
             $defaultFunctions = (new ScssDefaultFunctions)->get();
             if ($defaultFunctions && is_array($defaultFunctions)) {
                 foreach ($defaultFunctions as $name => $method) {
-                    $compiler->registerFunction($name, $method);
+                    $compiler->registerFunction($name, $method, '');
                 }
             }
 
             $globalFunctions = Kernel::getGlobalCache('asset/scss/functions');
             if ($globalFunctions && is_array($globalFunctions)) {
                 foreach ($globalFunctions as $name => $method) {
-                    $compiler->registerFunction($name, $method);
+                    $compiler->registerFunction($name, $method, '');
                 }
             }
 
             if (!empty($this->data['functions'])) {
                 foreach ($this->data['functions'] as $name => $method) {
-                    $compiler->registerFunction($name, $method);
+                    $compiler->registerFunction($name, $method, '');
                 }
             }
 
@@ -325,23 +325,19 @@ class ScssCompiler
                 }
             }
 
-            // Output
-            Tools::fWrite($outputPath, $compiler->compile($content, $inputPath));
-        }
+            $compileResult = $compiler->compileString($content, $inputPath);
 
-        // Build cache
-        if ($buildCache === true) {
-            $parsedFiles = [];
-
-            foreach ($compiler->getParsedFiles() as $file => $v) {
-                $parsedFiles[] = $file;
+            // Build cache
+            if ($buildCache === true) {
+                $assetCache->addAssets($compileResult->getIncludedFiles());
+                $assetCache->build([
+                    'md5-vars' => $md5Vars,
+                    'md5-af'   => $md5AF,
+                ]);
             }
 
-            $assetCache->addAssets($parsedFiles);
-            $assetCache->build([
-                'md5-vars' => $md5Vars,
-                'md5-af'   => $md5AF,
-            ]);
+            // Output
+            Tools::fWrite($outputPath, $compileResult->getCss());
         }
 
         // Remove cache
