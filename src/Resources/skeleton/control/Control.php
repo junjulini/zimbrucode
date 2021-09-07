@@ -18,7 +18,7 @@ use ZimbruCode\Module\Panel\Library\ControlKernel;
  *
  * @author  {APP-AUTHOR}
  * @package {APP-NAME}
- * @since   {APP-NAME} {APP-VERSION}
+ * @since   {APP-VERSION}
  */
 class Control extends ControlKernel
 {

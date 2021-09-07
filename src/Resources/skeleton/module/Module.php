@@ -18,7 +18,7 @@ use ZimbruCode\Component\Core\ModuleKernel;
  *
  * @author  {APP-AUTHOR}
  * @package {APP-NAME}
- * @since   {APP-NAME} {APP-VERSION}
+ * @since   {APP-VERSION}
  */
 class Module extends ModuleKernel
 {
