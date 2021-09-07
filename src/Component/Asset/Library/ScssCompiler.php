@@ -13,6 +13,7 @@ namespace ZimbruCode\Component\Asset\Library;
 
 use ScssPhp\ScssPhp\Compiler;
 use ScssPhp\ScssPhp\OutputStyle;
+use ScssPhp\ScssPhp\ValueConverter;
 use ZimbruCode\Component\Asset\Library\AssetCache;
 use ZimbruCode\Component\Common\Tools;
 use ZimbruCode\Component\Core\Kernel;
@@ -144,8 +145,8 @@ class ScssCompiler
         $assetCache->addSetting('check-asset-count', false);
         $assetCache->addPath($cachePath);
 
-        $md5Vars = md5(wp_json_encode($this->vars));
-        $md5AF   = md5(wp_json_encode($this->data['additional-files']));
+        $md5Vars         = md5(wp_json_encode($this->vars));
+        $md5AF           = md5(wp_json_encode($this->data['additional-files']));
         $executeLocation = $assetCache->addExecuteLocation(__CLASS__);
 
         // Callback : Check output file if exist and vars if is different
@@ -202,7 +203,7 @@ class ScssCompiler
         if (!$this->dev) {
             if ($assetCache->check()) {
                 $runCompiler = true;
-                $buildCache = true;
+                $buildCache  = true;
             }
         } else {
             $runCompiler = true;
@@ -228,7 +229,7 @@ class ScssCompiler
 
                 if (0 === strpos($outputPath, $templateDir)) {
                     $folder = str_replace($templateDir, '', $outputPath);
-    
+
                     if ('.' != $folder) {
                         $outputURL = trim(get_site_url(null, $folder), '/');
 
@@ -237,7 +238,7 @@ class ScssCompiler
                             'sourceMapRootpath' => content_url('/'),
                             'sourceMapBasepath' => WP_CONTENT_DIR,
                             'sourceMapWriteTo'  => $fileInfo($outputPath)['file-path'],
-                            'sourceMapURL'      => $fileInfo($outputURL)['file-path']
+                            'sourceMapURL'      => $fileInfo($outputURL)['file-path'],
                         ]);
                     }
                 }
@@ -249,7 +250,9 @@ class ScssCompiler
             }
 
             // Vars
-            $compiler->addVariables($this->vars);
+            $compiler->addVariables(array_map(function ($var) {
+                return ValueConverter::fromPhp($var);
+            }, $this->vars));
 
             // Preparing import dirs
             $importDirs = Kernel::getGlobalCache('asset/scss/import-dirs', []);
@@ -329,7 +332,10 @@ class ScssCompiler
 
             // Build cache
             if ($buildCache === true) {
-                $assetCache->addAssets($compileResult->getIncludedFiles());
+                $files   = (array) $compileResult->getIncludedFiles();
+                $files[] = $inputPath;
+
+                $assetCache->addAssets($files);
                 $assetCache->build([
                     'md5-vars' => $md5Vars,
                     'md5-af'   => $md5AF,
