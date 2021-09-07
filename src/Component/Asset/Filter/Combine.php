@@ -16,7 +16,6 @@ use MatthiasMullie\Minify\JS as MinifyJS;
 use ZimbruCode\Component\Asset\Library\AssetCache;
 use ZimbruCode\Component\Asset\Library\CssConvertor;
 use ZimbruCode\Component\Asset\Library\Filter;
-use ZimbruCode\Component\Asset\Library\RemoteMinify;
 use ZimbruCode\Component\Common\Tools;
 use ZimbruCode\Component\Core\Kernel;
 
@@ -175,10 +174,9 @@ class Combine extends Filter
      */
     protected function prepJavaScriptAssets(): void
     {
-        $suffix     = ($this->data['settings']['js']['minify']) ? '.min.js' : '.js';
-        $output     = $this->varPath . '/' . $this->data['settings']['js']['output-name'] . $suffix;
-        $minify     = $this->data['settings']['js']['minify'];
-        $minifyType = $this->data['settings']['js']['minify-type'];
+        $suffix = ($this->data['settings']['js']['minify']) ? '.min.js' : '.js';
+        $output = $this->varPath . '/' . $this->data['settings']['js']['output-name'] . $suffix;
+        $minify = $this->data['settings']['js']['minify'];
 
         $this->cache     = new AssetCache;
         $executeLocation = $this->cache->addExecuteLocation(__CLASS__);
@@ -222,13 +220,9 @@ class Combine extends Filter
                 }
 
                 if ($minify) {
-                    if ($minifyType == 'remote') {
-                        $content = (new RemoteMinify)->minify('js', $content);
-                    } else {
-                        $minifier = new MinifyJS;
-                        $minifier->add($content);
-                        $content = $minifier->minify();
-                    }
+                    $minifier = new MinifyJS;
+                    $minifier->add($content);
+                    $content = $minifier->minify();
                 }
 
                 $data = [

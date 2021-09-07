@@ -12,10 +12,11 @@
 namespace ZimbruCode\Component\Composer;
 
 use Composer\Script\Event;
+use MatthiasMullie\Minify\CSS as MinifyCSS;
+use MatthiasMullie\Minify\JS as MinifyJS;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
-use ZimbruCode\Component\Asset\Utility\RemoteMinify;
 
 /**
  * Class : Script handler
@@ -524,13 +525,18 @@ class ScriptHandler
             return;
         }
 
-        $rm = new RemoteMinify;
         $fi = new \SplFileInfo($path);
 
         if ($fi->getExtension() == 'css') {
-            file_put_contents("{$fi->getPath()}/{$name}", $rm->minify('css', file_get_contents($path)));
+            $tool = new MinifyCSS;
+            $tool->add(file_get_contents($path));
+
+            file_put_contents("{$fi->getPath()}/{$name}", $tool->minify());
         } elseif ($fi->getExtension() == 'js') {
-            file_put_contents("{$fi->getPath()}/{$name}", $rm->minify('js', file_get_contents($path)));
+            $tool = new MinifyJS;
+            $tool->add(file_get_contents($path));
+
+            file_put_contents("{$fi->getPath()}/{$name}", $tool->minify());
         }
     }
 }

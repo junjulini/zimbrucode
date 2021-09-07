@@ -42,7 +42,6 @@ return [
             'js'  => [
                 'output-name' => 'app/combine-file',
                 'minify'      => false,
-                'minify-type' => 'local', // "local" or "remote"
             ],
             'css' => [
                 'output-name' => 'app/combine-file',
@@ -78,11 +77,6 @@ return [
             'woff' => 'data:application/x-font-woff',
         ],
         'import-size' => 3, # import size of files in kb
-    ],
-
-    'remote-minify'             => [
-        'css-server' => '',
-        'js-server'  => '',
     ],
 
     'fw-search-point'           => 'zimbrucode/src/',
