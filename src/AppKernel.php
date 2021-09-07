@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the ZimbruCode package.
+ * This file is part of the zimbrucode package.
  *
  * (c) Junjulini
  *
@@ -23,9 +23,9 @@ use ZimbruCode\Component\Handler\DBHandler;
 /**
  * Class : Application Kernel
  *
- * @author  Junjulini
- * @package ZimbruCode
- * @since   ZimbruCode 1.0.1
+ * @author  C.R <cr@junjulini.com>
+ * @package zimbrucode
+ * @since   1.0.1
  */
 abstract class AppKernel extends Kernel
 {

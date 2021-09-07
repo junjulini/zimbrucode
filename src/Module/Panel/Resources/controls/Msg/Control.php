@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the ZimbruCode package.
+ * This file is part of the zimbrucode package.
  *
  * (c) Junjulini
  *
@@ -16,9 +16,9 @@ use ZimbruCode\Module\Panel\Library\ControlKernel;
 /**
  * Panel control : Msg
  *
- * @author  Junjulini
- * @package ZimbruCode
- * @since   ZimbruCode 1.0.0
+ * @author  C.R <cr@junjulini.com>
+ * @package zimbrucode
+ * @since   1.0.0
  */
 class Control extends ControlKernel
 {

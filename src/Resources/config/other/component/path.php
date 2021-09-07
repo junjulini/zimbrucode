@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the ZimbruCode package.
+ * This file is part of the zimbrucode package.
  *
  * (c) Junjulini
  *

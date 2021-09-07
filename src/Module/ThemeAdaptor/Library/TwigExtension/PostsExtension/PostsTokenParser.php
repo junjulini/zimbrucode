@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the ZimbruCode package.
+ * This file is part of the zimbrucode package.
  *
  * (c) Junjulini
  *
@@ -18,9 +18,9 @@ use Twig\TokenParser\AbstractTokenParser;
 /**
  * Twig token parser class : Posts
  *
- * @author  Junjulini
- * @package ZimbruCode
- * @since   ZimbruCode 1.0.0
+ * @author  C.R <cr@junjulini.com>
+ * @package zimbrucode
+ * @since   1.0.0
  */
 class PostsTokenParser extends AbstractTokenParser
 {

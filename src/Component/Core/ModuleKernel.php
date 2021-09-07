@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the ZimbruCode package.
+ * This file is part of the zimbrucode package.
  *
  * (c) Junjulini
  *
@@ -20,9 +20,9 @@ use ZimbruCode\Component\Core\Traits\RenderTrait;
 /**
  * Class : Module kernel
  *
- * @author  Junjulini
- * @package ZimbruCode
- * @since   ZimbruCode 1.0.0
+ * @author  C.R <cr@junjulini.com>
+ * @package zimbrucode
+ * @since   1.0.0
  */
 abstract class ModuleKernel extends Kernel
 {

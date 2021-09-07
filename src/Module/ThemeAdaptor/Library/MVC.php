@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the ZimbruCode package.
+ * This file is part of the zimbrucode package.
  *
  * (c) Junjulini
  *
@@ -21,9 +21,9 @@ use ZimbruCode\Component\Handler\Traits\SessionHandlerTrait;
 /**
  * Class : MVC : The controller that handles the model and view layers to work together
  *
- * @author  Junjulini
- * @package ZimbruCode
- * @since   ZimbruCode 1.0.3
+ * @author  C.R <cr@junjulini.com>
+ * @package zimbrucode
+ * @since   1.0.3
  */
 class MVC
 {
