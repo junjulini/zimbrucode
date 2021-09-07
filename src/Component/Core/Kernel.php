@@ -82,10 +82,10 @@ abstract class Kernel extends GlobalDataOperator
      * @return object             Service object
      * @since 1.0.0
      */
-    final public static function service(string $service, $handler = false)
+    final public static function service(string $service, object $handler = null)
     {
         if ($service) {
-            if ($handler && is_object($handler)) {
+            if ($handler) {
                 if (!self::getGlobalCache("services/{$service}")) {
                     self::addGlobalCache("services/{$service}", $handler);
                 } else {

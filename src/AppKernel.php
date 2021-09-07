@@ -43,7 +43,7 @@ abstract class AppKernel extends Kernel
      * @return void                        This function does not return a value
      * @since 1.0.0
      */
-    final public function __construct(string $slug, string $mode = 'theme', bool $dev = false, string $rootPath = '', bool $session = false, ClassLoader $composer)
+    final public function __construct(string $slug, string $mode = 'theme', bool $dev = false, string $rootPath = '', bool $session = false, ClassLoader $composer = null)
     {
         // Checking doubling of application
         $this->__checkAppDuplicate($slug);

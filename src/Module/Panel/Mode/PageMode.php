@@ -180,7 +180,7 @@ class PageMode extends Mode
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function __action_bar_render($wpAdminBar): void
+    public function __action_bar_render(object $wpAdminBar): void
     {
         $slug   = self::getGlobal('core/slug') . '-' . $this->getModuleSetting('slug');
         $target = (!is_admin()) ? '_blank' : '';

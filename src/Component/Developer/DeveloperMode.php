@@ -101,7 +101,7 @@ class DeveloperMode
      * @return void           This function does not return a value
      * @since 1.0.0
      */
-    public function dump(string $title = 'DEV-MSG', array $data): void
+    public function dump(string $title = 'DEV-MSG', array $data = null): void
     {
         if (!$this->isDev) {
             return;

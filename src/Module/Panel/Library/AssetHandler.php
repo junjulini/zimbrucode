@@ -183,7 +183,7 @@ class AssetHandler
             }
         }
 
-        $callbackForScssRender = function (string $type = '', object $collector, object $scss): void {
+        $callbackForScssRender = function (string $type = '', object $collector = null, object $scss = null): void {
             if (isset($type)) {
                 if ($type == 'scss-2') {
                     if (!empty($this->scssData['files'])) {

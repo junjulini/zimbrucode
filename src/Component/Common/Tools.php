@@ -1032,7 +1032,7 @@ class Tools
         }
     }
 
-    public static function removeClassAction(string $tag, string $class = '', $method, $priority = null)
+    public static function removeClassAction(string $tag, string $class = '', $method = null, $priority = null)
     {
         global $wp_filter;
 

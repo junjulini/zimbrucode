@@ -80,7 +80,7 @@ class NamespaceHandler
      * @return NamespaceHandler object
      * @since 1.0.0
      */
-    public function add(string $namespace = '', AssetDataCollector $collector): NamespaceHandler
+    public function add(string $namespace = '', AssetDataCollector $collector = null): NamespaceHandler
     {
         if (empty($namespace)) {
             $namespace = Kernel::getGlobal('core/component/asset/filter/namespace/global-namespace');
