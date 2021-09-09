@@ -30,6 +30,12 @@
 @import 'blocks/header/direct-notification.scss'; // Block : Direct notification
 @import 'blocks/header/popup-notification.scss';  // Block : Popup notification
 
+#wpbody-content {
+    .notice {
+        margin: 20px 20px 0 0;
+    }
+}
+
 .zc-panel-template {
     position: relative;
 
