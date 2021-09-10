@@ -168,6 +168,13 @@ abstract class AppKernel extends Kernel
         if ($mode === 'before') {
             self::service('composer', $composer);
             self::service('app-locator', new AppLocatorHandler($this, $rootPath, $slug));
+
+            $td = wp_get_theme();
+            if ($td->parent()) {
+                $td = $td->parent();
+            }
+
+            self::service('theme-details', $td);
         } elseif ($mode === 'after') {
             self::service('db', new DBHandler);
             self::service('fast-cache', new FastCache);
@@ -255,15 +262,7 @@ abstract class AppKernel extends Kernel
         // Theme mode
         if (self::getGlobal('app/mode') === 'theme') {
             $pref = self::getGlobal('core/slug');
-
-            $td = wp_get_theme();
-
-            if ($td->parent()) {
-                $td = $td->parent();
-            }
-
-            // Theme details
-            self::addGlobalCache('theme-details', $td);
+            $td   = self::service('theme-details');
 
             // Theme name
             self::addGlobal('app/name', $td->get('Name'));
