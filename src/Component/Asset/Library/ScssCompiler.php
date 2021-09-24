@@ -251,7 +251,7 @@ class ScssCompiler
 
             // Vars
             $compiler->addVariables(array_map(function ($var) {
-                return ValueConverter::fromPhp($var);
+                return ValueConverter::parseValue($var);
             }, $this->vars));
 
             // Preparing import dirs
