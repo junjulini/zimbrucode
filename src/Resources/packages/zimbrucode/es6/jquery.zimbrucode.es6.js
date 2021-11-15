@@ -875,6 +875,42 @@ class ZimbruCode {
             }
         }
     }
+
+    event(url, config) {
+        const urlHandler = new URL(url);
+
+        if (config.data !== undefined) {
+            $.each(config.data, (key, value) => {
+                urlHandler.searchParams.append(key, value);
+            });
+        }
+
+        const evtSource = new window.EventSource(urlHandler.href);
+
+        if (config.listener !== undefined) {
+            if ($.isFunction(config.listener)) {
+                evtSource.addEventListener('message', (event) => {
+                    const response = JSON.parse(event.data);
+
+                    config.listener(response, evtSource);
+                });
+            } else if (typeof config.listener === 'object') {
+                $.each(config.listener, (key, callback) => {
+                    evtSource.addEventListener(key, (event) => {
+                        const response = JSON.parse(event.data);
+    
+                        callback(response, evtSource);
+                    });
+                });
+            }
+        }
+
+        if (config.error !== undefined) {
+            evtSource.onerror = (error) => {
+                config.error(error);
+            };
+        }
+    }
 }
 
 // Initialization of class : ZimbruCode
