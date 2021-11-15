@@ -89,6 +89,11 @@ class AppLocatorHandler
                     $cache = $this->app->getGlobal('app/cache-dir');
                     $this->app->addGlobal('app/cache-path', "{$varsDirPath}/{$mid}{$cache}{$env}");
                     $this->app->addGlobal('app/cache-url', "{$varsDirURL}/{$mid}{$cache}{$env}");
+
+                    // Temp
+                    $temp = $this->app->getGlobal('app/temp-dir');
+                    $this->app->addGlobal('app/temp-path', "{$varsDirPath}/{$mid}{$temp}{$env}");
+                    $this->app->addGlobal('app/temp-url', "{$varsDirURL}/{$mid}{$temp}{$env}");
     
                     // Log
                     $log = $this->app->getGlobal('app/log-dir');
@@ -107,10 +112,15 @@ class AppLocatorHandler
             $this->app->addGlobal('app/cache-path', $this->getPath("{$var}{$mid}{$cache}{$env}"));
             $this->app->addGlobal('app/cache-url', $this->getURL("{$var}{$mid}{$cache}{$env}"));
 
+            // Temp
+            $temp = $this->app->getGlobal('app/temp-dir');
+            $this->app->addGlobal('app/temp-path', $this->getPath("{$var}{$mid}{$temp}{$env}"));
+            $this->app->addGlobal('app/temp-url', $this->getURL("{$var}{$mid}{$temp}{$env}"));
+
             // Log
             $log = $this->app->getGlobal('app/log-dir');
-            $this->app->addGlobal('app/log-path', $this->getPath("{$resource}{$mid}{$log}"));
-            $this->app->addGlobal('app/log-url', $this->getURL("{$resource}{$mid}{$log}"));
+            $this->app->addGlobal('app/log-path', $this->getPath("{$var}{$mid}{$log}"));
+            $this->app->addGlobal('app/log-url', $this->getURL("{$var}{$mid}{$log}"));
         }
     }
 
@@ -264,6 +274,30 @@ class AppLocatorHandler
     public function getCacheURL(string $url = ''): string
     {
         return esc_url($this->app->getGlobal('app/cache-url') . $url);
+    }
+
+    /**
+     * Get temp path
+     *
+     * @param  string $path   Additional part of path
+     * @return string         Temp path
+     * @since 1.0.0
+     */
+    public function getTempPath(string $path = ''): string
+    {
+        return wp_normalize_path($this->app->getGlobal('app/temp-path') . $path);
+    }
+
+    /**
+     * Get temp URL
+     *
+     * @param  string $url   Additional part of URL
+     * @return string        Temp URL
+     * @since 1.0.0
+     */
+    public function getTempURL(string $url = ''): string
+    {
+        return esc_url($this->app->getGlobal('app/temp-url') . $url);
     }
 
     /**

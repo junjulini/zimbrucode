@@ -10,8 +10,11 @@
  */
 
 return [
-    'mode'                   => 'theme', # mode of app ( theme / plugin )
-    'modes'                  => ['theme', 'plugin'], # permitted modes
+    # mode of app ( theme / plugin )
+    'mode'                   => 'theme',
+
+    # permitted modes
+    'modes'                  => ['theme', 'plugin'],
 
     'module-namespace-dir'   => 'Module',
 
@@ -28,16 +31,18 @@ return [
     'url'                    => false,
     'resource-path'          => false,
     'resource-url'           => false,
-    'cache-path'             => false,
-    'cache-url'              => false,
     'var-path'               => false,
     'var-url'                => false,
+    'cache-path'             => false,
+    'cache-url'              => false,
+    'temp-path'              => false,
+    'temp-url'               => false,
+    'log-path'               => false,
+    'log-url'                => false,
     'asset-path'             => false,
     'asset-url'              => false,
     'config-path'            => false,
     'config-url'             => false,
-    'log-path'               => false,
-    'log-url'                => false,
     'model-path'             => false,
     'model-url'              => false,
     'view-path'              => false,
@@ -47,6 +52,7 @@ return [
     'resource-dir'           => 'Resources/',
     'var-dir'                => 'Resources/var/',
     'cache-dir'              => 'cache/',
+    'temp-dir'               => 'temp/',
     'log-dir'                => 'logs/',
     'asset-dir'              => 'Resources/assets/',
     'config-dir'             => 'Resources/config/',
