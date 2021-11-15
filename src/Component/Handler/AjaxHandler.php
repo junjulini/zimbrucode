@@ -130,8 +130,12 @@ class AjaxHandler
      * @return void
      * @since 1.0.0
      */
-    public function send(): void
+    public function send(array $data = []): void
     {
+        if ($data) {
+            $this->data = $data;
+        }
+
         if ($this->data) {
             wp_send_json($this->data);
         }
