@@ -130,10 +130,16 @@ class AjaxHandler
      * @return void
      * @since 1.0.0
      */
-    public function send(array $data = []): void
+    public function send($data = '', $value = false): void
     {
         if ($data) {
-            $this->data = $data;
+            if (is_string($data) && $value) {
+                $this->data = [
+                    $data => $value,
+                ];
+            } elseif (is_array($data)) {
+                $this->data = $data;
+            }
         }
 
         if ($this->data) {
