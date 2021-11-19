@@ -28,20 +28,30 @@ abstract class ModuleKernel extends Kernel
 {
     use RenderTrait, AssetTrait;
 
-    /**
-     * Module base data
-     *
-     * @var DataCollector
-     */
     private $__DC;
+    private $__MP;
 
-    final public function __construct(DataCollector $collector)
+    final public function __construct(DataCollector $collector, ModuleKernel $moduleParent = null)
     {
         $this->__DC = $collector;
 
         // Set as multi use
         if (isset($this->__multiUse) && $this->__multiUse === true) {
             $this->__DC->add('multi-use', true);
+        }
+
+        // Module parent
+        if ($moduleParent) {
+            $this->__MP = $moduleParent;
+        }
+    }
+
+    final public function moduleParent(): ModuleKernel
+    {
+        if ($this->__MP instanceof ModuleKernel) {
+            return $this->__MP;
+        } else {
+            throw new \RuntimeException('Parent module not initialized');
         }
     }
 
@@ -245,12 +255,12 @@ abstract class ModuleKernel extends Kernel
             throw new \InvalidArgumentException('Module part : empty.');
         }
 
-        if (!(($part = new $part($this->__DC)) instanceof ModuleKernel)) {
+        if (!(($part = new $part($this->__DC, $this)) instanceof ModuleKernel)) {
             throw new \RuntimeException(get_class($part) . ' - this module part not compatible.');
         }
 
         if (method_exists($part, 'setup')) {
-            $part->setup($this, $data);
+            $part->setup($data);
         }
 
         if ($service && !$this->__DC->get("module-services/{$service}")) {
