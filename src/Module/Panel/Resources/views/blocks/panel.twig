@@ -155,8 +155,8 @@
                         {% if panel.getModuleSetting('footer/text') %}
                             <p class="zc-panel-footer__details-container zc-panel-footer__details-container_type_text">{{ panel.getModuleSetting('footer/text')|raw }}</p>
                         {% else %}
-                            {% set url = glob.get('core/author/main-website') ~ '/?utm_source=wp-admin&utm_campaign=theme-uri&utm_medium=wp-dash' %}
-                            <p class="zc-panel-footer__details-container zc-panel-footer__details-container_type_text">{{ __('Designed and Developed by', 'zc') }} <a href="{{ url|e('_url') }}" title="{{ __('Go to Junjulini', 'zc') }}" target="_blank" rel="noopener noreferrer" class="zc-panel-footer__details-container-link">Junjulini</a></p>
+                            {% set url = glob.get('core/author/main-website')|e('_url') ~ '/?utm_source=wp-admin&utm_campaign=theme-uri&utm_medium=wp-dash' %}
+                            <p class="zc-panel-footer__details-container zc-panel-footer__details-container_type_text">{{ __('Designed and Developed by', 'zc') }} <a href="{{ url }}" title="{{ __('Go to Junjulini', 'zc') }}" target="_blank" rel="noopener noreferrer" class="zc-panel-footer__details-container-link">Junjulini</a></p>
                         {% endif %}
                     </div>
 
