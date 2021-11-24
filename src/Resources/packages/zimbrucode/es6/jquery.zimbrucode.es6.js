@@ -907,7 +907,7 @@ class ZimbruCode {
 
         if (config.error !== undefined) {
             evtSource.onerror = (error) => {
-                config.error(error);
+                config.error(error, evtSource);
             };
         }
     }
