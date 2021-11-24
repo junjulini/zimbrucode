@@ -35,7 +35,7 @@ class Module extends ModuleKernel
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    public function setup()
+    public function setup(): void
     {
         // Search custom templates
         $this->searchCustomTemplates();
