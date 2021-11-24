@@ -34,10 +34,10 @@ export default class Reset extends Kernel {
     confirm() {
         this.click('.zc-metabox-panel-reset-button', () => {
             zc.confirm({
-                title: this.getVar('reset-pop-up-title'),
-                subject: this.getVar('reset-pop-up-subject'),
-                titleOK: this.getVar('reset-pop-up-ok'),
-                titleCancel: this.getVar('reset-pop-up-cancel'),
+                title: this.getVar('reset-popup-title'),
+                subject: this.getVar('reset-popup-subject'),
+                titleOK: this.getVar('reset-popup-ok'),
+                titleCancel: this.getVar('reset-popup-cancel'),
                 ok: (popup) => {
                     zc.ajax({
                         data: {

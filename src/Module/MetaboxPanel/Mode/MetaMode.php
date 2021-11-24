@@ -139,11 +139,11 @@ class MetaMode extends Mode
             'browser-error-subject' => esc_html__('Your browser is old. Please update your browser or download Chrome / Opera / Firefox', 'zc'),
             'prefix-slug'           => self::getGlobal('core/module/panel/prefix-slug'),
             'exit'                  => esc_html__('Exit', 'zc'),
-            'reset-pop-up-title'    => esc_html__('Confirm', 'zc'),
-            'reset-pop-up-subject'  => esc_html__('Options will be removed, ok?', 'zc'),
-            'reset-pop-up-ok'       => esc_html__('OK', 'zc'),
-            'reset-pop-up-cancel'   => esc_html__('Cancel', 'zc'),
-            'backup-pop-up-title'   => esc_html__('Backup', 'zc'),
+            'reset-popup-title'    => esc_html__('Confirm', 'zc'),
+            'reset-popup-subject'  => esc_html__('Options will be removed, ok?', 'zc'),
+            'reset-popup-ok'       => esc_html__('OK', 'zc'),
+            'reset-popup-cancel'   => esc_html__('Cancel', 'zc'),
+            'backup-popup-title'   => esc_html__('Backup', 'zc'),
         ]));
 
         do_action('zc/module/metabox_panel/mode/meta/enqueue--after');

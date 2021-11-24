@@ -51,7 +51,7 @@ export default class Backup extends Kernel {
             this.id = $('.zc-panel-template_wid').data('post-id');
 
             this.popup.add({
-                title: this.getVar('backup-pop-up-title'),
+                title: this.getVar('backup-popup-title'),
                 width: 400,
                 height: 400,
                 ajax: {
