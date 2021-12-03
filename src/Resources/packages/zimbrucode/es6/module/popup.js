@@ -92,7 +92,7 @@ export default class PopUp {
             this.close();
         });
 
-        $(document).on('mouseup touchstart', `#${this.id}`, (event) => {
+        $(document).on('mousedown touchstart', `#${this.id}`, (event) => {
             const popupWindow = $('.zc-popup__window');
 
             if (!popupWindow.is(event.target) && popupWindow.has(event.target).length === 0) {

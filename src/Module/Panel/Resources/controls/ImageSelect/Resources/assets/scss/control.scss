@@ -27,7 +27,9 @@
     }
 
     &__item {
-        display: block;
+        display: flex;
+        flex-direction: column;
+        row-gap: 5px;
         margin: 0;
     }
 
@@ -61,6 +63,5 @@
         background: $bg-color__1;
         border-radius: 3px;
         padding: 4px;
-        margin-top: 5px;
     }
 }

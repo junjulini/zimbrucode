@@ -38,6 +38,7 @@
         background: $alt-color__bg-1;
         display: flex;
         align-items: center;
+        column-gap: 10px;
 
         &_mode_mobile {
             display: none;
@@ -56,7 +57,6 @@
     }
 
     &__header-section-title {
-        margin-left: 10px;
         font-size: 15px;
         font-weight: 600;
         color: $alt-color__text;

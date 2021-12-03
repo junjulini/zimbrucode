@@ -101,10 +101,10 @@ class LiteMode extends Mode
             'browser-error-title'   => esc_html__('Panel error', 'zc'),
             'browser-error-subject' => esc_html__('Your browser is old. Please update your browser or download Chrome / Opera / Firefox', 'zc'),
             'exit'                  => esc_html__('Exit', 'zc'),
-            'reset-popup-title'    => esc_html__('Confirm', 'zc'),
-            'reset-popup-subject'  => esc_html__('Options will be removed, ok?', 'zc'),
-            'reset-popup-ok'       => esc_html__('OK', 'zc'),
-            'reset-popup-cancel'   => esc_html__('Cancel', 'zc'),
+            'reset-popup-title'     => esc_html__('Confirm', 'zc'),
+            'reset-popup-subject'   => esc_html__('Options will be removed, ok?', 'zc'),
+            'reset-popup-ok'        => esc_html__('OK', 'zc'),
+            'reset-popup-cancel'    => esc_html__('Cancel', 'zc'),
             'if-changed'            => esc_html__('Are you sure you want to leave ?', 'zc'),
             'prefix-slug'           => self::getGlobal('core/module/panel/prefix-slug'),
         ]));
@@ -181,15 +181,15 @@ class LiteMode extends Mode
                     do_action('zc/module/panel/mode/lite/options_save--success', $options, $ajax, $this);
                     do_action("zc/module/panel/{$this->getModuleSetting('slug')}/mode/lite/options_save--success", $options, $ajax, $this);
 
-                    $ajax->add(self::getGlobal('core/module/panel/settings/page/events/event-1'))->send();
+                    $ajax->send(self::getGlobal('core/module/panel/settings/page/events/event-1'));
                 } else {
-                    $ajax->add(self::getGlobal('core/module/panel/settings/page/events/event-5'))->send();
+                    $ajax->send(self::getGlobal('core/module/panel/settings/page/events/event-5'));
                 }
             } else {
-                $ajax->add(self::getGlobal('core/module/panel/settings/page/events/event-2'))->send();
+                $ajax->send(self::getGlobal('core/module/panel/settings/page/events/event-2'));
             }
         } else {
-            $ajax->add(self::getGlobal('core/module/panel/settings/page/events/event-6'))->send();
+            $ajax->send(self::getGlobal('core/module/panel/settings/page/events/event-6'));
         }
     }
 
@@ -214,9 +214,9 @@ class LiteMode extends Mode
             do_action('zc/module/panel/mode/lite/options_reset--success', $this, $ajax);
             do_action("zc/module/panel/{$this->getModuleSetting('slug')}/mode/lite/options_reset--success", $this, $ajax);
 
-            $ajax->add(self::getGlobal('core/module/panel/settings/page/events/event-3'))->send();
+            $ajax->send(self::getGlobal('core/module/panel/settings/page/events/event-3'));
         } else {
-            $ajax->add(self::getGlobal('core/module/panel/settings/page/events/event-4'))->send();
+            $ajax->send(self::getGlobal('core/module/panel/settings/page/events/event-4'));
         }
     }
 }

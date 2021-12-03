@@ -119,6 +119,7 @@
         height: 56px;
         display: flex;
         flex-direction: column;
+        row-gap: 5px;
         margin-left: 20px;
         justify-content: center;
     }
@@ -127,7 +128,6 @@
         display: block;
         font-weight: 500;
         font-size: 15px;
-        margin-bottom: 5px;
     }
 
     &__text {

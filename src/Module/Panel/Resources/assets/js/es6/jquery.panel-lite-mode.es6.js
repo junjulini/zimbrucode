@@ -35,7 +35,7 @@ zc.module.panel.addMode(($, panel) => {
         panel.tooltip();             // Init tooltip
 
         new BodySize;                 // Panel body size.
-        const oh = new OptionHandler; // Save/Reset => .
+        const oh = new OptionHandler; // Save/Reset function.
         new QuickLinks;               // Initialization of panel button "Quick Links".
 
         panel.addCache('option-handler', oh);

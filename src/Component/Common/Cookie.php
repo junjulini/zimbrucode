@@ -11,6 +11,8 @@
 
 namespace ZimbruCode\Component\Common;
 
+use ZimbruCode\Component\Common\Tools;
+
 /**
  * Class : Cookie
  *
@@ -42,7 +44,7 @@ class Cookie
                 break;
 
             case 'json':
-                $raw = json_decode(stripslashes($_COOKIE[$name]));
+                $raw = Tools::jsonDecode(stripslashes($_COOKIE[$name]), 'ZE0001');
                 return $raw ?: $default;
                 break;
 

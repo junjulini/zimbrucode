@@ -40,7 +40,7 @@ zc.module.panel.addControl(($, panel) => {
                 resize: 'vertical',
                 id: id,
                 setup: (ed) => {
-                    const timer = false;
+                    let timer = false;
     
                     if (typeof ed.on != 'undefined') {
                         ed.on('init', (ed) => {

@@ -47,6 +47,7 @@
         position: relative;
         display: flex;
         align-items: center;
+        column-gap: 10px;
     }
 
     &__icon {
@@ -60,7 +61,6 @@
         font-weight: 600;
         color: $alt-color__text;
         cursor: default;
-        margin-left: 10px;
     }
 
     // Element : Scrollbar container
@@ -120,6 +120,7 @@
         height: 34px;
         display: flex;
         align-items: center;
+        column-gap: 10px;
         margin-bottom: 0;
         margin-top: 1px;
 
@@ -186,6 +187,5 @@
     &__item-title {
         font-weight: 600;
         color: $alt-color__text;
-        margin-left: 10px;
     }
 }

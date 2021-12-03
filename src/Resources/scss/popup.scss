@@ -41,10 +41,6 @@
             outline: none;
         }
 
-        &:first-child {
-            margin-right: 10px
-        }
-
         &_active {
             background: $accent-color__1;
             color: #ffffff;
@@ -117,10 +113,10 @@
 
     &__header {
         display: flex;
-        z-index: 1;
         align-items: center;
+        justify-content: space-between;
+        z-index: 1;
         width: 100%;
-        position: relative;
         height: 35px;
         background: $alt-color__bg-1;
         box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.40);
@@ -137,9 +133,6 @@
     &__close {
         @include center-flex;
         cursor: pointer;
-        position: absolute;
-        right: 0;
-        top: 0;
         width: 29px;
         height: 35px;
         font-size: 18px;
@@ -199,6 +192,7 @@
         border-top: 1px solid $bg-color__border__2;
         width: 100%;
         @include center-flex;
+        column-gap: 10px;
         padding: 10px 0;
     }
 
@@ -262,6 +256,7 @@
         border-top: 1px solid $bg-color__border__2;
         width: 100%;
         @include center-flex;
+        column-gap: 10px;
         padding: 10px 0;
     }
 

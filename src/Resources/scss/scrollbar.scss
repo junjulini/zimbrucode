@@ -19,6 +19,8 @@
     right: 0;
     bottom: 0;
     left: 0;
+    scrollbar-width: thin;
+    scrollbar-color: $bg-color__scroll-bar__hover transparent;
 
     &::-webkit-scrollbar {
         width: 13px;

@@ -17,7 +17,8 @@
  */
 
 .zc-panel-control-msg {
-    position: relative;
+    display: flex;
+    padding: 10px 0;
     width: 100%;
     background: #ffe3e3;
     color: white;
@@ -83,31 +84,27 @@
     }
 
     &__icon-container {
-        width: 60px;
+        width: 70px;
         height: 100%;
-        position: absolute;
+        display: flex;
+        justify-content: center;
     }
 
     &__icon {
         font-size: 37px;
-        height: 37px;
-        width: 37px;
-        position: absolute;
-        margin: auto;
-        top: 8px;
-        left: 0;
-        right: 0;
         color: #e08c8c;
     }
 
     &__content {
-        padding: 6px 6px 11px 60px;
-        width: auto !important;
+        display: flex;
+        flex-grow: 2;
+        flex-direction: column;
+        row-gap: 5px;
     }
 
     &__title {
         color: $text-color__title;
-        margin: 5px 0 10px 0;
+        margin: 0;
         font-size: 15px;
         font-weight: 500;
     }
