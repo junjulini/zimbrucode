@@ -79,26 +79,26 @@ class LocationDetector
         $type = (new \SplFileInfo($path))->getExtension();
 
         if (isset($this->defaultLocation[$type])) {
-            $loc1 = realpath($this->location . $this->defaultLocation[$type] . $path);
-            $loc2 = realpath($this->root . $this->defaultLocation[$type] . $path);
+            $loc1 = wp_normalize_path($this->location . $this->defaultLocation[$type] . $path);
+            $loc2 = wp_normalize_path($this->root . $this->defaultLocation[$type] . $path);
 
             if (file_exists($loc1)) {
                 return $loc1;
             } elseif (file_exists($loc2)) {
                 return $loc2;
             } elseif (file_exists($path)) {
-                return $path;
+                return wp_normalize_path($path);
             }
         } else {
-            $loc1 = realpath("{$this->location}/{$path}");
-            $loc2 = realpath("{$this->root}/{$path}");
+            $loc1 = wp_normalize_path("{$this->location}/{$path}");
+            $loc2 = wp_normalize_path("{$this->root}/{$path}");
 
             if (file_exists($loc1)) {
                 return $loc1;
             } elseif (file_exists($loc2)) {
                 return $loc2;
             } elseif (file_exists($path)) {
-                return $path;
+                return wp_normalize_path($path);
             }
         }
 
@@ -115,7 +115,7 @@ class LocationDetector
     protected function definedAsPath(string $path): string
     {
         if (file_exists($path)) {
-            return $path;
+            return wp_normalize_path($path);
         }
 
         throw new \RuntimeException("Asset not exist : {$path}");

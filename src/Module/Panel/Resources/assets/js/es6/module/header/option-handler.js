@@ -38,12 +38,12 @@ export default class OptionHandler extends Kernel {
 
     showLoading() {
         $('.zc-panel-save-starter-button').hide();
-        $('.zc-panel-loading-starter-button').show();
+        $('.zc-panel-loading-starter-button').css('display', 'flex');
         $('.zc-panel-reset-starter-button').prop('disabled', true).addClass('zc-panel-header__controller-button_disabled');
     }
 
     hideLoading() {
-        $('.zc-panel-save-starter-button').show();
+        $('.zc-panel-save-starter-button').css('display', 'flex');
         $('.zc-panel-loading-starter-button').hide();
         $('.zc-panel-reset-starter-button').prop('disabled', false).removeClass('zc-panel-header__controller-button_disabled');
     }

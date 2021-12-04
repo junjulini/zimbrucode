@@ -38,27 +38,28 @@ class GlobalShell
             if (!empty($lastArg)) {
                 if ($lastArg === '{R}') {
                     array_pop($args);
-    
+
                     ob_start();
+
                     $output = call_user_func_array($name, $args);
+
                     ob_end_clean();
-    
+
                     return $output;
                 } elseif ($lastArg === '{E}') {
                     array_pop($args);
-    
+
                     call_user_func_array($name, $args);
-    
+
                     return '';
                 } elseif ($lastArg === '{ER}') {
                     array_pop($args);
-    
+
                     ob_start();
+
                     call_user_func_array($name, $args);
-                    $output = ob_get_contents();
-                    ob_end_clean();
-    
-                    return $output;
+
+                    return ob_get_clean();
                 }
             }
 

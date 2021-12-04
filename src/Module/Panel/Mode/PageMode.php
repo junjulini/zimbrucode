@@ -200,7 +200,7 @@ class PageMode extends Mode
                         'parent' => $slug,
                         'id'     => "{$slug}-menu-item-{$setting['id']}",
                         'title'  => $setting['title'],
-                        'href'   => admin_url("admin.php?page={$this->getModuleSetting('menu-slug')}#section_{$setting['id']}"),
+                        'href'   => self_admin_url("admin.php?page={$this->getModuleSetting('menu-slug')}#section_{$setting['id']}"),
                         'meta'   => [
                             'target' => $target,
                         ],
@@ -230,7 +230,7 @@ class PageMode extends Mode
                                     'parent' => "{$slug}-menu-parent-item-{$parentTab}",
                                     'id'     => "{$slug}-menu-item-{$setting['id']}",
                                     'title'  => $setting['title'],
-                                    'href'   => admin_url("admin.php?page={$this->getModuleSetting('menu-slug')}#section_{$setting['id']}"),
+                                    'href'   => self_admin_url("admin.php?page={$this->getModuleSetting('menu-slug')}#section_{$setting['id']}"),
                                     'meta'   => [
                                         'target' => $target,
                                     ],
@@ -249,7 +249,7 @@ class PageMode extends Mode
                 'parent' => false,
                 'id'     => $slug,
                 'title'  => $title,
-                'href'   => admin_url("admin.php?page={$this->getModuleSetting('menu-slug')}"),
+                'href'   => self_admin_url("admin.php?page={$this->getModuleSetting('menu-slug')}"),
                 'meta'   => [
                     'target' => $target,
                 ],
