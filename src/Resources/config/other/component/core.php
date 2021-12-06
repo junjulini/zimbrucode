@@ -14,7 +14,7 @@ return [
         'resource-dir' => "/Resources/",
         'module-name'  => 'Module',
         'namespace'    => [
-            'ZimbruCode\\Module',
+            'ZimbruCode\Module',
         ],
     ],
 ];

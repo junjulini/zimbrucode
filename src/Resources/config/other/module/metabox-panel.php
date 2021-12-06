@@ -11,12 +11,12 @@
 
 return [
     'mode'                => [
-        'meta'      => 'ZimbruCode\\Module\\MetaboxPanel\\Mode\\MetaMode',
-        'meta-lite' => 'ZimbruCode\\Module\\MetaboxPanel\\Mode\\MetaLiteMode',
+        'meta'      => 'ZimbruCode\Module\MetaboxPanel\Mode\MetaMode',
+        'meta-lite' => 'ZimbruCode\Module\MetaboxPanel\Mode\MetaLiteMode',
     ],
 
     'control-settings'    => [
-        'namespace' => 'ZimbruCode\\Module\\MetaboxPanel\\Controls\\',
+        'namespace' => 'ZimbruCode\Module\MetaboxPanel\Controls\\',
     ],
 
     'meta-container-slug' => "{$slug}_meta_panel_container",
@@ -39,7 +39,7 @@ return [
             'db-name' => 'module.metabox_panel.backup',
         ],
 
-        'custom-control-shell' => 'ZimbruCode\\Module\\MetaboxPanel\\Helper\\ControlShell',
+        'custom-control-shell' => 'ZimbruCode\Module\MetaboxPanel\Helper\ControlShell',
         'hide-header'          => false,
 
         'events'               => [

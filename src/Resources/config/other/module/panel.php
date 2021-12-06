@@ -13,12 +13,12 @@ return [
     'db-name'          => 'module.panel',
 
     'mode'             => [
-        'page'      => 'ZimbruCode\\Module\\Panel\\Mode\\PageMode',
-        'page-lite' => 'ZimbruCode\\Module\\Panel\\Mode\\LiteMode',
+        'page'      => 'ZimbruCode\Module\Panel\Mode\PageMode',
+        'page-lite' => 'ZimbruCode\Module\Panel\Mode\LiteMode',
     ],
 
     'control-settings' => [
-        'namespace'     => 'ZimbruCode\\Module\\Panel\\Controls\\',
+        'namespace'     => 'ZimbruCode\Module\Panel\Controls\\',
         'class'         => 'Control',
         'template-dir'  => '/Resources/views',
         'template-file' => 'control.twig',

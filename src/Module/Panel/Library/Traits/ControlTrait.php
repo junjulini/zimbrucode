@@ -30,7 +30,7 @@ trait ControlTrait
      */
     public function initControls(): void
     {
-        $this->addModuleData('control', $this->loadModulePart('ZimbruCode\\Module\\Panel\\Library\\ControlManager'));
+        $this->addModuleData('control', $this->loadModulePart('ZimbruCode\Module\Panel\Library\ControlManager'));
     }
 
     /**
