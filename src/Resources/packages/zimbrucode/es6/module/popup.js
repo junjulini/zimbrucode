@@ -36,12 +36,12 @@ export default class PopUp {
     add(options) {
         const defaults = {
             title: 'PopUp Title',
-            ajax: '',
-            error: () => {
+            jsonRequest: {},
+            error: (errorMsg) => {
                 console.error('ZimbruCode : PopUp');
             },
             before: () => {},
-            success: () => {},
+            success: (response) => {},
             afterShowContent: () => {},
             width: '',
             height: '',
@@ -59,30 +59,28 @@ export default class PopUp {
         $('body').css('overflow', 'hidden');
         $('body').append(structure);
 
-        if (!settings.html) {
+        if (settings.jsonRequest.action !== undefined && settings.jsonRequest.action) {
             this.size(settings.height, settings.width);
-            zc.ajax({
-                data: settings.ajax,
-                before: () => {
-                    settings.before.call();
-                    this.hideContent();
-                },
-                error: settings.error,
-                success: (response) => {
-                    if (response.content !== undefined) {
-                        this.appendContent(response.content);
-                    }
 
-                    settings.success.call(this, response);
-                    this.showContent();
-                    settings.afterShowContent.call(this, response);
+            settings.before();
+            this.hideContent();
+
+            zc.jsonRequest(settings.jsonRequest.action, settings.jsonRequest.nonce || '', settings.jsonRequest.options || {}).then((response) => {
+                if (response.content !== undefined) {
+                    this.appendContent(response.content);
                 }
+
+                settings.success(response);
+                this.showContent();
+                settings.afterShowContent(response);
+            }).catch((errorMsg) => {
+                settings.error(errorMsg);
             });
         } else {
             this.size(settings.height, settings.width);
             this.appendContent(settings.html);
             this.showContent();
-            settings.success.call(this, settings.html);
+            settings.success(settings.html);
         }
 
         $(`#${this.id}`).on('click', '.zc-popup__close', (event) => {

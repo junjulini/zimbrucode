@@ -83,7 +83,7 @@ class Backup extends Kernel
             'list'   => $list,
         ]);
 
-        $ajax->add('content', $content)->send();
+        $ajax->send('content', $content);
     }
 
     /**
@@ -97,8 +97,8 @@ class Backup extends Kernel
     protected function save(AjaxHandler $ajax, string $pageType): void
     {
         try {
-            if ($metaData = get_post_meta($ajax->post('id'), "_{$this->getGlobal('core/module/metabox-panel/meta-container-slug')}", true)) {
-                $backupName = md5($ajax->post('backup_name'));
+            if ($metaData = get_post_meta($ajax->get('id'), "_{$this->getGlobal('core/module/metabox-panel/meta-container-slug')}", true)) {
+                $backupName = md5($ajax->get('backup_name'));
 
                 if ($data = self::service('db')->get($this->backupDbName)) {
                     if (!empty($data[$pageType][$backupName])) {
@@ -116,7 +116,7 @@ class Backup extends Kernel
                         }
                     } else {
                         $data[$pageType][$backupName] = [
-                            'name' => $ajax->post('backup_name'),
+                            'name' => $ajax->get('backup_name'),
                             'data' => $metaData,
                         ];
 
@@ -126,7 +126,7 @@ class Backup extends Kernel
                                 'result' => 'success',
                                 'change' => [
                                     'count' => count($data[$pageType]),
-                                    'item'  => $this->getItemContent($backupName, $ajax->post('backup_name')),
+                                    'item'  => $this->getItemContent($backupName, $ajax->get('backup_name')),
                                 ],
                             ]);
                         } else {
@@ -137,7 +137,7 @@ class Backup extends Kernel
                     $data = [
                         $pageType => [
                             $backupName => [
-                                'name' => $ajax->post('backup_name'),
+                                'name' => $ajax->get('backup_name'),
                                 'data' => $metaData,
                             ],
                         ],
@@ -149,7 +149,7 @@ class Backup extends Kernel
                             'result' => 'success',
                             'change' => [
                                 'count' => 1,
-                                'item'  => $this->getItemContent($backupName, $ajax->post('backup_name')),
+                                'item'  => $this->getItemContent($backupName, $ajax->get('backup_name')),
                             ],
                         ]);
                     } else {
@@ -211,8 +211,8 @@ class Backup extends Kernel
     {
         try {
             if ($data = self::service('db')->get($this->backupDbName)) {
-                if (!empty($data[$pageType][$ajax->post('backup_name')])) {
-                    unset($data[$pageType][$ajax->post('backup_name')]);
+                if (!empty($data[$pageType][$ajax->get('backup_name')])) {
+                    unset($data[$pageType][$ajax->get('backup_name')]);
 
                     if (self::service('db')->add($this->backupDbName, $data, true, false)) {
                         $ajax->send([
@@ -246,11 +246,11 @@ class Backup extends Kernel
     {
         try {
             if ($data = self::service('db')->get($this->backupDbName)) {
-                if (!empty($data[$pageType][$ajax->post('backup_name')])) {
-                    $bdData = $data[$pageType][$ajax->post('backup_name')]['data'];
+                if (!empty($data[$pageType][$ajax->get('backup_name')])) {
+                    $bdData = $data[$pageType][$ajax->get('backup_name')]['data'];
 
                     // Restore backup
-                    update_post_meta($ajax->post('id'), "_{$this->getGlobal('core/module/metabox-panel/meta-container-slug')}", $bdData);
+                    update_post_meta($ajax->get('id'), "_{$this->getGlobal('core/module/metabox-panel/meta-container-slug')}", $bdData);
 
                     $events = $this->mode->getModuleSetting('events/backup');
 
@@ -285,7 +285,7 @@ class Backup extends Kernel
         $ajax     = new AjaxHandler($this->mode->getModuleSetting('nonce'));
         $pageType = implode('_', $this->mode->getModuleSetting('screen'));
 
-        switch ($ajax->post('type')) {
+        switch ($ajax->get('type')) {
 
             // Type : Get-Content
             case 'get-content':

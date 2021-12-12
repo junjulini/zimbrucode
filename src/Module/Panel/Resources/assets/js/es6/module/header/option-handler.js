@@ -50,6 +50,8 @@ export default class OptionHandler extends Kernel {
 
     save() {
         this.click('.zc-panel-save-starter-button', ($this) => {
+            this.showLoading();
+
             $(window).trigger('zc/panel/save/start');
 
             const priv = {};
@@ -64,6 +66,7 @@ export default class OptionHandler extends Kernel {
                     if (nameItem === undefined) return;
 
                     nameItem = nameItem.replace(/\[\]/g, '');
+                    nameItem = nameItem.replace(this.getVar('prefix-slug'), '');
 
                     const value = $(el).val();
 
@@ -72,42 +75,34 @@ export default class OptionHandler extends Kernel {
                             options[nameItem] = value;
                         }
                     } else {
-                        options[nameItem] = $(el).val();
+                        options[nameItem] = value;
                     }
                 });
 
                 return options;
             };
 
-            this.showLoading();
+            zc.jsonRequest(`zc/module/panel/save_${this.getVar('slug')}`, this.getVar('nonce'), {
+                options: priv.prepOptions(),
+            }).then((response) => {
+                $(window).trigger('zc/panel/save/success-start');
 
-            zc.ajax({
-                data: {
-                    action: `zc/module/panel/save_${this.getVar('slug')}`,
-                    options: zc.parse(priv.prepOptions(), true),
-                    _ajax_nonce: this.getVar('nonce')
-                },
-                error: (jqXHR, textStatus) => {
-                    $(window).trigger('zc/panel/save/error');
-                    this.errorCheck('Panel : Save options', jqXHR);
-                },
-                success: (response) => {
-                    $(window).trigger('zc/panel/save/success-start');
+                const reload = typeof response.reload === 'undefined' ? undefined : () => {
+                    location.reload();
+                };
 
-                    const reload = typeof response.reload === 'undefined' ? undefined : () => {
-                        location.reload();
-                    };
+                this.dn.add(response.type, response.title, response.content, 3000, reload);
+                this.hideLoading();
 
-                    this.dn.add(response.type, response.title, response.content, 3000, reload);
-                    this.hideLoading();
-
-                    if (response.type === 'success') {
-                        this.addCache('changed', false);
-                        $(window).trigger('zc/panel/save/success-response');
-                    }
-
-                    $(window).trigger('zc/panel/save/success-end');
+                if (response.type === 'success') {
+                    this.addCache('changed', false);
+                    $(window).trigger('zc/panel/save/success-response');
                 }
+
+                $(window).trigger('zc/panel/save/success-end');
+            }).catch((errorMsg) => {
+                $(window).trigger('zc/panel/save/error');
+                this.errorCheck('Panel : Save options', errorMsg);
             });
 
             $(window).trigger('zc/panel/save/end');
@@ -124,71 +119,63 @@ export default class OptionHandler extends Kernel {
                 titleOK: this.getVar('reset-popup-ok'),
                 titleCancel: this.getVar('reset-popup-cancel'),
                 ok: (popup) => {
-                    zc.ajax({
-                        data: {
-                            action: `zc/module/panel/reset_${this.getVar('slug')}`,
-                            _ajax_nonce: this.getVar('nonce')
-                        },
-                        error: (jqXHR, textStatus) => {
-                            $(window).trigger('zc/panel/reset/error');
-                            this.errorCheck('Panel : Reset options', jqXHR);
-                        },
-                        before: () => {
-                            popup.hideContent();
-                            $(window).trigger('zc/panel/reset/before');
-                        },
-                        success: (response) => {
-                            $(window).trigger('zc/panel/reset/success-start');
+                    popup.hideContent();
+                    $(window).trigger('zc/panel/reset/before');
 
-                            if (response.type === 'success') {
-                                popup.remContent();
-                                popup.appendContent(zc.tpl(this.tpl, {
-                                    type: response.type,
-                                    title: response.title,
-                                    content: response.content
-                                }));
-                                popup.showContent();
+                    zc.jsonRequest(`zc/module/panel/reset_${this.getVar('slug')}`, this.getVar('nonce')).then((response) => {
+                        $(window).trigger('zc/panel/reset/success-start');
 
-                                setTimeout(() => {
-                                    location.reload();
-                                }, 2000);
+                        if (response.type === 'success') {
+                            popup.remContent();
+                            popup.appendContent(zc.tpl(this.tpl, {
+                                type: response.type,
+                                title: response.title,
+                                content: response.content
+                            }));
+                            popup.showContent();
 
-                                this.addCache('changed', false);
+                            setTimeout(() => {
+                                location.reload();
+                            }, 2000);
 
-                                $(window).trigger('zc/panel/reset/success-success');
-                            } else if (response.type === 'info') {
-                                popup.remContent();
-                                popup.appendContent(zc.tpl(this.tpl, {
-                                    type: response.type,
-                                    title: response.title,
-                                    content: response.content,
-                                    var_exit: this.getVar('exit')
-                                }));
-                                popup.showContent();
+                            this.addCache('changed', false);
 
-                                $(window).trigger('zc/panel/reset/success-info');
-                            } else {
-                                popup.remContent();
-                                popup.appendContent(zc.tpl(this.tpl, {
-                                    type: 'error',
-                                    title: 'Error',
-                                    content: 'AJAX / LOGIN / PHP Error',
-                                    var_exit: this.getVar('exit')
-                                }));
-                                popup.showContent();
+                            $(window).trigger('zc/panel/reset/success-success');
+                        } else if (response.type === 'info') {
+                            popup.remContent();
+                            popup.appendContent(zc.tpl(this.tpl, {
+                                type: response.type,
+                                title: response.title,
+                                content: response.content,
+                                var_exit: this.getVar('exit')
+                            }));
+                            popup.showContent();
 
-                                $(window).trigger('zc/panel/reset/success-error');
-                            }
+                            $(window).trigger('zc/panel/reset/success-info');
+                        } else {
+                            popup.remContent();
+                            popup.appendContent(zc.tpl(this.tpl, {
+                                type: 'error',
+                                title: 'Error',
+                                content: 'AJAX / LOGIN / PHP Error',
+                                var_exit: this.getVar('exit')
+                            }));
+                            popup.showContent();
 
-                            $('.zc-popup').on('click', '.zc-panel-popup-notification__close-button', (event) => {
-                                event.preventDefault();
-                                /* Act on the event */
-
-                                popup.close();
-                            });
-
-                            $(window).trigger('zc/panel/reset/success-end');
+                            $(window).trigger('zc/panel/reset/success-error');
                         }
+
+                        $('.zc-popup').on('click', '.zc-panel-popup-notification__close-button', (event) => {
+                            event.preventDefault();
+                            /* Act on the event */
+
+                            popup.close();
+                        });
+
+                        $(window).trigger('zc/panel/reset/success-end');
+                    }).catch((errorMsg) => {
+                        $(window).trigger('zc/panel/reset/error');
+                        this.errorCheck('Panel : Reset options', errorMsg);
                     });
                 }
             });

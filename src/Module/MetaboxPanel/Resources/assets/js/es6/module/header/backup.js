@@ -54,13 +54,15 @@ export default class Backup extends Kernel {
                 title: this.getVar('backup-popup-title'),
                 width: 400,
                 height: 400,
-                ajax: {
+                jsonRequest: {
                     action: `zc/module/metabox_panel/backup_${this.getVar('slug')}`,
-                    type: 'get-content',
-                    _ajax_nonce: this.getVar('nonce')
+                    nonce: this.getVar('nonce'),
+                    options: {
+                        type: 'get-content',
+                    }
                 },
-                error: (status) => {
-                    this.errorCheck('MetaboxPanelBackup : Load content', status);
+                error: (errorMsg) => {
+                    this.errorCheck('MetaboxPanelBackup : Load content', errorMsg);
                 },
                 success: ()  => {
                     this.save();
@@ -80,36 +82,29 @@ export default class Backup extends Kernel {
             const backupName = $(event.currentTarget).parent().find('input').val();
 
             if (backupName && backupName !== undefined) {
-                zc.ajax({
-                    data: {
-                        action: `zc/module/metabox_panel/backup_${this.getVar('slug')}`,
-                        type: 'save',
-                        id: this.id,
-                        backup_name: backupName,
-                        _ajax_nonce: this.getVar('nonce')
-                    },
-                    error: (jqXHR, textStatus) => {
-                        this.errorCheck('MetaboxPanelBackup : Save', jqXHR);
-                        this.closeBlock.hide();
-                    },
-                    before: () => {
-                        this.closeBlock.show();
-                    },
-                    success: (response) => {
-                        this.closeBlock.hide();
+                this.closeBlock.show();
 
-                        if (response.result === 'success') {
-                            if ($('.zc-popup-backup__no-backups').hasClass('zc-popup-backup__no-backups_active')) {
-                                $('.zc-popup-backup__no-backups').removeClass('zc-popup-backup__no-backups_active');
-                            }
+                zc.jsonRequest(`zc/module/metabox_panel/backup_${this.getVar('slug')}`, this.getVar('nonce'), {
+                    type: 'save',
+                    id: this.id,
+                    backup_name: backupName,
+                }).then((response) => {
+                    this.closeBlock.hide();
 
-                            $('.zc-popup-backup__input').val('');
-                            $('.zc-popup-backup__number').text(response.change.count);
-                            $('.zc-popup-backup__list').append(response.change.item);
-                        } else {
-                            console.error(response.result_msg);
+                    if (response.result === 'success') {
+                        if ($('.zc-popup-backup__no-backups').hasClass('zc-popup-backup__no-backups_active')) {
+                            $('.zc-popup-backup__no-backups').removeClass('zc-popup-backup__no-backups_active');
                         }
+
+                        $('.zc-popup-backup__input').val('');
+                        $('.zc-popup-backup__number').text(response.change.count);
+                        $('.zc-popup-backup__list').append(response.change.item);
+                    } else {
+                        console.error(response.result_msg);
                     }
+                }).catch((errorMsg) => {
+                    this.errorCheck('MetaboxPanelBackup : Save', errorMsg);
+                    this.closeBlock.hide();
                 });
             }
         });
@@ -120,30 +115,23 @@ export default class Backup extends Kernel {
             event.preventDefault();
             /* Act on the event */
 
-            zc.ajax({
-                data: {
-                    action: `zc/module/metabox_panel/backup_${this.getVar('slug')}`,
-                    type: 'delete',
-                    _ajax_nonce: this.getVar('nonce')
-                },
-                error: (jqXHR, textStatus) => {
-                    this.errorCheck('MetaboxPanelBackup : Delete all', jqXHR);
-                    this.closeBlock.hide();
-                },
-                before: () => {
-                    this.closeBlock.show();
-                },
-                success: (response) => {
-                    this.closeBlock.hide();
+            this.closeBlock.show();
 
-                    if (response.result === 'success') {
-                        $('.zc-popup-backup__number').text(0);
-                        $('.zc-popup-backup__list').empty();
-                        $('.zc-popup-backup__no-backups').addClass('zc-popup-backup__no-backups_active');
-                    } else {
-                        console.error(response.result_msg);
-                    }
+            zc.jsonRequest(`zc/module/metabox_panel/backup_${this.getVar('slug')}`, this.getVar('nonce'), {
+                type: 'delete',
+            }).then((response) => {
+                this.closeBlock.hide();
+
+                if (response.result === 'success') {
+                    $('.zc-popup-backup__number').text(0);
+                    $('.zc-popup-backup__list').empty();
+                    $('.zc-popup-backup__no-backups').addClass('zc-popup-backup__no-backups_active');
+                } else {
+                    console.error(response.result_msg);
                 }
+            }).catch((errorMsg) => {
+                this.errorCheck('MetaboxPanelBackup : Delete all', errorMsg);
+                this.closeBlock.hide();
             });
         });
     }
@@ -153,34 +141,27 @@ export default class Backup extends Kernel {
             event.preventDefault();
             /* Act on the event */
 
-            zc.ajax({
-                data: {
-                    action: `zc/module/metabox_panel/backup_${this.getVar('slug')}`,
-                    type: 'delete-item',
-                    backup_name: $(event.currentTarget).parent().attr('id'),
-                    _ajax_nonce: this.getVar('nonce')
-                },
-                error: (jqXHR, textStatus) => {
-                    this.errorCheck('MetaboxPanelBackup : Delete item', jqXHR);
-                    this.closeBlock.hide();
-                },
-                before: () => {
-                    this.closeBlock.show();
-                },
-                success: (response) => {
-                    this.closeBlock.hide();
+            this.closeBlock.show();
 
-                    if (response.result === 'success') {
-                        $('.zc-popup-backup__number').text(response.count);
-                        $(event.currentTarget).parent().remove();
+            zc.jsonRequest(`zc/module/metabox_panel/backup_${this.getVar('slug')}`, this.getVar('nonce'), {
+                type: 'delete-item',
+                backup_name: $(event.currentTarget).parent().attr('id'),
+            }).then((response) => {
+                this.closeBlock.hide();
 
-                        if (response.count == 0) {
-                            $('.zc-popup-backup__no-backups').addClass('zc-popup-backup__no-backups_active');
-                        }
-                    } else {
-                        console.error(response.result_msg);
+                if (response.result === 'success') {
+                    $('.zc-popup-backup__number').text(response.count);
+                    $(event.currentTarget).parent().remove();
+
+                    if (response.count == 0) {
+                        $('.zc-popup-backup__no-backups').addClass('zc-popup-backup__no-backups_active');
                     }
+                } else {
+                    console.error(response.result_msg);
                 }
+            }).catch((errorMsg) => {
+                this.errorCheck('MetaboxPanelBackup : Delete item', errorMsg);
+                this.closeBlock.hide();
             });
         });
     }
@@ -190,40 +171,33 @@ export default class Backup extends Kernel {
             event.preventDefault();
             /* Act on the event */
 
-            zc.ajax({
-                data: {
-                    action: `zc/module/metabox_panel/backup_${this.getVar('slug')}`,
-                    type: 'restore',
-                    id: this.id,
-                    backup_name: $(event.currentTarget).parent().attr('id'),
-                    _ajax_nonce: this.getVar('nonce')
-                },
-                error: (jqXHR, textStatus) => {
-                    this.errorCheck('MetaboxPanelBackup : Restore', jqXHR);
-                    this.closeBlock.hide();
-                },
-                before: () => {
-                    this.closeBlock.show();
-                },
-                success: (response) => {
-                    this.closeBlock.hide();
+            this.closeBlock.show();
 
-                    if (response.result === 'success') {
-                        this.popup.remContent();
-                        this.popup.appendContent(zc.tpl(TPL__backup_notification, {
-                            type: response.type,
-                            title: response.title,
-                            content: response.content
-                        }));
-                        this.popup.showContent();
+            zc.jsonRequest(`zc/module/metabox_panel/backup_${this.getVar('slug')}`, this.getVar('nonce'), {
+                type: 'restore',
+                id: this.id,
+                backup_name: $(event.currentTarget).parent().attr('id'),
+            }).then((response) => {
+                this.closeBlock.hide();
 
-                        setTimeout(() => {
-                            location.reload();
-                        }, 2000);
-                    } else {
-                        console.error(response.result_msg);
-                    }
+                if (response.result === 'success') {
+                    this.popup.remContent();
+                    this.popup.appendContent(zc.tpl(TPL__backup_notification, {
+                        type: response.type,
+                        title: response.title,
+                        content: response.content
+                    }));
+                    this.popup.showContent();
+
+                    setTimeout(() => {
+                        location.reload();
+                    }, 2000);
+                } else {
+                    console.error(response.result_msg);
                 }
+            }).catch((errorMsg) => {
+                this.errorCheck('MetaboxPanelBackup : Restore', errorMsg);
+                this.closeBlock.hide();
             });
         });
     }

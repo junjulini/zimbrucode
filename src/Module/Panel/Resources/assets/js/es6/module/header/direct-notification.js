@@ -76,7 +76,7 @@ export default class DirectNotification extends Kernel {
                 $('.zc-panel .zc-panel-direct-notification').remove();
             }, 300);
 
-            callback.call();
+            callback();
         });
 
         this.timer1 = setTimeout(() => {
@@ -86,7 +86,7 @@ export default class DirectNotification extends Kernel {
                 $('.zc-panel .zc-panel-direct-notification').remove();
             }, 300);
 
-            callback.call();
+            callback();
         }, duration);
     }
 }

@@ -76,15 +76,6 @@ trait ContentUtilityTrait
      */
     public function addOptions(array $options)
     {
-        $prefix = self::getGlobal('core/module/panel/prefix-slug');
-
-        foreach ($options as $key => $option) {
-            unset($options[$key]);
-
-            $key           = str_replace($prefix, '', $key);
-            $options[$key] = stripslashes_deep($option);
-        }
-
         $dbName = self::getGlobal('core/module/panel/db-name');
 
         return self::service('db')->add("{$dbName}.{$this->getModuleSetting('slug')}", $options, true);
@@ -99,15 +90,6 @@ trait ContentUtilityTrait
      */
     public function isOptionsDifferent(array $options): bool
     {
-        $prefix = self::getGlobal('core/module/panel/prefix-slug');
-
-        foreach ($options as $key => $option) {
-            unset($options[$key]);
-
-            $key           = str_replace($prefix, '', $key);
-            $options[$key] = stripslashes_deep($option);
-        }
-
         return Tools::arrayDiff($options, $this->getOptions());
     }
 

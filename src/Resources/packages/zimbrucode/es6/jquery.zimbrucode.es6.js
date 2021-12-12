@@ -115,7 +115,7 @@ class ZimbruCode {
             search.forEach((el, index) => {
                 if (el == match) {
                     if ($.isFunction(replace[index])) {
-                        output = replace[index].call(this, match);
+                        output = replace[index](match);
                         return false;
                     } else {
                         output = replace[index];
@@ -269,14 +269,14 @@ class ZimbruCode {
      */
     resize(callbackWidth, callbackHeight) {
         let windowWidth  = window.innerWidth,
-            windowHeight = window.innerHeight; 
+            windowHeight = window.innerHeight;
 
         $(window).resize(() => {
             if (window.innerWidth != windowWidth) {
                 windowWidth = window.innerWidth;
 
                 if ($.isFunction(callbackWidth)) {
-                    callbackWidth.call(this, windowWidth);
+                    callbackWidth(windowWidth);
                 }
             }
 
@@ -284,7 +284,7 @@ class ZimbruCode {
                 windowHeight = window.innerHeight;
 
                 if ($.isFunction(callbackHeight)) {
-                    callbackHeight.call(this, windowHeight);
+                    callbackHeight(windowHeight);
                 }
             }
         });
@@ -467,65 +467,6 @@ class ZimbruCode {
     }
 
     /**
-     * AJAX
-     * 
-     * @since 1.0.0
-     */
-    ajax(settings) {
-        const defaults = {
-            method: 'post',
-            url: ajaxurl,
-            data: '',
-            before: () => {},
-            error: () => {
-                console.warn('ZimbruCode : Ajax Error');
-            },
-            success: (response) => {}
-        };
-
-        let checkN = 1;
-
-        const interval = 1000;
-        const iterations = 4;
-
-        settings = $.extend({}, defaults, settings);
-
-        const preparedSettings = this.clone(settings);
-
-        if ($.isFunction(settings.before)) {
-            preparedSettings.beforeSend = settings.before;
-            delete preparedSettings.before;
-        }
-
-        preparedSettings.success = (response, textStatus, jqXHR) => {
-            if (response < 0) {
-                if ($.isFunction(settings.error)) {
-                    settings.error.call(this, jqXHR, textStatus);
-                }
-            } else {
-                if ($.isFunction(settings.success)) {
-                    settings.success.call(this, response, textStatus, jqXHR);
-                }
-            }
-        };
-
-        preparedSettings.error = (jqXHR, textStatus) => {
-            if (checkN <= iterations) {
-                setTimeout(() => {
-                    checkN ++;
-                    $.ajax(preparedSettings);
-                }, interval);
-            } else {
-                if ($.isFunction(settings.error)) {
-                    settings.error.call(this, jqXHR, textStatus);
-                }
-            }
-        };
-
-        return $.ajax(preparedSettings);
-    }
-
-    /**
      * PopUp
      * 
      * @since 1.0.0
@@ -584,14 +525,14 @@ class ZimbruCode {
                     event.preventDefault();
                     /* Act on the event */
 
-                    settings.ok.call(this, popup);
+                    settings.ok(popup);
                 });
 
                 $('.zc-confirm').on('click', '.zc-confirm__button_type_cancel', (event) => {
                     event.preventDefault();
                     /* Act on the event */
 
-                    settings.cancel.call(this, popup);
+                    settings.cancel(popup);
                 });
             }
         });
@@ -654,7 +595,7 @@ class ZimbruCode {
                     let text = $('.zc-prompt__input').val();
 
                     if (text) {
-                        settings.ok.call(this, popup, text);
+                        settings.ok(popup, text);
                     } else {
                         $('.zc-prompt__input').focus();
                     }
@@ -664,7 +605,7 @@ class ZimbruCode {
                     event.preventDefault();
                     /* Act on the event */
 
-                    settings.cancel.call(this, popup);
+                    settings.cancel(popup);
                 });
             }
         });
@@ -715,21 +656,10 @@ class ZimbruCode {
                     event.preventDefault();
                     /* Act on the event */
 
-                    settings.ok.call(this, popup);
+                    settings.ok(popup);
                 });
             }
         });
-    }
-
-    /**
-     * Rest API
-     * 
-     * @param {string} url   WordPress rest API URL
-     * @param {string} nonce WordPress X nonce for RestAPI
-     * @since 1.0.0
-     */
-    restAPI(url, nonce) {
-        return new RestAPI(url, nonce);
     }
 
     inputRange(mode, data = {}) {
@@ -876,6 +806,17 @@ class ZimbruCode {
         }
     }
 
+     /**
+     * Rest API
+     * 
+     * @param {string} url   WordPress rest API URL
+     * @param {string} nonce WordPress X nonce for RestAPI
+     * @since 1.0.0
+     */
+    restAPI(url, nonce) {
+        return new RestAPI(url, nonce);
+    }
+
     event(url, config) {
         const urlHandler = new URL(url);
 
@@ -910,6 +851,111 @@ class ZimbruCode {
                 config.error(error, evtSource);
             };
         }
+    }
+
+    async jsonRequest(action, nonce = '', options = {}) {
+        let attempts   = 4;
+        const interval = 1000;
+
+        const urlHandler = new URL(ajaxurl, $(location).attr('origin'));
+        urlHandler.searchParams.append('action', action);
+
+        if (nonce) {
+            urlHandler.searchParams.append('_wpnonce', nonce);
+        }
+
+        const sleep = (ms) => {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        const fetchRetry = async (bodyData, attempt) => {
+            try {
+                const response = await fetch(urlHandler.href, {
+                    method: 'POST',
+                    credentials: 'same-origin',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Cache-Control': 'no-cache',
+                    },
+                    body: JSON.stringify(bodyData)
+                });
+
+                if (!response.ok) {
+                    throw `Error - ${response.status} : ${response.statusText}`;
+                }
+
+                return response.json();
+            } catch (error) {
+                if (attempt <= 1) {
+                    throw error;
+                }
+
+                await sleep(interval);
+
+                return fetchRetry(bodyData, attempt - 1);
+            }
+        };
+
+        return await fetchRetry(options, attempts);
+    }
+
+    /**
+     * AJAX
+     * 
+     * @since 1.0.0
+     */
+     ajax(settings) {
+        const defaults = {
+            method: 'post',
+            url: ajaxurl,
+            data: '',
+            before: () => {},
+            error: () => {
+                console.warn('ZimbruCode : Ajax Error');
+            },
+            success: (response) => {}
+        };
+
+        let checkN = 1;
+
+        const interval = 1000;
+        const iterations = 4;
+
+        settings = $.extend({}, defaults, settings);
+
+        const preparedSettings = this.clone(settings);
+
+        if ($.isFunction(settings.before)) {
+            preparedSettings.beforeSend = settings.before;
+            delete preparedSettings.before;
+        }
+
+        preparedSettings.success = (response, textStatus, jqXHR) => {
+            if (response < 0) {
+                if ($.isFunction(settings.error)) {
+                    settings.error(jqXHR, textStatus);
+                }
+            } else {
+                if ($.isFunction(settings.success)) {
+                    settings.success(response, textStatus, jqXHR);
+                }
+            }
+        };
+
+        preparedSettings.error = (jqXHR, textStatus) => {
+            if (checkN <= iterations) {
+                setTimeout(() => {
+                    checkN ++;
+                    $.ajax(preparedSettings);
+                }, interval);
+            } else {
+                if ($.isFunction(settings.error)) {
+                    settings.error(jqXHR, textStatus);
+                }
+            }
+        };
+
+        return $.ajax(preparedSettings);
     }
 }
 

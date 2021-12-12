@@ -38,9 +38,7 @@ class AssetManager
     {
         $this->autoFilter($autoFilter);
 
-        if (!$customLocation) {
-            $customLocation = dirname(debug_backtrace()[0]['file']);
-        }
+        $customLocation = $customLocation ?: ((!empty(debug_backtrace()[0]['file'])) ? debug_backtrace()[0]['file'] : __FILE__);
 
         $location        = new LocationDetector($customLocation);
         $this->collector = new AssetDataCollector($location);

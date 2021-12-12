@@ -39,29 +39,22 @@ export default class Reset extends Kernel {
                 titleOK: this.getVar('reset-popup-ok'),
                 titleCancel: this.getVar('reset-popup-cancel'),
                 ok: (popup) => {
-                    zc.ajax({
-                        data: {
-                            action: `zc/module/metabox_panel/reset_${this.getVar('slug')}`,
-                            id: $('.zc-panel-template_wid').data('post-id'),
-                            _ajax_nonce: this.getVar('nonce')
-                        },
-                        error: (jqXHR, textStatus) => {
-                            $(window).trigger('zc/metabox-panel/reset/error');
-                            this.errorCheck('MetaboxPanel : Reset settings', jqXHR);
-                        },
-                        before: () => {
-                            popup.hideContent();
-                            $(window).trigger('zc/metabox-panel/reset/before');
-                        },
-                        success: (response) => {
-                            if (response.type === 'success') {
-                                this.successConfirm(popup, response);
-                                $(window).trigger('zc/metabox-panel/reset/success-success');
-                            } else {
-                                this.neutralConfirm(popup, response);
-                                $(window).trigger('zc/metabox-panel/reset/success-info');
-                            }
+                    popup.hideContent();
+                    $(window).trigger('zc/metabox-panel/reset/before');
+
+                    zc.jsonRequest(`zc/module/metabox_panel/reset_${this.getVar('slug')}`, this.getVar('nonce'), {
+                        id: $('.zc-panel-template_wid').data('post-id'),
+                    }).then((response) => {
+                        if (response.type === 'success') {
+                            this.successConfirm(popup, response);
+                            $(window).trigger('zc/metabox-panel/reset/success-success');
+                        } else {
+                            this.neutralConfirm(popup, response);
+                            $(window).trigger('zc/metabox-panel/reset/success-info');
                         }
+                    }).catch((errorMsg) => {
+                        $(window).trigger('zc/metabox-panel/reset/error');
+                        this.errorCheck('MetaboxPanel : Reset settings', errorMsg);
                     });
                 }
             });

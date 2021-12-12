@@ -157,7 +157,7 @@ class MetaLiteMode extends Mode
     public function __action_save_options(int $postID)
     {
         // Verify nonce
-        if (!AjaxHandler::checkNonce(self::rPost('zc-panel-meta-mode-nonce'), $this->getModuleSetting('nonce'))) {
+        if (!AjaxHandler::checkNonce(self::request('zc-panel-meta-mode-nonce'), $this->getModuleSetting('nonce'))) {
             return $postID;
         }
 
@@ -167,7 +167,7 @@ class MetaLiteMode extends Mode
         }
 
         // Check permissions
-        if (in_array(self::rPost('post_type'), $this->getModuleSetting('screen'))) {
+        if (in_array(self::request('post_type'), $this->getModuleSetting('screen'))) {
             if (!current_user_can('edit_page', $postID)) {
                 return $postID;
             }

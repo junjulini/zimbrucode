@@ -40,8 +40,7 @@ class TwigFunctions
         $ttb->addFunction('action',       [$this, '__callback_action']);
         $ttb->addFunction('filter',       [$this, '__callback_filter']);
         $ttb->addFunction('fn',           [$this, '__callback_fn']);
-        $ttb->addFunction('r_post',       [$this, '__callback_r_post']);
-        $ttb->addFunction('r_get',        [$this, '__callback_r_get']);
+        $ttb->addFunction('request',      [$this, '__callback_request']);
         $ttb->addFunction('dev',          [$this, '__callback_dev']);
         $ttb->addFunction('get_session',  [$this, '__callback_get_session']);
         $ttb->addFunction('dump',         [$this, '__callback_dump']);
@@ -71,27 +70,15 @@ class TwigFunctions
     }
 
     /**
-     * Post control
+     * Request control
      *
      * @param  string $param
      * @return mix
      * @since 1.0.0
      */
-    public function __callback_r_post(...$args)
+    public function __callback_request(...$args)
     {
-        return Kernel::rPost(...$args);
-    }
-
-    /**
-     * Get control
-     *
-     * @param  string $param
-     * @return mix
-     * @since 1.0.0
-     */
-    public function __callback_r_get(...$args)
-    {
-        return Kernel::rGet(...$args);
+        return Kernel::request(...$args);
     }
 
     /**

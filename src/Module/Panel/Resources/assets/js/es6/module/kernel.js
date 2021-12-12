@@ -86,18 +86,18 @@ export default class Kernel {
      * @return {null} None
      * @since 1.0.0
      */
-    errorCheck(msg, jqXHR) {
+    errorCheck(mainMsg, errorMsg) {
         if (!$('.zc-popup').hasClass('zc-panel-error-confirm')) {
 
             if ($('.zc-popup').length) {
                 $('.zc-popup').remove();
             }
 
-            console.error(msg);
+            console.error(mainMsg);
 
             zc.confirm({
-                title: `Error - ${jqXHR.statusText} : ${jqXHR.status}`,
-                subject: `${msg} Page will be reloaded, ok?`,
+                title: errorMsg,
+                subject: `${mainMsg} Page will be reloaded, ok?`,
                 class: 'zc-panel-error-confirm',
                 ok: () => {
                     location.reload();
@@ -217,7 +217,7 @@ export default class Kernel {
                 event.preventDefault();
             }
 
-            handler.call(this, $(event.currentTarget), event);
+            handler($(event.currentTarget), event);
         });
     }
 

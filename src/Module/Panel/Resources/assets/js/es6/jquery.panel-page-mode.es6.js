@@ -58,8 +58,8 @@ zc.module.panel.addMode(($, panel) => {
 
             return xhr;
         },
-        error: (status) => {
-            panel.errorCheck(' Panel : Content load', status);
+        error: (jqXHR) => {
+            panel.errorCheck(' Panel : Content load', `Error - ${jqXHR.status} : ${jqXHR.statusText}`);
         },
         success: (data) => {
             if (data <= 0) {

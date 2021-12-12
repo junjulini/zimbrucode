@@ -178,7 +178,7 @@ class MetaMode extends Mode
     public function __action_save_options(int $postID)
     {
         // Verify nonce
-        if (!AjaxHandler::checkNonce(self::rPost('zc-panel-meta-mode-nonce'), $this->getModuleSetting('nonce'))) {
+        if (!AjaxHandler::checkNonce(self::request('zc-panel-meta-mode-nonce'), $this->getModuleSetting('nonce'))) {
             return $postID;
         }
 
@@ -188,7 +188,7 @@ class MetaMode extends Mode
         }
 
         // Check permissions
-        if (in_array(self::rPost('post_type'), $this->getModuleSetting('screen'))) {
+        if (in_array(self::request('post_type'), $this->getModuleSetting('screen'))) {
             if (!current_user_can('edit_page', $postID)) {
                 return $postID;
             }
@@ -228,7 +228,7 @@ class MetaMode extends Mode
     {
         $ajax = new AjaxHandler($this->getModuleSetting('nonce'));
 
-        if (delete_post_meta($ajax->post('id'), "_{$this->getGlobal('core/module/metabox-panel/meta-container-slug')}")) {
+        if (delete_post_meta($ajax->get('id'), "_{$this->getGlobal('core/module/metabox-panel/meta-container-slug')}")) {
 
             // Hook : Options reset - success
             do_action('zc/module/metabox_panel/mode/meta/options_reset--success', $this, $ajax);

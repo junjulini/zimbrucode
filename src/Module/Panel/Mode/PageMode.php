@@ -35,7 +35,7 @@ class PageMode extends Mode
     public function setup(): void
     {
         // Preparing controls & assets
-        if (self::rGet('page') == $this->getModuleSetting('menu-slug')) {
+        if (self::request('page') == $this->getModuleSetting('menu-slug')) {
 
             // Remove screen options
             $this->addFilter('screen_options_show_screen', '__return_false');
@@ -269,7 +269,7 @@ class PageMode extends Mode
      */
     public function __ajax_load_panel_content(): void
     {
-        $ajax = new AjaxHandler($this->getModuleSetting('nonce'));
+        $ajax = new AjaxHandler($this->getModuleSetting('nonce'), '', false);
 
         // Initialization of controls
         $this->initControls();
@@ -308,7 +308,7 @@ class PageMode extends Mode
     public function __ajax_save_options(): void
     {
         $ajax    = new AjaxHandler($this->getModuleSetting('nonce'));
-        $options = json_decode(stripslashes($ajax->post('options')), true);
+        $options = $ajax->get('options');
 
         // Filter : Options save - before
         $options = apply_filters('zc/module/panel/mode/page/options_save--before', $options, $ajax, $this);

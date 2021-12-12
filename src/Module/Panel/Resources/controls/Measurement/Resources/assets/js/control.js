@@ -72,9 +72,9 @@ zc.module.panel.addControl(($, panel, global) => {
                     const value = $(this).val();
 
                     if (value.match(/[+-]?([0-9]*[.])?[0-9]+/) && value >= g.settings.min && value <= g.settings.max) {
-                        g.settings.ifChangeCallback.call(this, value);
+                        g.settings.ifChangeCallback(value);
                     } else {
-                        g.settings.ifErrorCallback.call(this, value);
+                        g.settings.ifErrorCallback(value);
                     }
         
                 });
@@ -95,14 +95,14 @@ zc.module.panel.addControl(($, panel, global) => {
                             value = zc.round(value, 3);
 
                             if (value >= g.settings.min && value <= g.settings.max) {
-                                g.settings.ifIncCallback.call(this, value);
+                                g.settings.ifIncCallback(value);
                             }
                         } else {
                             value = parseFloat(value) - parseFloat(g.settings.step);
                             value = zc.round(value, 3);
 
                             if (value >= g.settings.min && value <= g.settings.max) {
-                                g.settings.ifDecCallback.call(this, value);
+                                g.settings.ifDecCallback(value);
                             }
                         }
                     }
@@ -126,7 +126,7 @@ zc.module.panel.addControl(($, panel, global) => {
                     value = zc.round(value, 3);
 
                     if (value >= g.settings.min && value <= g.settings.max) {
-                        g.settings.ifIncCallback.call(this, value);
+                        g.settings.ifIncCallback(value);
                     }
         
                     to = setTimeout(() => {
@@ -136,7 +136,7 @@ zc.module.panel.addControl(($, panel, global) => {
                             value = zc.round(value, 3);
 
                             if (value >= g.settings.min && value <= g.settings.max) {
-                                g.settings.ifIncCallback.call(this, value);
+                                g.settings.ifIncCallback(value);
                             }
         
                         }, 75);
@@ -164,7 +164,7 @@ zc.module.panel.addControl(($, panel, global) => {
                     value = zc.round(value, 3);
 
                     if (value >= g.settings.min && value <= g.settings.max) {
-                        g.settings.ifDecCallback.call(this, value);
+                        g.settings.ifDecCallback(value);
                     }
         
                     to = setTimeout(() => {
@@ -174,7 +174,7 @@ zc.module.panel.addControl(($, panel, global) => {
                             value = zc.round(value, 3);
 
                             if (value >= g.settings.min && value <= g.settings.max) {
-                                g.settings.ifDecCallback.call(this, value);
+                                g.settings.ifDecCallback(value);
                             }
         
                         }, 75);

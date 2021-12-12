@@ -11,6 +11,8 @@
 
 namespace ZimbruCode\Component\Handler;
 
+use Exception;
+use ZimbruCode\Component\Common\Tools;
 use ZimbruCode\Component\Core\Kernel;
 
 /**
@@ -22,9 +24,12 @@ use ZimbruCode\Component\Core\Kernel;
  */
 class AjaxHandler
 {
+    protected $inputJsonType = true;
+    protected $inputJsonData = [];
+
     protected $data = [];
 
-    public function __construct(string $action = '', string $userCapability = '')
+    public function __construct(string $action = '', string $userCapability = '', bool $inputJsonType = true)
     {
         if ($action) {
             self::checkAjaxReferer($action);
@@ -35,6 +40,21 @@ class AjaxHandler
                 }
             }
         }
+
+        $this->inputJsonType = $inputJsonType;
+
+        if ($this->inputJsonType === true) {
+            if (($_SERVER['CONTENT_TYPE'] ?? '') == 'application/json') {
+                $this->inputJsonData = (array) Tools::jsonDecode((string) file_get_contents('php://input'), 'E0001');
+            } else {
+                throw new Exception('Content type not : application/json');
+            }
+        }
+    }
+
+    public function getInputJsonData(): array
+    {
+        return $this->inputJsonData;
     }
 
     /**
@@ -66,27 +86,19 @@ class AjaxHandler
     }
 
     /**
-     * Post control
-     *
-     * @param  string $param
-     * @return mix
-     * @since 1.0.0
-     */
-    public function post(...$args)
-    {
-        return Kernel::rPost(...$args);
-    }
-
-    /**
      * Get control
      *
      * @param  string $param
      * @return mix
      * @since 1.0.0
      */
-    public function get(...$args)
+    public function get(string $param, $default = '')
     {
-        return Kernel::rGet(...$args);
+        if ($this->inputJsonType === true) {
+            return $this->inputJsonData[$param] ?? $default;
+        } else {
+            return Kernel::request($param, $default);
+        }
     }
 
     /**
@@ -156,9 +168,13 @@ class AjaxHandler
      * @return void             This function does not return a value
      * @since 1.0.0
      */
-    public function off(string $message = '', string $title = '', array $args = []): void
+    public function off(string $message = '', string $title = '', array $args = [], bool $force = false): void
     {
-        wp_die($message, $title, $args);
+        if ($this->inputJsonType === true && $force === false) {
+            $this->send([]);
+        } else {
+            wp_die($message, $title, $args);
+        }
     }
 
     /**
