@@ -37,7 +37,7 @@ return [
         ],
     ],
 
-    # Prefix slug for options
+    // Prefix slug for options
     'prefix-slug'      => "{$slug}_panel_option_",
 
     'settings'         => [

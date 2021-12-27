@@ -28,6 +28,7 @@ export default class Cookie {
 
         for (; i < args.length; i++) {
             let attributes = args[i];
+
             for (let key in attributes) {
                 result[key] = attributes[key];
             }

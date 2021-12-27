@@ -10,10 +10,10 @@
  */
 
 return [
-    # mode of app ( theme / plugin )
+    // mode of app ( theme / plugin )
     'mode'                   => 'theme',
 
-    # permitted modes
+    // permitted modes
     'modes'                  => ['theme', 'plugin'],
 
     'module-namespace-dir'   => 'Module',
@@ -23,7 +23,7 @@ return [
     'slug'                   => false,
     'version'                => false,
 
-    # locator configs
+    // locator configs
     'load-file'              => false,
     'load-path'              => false,
     'load-url'               => false,
@@ -48,7 +48,7 @@ return [
     'view-path'              => false,
     'view-url'               => false,
 
-    # app resource dir & other
+    // app resource dir & other
     'resource-dir'           => 'Resources/',
     'var-dir'                => 'Resources/var/',
     'cache-dir'              => 'cache/',
@@ -61,6 +61,6 @@ return [
 
     'var-upload-mode'        => false,
 
-    # app network site delimiter
+    // app network site delimiter
     'network-site-delimiter' => 'network-site-',
 ];

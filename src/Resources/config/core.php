@@ -14,12 +14,12 @@ return [
     'slug'       => ($slug = 'zc'),
     'name'       => 'ZimbruCode',
 
-    # Author details
+    // Author details
     'author'     => [
         'main-website' => 'https://junjulini.com',
     ],
 
-    # For dev
+    // For dev
     'dev'        => false,
     'dev-config' => [
         'dev-log'      => true,
@@ -29,9 +29,9 @@ return [
         'environment'  => false,
     ],
 
-    # Module configs
+    // Module configs
     'module'     => require __DIR__ . '/other/module.php',
 
-    # Component configs
+    // Component configs
     'component'  => require __DIR__ . '/other/component.php',
 ];

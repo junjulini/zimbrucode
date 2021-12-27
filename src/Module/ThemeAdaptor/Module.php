@@ -37,11 +37,29 @@ class Module extends ModuleKernel
      */
     public function setup(): void
     {
-        // Search custom templates
-        $this->searchCustomTemplates();
+        // Initialize search for custom templates
+        $this->initCustomTemplates();
 
         // Template include
         $this->addFilter('template_include', '__filter_template_include', 999999);
+    }
+
+    protected function initCustomTemplates(): void
+    {
+        if (file_exists($dir = self::service('app-locator')->getViewPath())) {
+            $this->searchCustomTemplates($dir);
+        }
+
+        if (Tools::isChildTheme()) {
+            if (file_exists($dir = wp_normalize_path(get_stylesheet_directory()) . '/views')) {
+                $this->searchCustomTemplates($dir);
+            }
+        }
+
+        if ($this->templates) {
+            $this->addFilter('theme_page_templates', '__filter_register_templates', 20, 4);
+            $this->addFilter('template_include',     '__filter_register_templates_files', 11);
+        }
     }
 
     /**
@@ -50,62 +68,30 @@ class Module extends ModuleKernel
      * @return void   This function does not return a value
      * @since 1.0.0
      */
-    protected function searchCustomTemplates(): void
+    protected function searchCustomTemplates(string $dir): void
     {
         $prefix = self::getGlobal('core/module/theme-adaptor/custom-template-prefix', '__');
-        $slug   = self::getGlobal('core/slug', 'zc');
 
-        if (file_exists($dir = self::service('app-locator')->getViewPath())) {
-            foreach ((new Finder)->files()->in($dir) as $file) {
-                if (strpos($file->getBasename(), $prefix) !== false) {
-                    $path = wp_normalize_path($file->getPathname());
+        foreach ((new Finder)->files()->in($dir) as $file) {
+            if (strpos($file->getBasename(), $prefix) !== false) {
+                $path = wp_normalize_path($file->getPathname());
 
-                    if (!preg_match('|Template Name:(.*)$|mi', file_get_contents($path), $header)) {
-                        continue;
-                    }
-
-                    if (empty($header[1]) || $header[1] == ' ') {
-                        continue;
-                    }
-
-                    $hash = $slug . '_template_' . md5($path);
-
-                    $this->templates[$hash] = [
-                        'name' => $header[1],
-                        'file' => $path,
-                    ];
+                if (!preg_match('|Template Name:(.*)$|mi', file_get_contents($path), $header)) {
+                    continue;
                 }
-            }
-        }
 
-        if (Tools::isChildTheme()) {
-            if (file_exists($dir = wp_normalize_path(get_stylesheet_directory()) . '/views')) {
-                foreach ((new Finder)->files()->in($dir) as $file) {
-                    if (strpos($file->getBasename(), $prefix) !== false) {
-                        $path = wp_normalize_path($file->getPathname());
-
-                        if (!preg_match('|Template Name:(.*)$|mi', file_get_contents($path), $header)) {
-                            continue;
-                        }
-    
-                        if (empty($header[1]) || $header[1] == ' ') {
-                            continue;
-                        }
-
-                        $hash = $slug . '_template_' . md5($path);
-
-                        $this->templates[$hash] = [
-                            'name' => $header[1],
-                            'file' => $path,
-                        ];
-                    }
+                if (empty($header[1]) || $header[1] == ' ') {
+                    continue;
                 }
-            }
-        }
 
-        if ($this->templates) {
-            $this->addFilter('theme_page_templates', '__filter_register_templates', 20, 4);
-            $this->addFilter('template_include',     '__filter_register_templates_files', 11);
+                $hash = md5(str_replace(get_theme_root(), '', $path));
+                $slug = self::getGlobal('core/slug', 'zc') . '_template_' . $hash;
+
+                $this->templates[$slug] = [
+                    'name' => $header[1],
+                    'file' => $path,
+                ];
+            }
         }
     }
 

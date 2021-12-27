@@ -24,18 +24,18 @@ use ZimbruCode\Module\Panel\Library\ControlManager;
 class ControlShell
 {
     protected $panel;
-    protected $base         = [];
+    protected $controlData  = [];
     protected $customMethod = [];
 
-    public function __construct(ControlManager $panel, array $base)
+    public function __construct(ControlManager $panel, array $controlData)
     {
-        $this->panel = $panel;
-        $this->base  = $base;
+        $this->panel       = $panel;
+        $this->controlData = $controlData;
     }
 
-    protected function getBaseSetting(string $setting, $default = null)
+    protected function getControlData(string $setting, $default = null)
     {
-        return $this->base[$setting] ?? $default;
+        return $this->controlData[$setting] ?? $default;
     }
 
     /**
@@ -112,7 +112,7 @@ class ControlShell
      */
     public function type($default = null)
     {
-        return $this->getBaseSetting(__FUNCTION__, $default);
+        return $this->getControlData(__FUNCTION__, $default);
     }
 
     /**
@@ -123,7 +123,7 @@ class ControlShell
      */
     public function ID($default = '')
     {
-        $value = $this->getBaseSetting('id', $default);
+        $value = $this->getControlData('id', $default);
         return ($value) ? Kernel::getGlobal('core/module/panel/prefix-slug') . $value : $default;
     }
 
@@ -135,7 +135,7 @@ class ControlShell
      */
     public function title($default = null)
     {
-        return $this->getBaseSetting(__FUNCTION__, $default);
+        return $this->getControlData(__FUNCTION__, $default);
     }
 
     /**
@@ -146,7 +146,7 @@ class ControlShell
      */
     public function desc($default = null)
     {
-        return $this->getBaseSetting(__FUNCTION__, $default);
+        return $this->getControlData(__FUNCTION__, $default);
     }
 
     /**
@@ -157,7 +157,7 @@ class ControlShell
      */
     public function style($default = null)
     {
-        return $this->getBaseSetting(__FUNCTION__, $default);
+        return $this->getControlData(__FUNCTION__, $default);
     }
 
     /**
@@ -168,7 +168,7 @@ class ControlShell
      */
     public function classes($default = null)
     {
-        return $this->getBaseSetting(__FUNCTION__, $default);
+        return $this->getControlData(__FUNCTION__, $default);
     }
 
     /**
@@ -179,7 +179,7 @@ class ControlShell
      */
     public function fullWidth($default = false)
     {
-        return $this->getBaseSetting('full-width', $default);
+        return $this->getControlData('full-width', $default);
     }
 
     /**
@@ -190,7 +190,7 @@ class ControlShell
      */
     public function borderLine($default = false)
     {
-        return $this->getBaseSetting('border-line', $default);
+        return $this->getControlData('border-line', $default);
     }
 
     /**
@@ -201,7 +201,7 @@ class ControlShell
      */
     public function ratio($default = null)
     {
-        return $this->getBaseSetting(__FUNCTION__, $default);
+        return $this->getControlData(__FUNCTION__, $default);
     }
 
     /**
@@ -212,7 +212,7 @@ class ControlShell
      */
     public function help($default = null)
     {
-        return $this->getBaseSetting(__FUNCTION__, $default);
+        return $this->getControlData(__FUNCTION__, $default);
     }
 
     /**
@@ -224,7 +224,7 @@ class ControlShell
      */
     public function ignore($default = null, bool $return = false)
     {
-        $value = ($this->getBaseSetting(__FUNCTION__, $default)) ? 'data-i="i"' : '';
+        $value = ($this->getControlData(__FUNCTION__, $default)) ? 'data-i="i"' : '';
 
         if ($return == true) {
             return $value;
@@ -241,7 +241,7 @@ class ControlShell
      */
     public function defaultValue($default = null)
     {
-        return $this->getBaseSetting('default', $default);
+        return $this->getControlData('default', $default);
     }
 
     /**
@@ -252,7 +252,7 @@ class ControlShell
      */
     public function condition($default = null)
     {
-        return $this->getBaseSetting(__FUNCTION__, $default);
+        return $this->getControlData(__FUNCTION__, $default);
     }
 
     /**
@@ -263,7 +263,7 @@ class ControlShell
      */
     public function operator($default = null)
     {
-        return $this->getBaseSetting(__FUNCTION__, $default);
+        return $this->getControlData(__FUNCTION__, $default);
     }
 
     /**
@@ -274,7 +274,7 @@ class ControlShell
      */
     public function content($default = null)
     {
-        return $this->getBaseSetting(__FUNCTION__, $default);
+        return $this->getControlData(__FUNCTION__, $default);
     }
 
     /**
@@ -285,6 +285,6 @@ class ControlShell
      */
     public function settings($default = null)
     {
-        return $this->getBaseSetting(__FUNCTION__, $default);
+        return $this->getControlData(__FUNCTION__, $default);
     }
 }

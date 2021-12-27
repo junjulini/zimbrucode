@@ -12,6 +12,8 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 5px;
+    width: 40px;
+    height: 10px;
 
     &__bounce {
         width: 10px;

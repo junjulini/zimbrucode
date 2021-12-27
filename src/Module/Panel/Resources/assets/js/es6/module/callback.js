@@ -56,15 +56,15 @@ export default class Callback {
             args.shift();
 
             if (this.callback[name] !== undefined) {
-                for (let i in this.callback[name]) {
+                this.callback[name].forEach(el => {
                     const pArgs = $.extend(true, [], args);
 
-                    if (this.callback[name][i].additional !== undefined) {
-                        pArgs.push(this.callback[name][i].additional);
+                    if (el.additional !== undefined) {
+                        pArgs.push(el.additional);
                     }
 
-                    this.callback[name][i].callback.apply(this, pArgs);
-                };
+                    el.callback.apply(this, pArgs);
+                });
             }
         }
     }

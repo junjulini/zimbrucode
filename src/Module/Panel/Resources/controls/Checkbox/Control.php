@@ -22,5 +22,5 @@ use ZimbruCode\Module\Panel\Library\ControlKernel;
  */
 class Control extends ControlKernel
 {
-    # For custom manipulations
+    // For custom manipulations
 }

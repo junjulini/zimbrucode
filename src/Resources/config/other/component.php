@@ -11,18 +11,18 @@
 
 return [
 
-    # Core
+    // Core
     'core'       => require __DIR__ . '/component/core.php',
 
-    # Asset
+    // Asset
     'asset'      => require __DIR__ . '/component/asset.php',
 
-    # Path
+    // Path
     'path'       => require __DIR__ . '/component/path.php',
 
-    # Cache
+    // Cache
     'cache'      => require __DIR__ . '/component/cache.php',
 
-    # Fast Cache
+    // Fast Cache
     'fast-cache' => require __DIR__ . '/component/fast-cache.php',
 ];

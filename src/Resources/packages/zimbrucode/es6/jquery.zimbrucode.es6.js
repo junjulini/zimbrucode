@@ -175,13 +175,13 @@ class ZimbruCode {
                     }
                 }
             } else {
-                for (let i in paths) {
-                    if (current === undefined || current[paths[i]] === undefined) {
+                paths.forEach(el => {
+                    if (current === undefined || current[el] === undefined) {
                         return undefined;
                     } else {
-                        current = current[paths[i]];
+                        current = current[el];
                     }
-                }
+                });
         
                 return current;
             }

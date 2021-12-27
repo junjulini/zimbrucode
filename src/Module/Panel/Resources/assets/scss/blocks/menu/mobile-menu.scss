@@ -32,9 +32,11 @@
                     &:before {
                         transform: translateY(5px) rotate(135deg);
                     }
+
                     &:after {
                         transform: translateY(-5px) rotate(-135deg);
                     }
+
                     span {
                         @include scale(0);
                     }
@@ -113,8 +115,6 @@
 
                 .zc-panel-submenu__header-section-title {
                     color: $alt-color__text !important;
-                    margin-right: 0 !important;
-                    margin-left: 5px !important;
                     cursor: pointer;
                     @include def-transition(color);
 
