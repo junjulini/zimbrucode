@@ -9,25 +9,28 @@
  * file that was distributed with this source code.
  */
 
-namespace ZimbruCode\Component\Handler;
+namespace ZimbruCode\Component\Service;
 
+use Symfony\Component\Filesystem\Filesystem;
 use ZimbruCode\AppKernel;
 use ZimbruCode\Component\Common\Tools;
 
 /**
- * Class : Application locator handler
+ * Class : Application service
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
  * @since   1.0.0
  */
-class AppLocatorHandler
+class AppService
 {
     protected $app;
+    protected $fs;
 
     public function __construct(AppKernel $app, string $rootPath, string $slug)
     {
         $this->app = $app;
+        $this->fs  = new Filesystem;
 
         $mid = ($id = Tools::getMultiSiteID()) ? "{$id}/" : '';
         $env = $this->app->getEnvironment() . '/';
@@ -75,16 +78,16 @@ class AppLocatorHandler
         if ($this->app->getGlobal('app/var-upload-mode') === true) {
             if ($slug) {
                 $uploadDir = wp_get_upload_dir();
-    
+
                 if (isset($uploadDir['error']) && $uploadDir['error'] === false && $uploadDir['basedir'] && $uploadDir['baseurl']) {
                     $varsDirPath = wp_normalize_path("{$uploadDir['basedir']}/{$slug}");
                     $varsDirURL  = esc_url("{$uploadDir['baseurl']}/{$slug}");
-    
+
                     // Var
                     $var = $this->app->getGlobal('app/var-dir');
                     $this->app->addGlobal('app/var-path', "{$varsDirPath}/{$mid}");
                     $this->app->addGlobal('app/var-url', "{$varsDirURL}/{$mid}");
-    
+
                     // Cache
                     $cache = $this->app->getGlobal('app/cache-dir');
                     $this->app->addGlobal('app/cache-path', "{$varsDirPath}/{$mid}{$cache}{$env}");
@@ -94,7 +97,7 @@ class AppLocatorHandler
                     $temp = $this->app->getGlobal('app/temp-dir');
                     $this->app->addGlobal('app/temp-path', "{$varsDirPath}/{$mid}{$temp}{$env}");
                     $this->app->addGlobal('app/temp-url', "{$varsDirURL}/{$mid}{$temp}{$env}");
-    
+
                     // Log
                     $log = $this->app->getGlobal('app/log-dir');
                     $this->app->addGlobal('app/log-path', "{$varsDirPath}/{$mid}{$log}");
@@ -252,6 +255,11 @@ class AppLocatorHandler
         return esc_url($this->app->getGlobal('app/var-url') . $url);
     }
 
+    public function removeVarDir(): void
+    {
+        $this->fs->remove($this->getVarPath());
+    }
+
     /**
      * Get cache path
      *
@@ -274,6 +282,11 @@ class AppLocatorHandler
     public function getCacheURL(string $url = ''): string
     {
         return esc_url($this->app->getGlobal('app/cache-url') . $url);
+    }
+
+    public function removeCacheDir(): void
+    {
+        $this->fs->remove($this->getCachePath());
     }
 
     /**
@@ -300,6 +313,11 @@ class AppLocatorHandler
         return esc_url($this->app->getGlobal('app/temp-url') . $url);
     }
 
+    public function removeTempDir(): void
+    {
+        $this->fs->remove($this->getTempPath());
+    }
+
     /**
      * Get log path
      *
@@ -322,6 +340,11 @@ class AppLocatorHandler
     public function getLogURL(string $url = ''): string
     {
         return esc_url($this->app->getGlobal('app/log-url') . $url);
+    }
+
+    public function removeLogDir(): void
+    {
+        $this->fs->remove($this->getLogPath());
     }
 
     /**

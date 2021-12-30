@@ -393,7 +393,7 @@ class AssetData
     public function generateName(bool $withCoreSlug = true): string
     {
         $fileURL = $this->getURL();
-        $rootURL = Kernel::service('app-locator')->getURL();
+        $rootURL = Kernel::service('app')->getURL();
 
         if (0 === strpos($fileURL, $rootURL)) {
             $rootURL = str_replace('/app', '', $rootURL);
@@ -403,7 +403,7 @@ class AssetData
 
             return ($withCoreSlug) ? Kernel::getGlobal('core/slug') . '/' . $output : $output;
         } else {
-            $rootURL = Kernel::service('app-locator')->getRootURL();
+            $rootURL = Kernel::service('app')->getRootURL();
 
             if (0 === strpos($fileURL, $rootURL)) {
                 $fwSP = Kernel::getGlobal('core/component/asset/fw-search-point');

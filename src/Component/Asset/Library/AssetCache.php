@@ -36,7 +36,7 @@ class AssetCache
     {
         // Set settings
         $this->settings = Kernel::getGlobal('core/component/asset/cache/settings');
-        $cacheDir       = Kernel::service('app-locator')->getCachePath(Kernel::getGlobal('core/component/asset/cache/dir', '/assets'));
+        $cacheDir       = Kernel::service('app')->getCachePath(Kernel::getGlobal('core/component/asset/cache/dir', '/assets'));
         $extension      = Kernel::getGlobal('core/component/asset/cache/extension', '.cache');
 
         $cacheHandler = new CacheHandler($cacheDir, $extension);

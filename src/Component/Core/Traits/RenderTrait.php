@@ -40,7 +40,7 @@ trait RenderTrait
             $renderTemplate = function (string $template, string $locationPath) use ($vars, $renderCallback): ?string {
                 $ttb = new TwigTemplateBridge;
                 $ttb->addLocationPath($locationPath);
-                $ttb->addCachePath(self::service('app-locator')->getCachePath('twig'));
+                $ttb->addCachePath(self::service('app')->getCachePath('twig'));
 
                 if (!empty($vars)) {
                     foreach ($vars as $name => $value) {
@@ -66,8 +66,8 @@ trait RenderTrait
 
                 if (file_exists("{$locationPath}/{$template}")) {
                     $output = $renderTemplate($template, $locationPath);
-                } elseif (file_exists(self::service('app-locator')->getViewPath($template))) {
-                    $output = $renderTemplate($template, self::service('app-locator')->getViewPath());
+                } elseif (file_exists(self::service('app')->getViewPath($template))) {
+                    $output = $renderTemplate($template, self::service('app')->getViewPath());
                 }
             }
 

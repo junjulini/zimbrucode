@@ -17,8 +17,8 @@ use ZimbruCode\Component\Core\GlobalConfig;
 use ZimbruCode\Component\Core\GlobalLibrary;
 use ZimbruCode\Component\Core\Kernel;
 use ZimbruCode\Component\Core\Traits\AssetTrait;
-use ZimbruCode\Component\Handler\AppLocatorHandler;
-use ZimbruCode\Component\Handler\DBHandler;
+use ZimbruCode\Component\Service\AppService;
+use ZimbruCode\Component\Service\DbService;
 
 /**
  * Class : Application Kernel
@@ -167,7 +167,7 @@ abstract class AppKernel extends Kernel
     {
         if ($mode === 'before') {
             self::service('composer', $composer);
-            self::service('app-locator', new AppLocatorHandler($this, $rootPath, $slug));
+            self::service('app', new AppService($this, $rootPath, $slug));
 
             $td = wp_get_theme();
             if ($td->parent()) {
@@ -176,7 +176,7 @@ abstract class AppKernel extends Kernel
 
             self::service('theme-details', $td);
         } elseif ($mode === 'after') {
-            self::service('db', new DBHandler);
+            self::service('db', new DbService);
             self::service('fast-cache', new FastCache);
         }
     }
@@ -232,14 +232,14 @@ abstract class AppKernel extends Kernel
     private function __customAppConfig(): void
     {
         // Load custom 'App' config file
-        if (file_exists($file = self::service('app-locator')->getConfigPath('app.php'))) {
+        if (file_exists($file = self::service('app')->getConfigPath('app.php'))) {
             if (is_array($config = require $file)) {
                 self::addGlobal('app', array_replace_recursive(self::getGlobal('app'), $config));
             }
         }
 
         // Load custom 'Core' config file
-        if (file_exists($file = self::service('app-locator')->getConfigPath('core.php'))) {
+        if (file_exists($file = self::service('app')->getConfigPath('core.php'))) {
             if (is_array($config = require $file)) {
                 self::addGlobal('core', array_replace_recursive(self::getGlobal('core'), $config));
             }
@@ -298,7 +298,7 @@ abstract class AppKernel extends Kernel
      */
     private function __loadModules(): void
     {
-        $file = self::service('app-locator')->getConfigPath('modules.php');
+        $file = self::service('app')->getConfigPath('modules.php');
 
         if (file_exists($file)) {
             if ($modules = require $file) {
@@ -343,7 +343,7 @@ abstract class AppKernel extends Kernel
      */
     final public function getName(): string
     {
-        return self::service('app-locator')->getName();
+        return self::service('app')->getName();
     }
 
     /**
@@ -354,7 +354,7 @@ abstract class AppKernel extends Kernel
      */
     final public function getNamespace(): string
     {
-        return self::service('app-locator')->getNamespace();
+        return self::service('app')->getNamespace();
     }
 
     /**
@@ -365,7 +365,7 @@ abstract class AppKernel extends Kernel
      */
     final public function getPath(string $path = ''): string
     {
-        return self::service('app-locator')->getPath($path);
+        return self::service('app')->getPath($path);
     }
 
     /**
@@ -376,7 +376,7 @@ abstract class AppKernel extends Kernel
      */
     final public function getURL(string $url = ''): string
     {
-        return self::service('app-locator')->getUrl($url);
+        return self::service('app')->getUrl($url);
     }
 
     /**
@@ -388,7 +388,7 @@ abstract class AppKernel extends Kernel
      */
     final public function getResourcePath(string $path = ''): string
     {
-        return self::service('app-locator')->getResourcePath($path);
+        return self::service('app')->getResourcePath($path);
     }
 
     /**
@@ -400,7 +400,7 @@ abstract class AppKernel extends Kernel
      */
     final public function getResourceURL(string $url = ''): string
     {
-        return self::service('app-locator')->getResourceURL($url);
+        return self::service('app')->getResourceURL($url);
     }
 
     /**
@@ -411,7 +411,7 @@ abstract class AppKernel extends Kernel
      */
     final public function getRootFilePath(): string
     {
-        return self::service('app-locator')->getRootFilePath();
+        return self::service('app')->getRootFilePath();
     }
 
     /**

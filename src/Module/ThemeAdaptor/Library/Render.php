@@ -60,7 +60,7 @@ class Render
     public function setupEnvironment()
     {
         if (Kernel::getGlobal('core/module/theme-adaptor/cache')) {
-            $this->ttb->addCachePath(Kernel::service('app-locator')->getCachePath('twig'));
+            $this->ttb->addCachePath(Kernel::service('app')->getCachePath('twig'));
         }
 
         // Default shells

@@ -50,9 +50,9 @@ class SCSS extends Filter
 
         $env = Kernel::getEnvironment();
 
-        $this->appPath  = Kernel::service('app-locator')->getPath();
-        $this->rootPath = Kernel::service('app-locator')->getRootPath();
-        $this->varPath  = Kernel::service('app-locator')->getVarPath("assets/{$env}");
+        $this->appPath  = Kernel::service('app')->getPath();
+        $this->rootPath = Kernel::service('app')->getRootPath();
+        $this->varPath  = Kernel::service('app')->getVarPath("assets/{$env}");
 
         $this->searchPoint   = Kernel::getGlobal('core/component/asset/filter/scss/search-point');
         $this->externalPoint = Kernel::getGlobal('core/component/asset/filter/scss/external-point');

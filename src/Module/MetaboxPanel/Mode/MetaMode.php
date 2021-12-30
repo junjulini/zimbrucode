@@ -226,7 +226,7 @@ class MetaMode extends Mode
      */
     public function __ajax_options_reset(): void
     {
-        $ajax = new AjaxHandler($this->getModuleSetting('nonce'));
+        $ajax = new AjaxHandler($this->getModuleSetting('nonce'), 'edit_pages');
 
         if (delete_post_meta($ajax->get('id'), "_{$this->getGlobal('core/module/metabox-panel/meta-container-slug')}")) {
 

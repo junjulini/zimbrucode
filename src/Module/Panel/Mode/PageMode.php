@@ -269,7 +269,7 @@ class PageMode extends Mode
      */
     public function __ajax_load_panel_content(): void
     {
-        $ajax = new AjaxHandler($this->getModuleSetting('nonce'), '', false);
+        $ajax = new AjaxHandler($this->getModuleSetting('nonce'), 'edit_theme_options', false);
 
         // Initialization of controls
         $this->initControls();
@@ -307,7 +307,7 @@ class PageMode extends Mode
      */
     public function __ajax_save_options(): void
     {
-        $ajax    = new AjaxHandler($this->getModuleSetting('nonce'));
+        $ajax    = new AjaxHandler($this->getModuleSetting('nonce'), 'edit_theme_options');
         $options = $ajax->get('options');
 
         // Filter : Options save - before
@@ -342,7 +342,7 @@ class PageMode extends Mode
      */
     public function __ajax_reset_options(): void
     {
-        $ajax = new AjaxHandler($this->getModuleSetting('nonce'));
+        $ajax = new AjaxHandler($this->getModuleSetting('nonce'), 'edit_theme_options');
 
         // Hook : Options reset - before
         do_action('zc/module/panel/mode/page/options_reset--before', $this, $ajax);

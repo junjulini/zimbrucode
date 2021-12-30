@@ -52,6 +52,19 @@ abstract class Kernel extends GlobalDataOperator
     }
 
     /**
+     * Development or Production value
+     *
+     * @param  mix $value1
+     * @param  mix $value2
+     * @return mix
+     * @since 1.0.0
+     */
+    final public static function dop($value1, $value2)
+    {
+        return (self::dev()) ? $value1 : $value2;
+    }
+
+    /**
      * Module loader
      *
      * @return ModuleLoader
@@ -112,18 +125,5 @@ abstract class Kernel extends GlobalDataOperator
                 }
             }
         }
-    }
-
-    /**
-     * Development or Production value
-     *
-     * @param  mix $value1
-     * @param  mix $value2
-     * @return mix
-     * @since 1.0.0
-     */
-    final public static function dop($value1, $value2)
-    {
-        return (self::dev()) ? $value1 : $value2;
     }
 }

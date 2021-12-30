@@ -55,29 +55,29 @@ class MVC
                 $this->__render->addLocationPath($dir);
             }
 
-            if (!file_exists($this->service('app-locator')->getViewPath())) {
+            if (!file_exists($this->service('app')->getViewPath())) {
                 throw new \RuntimeException('App views dir don\'t exist.');
             }
 
             // Set views path
-            $this->__render->addLocationPath($this->service('app-locator')->getViewPath());
+            $this->__render->addLocationPath($this->service('app')->getViewPath());
 
             // Load model if exist
             if (file_exists($model = wp_normalize_path(get_stylesheet_directory()) . '/models/' . str_replace('.twig', '.php', $template))) {
                 require $model;
-            } elseif (file_exists($model = $this->service('app-locator')->getModelPath(str_replace('.twig', '.php', $template)))) {
+            } elseif (file_exists($model = $this->service('app')->getModelPath(str_replace('.twig', '.php', $template)))) {
                 require $model;
             }
         } else {
-            if (!file_exists($this->service('app-locator')->getViewPath())) {
+            if (!file_exists($this->service('app')->getViewPath())) {
                 throw new \RuntimeException('App views dir don\'t exist.');
             }
 
             // Set views path
-            $this->__render->addLocationPath($this->service('app-locator')->getViewPath());
+            $this->__render->addLocationPath($this->service('app')->getViewPath());
 
             // Load model if exist
-            if (file_exists($model = $this->service('app-locator')->getModelPath(str_replace('.twig', '.php', $template)))) {
+            if (file_exists($model = $this->service('app')->getModelPath(str_replace('.twig', '.php', $template)))) {
                 require $model;
             }
         }

@@ -215,7 +215,7 @@ class AssetHandler
                     $panelMode  = strtolower($this->module->getModuleSetting('mode', 'page'));
                     $panelSlug  = strtolower($this->module->getModuleSetting('slug', 'undefined'));
 
-                    $scss->output = Kernel::service('app-locator')->getVarPath("assets/{$env}/module.panel.{$panelMode}.{$panelSlug}/{$outputFile}");
+                    $scss->output = Kernel::service('app')->getVarPath("assets/{$env}/module.panel.{$panelMode}.{$panelSlug}/{$outputFile}");
 
                     $info        = new \SplFileInfo($scss->output);
                     $scss->cache = "{$info->getPath()}/{$info->getBasename('.' . $info->getExtension())}.cache";

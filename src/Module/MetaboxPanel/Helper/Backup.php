@@ -282,7 +282,7 @@ class Backup extends Kernel
      */
     public function __ajax_backup()
     {
-        $ajax     = new AjaxHandler($this->mode->getModuleSetting('nonce'));
+        $ajax     = new AjaxHandler($this->mode->getModuleSetting('nonce'), 'edit_pages');
         $pageType = implode('_', $this->mode->getModuleSetting('screen'));
 
         switch ($ajax->get('type')) {

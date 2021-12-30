@@ -33,7 +33,7 @@ class LocationDetector
             throw new \InvalidArgumentException('Location is empty.');
         }
 
-        $this->root            = Kernel::service('app-locator')->getResourcePath();
+        $this->root            = Kernel::service('app')->getResourcePath();
         $this->defaultLocation = Kernel::getGlobal('core/component/asset/default-location');
 
         $path = wp_normalize_path($location);

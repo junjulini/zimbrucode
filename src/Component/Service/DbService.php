@@ -9,19 +9,19 @@
  * file that was distributed with this source code.
  */
 
-namespace ZimbruCode\Component\Handler;
+namespace ZimbruCode\Component\Service;
 
 use ZimbruCode\Component\Common\Tools;
 use ZimbruCode\Component\Core\Kernel;
 
 /**
- * Class : Global data handler in DB
+ * Class : DB Service
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
  * @since   1.0.0
  */
-class DBHandler
+class DbService
 {
     protected $data      = [];
     protected $tableName = false;

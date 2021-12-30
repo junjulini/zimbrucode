@@ -166,7 +166,7 @@ class LiteMode extends Mode
      */
     public function __ajax_save_options(): void
     {
-        $ajax    = new AjaxHandler($this->getModuleSetting('nonce'));
+        $ajax    = new AjaxHandler($this->getModuleSetting('nonce'), 'edit_theme_options');
         $options = $ajax->get('options');
 
         // Filter : Options save - before
@@ -201,7 +201,7 @@ class LiteMode extends Mode
      */
     public function __ajax_reset_options(): void
     {
-        $ajax = new AjaxHandler($this->getModuleSetting('nonce'));
+        $ajax = new AjaxHandler($this->getModuleSetting('nonce'), 'edit_theme_options');
 
         // Hook : Options reset - before
         do_action('zc/module/panel/mode/lite/options_reset--before', $this, $ajax);

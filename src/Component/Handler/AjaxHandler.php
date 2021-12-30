@@ -36,7 +36,7 @@ class AjaxHandler
 
             if ($userCapability) {
                 if (!$this->checkUser($userCapability)) {
-                    $this->off(-1);
+                    throw new Exception('The current user does not have access to this request');
                 }
             }
         }
@@ -71,18 +71,14 @@ class AjaxHandler
     /**
      * Whether current user has a specific capability
      *
-     * @param string $capability   Role or capability
-     * @param int    $objectID     Recommended when checking meta capabilities such as the capabilities defined in the
-     *                             `map_meta_cap` function i.e 'edit_post', 'edit_others_posts', 'read_post' etc.
-     *                             If omitted you may receive an 'Undefined offset: 0' warning (this is because the
-     *                             `current_user_can` function eventually calls `map_meta_cap` which when checking
-     *                             against meta capabilities expects an array but is only supplied a single value)
-     * @return bool                Current user has capability
+     * @param  string $capability   Role or capability
+     * @param  mix    $args         (Optional) further parameters, typically starting with an object ID
+     * @return bool                 Current user has capability
      * @since 1.0.0
      */
-    public function checkUser(string $capability, int $objectID = null): bool
+    public function checkUser(string $capability, $args = null): bool
     {
-        return current_user_can($capability, $objectID);
+        return current_user_can($capability, $args);
     }
 
     /**

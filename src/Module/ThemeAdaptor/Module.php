@@ -46,7 +46,7 @@ class Module extends ModuleKernel
 
     protected function initCustomTemplates(): void
     {
-        if (file_exists($dir = self::service('app-locator')->getViewPath())) {
+        if (file_exists($dir = self::service('app')->getViewPath())) {
             $this->searchCustomTemplates($dir);
         }
 
@@ -147,7 +147,7 @@ class Module extends ModuleKernel
     public function __filter_template_include($wpTemplate)
     {
         $tfh           = new TemplateFilesHandler;
-        $tfh->location = self::service('app-locator')->getViewPath();
+        $tfh->location = self::service('app')->getViewPath();
 
         $template     = false;
         $tagTemplates = [
