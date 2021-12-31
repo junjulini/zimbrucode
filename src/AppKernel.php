@@ -17,8 +17,8 @@ use ZimbruCode\Component\Core\GlobalConfig;
 use ZimbruCode\Component\Core\GlobalLibrary;
 use ZimbruCode\Component\Core\Kernel;
 use ZimbruCode\Component\Core\Traits\AssetTrait;
+use ZimbruCode\Component\Handler\DBHandler;
 use ZimbruCode\Component\Service\AppService;
-use ZimbruCode\Component\Service\DbService;
 
 /**
  * Class : Application Kernel
@@ -176,7 +176,7 @@ abstract class AppKernel extends Kernel
 
             self::service('theme-details', $td);
         } elseif ($mode === 'after') {
-            self::service('db', new DbService);
+            self::service('db', new DBHandler);
             self::service('fast-cache', new FastCache);
         }
     }
