@@ -11,7 +11,7 @@
 
 namespace ZimbruCode\Component\Handler;
 
-use Exception;
+use RuntimeException;
 use ZimbruCode\Component\Common\Tools;
 use ZimbruCode\Component\Core\Kernel;
 
@@ -36,7 +36,7 @@ class AjaxHandler
 
             if ($userCapability) {
                 if (!$this->checkUser($userCapability)) {
-                    throw new Exception('The current user does not have access to this request');
+                    throw new RuntimeException('ZE0074');
                 }
             }
         }
@@ -45,9 +45,9 @@ class AjaxHandler
 
         if ($this->inputJsonType === true) {
             if (($_SERVER['CONTENT_TYPE'] ?? '') == 'application/json') {
-                $this->inputJsonData = (array) Tools::jsonDecode((string) file_get_contents('php://input'), 'E0001');
+                $this->inputJsonData = (array) Tools::jsonDecode((string) file_get_contents('php://input'), 'ZE0146');
             } else {
-                throw new Exception('Content type not : application/json');
+                throw new RuntimeException('ZE0075');
             }
         }
     }

@@ -11,6 +11,7 @@
 
 namespace ZimbruCode\Module\Panel\Library;
 
+use SplFileInfo;
 use ZimbruCode\Component\Asset\AssetManager;
 use ZimbruCode\Component\Core\Kernel;
 use ZimbruCode\Component\Core\ModuleKernel;
@@ -217,14 +218,14 @@ class AssetHandler
 
                     $scss->output = Kernel::service('app')->getVarPath("assets/{$env}/module.panel.{$panelMode}.{$panelSlug}/{$outputFile}");
 
-                    $info        = new \SplFileInfo($scss->output);
+                    $info        = new SplFileInfo($scss->output);
                     $scss->cache = "{$info->getPath()}/{$info->getBasename('.' . $info->getExtension())}.cache";
                 }
             }
         };
 
         foreach ($this->assets as $asset) {
-            if ((new \SplFileInfo($asset))->getExtension() == 'scss') {
+            if ((new SplFileInfo($asset))->getExtension() == 'scss') {
                 $this->assetManager->addCallback($asset, $callbackForScssRender);
             }
         }

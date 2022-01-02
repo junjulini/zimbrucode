@@ -11,6 +11,7 @@
 
 namespace ZimbruCode\Component\Asset\Library;
 
+use InvalidArgumentException;
 use ZimbruCode\Component\Asset\Library\AssetDataCollector;
 use ZimbruCode\Component\Core\Kernel;
 
@@ -86,7 +87,7 @@ class NamespaceHandler
             $namespace = Kernel::getGlobal('core/component/asset/filter/namespace/global-namespace');
         } elseif (is_string($namespace)) {
             if (strpos($namespace, '/') !== false) {
-                throw new \InvalidArgumentException('Namespace with next symbol "/" not permitted.');
+                throw new InvalidArgumentException('ZE0033 - Namespace with the following "/" character is not allowed');
             }
         }
 

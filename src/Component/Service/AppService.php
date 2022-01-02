@@ -11,6 +11,7 @@
 
 namespace ZimbruCode\Component\Service;
 
+use ReflectionObject;
 use Symfony\Component\Filesystem\Filesystem;
 use ZimbruCode\AppKernel;
 use ZimbruCode\Component\Common\Tools;
@@ -35,7 +36,7 @@ class AppService
         $mid = ($id = Tools::getMultiSiteID()) ? "{$id}/" : '';
         $env = $this->app->getEnvironment() . '/';
 
-        $reflected = new \ReflectionObject($app);
+        $reflected = new ReflectionObject($app);
         $path      = dirname(wp_normalize_path($reflected->getFileName())) . '/';
         $this->app->addGlobal('app/path', $path);
 

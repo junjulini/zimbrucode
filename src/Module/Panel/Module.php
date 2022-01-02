@@ -11,6 +11,7 @@
 
 namespace ZimbruCode\Module\Panel;
 
+use InvalidArgumentException;
 use ZimbruCode\Component\Common\Tools;
 use ZimbruCode\Component\Core\ModuleKernel;
 use ZimbruCode\Module\Panel\Library\AssetHandler;
@@ -39,7 +40,7 @@ class Module extends ModuleKernel
             // Check build settings if not empty
             if (!$this->getModuleSetting('build-settings', [])) {
                 if (!file_exists($this->getModuleSetting('build-settings-file'))) {
-                    throw new \InvalidArgumentException('Build settings are empty or file with settings not exist.');
+                    throw new InvalidArgumentException('ZE0125');
                 }
             }
 
@@ -94,17 +95,17 @@ class Module extends ModuleKernel
         $mode = $this->getModuleSetting('mode', 'page');
 
         if (empty($mode)) {
-            throw new \InvalidArgumentException('Mode is empty.');
+            throw new InvalidArgumentException('ZE0126');
         }
 
         if (!is_string($mode)) {
-            throw new \InvalidArgumentException('Mode is not string.');
+            throw new InvalidArgumentException('ZE0127');
         }
 
         if (!self::getGlobal("core/module/panel/mode/{$mode}")) {
             if (!$this->getModuleData("custom-mode/{$mode}")) {
-                throw new \InvalidArgumentException(
-                    "{$mode} - this mode is not compatible, permitted only : " .
+                throw new InvalidArgumentException(
+                    "ZE0128 - This mode '{$mode}' is incompatible, only allowed:" .
                     implode(', ', array_keys(Tools::arrayMerge(self::getGlobal('core/module/panel/mode'), $this->getModuleData('custom-mode', []))))
                 );
             }
@@ -138,8 +139,8 @@ class Module extends ModuleKernel
     protected function loadMode(): void
     {
         $mode = ($mode = self::getGlobal("core/module/panel/mode/{$this->getModuleData('mode')}"))
-            ? $mode
-            : $this->getModuleData("custom-mode/{$this->getModuleData('mode')}");
+        ? $mode
+        : $this->getModuleData("custom-mode/{$this->getModuleData('mode')}");
 
         $this->loadModulePart($mode);
     }
@@ -154,11 +155,11 @@ class Module extends ModuleKernel
     public function addCustomMode(string $mode, string $class): ModuleKernel
     {
         if (!$mode) {
-            throw new \InvalidArgumentException('Mode is empty.');
+            throw new InvalidArgumentException('ZE0129');
         }
 
         if (!class_exists($class)) {
-            throw new \InvalidArgumentException("{$class} - class don't exist.");
+            throw new InvalidArgumentException("ZE0130 - Class don't exist : {$class}");
         }
 
         $this->addModuleData("custom-mode/{$mode}", $class);
@@ -176,15 +177,15 @@ class Module extends ModuleKernel
     public function addCustomControlsNamespace(string $path, string $namespace): ModuleKernel
     {
         if (!$path) {
-            throw new \InvalidArgumentException('Control path is empty.');
+            throw new InvalidArgumentException('ZE0131');
         }
 
         if (!Tools::isLocalPath($path)) {
-            throw new \InvalidArgumentException("{$path} - control path is not local.");
+            throw new InvalidArgumentException("ZE0132 - Control path is not local : {$path}");
         }
 
         if (!$namespace) {
-            throw new \InvalidArgumentException('Control namespace is empty.');
+            throw new InvalidArgumentException('ZE0133');
         }
 
         $this->addModuleData('custom-controls-namespaces', Tools::arrayMerge(

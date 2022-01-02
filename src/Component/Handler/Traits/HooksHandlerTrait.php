@@ -11,6 +11,8 @@
 
 namespace ZimbruCode\Component\Handler\Traits;
 
+use InvalidArgumentException;
+
 /**
  * Trait : Hooks handler trait
  *
@@ -33,11 +35,11 @@ trait HooksHandlerTrait
     protected function addAction(string $hook, $method, int $priority = 10, int $acceptedArgs = 1): void
     {
         if (!$hook) {
-            throw new \InvalidArgumentException('Action is empty.');
+            throw new InvalidArgumentException('ZE0081');
         }
 
         if (!$method) {
-            throw new \InvalidArgumentException('Method is empty.');
+            throw new InvalidArgumentException('ZE0082');
         }
 
         if (is_callable($method)) {
@@ -45,7 +47,7 @@ trait HooksHandlerTrait
         } elseif (is_string($method)) {
             add_action($hook, [$this, $method], $priority, $acceptedArgs);
         } else {
-            throw new \InvalidArgumentException('Method not string or callable.');
+            throw new InvalidArgumentException('ZE0083');
         }
     }
 
@@ -61,11 +63,11 @@ trait HooksHandlerTrait
     protected function remAction(string $hook, $method, int $priority = 10): void
     {
         if (!$hook) {
-            throw new \InvalidArgumentException('Action is empty.');
+            throw new InvalidArgumentException('ZE0084');
         }
 
         if (!$method) {
-            throw new \InvalidArgumentException('Method is empty.');
+            throw new InvalidArgumentException('ZE0085');
         }
 
         if (is_callable($method)) {
@@ -73,7 +75,7 @@ trait HooksHandlerTrait
         } elseif (is_string($method)) {
             remove_action($hook, [$this, $method], $priority);
         } else {
-            throw new \InvalidArgumentException('Method not string or callable.');
+            throw new InvalidArgumentException('ZE0086');
         }
     }
 
@@ -89,11 +91,11 @@ trait HooksHandlerTrait
     protected function addAjax(string $hook, $method, bool $nopriv = false): void
     {
         if (!$hook) {
-            throw new \InvalidArgumentException('Action is empty.');
+            throw new InvalidArgumentException('ZE0087');
         }
 
         if (!$method) {
-            throw new \InvalidArgumentException('Method is empty.');
+            throw new InvalidArgumentException('ZE0088');
         }
 
         if ($nopriv === true) {
@@ -116,11 +118,11 @@ trait HooksHandlerTrait
     protected function addFilter(string $tag, $method, int $priority = 10, int $acceptedArgs = 1): void
     {
         if (!$tag) {
-            throw new \InvalidArgumentException('Filter is empty.');
+            throw new InvalidArgumentException('ZE0089');
         }
 
         if (!$method) {
-            throw new \InvalidArgumentException('Method is empty.');
+            throw new InvalidArgumentException('ZE0090');
         }
 
         if (is_callable($method)) {
@@ -128,7 +130,7 @@ trait HooksHandlerTrait
         } elseif (is_string($method)) {
             add_action($tag, [$this, $method], $priority, $acceptedArgs);
         } else {
-            throw new \InvalidArgumentException('Method not string or callable.');
+            throw new InvalidArgumentException('ZE0091');
         }
     }
 
@@ -144,11 +146,11 @@ trait HooksHandlerTrait
     protected function remFilter(string $tag, $method, int $priority = 10): void
     {
         if (!$tag) {
-            throw new \InvalidArgumentException('Filter is empty.');
+            throw new InvalidArgumentException('ZE0092');
         }
 
         if (!$method) {
-            throw new \InvalidArgumentException('Method is empty.');
+            throw new InvalidArgumentException('ZE0093');
         }
 
         if (is_callable($method)) {
@@ -156,7 +158,7 @@ trait HooksHandlerTrait
         } elseif (is_string($method)) {
             remove_filter($tag, [$this, $method], $priority);
         } else {
-            throw new \InvalidArgumentException('Method not string or callable.');
+            throw new InvalidArgumentException('ZE0094');
         }
     }
 
@@ -171,11 +173,11 @@ trait HooksHandlerTrait
     protected function addShortCode(string $tag, $method): void
     {
         if (!$tag) {
-            throw new \InvalidArgumentException('Tag is empty.');
+            throw new InvalidArgumentException('ZE0095');
         }
 
         if (!$method) {
-            throw new \InvalidArgumentException('Method is empty.');
+            throw new InvalidArgumentException('ZE0096');
         }
 
         if (is_callable($method)) {
@@ -183,7 +185,7 @@ trait HooksHandlerTrait
         } elseif (is_string($method)) {
             add_shortcode($tag, [$this, $method]);
         } else {
-            throw new \InvalidArgumentException('Method not string or callable.');
+            throw new InvalidArgumentException('ZE0097');
         }
     }
 
@@ -197,7 +199,7 @@ trait HooksHandlerTrait
     protected function doShortCode(string $tag, bool $return = false)
     {
         if (!$tag) {
-            throw new \InvalidArgumentException('Tag is empty.');
+            throw new InvalidArgumentException('ZE0098');
         }
 
         if ($return) {
@@ -217,7 +219,7 @@ trait HooksHandlerTrait
     protected function remShortCode(string $tag): void
     {
         if (!$tag) {
-            throw new \InvalidArgumentException('Tag is empty.');
+            throw new InvalidArgumentException('ZE0099');
         }
 
         remove_shortcode($tag);

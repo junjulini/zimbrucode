@@ -11,7 +11,7 @@
 
 namespace ZimbruCode\Module\MetaboxPanel\Helper;
 
-use Exception;
+use RuntimeException;
 use Throwable;
 use ZimbruCode\Component\Core\Kernel;
 use ZimbruCode\Component\Handler\AjaxHandler;
@@ -109,10 +109,10 @@ class Backup extends Kernel
                             if (self::service('db')->add($this->backupDbName, $data, true, false)) {
                                 $ajax->send('result', 'success');
                             } else {
-                                throw new Exception('Backup/Save - Error : 1');
+                                throw new RuntimeException('ZE0114');
                             }
                         } else {
-                            throw new Exception('Backup/Save - Error : 2');
+                            throw new RuntimeException('ZE0115');
                         }
                     } else {
                         $data[$pageType][$backupName] = [
@@ -130,7 +130,7 @@ class Backup extends Kernel
                                 ],
                             ]);
                         } else {
-                            throw new Exception('Backup/Save - Error : 3');
+                            throw new RuntimeException('ZE0116');
                         }
                     }
                 } else {
@@ -153,11 +153,11 @@ class Backup extends Kernel
                             ],
                         ]);
                     } else {
-                        throw new Exception('Backup/Save - Error : 4');
+                        throw new RuntimeException('ZE0117');
                     }
                 }
             } else {
-                throw new Exception('Backup/Save - Error : 5');
+                throw new RuntimeException('ZE0118');
             }
         } catch (Throwable $th) {
             $ajax->send([
@@ -185,12 +185,12 @@ class Backup extends Kernel
                     if (self::service('db')->add($this->backupDbName, $data, true, false)) {
                         $ajax->send('result', 'success');
                     } else {
-                        throw new Exception('Backup/Delete All - Error : 1');
+                        throw new RuntimeException('ZE0119');
                     }
                 }
             }
 
-            throw new Exception('Backup/Delete All - Error : 2');
+            throw new RuntimeException('ZE0120');
         } catch (Throwable $th) {
             $ajax->send([
                 'result'     => 'failure',
@@ -220,12 +220,12 @@ class Backup extends Kernel
                             'count'  => count($data[$pageType]),
                         ]);
                     } else {
-                        throw new Exception('Backup/Delete Item - Error : 1');
+                        throw new RuntimeException('ZE0121');
                     }
                 }
             }
 
-            throw new Exception('Backup/Delete Item - Error : 2');
+            throw new RuntimeException('ZE0122');
         } catch (Throwable $th) {
             $ajax->send([
                 'result'     => 'failure',
@@ -261,10 +261,10 @@ class Backup extends Kernel
                         'content' => $events['success']['content'],
                     ]);
                 } else {
-                    throw new Exception('Backup/Restore - Error : 1');
+                    throw new RuntimeException('ZE0123');
                 }
             } else {
-                throw new Exception('Backup/Restore - Error : 2');
+                throw new RuntimeException('ZE0124');
             }
         } catch (Throwable $th) {
             $ajax->send([

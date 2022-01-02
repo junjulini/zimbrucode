@@ -11,6 +11,7 @@
 
 namespace ZimbruCode\Component\Asset;
 
+use InvalidArgumentException;
 use ZimbruCode\Component\Asset\Filter\Combine;
 use ZimbruCode\Component\Asset\Library\AssetData;
 use ZimbruCode\Component\Asset\Library\AssetDataCollector;
@@ -149,7 +150,7 @@ class AssetManager
     public function combine(string $name): AssetManager
     {
         if ($this->collector->get() && $name && !Kernel::dev()) {
-            $callback = function (object $collector, array $data) use ($name): array {
+            $callback = function (object $collector, array $data) use ($name): array{
                 $data['settings']['js']['output-name']  = $name;
                 $data['settings']['css']['output-name'] = $name;
 
@@ -231,7 +232,7 @@ class AssetManager
                 }
             }
 
-            throw new \InvalidArgumentException("Next script handle for \"localize\" function not found : {$handle}");
+            throw new InvalidArgumentException("ZE0004 - Handle not found : {$handle}");
         }
     }
 
@@ -245,7 +246,7 @@ class AssetManager
                 }
             }
 
-            throw new \InvalidArgumentException("Next script handle for \"addInlineScript\" function not found : {$handle}");
+            throw new InvalidArgumentException("ZE0005 - Handle not found : {$handle}");
         }
     }
 
@@ -259,7 +260,7 @@ class AssetManager
                 }
             }
 
-            throw new \InvalidArgumentException("Next style handle for \"addInlineStyle\" function not found : {$handle}");
+            throw new InvalidArgumentException("ZE0006 - Handle not found : {$handle}");
         }
     }
 

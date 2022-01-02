@@ -11,6 +11,9 @@
 
 namespace ZimbruCode\Component\Core;
 
+use InvalidArgumentException;
+use ReflectionObject;
+use RuntimeException;
 use ZimbruCode\Component\Common\DataCollector;
 use ZimbruCode\Component\Common\Tools;
 use ZimbruCode\Component\Core\Kernel;
@@ -115,7 +118,7 @@ class ModuleLoader
     public function addNamespace(string $namespace): ModuleLoader
     {
         if (!$namespace) {
-            throw new \InvalidArgumentException('Namespace is empty.');
+            throw new InvalidArgumentException('ZE0068');
         }
 
         Kernel::addGlobalCache("module/namespace/{$namespace}", $namespace);
@@ -202,7 +205,7 @@ class ModuleLoader
                              ->build();
                     } elseif (is_array($module)) {
                         if (empty($module['module'])) {
-                            throw new \RuntimeException('Module name is empty.');
+                            throw new RuntimeException('ZE0069');
                         }
 
                         $service  = (!empty($module['service']) && is_string($module['service'])) ? $module['service'] : false;
@@ -277,7 +280,7 @@ class ModuleLoader
     protected function build(): ?ModuleKernel
     {
         if (empty($this->config['module']) || !is_string($this->config['module'])) {
-            throw new \RuntimeException('Module is empty or is not compatible.');
+            throw new RuntimeException('ZE0070');
         }
 
         if (!empty($this->config['mode']) && is_string($this->config['mode'])) {
@@ -316,7 +319,7 @@ class ModuleLoader
     protected function prepModuleData(): ModuleKernel
     {
         if (!$module = $this->getModuleClass($this->config['module'])) {
-            throw new \RuntimeException("{$this->config['module']} - module not exist.");
+            throw new RuntimeException("ZE0071 - Module does not exist : {$this->config['module']}");
         }
 
         // Init collector
@@ -327,18 +330,18 @@ class ModuleLoader
 
         // Init module
         if (!(($module = new $module($collector)) instanceof ModuleKernel)) {
-            throw new \RuntimeException(get_class($module) . ' - this module not compatible.');
+            throw new RuntimeException('ZE0072 - This module is not compatible : ' . get_class($module));
         }
 
         // Set module path in collector
-        $collector->add('module-path', wp_normalize_path(dirname((new \ReflectionObject($module))->getFileName())));
+        $collector->add('module-path', wp_normalize_path(dirname((new ReflectionObject($module))->getFileName())));
 
         // Check "MultiUse"
         if (!$collector->get('multi-use')) {
             if (!Kernel::getGlobal("cache/module/one-off/{$module->getModuleNamespace()}")) {
                 Kernel::addGlobal("cache/module/one-off/{$module->getModuleNamespace()}", $module->getModuleName());
             } else {
-                throw new \RuntimeException("Duplication of module : {$module->getModuleNamespace()}");
+                throw new RuntimeException("ZE0073 - This module is duplicated : {$module->getModuleNamespace()}");
             }
         }
 

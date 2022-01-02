@@ -16,6 +16,9 @@ use Doctrine\Common\Cache\FilesystemCache;
 use Doctrine\Common\Cache\MemcacheCache;
 use Doctrine\Common\Cache\MemcachedCache;
 use Doctrine\Common\Cache\RedisCache;
+use Memcache;
+use Memcached;
+use Redis;
 use ZimbruCode\Component\Core\Kernel;
 
 /**
@@ -121,7 +124,7 @@ class CacheHandler
         $host = Kernel::getGlobal('core/component/cache/settings/memcache/host');
         $port = Kernel::getGlobal('core/component/cache/settings/memcache/port');
 
-        $memcache = new \Memcache;
+        $memcache = new Memcache;
 
         if ($memcache->connect($host, $port)) {
             $cacheDriver = new MemcacheCache;
@@ -142,7 +145,7 @@ class CacheHandler
         $host = Kernel::getGlobal('core/component/cache/settings/memcached/host');
         $port = Kernel::getGlobal('core/component/cache/settings/memcached/port');
 
-        $memcached = new \Memcached;
+        $memcached = new Memcached;
 
         if ($memcached->addServer($host, $port)) {
             $cacheDriver = new MemcachedCache;
@@ -163,7 +166,7 @@ class CacheHandler
         $host = Kernel::getGlobal('core/component/cache/settings/redis/host');
         $port = Kernel::getGlobal('core/component/cache/settings/redis/port');
 
-        $redis = new \Redis;
+        $redis = new Redis;
 
         if ($redis->connect($host, $port)) {
             $cacheDriver = new RedisCache;

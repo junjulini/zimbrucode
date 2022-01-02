@@ -11,6 +11,7 @@
 
 namespace ZimbruCode\Module\ThemeAdaptor\Library;
 
+use InvalidArgumentException;
 use ZimbruCode\Component\Core\Kernel;
 use ZimbruCode\Component\TemplateBridges\TwigTemplateBridge;
 use ZimbruCode\Module\ThemeAdaptor\Library\Shell\GeneralShell;
@@ -43,7 +44,7 @@ class Render
     public function __construct(string $template, string $locationPath = '', bool $flush = true)
     {
         if (!$template) {
-            throw new \InvalidArgumentException('Template is empty.');
+            throw new InvalidArgumentException('ZE0140');
         }
 
         $this->ttb   = new TwigTemplateBridge;
@@ -171,7 +172,7 @@ class Render
     public function addFunction(string $name, callable $method): void
     {
         if (!$name) {
-            throw new \InvalidArgumentException('Function name is empty.');
+            throw new InvalidArgumentException('ZE0141');
         }
 
         $this->data['functions'][$name] = $method;
@@ -188,7 +189,7 @@ class Render
     public function addEscaper(string $name, callable $method): void
     {
         if (!$name) {
-            throw new \InvalidArgumentException('Escaper function name is empty.');
+            throw new InvalidArgumentException('ZE0142');
         }
 
         $this->data['escapers'][$name] = $method;
@@ -205,7 +206,7 @@ class Render
     public function addFilter(string $name, callable $method): void
     {
         if (!$name) {
-            throw new \InvalidArgumentException('Filter function name is empty.');
+            throw new InvalidArgumentException('ZE0143');
         }
 
         $this->data['filters'][$name] = $method;

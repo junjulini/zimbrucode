@@ -11,6 +11,9 @@
 
 namespace ZimbruCode\Component\Asset\Library;
 
+use InvalidArgumentException;
+use RuntimeException;
+use SplFileInfo;
 use ZimbruCode\Component\Asset\Library\LocationDetector;
 use ZimbruCode\Component\Common\Tools;
 use ZimbruCode\Component\Core\Kernel;
@@ -67,11 +70,11 @@ class AssetData
                     $this->footer($asset['footer']);
                 }
             } else {
-                throw new \InvalidArgumentException('Asset is empty or not string/array or asset[\'raw\'] is empty');
+                throw new InvalidArgumentException('ZE0018');
             }
         }
 
-        $this->info     = new \SplFileInfo($this->raw);
+        $this->info     = new SplFileInfo($this->raw);
         $this->location = $location;
     }
 
@@ -323,7 +326,7 @@ class AssetData
         if ($this->isFile()) {
             return $this->location->get($this->raw);
         } else {
-            throw new \RuntimeException("Asset is not file : {$this->raw}");
+            throw new RuntimeException("ZE0019 - The asset is not file : {$this->raw}");
         }
     }
 

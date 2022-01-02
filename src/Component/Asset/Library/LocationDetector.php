@@ -11,6 +11,9 @@
 
 namespace ZimbruCode\Component\Asset\Library;
 
+use InvalidArgumentException;
+use RuntimeException;
+use SplFileInfo;
 use ZimbruCode\Component\Common\Tools;
 use ZimbruCode\Component\Core\Kernel;
 
@@ -30,7 +33,7 @@ class LocationDetector
     public function __construct(string $location)
     {
         if (!$location) {
-            throw new \InvalidArgumentException('Location is empty.');
+            throw new InvalidArgumentException('ZE0028');
         }
 
         $this->root            = Kernel::service('app')->getResourcePath();
@@ -55,7 +58,7 @@ class LocationDetector
     public function get(string $path): string
     {
         if (!$path) {
-            throw new \InvalidArgumentException('Path is empty.');
+            throw new InvalidArgumentException('ZE0029');
         }
 
         if (Tools::isPath($path)) {
@@ -76,7 +79,7 @@ class LocationDetector
      */
     protected function definedAsString(string $path): string
     {
-        $type = (new \SplFileInfo($path))->getExtension();
+        $type = (new SplFileInfo($path))->getExtension();
 
         if (isset($this->defaultLocation[$type])) {
             $loc1 = wp_normalize_path($this->location . $this->defaultLocation[$type] . $path);
@@ -102,7 +105,7 @@ class LocationDetector
             }
         }
 
-        throw new \RuntimeException("Asset not exist : {$path}");
+        throw new RuntimeException("ZE0030 - The asset does not exist : {$path}");
     }
 
     /**
@@ -118,7 +121,7 @@ class LocationDetector
             return wp_normalize_path($path);
         }
 
-        throw new \RuntimeException("Asset not exist : {$path}");
+        throw new RuntimeException("ZE0031 - The asset does not exist : {$path}");
     }
 
     /**
@@ -133,7 +136,7 @@ class LocationDetector
         if (Tools::isLocalURL($path)) {
             return Tools::getPath($path);
         } else {
-            throw new \RuntimeException("Can't get path for non local URL : {$path}");
+            throw new RuntimeException("ZE0032 - URL is not local : {$path}");
         }
     }
 }

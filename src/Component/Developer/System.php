@@ -11,6 +11,7 @@
 
 namespace ZimbruCode\Component\Developer;
 
+use COM;
 use ZimbruCode\Component\Common\Tools;
 use ZimbruCode\Component\Core\Kernel;
 
@@ -33,7 +34,7 @@ class System
     {
         $memory = $this->getMemoryUsage();
 
-        $data   = [
+        $data = [
             'server-load'         => $this->getServerLoad(),
             'server-memory-usage' => $this->getServerMemoryUsage(),
             'memory-limit'        => "{$memory['limit']} Mb",
@@ -92,7 +93,7 @@ class System
                 return 'Not compatible';
             }
 
-            $wmi    = new \COM('Winmgmts://');
+            $wmi    = new COM('Winmgmts://');
             $server = $wmi->execquery('SELECT LoadPercentage FROM Win32_Processor');
 
             $cpuNum = $loadTotal = 0;

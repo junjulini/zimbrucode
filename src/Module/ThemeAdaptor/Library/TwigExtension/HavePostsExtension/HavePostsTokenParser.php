@@ -54,7 +54,7 @@ class HavePostsTokenParser extends AbstractTokenParser
                     break;
 
                 default:
-                    throw new SyntaxError(sprintf('Unexpected end of template. Twig was looking for the following tags "else" or "endhaveposts" to close the "haveposts" block started at line %d).', $lineno), $stream->getCurrent()->getLine(), $stream->getFilename());
+                    throw new SyntaxError('ZE0144 - ' . sprintf('Unexpected end of template. Twig was looking for the following tags "else" or "endhaveposts" to close the "haveposts" block started at line %d).', $lineno), $stream->getCurrent()->getLine(), $stream->getFilename());
             }
         }
 

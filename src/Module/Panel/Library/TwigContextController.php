@@ -11,6 +11,8 @@
 
 namespace ZimbruCode\Module\Panel\Library;
 
+use InvalidArgumentException;
+
 /**
  * Class : TWIG context controller
  *
@@ -37,11 +39,11 @@ class TwigContextController
     public function get(string $name)
     {
         if (!$name) {
-            throw new \InvalidArgumentException('ZimbruCode\Module\Panel\Library\TwigContextController : Name item is empty');
+            throw new InvalidArgumentException('ZE0135');
         }
 
         if (!isset($this->context[$name])) {
-            throw new \InvalidArgumentException('ZimbruCode\Module\Panel\Library\TwigContextController : The element does not exist in the context array');
+            throw new InvalidArgumentException('ZE0136');
         }
 
         return $this->context[$name];

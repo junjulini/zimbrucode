@@ -11,6 +11,7 @@
 
 namespace ZimbruCode\Component\Common;
 
+use DateTime;
 use InvalidArgumentException;
 use RuntimeException;
 use Tracy\Debugger;
@@ -148,7 +149,7 @@ class Tools
     {
         // Fail if the path is empty
         if (!$path) {
-            throw new InvalidArgumentException('Node path cannot be empty.');
+            throw new InvalidArgumentException('ZE0042');
         }
 
         $path    = trim($path, $delimiter);    // Remove all leading and trailing slashes
@@ -177,7 +178,7 @@ class Tools
     {
         // Fail if the path is empty
         if (!$path) {
-            throw new InvalidArgumentException('Node path cannot be empty.');
+            throw new InvalidArgumentException('ZE0043');
         }
 
         $path    = trim($path, $delimiter);    // Remove all leading and trailing slashes
@@ -210,7 +211,7 @@ class Tools
     {
         // Fail if the path is empty
         if (!$path) {
-            throw new InvalidArgumentException('Node path cannot be empty.');
+            throw new InvalidArgumentException('ZE0044');
         }
 
         $path    = trim($path, $delimiter);    // Remove all leading and trailing slashes
@@ -400,7 +401,7 @@ class Tools
     public static function cut(string $input, int $n = 20, bool $return = false)
     {
         if (!$input) {
-            throw new InvalidArgumentException('Input is empty.');
+            throw new InvalidArgumentException('ZE0045');
         }
 
         $output = ($n < strlen($input)) ? substr($input, 0, $n) . ' ...' : $input;
@@ -481,7 +482,7 @@ class Tools
     {
         $time       = microtime(true);
         $micro_time = sprintf('%06d', ($time - floor($time)) * 1000000);
-        $date       = new \DateTime(date('Y-m-d H:i:s.' . $micro_time));
+        $date       = new DateTime(date('Y-m-d H:i:s.' . $micro_time));
 
         return $date->format('Y-m-d H:i:s.u');
     }
@@ -544,7 +545,7 @@ class Tools
     public static function checkImage(string $image): bool
     {
         if (!$image) {
-            throw new InvalidArgumentException('Image path is empty.');
+            throw new InvalidArgumentException('ZE0046');
         }
 
         $mimes = [
@@ -593,7 +594,7 @@ class Tools
     public static function removeSlashes(string $input): string
     {
         if (!$input) {
-            throw new InvalidArgumentException('Input is empty.');
+            throw new InvalidArgumentException('ZE0047');
         }
 
         $input = implode('', explode('\\', $input));
@@ -612,7 +613,7 @@ class Tools
     public static function replaceSpaces(string $input, string $replace = '-'): string
     {
         if (!$input) {
-            throw new InvalidArgumentException('Input is empty.');
+            throw new InvalidArgumentException('ZE0048');
         }
 
         return str_replace(' ', $replace, $input);
@@ -870,7 +871,7 @@ class Tools
         $dir = dirname($file);
         if (!is_dir($dir)) {
             if (false === wp_mkdir_p($dir)) {
-                throw new RuntimeException("Unable to create the directory ({$dir})");
+                throw new RuntimeException("ZE0049 - Unable to create the directory : {$dir}");
             }
         }
 
@@ -880,7 +881,7 @@ class Tools
 
         $fp = @fopen($file, 'wb');
         if (!$fp) {
-            throw new RuntimeException("E1 - Unable to create the file : ({$file})");
+            throw new RuntimeException("ZE0050 - Unable to create the file : {$file}");
         }
 
         mbstring_binary_safe_encoding();
@@ -893,7 +894,7 @@ class Tools
         fclose($fp);
 
         if ($dataLength !== $bytesWritten) {
-            throw new RuntimeException("E2 - Unable to create the file : ({$file})");
+            throw new RuntimeException("ZE0051 - Unable to create the file : {$file}");
         }
 
         @chmod($file, fileperms(ABSPATH . 'index.php') & 0777 | 0644);
@@ -911,7 +912,7 @@ class Tools
     public static function getLineCount(string $file): int
     {
         if (!file_exists($file)) {
-            throw new InvalidArgumentException("{$file}  - file don\'t exist.");
+            throw new InvalidArgumentException("ZE0052 - File don't exist : {$file}");
         }
 
         return count(file($file));
@@ -927,7 +928,7 @@ class Tools
     public static function getAbsolutePath(string $path): string
     {
         if (!$path) {
-            throw new InvalidArgumentException('Path is empty.');
+            throw new InvalidArgumentException('ZE0053');
         }
 
         $separator = self::getGlobal('core/component/path/directory-separator');
@@ -961,11 +962,11 @@ class Tools
     public static function getRelativePath(string $from, string $to): string
     {
         if (!$from) {
-            throw new InvalidArgumentException('$from is empty.');
+            throw new InvalidArgumentException('ZE0054');
         }
 
         if (!$to) {
-            throw new InvalidArgumentException('$to is empty.');
+            throw new InvalidArgumentException('ZE0055');
         }
 
         // Some compatibility fixes for Windows paths

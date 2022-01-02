@@ -12,6 +12,7 @@
 namespace ZimbruCode;
 
 use Composer\Autoload\ClassLoader;
+use RuntimeException;
 use ZimbruCode\Component\Common\FastCache;
 use ZimbruCode\Component\Core\GlobalConfig;
 use ZimbruCode\Component\Core\GlobalLibrary;
@@ -109,7 +110,7 @@ abstract class AppKernel extends Kernel
             // Set global var slug (GVS)
             self::addGlobalVarSlug($slug);
         } else {
-            throw new \RuntimeException("AppKernel - Doubling of application : {$appClass}");
+            throw new RuntimeException("ZE0001 - This application is duplicated : {$appClass}");
         }
     }
 
@@ -195,14 +196,14 @@ abstract class AppKernel extends Kernel
             if (in_array($mode, self::getGlobal('app/modes'))) {
                 self::addGlobal('app/mode', $mode);
             } else {
-                throw new \RuntimeException("AppKernel - Mode is not compatible : {$mode}");
+                throw new RuntimeException("ZE0002 - Mode is not compatible : {$mode}");
             }
         } else {
             if (self::getGlobal('app/mode') !== $mode) {
                 if (in_array($mode, self::getGlobal('app/modes'))) {
                     self::addGlobal('app/mode', $mode);
                 } else {
-                    throw new \RuntimeException("AppKernel - Mode is not compatible : {$mode}");
+                    throw new RuntimeException("ZE0003 - Mode is not compatible : {$mode}");
                 }
             }
         }

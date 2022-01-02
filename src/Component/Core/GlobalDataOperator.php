@@ -11,6 +11,8 @@
 
 namespace ZimbruCode\Component\Core;
 
+use InvalidArgumentException;
+use RuntimeException;
 use ZimbruCode\Component\Common\Tools;
 
 /**
@@ -171,11 +173,11 @@ abstract class GlobalDataOperator
     final protected static function addGlobalVarSlug(string $slug): void
     {
         if (!$slug) {
-            throw new \InvalidArgumentException('Global var slug : empty.');
+            throw new InvalidArgumentException('ZE0056');
         }
 
         if (isset(self::$__GN[$slug])) {
-            throw new \RuntimeException('App slug is already used.');
+            throw new RuntimeException('ZE0057');
         }
 
         self::$__GNS       = $slug;
@@ -216,7 +218,7 @@ abstract class GlobalDataOperator
                 }
 
                 if (self::__isRootNode($path)) {
-                    $path = str_replace('@/', '', $path);
+                    $path                            = str_replace('@/', '', $path);
                     self::$__NODES_CACHE['@'][$path] = Tools::getNode(self::$__GN[self::$__RN], $path, $default);
 
                     return self::$__NODES_CACHE['@'][$path];
@@ -259,7 +261,7 @@ abstract class GlobalDataOperator
     {
         if ($path) {
             if (!self::__isOnCondition($path)) {
-                throw new \InvalidArgumentException(self::__getOEM($path));
+                throw new InvalidArgumentException('ZE0058 - ' . self::__getOEM($path));
             }
 
             self::__removeFromNodesCache($path);
@@ -284,7 +286,7 @@ abstract class GlobalDataOperator
     {
         if ($path) {
             if (!self::__isOnCondition($path)) {
-                throw new \InvalidArgumentException(self::__getOEM($path));
+                throw new InvalidArgumentException('ZE0059 - ' . self::__getOEM($path));
             }
 
             self::__removeFromNodesCache($path);
@@ -311,7 +313,7 @@ abstract class GlobalDataOperator
     {
         if ($path) {
             if (!self::__isOnCondition($path)) {
-                throw new \InvalidArgumentException(self::__getOEM($path));
+                throw new InvalidArgumentException('ZE0060 - ' . self::__getOEM($path));
             }
 
             Tools::dump(self::getGlobal($path));

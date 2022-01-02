@@ -44,7 +44,7 @@ class Cookie
                 break;
 
             case 'json':
-                $raw = Tools::jsonDecode(stripslashes($_COOKIE[$name]), 'ZE0001');
+                $raw = Tools::jsonDecode(stripslashes($_COOKIE[$name]), 'ZE0145');
                 return $raw ?: $default;
                 break;
 

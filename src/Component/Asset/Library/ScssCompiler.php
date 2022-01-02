@@ -11,9 +11,11 @@
 
 namespace ZimbruCode\Component\Asset\Library;
 
+use RuntimeException;
 use ScssPhp\ScssPhp\Compiler;
 use ScssPhp\ScssPhp\OutputStyle;
 use ScssPhp\ScssPhp\ValueConverter;
+use SplFileInfo;
 use ZimbruCode\Component\Asset\Library\AssetCache;
 use ZimbruCode\Component\Common\Tools;
 use ZimbruCode\Component\Core\Kernel;
@@ -125,21 +127,21 @@ class ScssCompiler
         $compiler   = new Compiler();
         $assetCache = new AssetCache;
 
-        // Data preparing
+                                                        // Data preparing
         $cachePath  = wp_normalize_path($this->cache);  // Set cache path
         $inputPath  = wp_normalize_path($this->input);  // Set input path (SCSS File)
         $outputPath = wp_normalize_path($this->output); // Set output path (CSS File)
 
         if (empty($inputPath)) {
-            throw new \RuntimeException("{$inputPath} - input path is empty.");
+            throw new RuntimeException('ZE0034');
         }
 
         if (!Tools::isLocalPath($inputPath)) {
-            throw new \RuntimeException("{$inputPath} - input file is not local.");
+            throw new RuntimeException('ZE0035');
         }
 
         if (!file_exists($inputPath)) {
-            throw new \RuntimeException("{$inputPath} - input file not found.");
+            throw new RuntimeException('ZE0036');
         }
 
         $assetCache->addSetting('check-asset-count', false);
@@ -216,7 +218,7 @@ class ScssCompiler
             // Source map
             if (Kernel::dev()) {
                 $fileInfo = function (string $path): array{
-                    $info = new \SplFileInfo($path);
+                    $info = new SplFileInfo($path);
                     $name = $info->getBasename('.' . $info->getExtension());
 
                     return [

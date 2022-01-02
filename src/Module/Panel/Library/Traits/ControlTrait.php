@@ -11,6 +11,7 @@
 
 namespace ZimbruCode\Module\Panel\Library\Traits;
 
+use RuntimeException;
 use ZimbruCode\Component\Common\Tools;
 
 /**
@@ -43,7 +44,7 @@ trait ControlTrait
     public function mergeControlsLocalizeVars(array $data): array
     {
         if (isset($data['controls'])) {
-            throw new \RuntimeException('Detected "controls" key in array. You can\'t use this key because is reserved for "controls localize vars".');
+            throw new RuntimeException('ZE0137');
         }
 
         return Tools::arrayMerge(['controls' => $this->getModuleData('control-localize-vars')], $data);

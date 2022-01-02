@@ -11,6 +11,8 @@
 
 namespace ZimbruCode\Module\Panel\Library;
 
+use InvalidArgumentException;
+use ReflectionObject;
 use ZimbruCode\Component\Common\Tools;
 use ZimbruCode\Component\Core\ModuleKernel;
 use ZimbruCode\Module\Panel\Library\Traits\ContentUtilityTrait;
@@ -35,7 +37,7 @@ abstract class ControlKernel extends ModuleKernel
      */
     public function getControlPath(string $path = ''): string
     {
-        return wp_normalize_path(dirname((new \ReflectionObject($this))->getFileName()) . $path);
+        return wp_normalize_path(dirname((new ReflectionObject($this))->getFileName()) . $path);
     }
 
     /**
@@ -59,7 +61,7 @@ abstract class ControlKernel extends ModuleKernel
      * @return void          This function does not return a value
      * @since 1.0.0
      */
-    protected function addShellFunction(string $name, string $method, string $type = 'control_shell'): void // TODO: Posibil de scimbat denumirea
+    protected function addShellFunction(string $name, string $method, string $type = 'control_shell'): void
     {
         if (!is_callable($method)) {
             $method = [$this, $method];
@@ -110,7 +112,7 @@ abstract class ControlKernel extends ModuleKernel
     protected function addAsset(string $path): void
     {
         if (!$path) {
-            throw new \InvalidArgumentException('Path is empty.');
+            throw new InvalidArgumentException('ZE0134');
         }
 
         $this->getModuleData('asset')->add($path);

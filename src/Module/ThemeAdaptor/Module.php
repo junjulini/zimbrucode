@@ -11,11 +11,12 @@
 
 namespace ZimbruCode\Module\ThemeAdaptor;
 
+use SplFileInfo;
 use Symfony\Component\Finder\Finder;
 use ZimbruCode\Component\Common\Tools;
 use ZimbruCode\Component\Core\ModuleKernel;
-use ZimbruCode\Module\ThemeAdaptor\Library\Render;
 use ZimbruCode\Module\ThemeAdaptor\Library\MVC;
+use ZimbruCode\Module\ThemeAdaptor\Library\Render;
 use ZimbruCode\Module\ThemeAdaptor\Library\TemplateFilesHandler;
 
 /**
@@ -190,7 +191,7 @@ class Module extends ModuleKernel
         }
 
         if ($wpTemplate !== get_index_template()) {
-            $ext = (new \SplFileInfo($wpTemplate))->getExtension();
+            $ext = (new SplFileInfo($wpTemplate))->getExtension();
 
             if ($ext === 'php' || $ext === 'html') {
                 return $wpTemplate;

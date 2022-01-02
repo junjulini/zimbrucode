@@ -11,6 +11,8 @@
 
 namespace ZimbruCode\Component\Common;
 
+use RuntimeException;
+
 /**
  * Class : Callback
  *
@@ -51,7 +53,7 @@ class Callback
     public function run(string $name, ...$args)
     {
         if (!$name) {
-            throw new \RuntimeException('Name of callback is not defined.');
+            throw new RuntimeException('ZE0037');
         }
 
         $output = [];

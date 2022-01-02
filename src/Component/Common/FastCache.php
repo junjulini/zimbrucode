@@ -11,6 +11,7 @@
 
 namespace ZimbruCode\Component\Common;
 
+use RuntimeException;
 use ZimbruCode\Component\Common\Tools;
 use ZimbruCode\Component\Core\Kernel;
 use ZimbruCode\Component\Handler\CacheHandler;
@@ -57,7 +58,7 @@ class FastCache
     public function add(string $key, $value = ''): void
     {
         if (!$key) {
-            throw new \RuntimeException('Cache key : empty.');
+            throw new RuntimeException('ZE0038');
         }
 
         $this->data[$key] = $value;
@@ -75,7 +76,7 @@ class FastCache
     public function get(string $key, $default = false)
     {
         if (!$key) {
-            throw new \RuntimeException('Cache key : empty.');
+            throw new RuntimeException('ZE0039');
         }
 
         return $this->data[$key] ?? $default;
@@ -91,11 +92,11 @@ class FastCache
     public function remove(string $key): void
     {
         if (!$key) {
-            throw new \RuntimeException('Cache key : empty.');
+            throw new RuntimeException('ZE0040');
         }
 
         if (!isset($this->data[$key])) {
-            throw new \RuntimeException("This element {$key} don't exist in cache data.");
+            throw new RuntimeException("ZE0041 - This item '{$key}' does not exist in the cache data");
         }
 
         unset($this->data[$key]);

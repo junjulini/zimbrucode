@@ -11,6 +11,8 @@
 
 namespace ZimbruCode\Component\TemplateBridges\Helper;
 
+use RuntimeException;
+
 /**
  * Class : Shell kernel
  *
@@ -25,7 +27,7 @@ abstract class ShellKernel
     public function __set(string $name, callable $method)
     {
         if (method_exists($this, $name) || !empty($this->customMethod[$name])) {
-            throw new \RuntimeException($name . ' - this method exist in ' . static::class);
+            throw new RuntimeException("ZE0113 - This method '{$name}' exist in " . static::class);
         }
 
         $this->__CM[$name] = $method;

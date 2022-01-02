@@ -14,6 +14,7 @@ namespace ZimbruCode\Component\Composer;
 use Composer\Script\Event;
 use MatthiasMullie\Minify\CSS as MinifyCSS;
 use MatthiasMullie\Minify\JS as MinifyJS;
+use SplFileInfo;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
@@ -525,7 +526,7 @@ class ScriptHandler
             return;
         }
 
-        $fi = new \SplFileInfo($path);
+        $fi = new SplFileInfo($path);
 
         if ($fi->getExtension() == 'css') {
             $tool = new MinifyCSS;

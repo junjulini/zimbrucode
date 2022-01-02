@@ -11,6 +11,7 @@
 
 namespace ZimbruCode\Component\Core;
 
+use RuntimeException;
 use ZimbruCode\Component\Core\ModuleLoader;
 use ZimbruCode\Component\Developer\DeveloperMode;
 use ZimbruCode\Component\Handler\Traits\GlobalCacheHandlerTrait;
@@ -102,7 +103,7 @@ abstract class Kernel extends GlobalDataOperator
                 if (!self::getGlobalCache("services/{$service}")) {
                     self::addGlobalCache("services/{$service}", $handler);
                 } else {
-                    throw new \RuntimeException("This service exist : {$service}");
+                    throw new RuntimeException("ZE0061 - This service exist : {$service}");
                 }
             } else {
 
@@ -112,7 +113,7 @@ abstract class Kernel extends GlobalDataOperator
                         if (isset($GLOBALS['wpdb'])) {
                             return $GLOBALS['wpdb'];
                         } else {
-                            throw new \RuntimeException('Error : WPDB');
+                            throw new RuntimeException('ZE0062');
                         }
                         break;
                 }
@@ -121,7 +122,7 @@ abstract class Kernel extends GlobalDataOperator
                 if ($object = self::getGlobalCache("services/{$service}")) {
                     return $object;
                 } else {
-                    throw new \RuntimeException("This service don't exist : {$service}");
+                    throw new RuntimeException("ZE0063 - This service don't exist : {$service}");
                 }
             }
         }

@@ -11,6 +11,7 @@
 
 namespace ZimbruCode\Component\Handler;
 
+use RuntimeException;
 use ZimbruCode\Component\Common\Tools;
 use ZimbruCode\Component\Core\Kernel;
 
@@ -29,11 +30,11 @@ class DBHandler
     public function __construct(string $tableName = '')
     {
         if (!$slug = esc_sql(Kernel::getGlobal('app/slug'))) {
-            throw new \RuntimeException('App slug not defined.');
+            throw new RuntimeException('ZE0076');
         }
 
         if ($tableName) {
-            $this->tableName = Kernel::service('wpdb')->prefix . $slug .'_'. $tableName;
+            $this->tableName = Kernel::service('wpdb')->prefix . $slug . '_' . $tableName;
         } else {
             $this->tableName = Kernel::service('wpdb')->prefix . $slug;
         }
@@ -69,7 +70,7 @@ class DBHandler
     protected function checkError(): void
     {
         if ($e = Kernel::service('wpdb')->last_error) {
-            throw new \RuntimeException('Error : WPDB - ' . $e);
+            throw new RuntimeException("ZE0077 - WPDB : {$e}");
         }
     }
 
@@ -349,12 +350,12 @@ class DBHandler
                 if (is_serialized($item->value)) {
                     $output[$item->name] = [
                         'data'     => unserialize($item->value),
-                        'autoload' => $item->autoload
+                        'autoload' => $item->autoload,
                     ];
                 } else {
                     $output[$item->name] = [
                         'data'     => $item->value,
-                        'autoload' => $item->autoload
+                        'autoload' => $item->autoload,
                     ];
                 }
             }

@@ -11,6 +11,8 @@
 
 namespace ZimbruCode\Component\Core;
 
+use InvalidArgumentException;
+use RuntimeException;
 use ZimbruCode\Component\Common\DataCollector;
 use ZimbruCode\Component\Common\Tools;
 use ZimbruCode\Component\Core\Kernel;
@@ -51,7 +53,7 @@ abstract class ModuleKernel extends Kernel
         if ($this->__MP instanceof ModuleKernel) {
             return $this->__MP;
         } else {
-            throw new \RuntimeException('Parent module not initialized');
+            throw new RuntimeException('ZE0064');
         }
     }
 
@@ -252,11 +254,11 @@ abstract class ModuleKernel extends Kernel
     final public function loadModulePart(string $part, string $service = '', $data = null): object
     {
         if (!$part) {
-            throw new \InvalidArgumentException('Module part : empty.');
+            throw new InvalidArgumentException('ZE0065');
         }
 
         if (!(($part = new $part($this->__DC, $this)) instanceof ModuleKernel)) {
-            throw new \RuntimeException(get_class($part) . ' - this module part not compatible.');
+            throw new RuntimeException('ZE0066 - this module part not compatible : ' . get_class($part));
         }
 
         if (method_exists($part, 'setup')) {
@@ -282,7 +284,7 @@ abstract class ModuleKernel extends Kernel
         if ($service && $moduleService = $this->__DC->get("module-services/{$service}")) {
             return $moduleService;
         } else {
-            throw new \InvalidArgumentException('Module service is : empty, not string or not exist.');
+            throw new InvalidArgumentException('ZE0067');
         }
     }
 }

@@ -11,6 +11,9 @@
 
 namespace ZimbruCode\Component\Asset\Library;
 
+new SplFileInfo;
+use InvalidArgumentException;
+use RuntimeException;
 use ZimbruCode\Component\Common\Tools;
 use ZimbruCode\Component\Core\Kernel;
 
@@ -37,11 +40,11 @@ class CssConvertor
     public function addAsset(string $asset): void
     {
         if (!$asset) {
-            throw new \InvalidArgumentException('Asset is empty.');
+            throw new InvalidArgumentException('ZE0023');
         }
 
         if (!file_exists($asset)) {
-            throw new \RuntimeException("{$asset} - asset don't exist.");
+            throw new RuntimeException("ZE0024 - The asset does not exist : {$asset}");
         }
 
         $this->asset = $asset;
@@ -57,7 +60,7 @@ class CssConvertor
     public function addOutput(string $output): void
     {
         if (!$output) {
-            throw new \InvalidArgumentException('Output is empty.');
+            throw new InvalidArgumentException('ZE0025');
         }
 
         $this->output = $output;
@@ -73,7 +76,7 @@ class CssConvertor
     public function add(string $content): void
     {
         if (!$content) {
-            throw new \InvalidArgumentException('Content is empty');
+            throw new InvalidArgumentException('ZE0026');
         }
 
         $this->content = $content;
@@ -88,7 +91,7 @@ class CssConvertor
     protected function get(): string
     {
         if (!$this->asset) {
-            throw new \RuntimeException('Asset is empty.');
+            throw new RuntimeException('ZE0027');
         }
 
         return $this->content ?: file_get_contents($this->asset);
@@ -160,7 +163,7 @@ class CssConvertor
                 $clean = str_replace(['"', "'"], '', $item);
 
                 if (Tools::isLocalURL($clean) || Tools::isLocalPath($clean)) {
-                    $item      = new \SplFileInfo(Tools::getPath($clean));
+                    $item      = new SplFileInfo(Tools::getPath($clean));
                     $importExt = $config['import-ext'];
 
                     if (isset($importExt[$item->getExtension()]) && file_exists($item->getPathname())) {

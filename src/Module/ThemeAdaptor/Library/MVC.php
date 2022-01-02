@@ -11,11 +11,12 @@
 
 namespace ZimbruCode\Module\ThemeAdaptor\Library;
 
+use RuntimeException;
 use ZimbruCode\Component\Common\Tools;
 use ZimbruCode\Component\Core\Kernel;
 use ZimbruCode\Component\Handler\Traits\GlobalCacheHandlerTrait;
-use ZimbruCode\Component\Handler\Traits\RequestHandlerTrait;
 use ZimbruCode\Component\Handler\Traits\OptionHandlerTrait;
+use ZimbruCode\Component\Handler\Traits\RequestHandlerTrait;
 use ZimbruCode\Component\Handler\Traits\SessionHandlerTrait;
 
 /**
@@ -56,7 +57,7 @@ class MVC
             }
 
             if (!file_exists($this->service('app')->getViewPath())) {
-                throw new \RuntimeException('App views dir don\'t exist.');
+                throw new RuntimeException('ZE0138');
             }
 
             // Set views path
@@ -70,7 +71,7 @@ class MVC
             }
         } else {
             if (!file_exists($this->service('app')->getViewPath())) {
-                throw new \RuntimeException('App views dir don\'t exist.');
+                throw new RuntimeException('ZE0139');
             }
 
             // Set views path

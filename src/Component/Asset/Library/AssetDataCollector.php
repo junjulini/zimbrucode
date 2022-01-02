@@ -11,12 +11,13 @@
 
 namespace ZimbruCode\Component\Asset\Library;
 
+use InvalidArgumentException;
 use ZimbruCode\Component\Asset\Filter\AssetNamespace;
 use ZimbruCode\Component\Asset\Filter\CSS;
 use ZimbruCode\Component\Asset\Filter\JavaScript;
-use ZimbruCode\Component\Asset\Filter\SCSS;
 use ZimbruCode\Component\Asset\Filter\Package;
 use ZimbruCode\Component\Asset\Filter\Registered;
+use ZimbruCode\Component\Asset\Filter\SCSS;
 use ZimbruCode\Component\Asset\Library\Filter;
 use ZimbruCode\Component\Asset\Library\LocationDetector;
 use ZimbruCode\Component\Common\Tools;
@@ -70,7 +71,6 @@ class AssetDataCollector
      * @param string   $assetName            The asset name
      * @param bool     $autoFilter           Preparing through default filters
      * @param callable $callback             Callback for additional manipulations with assets
-     * @throws \InvalidArgumentException     If the asset name is invalid
      * @since 1.0.0
      */
     public function add($asset, bool $autoFilter = false, callable $callback = null): AssetDataCollector
@@ -89,7 +89,7 @@ class AssetDataCollector
                 $this->filter(new Registered, $assetData->raw(), $callback);
             }
         } else {
-            throw new \InvalidArgumentException('Asset is empty or not string/array');
+            throw new InvalidArgumentException('ZE0020');
         }
 
         return $this;
@@ -116,7 +116,6 @@ class AssetDataCollector
      *
      * @param  string $asset               The asset name
      * @return array|AssetData             The asset data
-     * @throws \InvalidArgumentException   If there is no asset by that name
      * @since 1.0.0
      */
     public function get(string $asset = null)
@@ -126,7 +125,7 @@ class AssetDataCollector
         }
 
         if (!isset($this->data[$asset])) {
-            throw new \InvalidArgumentException("There is no {$asset} asset.");
+            throw new InvalidArgumentException("ZE0021 - The asset does not exist : {$asset}");
         }
 
         return $this->data[$asset];
@@ -153,13 +152,12 @@ class AssetDataCollector
      *
      * @param  string $asset              The asset name
      * @return bool                       False or True
-     * @throws \InvalidArgumentException  If there is no asset by that name
      * @since 1.0.0
      */
     public function remove(string $asset): bool
     {
         if (!isset($this->data[$asset])) {
-            throw new \InvalidArgumentException("There is no {$asset} asset.");
+            throw new InvalidArgumentException("ZE0022 - The asset does not exist : {$asset}");
         }
 
         unset($this->data[$asset]);

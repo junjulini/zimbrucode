@@ -11,6 +11,9 @@
 
 namespace ZimbruCode\Component\Asset\Library;
 
+use InvalidArgumentException;
+use ReflectionClass;
+use RuntimeException;
 use ZimbruCode\Component\Common\Callback;
 use ZimbruCode\Component\Common\Tools;
 use ZimbruCode\Component\Core\Kernel;
@@ -57,7 +60,7 @@ class AssetCache
     public function addSetting(string $setting, string $value = ''): void
     {
         if (!isset($this->settings[$setting])) {
-            throw new \RuntimeException("{$setting} - this setting don't exist.");
+            throw new RuntimeException("ZE0007 - Setting don't exist : {$setting}");
         }
 
         $this->settings[$setting] = $value;
@@ -83,10 +86,10 @@ class AssetCache
     public function addExecuteLocation(string $class): string
     {
         if (!class_exists($class)) {
-            throw new \InvalidArgumentException("{$class} - class don't exist.");
+            throw new InvalidArgumentException("ZE0008 - Class don't exist : {$class}");
         }
 
-        $this->executeLocation = (new \ReflectionClass($class))->getShortName();
+        $this->executeLocation = (new ReflectionClass($class))->getShortName();
 
         return $this->executeLocation;
     }
@@ -127,7 +130,7 @@ class AssetCache
         if ($path) {
             $this->cacheID = $path;
         } else {
-            throw new \InvalidArgumentException('AssetCache : path is empty.');
+            throw new InvalidArgumentException('ZE0009');
         }
     }
 
@@ -271,11 +274,11 @@ class AssetCache
     public function get(): array
     {
         if (!$this->cacheID) {
-            throw new \RuntimeException('Cache id : empty.');
+            throw new RuntimeException('ZE0010');
         }
 
         if (!is_string($this->cacheID)) {
-            throw new \RuntimeException('Cache id : not string.');
+            throw new RuntimeException('ZE0011');
         }
 
         return $this->object['cache']->fetch($this->cacheID);
@@ -290,11 +293,11 @@ class AssetCache
     public function has(): bool
     {
         if (!$this->cacheID) {
-            throw new \RuntimeException('Cache id : empty.');
+            throw new RuntimeException('ZE0012');
         }
 
         if (!is_string($this->cacheID)) {
-            throw new \RuntimeException('Cache id : not string.');
+            throw new RuntimeException('ZE0013');
         }
 
         return $this->object['cache']->contains($this->cacheID);
@@ -310,11 +313,11 @@ class AssetCache
     public function add(array $content): void
     {
         if (!$this->cacheID) {
-            throw new \RuntimeException('Cache id : empty.');
+            throw new RuntimeException('ZE0014');
         }
 
         if (!is_string($this->cacheID)) {
-            throw new \RuntimeException('Cache id : not string.');
+            throw new RuntimeException('ZE0015');
         }
 
         $this->object['cache']->save($this->cacheID, $content);
@@ -329,11 +332,11 @@ class AssetCache
     public function remove(): void
     {
         if (!$this->cacheID) {
-            throw new \RuntimeException('Cache id : empty.');
+            throw new RuntimeException('ZE0016');
         }
 
         if (!is_string($this->cacheID)) {
-            throw new \RuntimeException('Cache id : not string.');
+            throw new RuntimeException('ZE0017');
         }
 
         $this->object['cache']->delete($this->cacheID);

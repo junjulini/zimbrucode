@@ -11,6 +11,7 @@
 
 namespace ZimbruCode\Component\Handler\Traits;
 
+use InvalidArgumentException;
 use ZimbruCode\Component\Core\Kernel;
 
 /**
@@ -32,7 +33,7 @@ trait GlobalCacheHandlerTrait
     public static function addGlobalCache(string $key, $value = '')
     {
         if (!$key) {
-            throw new \InvalidArgumentException('Global cache key is empty.');
+            throw new InvalidArgumentException('ZE0078');
         }
 
         return Kernel::addGlobal("cache/$key", $value);
@@ -47,7 +48,7 @@ trait GlobalCacheHandlerTrait
     public static function getGlobalCache(string $key, $default = false)
     {
         if (!$key) {
-            throw new \InvalidArgumentException('Global cache key is empty.');
+            throw new InvalidArgumentException('ZE0079');
         }
 
         return Kernel::getGlobal("cache/$key", $default);
@@ -62,7 +63,7 @@ trait GlobalCacheHandlerTrait
     public static function remGlobalCache(string $key): bool
     {
         if (!$key) {
-            throw new \InvalidArgumentException('Global cache key is empty.');
+            throw new InvalidArgumentException('ZE0080');
         }
 
         return Kernel::remGlobal("cache/$key");

@@ -11,6 +11,8 @@
 
 namespace ZimbruCode\Component\TemplateBridges;
 
+use InvalidArgumentException;
+use RuntimeException;
 use Twig\Cache\FilesystemCache;
 use Twig\Environment;
 use Twig\Extension\AbstractExtension;
@@ -75,7 +77,7 @@ class TwigTemplateBridge
     public function getTWIG(): Environment
     {
         if (!$this->twig || !($this->twig instanceof Environment)) {
-            throw new \RuntimeException('TWIG Environment is not initialized.');
+            throw new RuntimeException('ZE0100');
         }
 
         return $this->twig;
@@ -90,7 +92,7 @@ class TwigTemplateBridge
     public function getLoader(): FilesystemLoader
     {
         if (!$this->loader || !($this->loader instanceof FilesystemLoader)) {
-            throw new \RuntimeException('TWIG FilesystemLoader is not initialized.');
+            throw new RuntimeException('ZE0101');
         }
 
         return $this->loader;
@@ -105,7 +107,7 @@ class TwigTemplateBridge
     public function __get(string $name)
     {
         if (!isset($this->data['vars'][$name])) {
-            throw new \RuntimeException($name . ' - this variable not found.');
+            throw new RuntimeException("ZE0102 - Variable not found : {$name}");
         }
 
         return $this->data['vars'][$name];
@@ -123,7 +125,7 @@ class TwigTemplateBridge
         if ($name) {
             $this->data['vars'][$name] = $value;
         } else {
-            throw new \RuntimeException('Name of var is not string or is empty.');
+            throw new RuntimeException('ZE0103');
         }
     }
 
@@ -137,7 +139,7 @@ class TwigTemplateBridge
     {
         if ($name) {
             if (!isset($this->data['vars'][$name])) {
-                throw new \RuntimeException("{$name} - this variable not found.");
+                throw new RuntimeException("ZE0104 - Variable not found : {$name}");
             }
 
             return $this->data['vars'][$name];
@@ -192,11 +194,11 @@ class TwigTemplateBridge
     public function addLocationPath(string $path, string $namespace = null): void
     {
         if (!$path) {
-            throw new \RuntimeException('Load path is empty.');
+            throw new RuntimeException('ZE0105');
         }
 
         if (!Tools::isLocalPath($path)) {
-            throw new \RuntimeException("{$path} - this path is not local.");
+            throw new RuntimeException("ZE0106 - Path is not local : {$path}");
         }
 
         $this->locationPath[] = [$path, $namespace];
@@ -212,11 +214,11 @@ class TwigTemplateBridge
     public function addCachePath(string $path): void
     {
         if (!$path) {
-            throw new \RuntimeException('Cache path is empty.');
+            throw new RuntimeException('ZE0107');
         }
 
         if (!Tools::isLocalPath($path)) {
-            throw new \RuntimeException("{$path} - this path is not local.");
+            throw new RuntimeException("ZE0108 - Path is not local : {$path}");
         }
 
         $this->cachePath = $path;
@@ -233,7 +235,7 @@ class TwigTemplateBridge
     public function addFunction(string $name, callable $method): void
     {
         if (!$name) {
-            throw new \InvalidArgumentException('Function name is empty.');
+            throw new InvalidArgumentException('ZE0109');
         }
 
         $this->data['functions'][$name] = $method;
@@ -250,7 +252,7 @@ class TwigTemplateBridge
     public function addEscaper(string $name, callable $method): void
     {
         if (!$name) {
-            throw new \InvalidArgumentException('Escaper function name is empty.');
+            throw new InvalidArgumentException('ZE0110');
         }
 
         $this->data['escapers'][$name] = $method;
@@ -267,7 +269,7 @@ class TwigTemplateBridge
     public function addFilter(string $name, callable $method): void
     {
         if (!$name) {
-            throw new \InvalidArgumentException('Filter function name is empty.');
+            throw new InvalidArgumentException('ZE0111');
         }
 
         $this->data['filters'][$name] = $method;
@@ -294,7 +296,7 @@ class TwigTemplateBridge
     public function addLoader(): void
     {
         if (!$this->locationPath) {
-            throw new \RuntimeException('Array path is empty.');
+            throw new RuntimeException('ZE0112');
         }
 
         $this->loader = new FilesystemLoader();
