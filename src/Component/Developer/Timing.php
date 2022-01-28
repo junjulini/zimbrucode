@@ -14,7 +14,7 @@ namespace ZimbruCode\Component\Developer;
 use ZimbruCode\Component\Core\Kernel;
 
 /**
- * Class : Timing
+ * Class : Component/Developer : Timing
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -28,7 +28,7 @@ class Timing
     /**
      * Start time
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     public function start(string $marker = ''): void
@@ -40,20 +40,21 @@ class Timing
     /**
      * End time
      *
-     * @return int   Time
+     * @return float   Final time
      * @since 1.0.0
      */
-    public function segs()
+    public function segs(): float
     {
         return microtime(true) - self::$start;
     }
 
     /**
-     * Converted time
+     * Convert time
      *
+     * @return string   Converted time
      * @since 1.0.0
      */
-    public function display()
+    public function display(): string
     {
         $segs = $this->segs();
         $days = floor($segs / 86400);

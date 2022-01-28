@@ -9,7 +9,7 @@
  */
 
 /*
- * Control script : Color Picker
+ * Control script : Color picker
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode

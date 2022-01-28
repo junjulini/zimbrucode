@@ -14,7 +14,7 @@ namespace ZimbruCode\Component\TemplateBridges\Helper;
 use ZimbruCode\Component\Core\Kernel;
 
 /**
- * Class : Global shell (All extern functions)
+ * Class : Component/TemplateBridge/Helper : Global shell (All extern functions)
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -25,9 +25,9 @@ class GlobalShell
     /**
      * Call function
      *
-     * @param  string $name function name
-     * @param  array  $args function args
-     * @return mix          function return after calling
+     * @param  string $name   Function name
+     * @param  array  $args   Function args
+     * @return mix            Action result
      * @since 1.0.0
      */
     public function __call(string $name, array $args)
@@ -68,11 +68,11 @@ class GlobalShell
     }
 
     /**
-     * Get global data from global var
+     * Get global data
      *
-     * @param  string  $path      Base path
+     * @param  string  $path      Array path
      * @param  mix     $default   Default value
-     * @return mix                Return data
+     * @return mix                Global data
      * @since 1.0.0
      */
     public function get(...$args)
@@ -81,11 +81,11 @@ class GlobalShell
     }
 
     /**
-     * Get cache value
+     * Get cache data
      *
      * @param  string  $key       Cache key
      * @param  mix     $default   Default value
-     * @return mix                Return data
+     * @return mix                Cache data
      * @since 1.0.0
      */
     public function cache(string $key, $default = false)
@@ -104,6 +104,14 @@ class GlobalShell
         return Kernel::getGlobalVarSlug();
     }
 
+    /**
+     * Get external global var
+     *
+     * @param string  $key       Global var
+     * @param boolean $default   Default value
+     * @return mix               Global data
+     * @since 1.0.0
+     */
     public function externVar(string $key, $default = false)
     {
         return $GLOBALS[$key] ?? $default;

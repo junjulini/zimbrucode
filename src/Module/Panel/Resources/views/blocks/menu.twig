@@ -31,7 +31,7 @@
                 <ul class="zc-panel-menu__list">
                     {% for menu in panel.getBuildSettings %}
 
-                        {# If is simple type #}
+                        {# If it's a simple type #}
                         {% if menu.type == 'menuTab' and menu.id %}
 
                             <li class="zc-panel-menu__item zc-panel-menu__item_type_simple" data-menu-item-id="section_{{ menu.id }}">
@@ -41,7 +41,7 @@
                                 <span class="zc-panel-menu__item-title">{{ menu.title }}</span>
                             </li>
 
-                        {# If is parent type #}
+                        {# If it's a parent type #}
                         {% elseif menu.type == 'menuParentTab' and menu.id %}
                             <li class="zc-panel-menu__item zc-panel-menu__item_type_parent zc-panel-menu__item_type_simple" data-menu-container-id="{{ menu.id }}">
                                 {% if menu.icon %}
@@ -51,14 +51,14 @@
                                 <i class="zc-panel-menu__item-icon zc-panel-menu__item-icon_pointer zc-icon-chevron-right"></i>
                             </li>
 
-                        {# If is title type #}
+                        {# If it's a title type #}
                         {% elseif menu.type == 'menuTitleTab' %}
 
                             <li class="zc-panel-menu__item zc-panel-menu__item_type_title">
                                 <span class="zc-panel-menu__item-only-title">{{ menu.title }}</span>
                             </li>
 
-                        {# If is delimiter type #}
+                        {# If it's a delimiter type #}
                         {% elseif menu.type == 'menuDelimiterTab' %}
 
                             <li class="zc-panel-menu__item zc-panel-menu__item_type_delimiter"></li>
@@ -92,7 +92,7 @@
 
                                     {% for sub_menu in menu.content %}
 
-                                        {# If is simple type #}
+                                        {# If it's a simple type #}
                                         {% if sub_menu.type == 'menuTab' and sub_menu.id %}
                                             
                                             <li class="zc-panel-submenu__item zc-panel-submenu__item_type_simple" data-menu-item-id="section_{{ sub_menu.id }}">
@@ -102,19 +102,19 @@
                                                 <span class="zc-panel-submenu__item-title">{{ sub_menu.title }}</span>
                                             </li>
 
-                                        {# If is title type #}
+                                        {# If it's a title type #}
                                         {% elseif sub_menu.type == 'menuTitleTab' %}
                                             
                                             <li class="zc-panel-submenu__item zc-panel-submenu__item_type_title">
                                                 <span class="zc-panel-submenu__item-only-title">{{ sub_menu.title }}</span>
                                             </li>
 
-                                        {# If is delimiter type #}
+                                        {# If it's a delimiter type #}
                                         {% elseif sub_menu.type == 'menuDelimiterTab' %}
                                             
                                             <li class="zc-panel-submenu__item zc-panel-submenu__item_type_delimiter"></li>
 
-                                        {# If is text type #}
+                                        {# If it's a text type #}
                                         {% elseif sub_menu.type == 'menuTextTab' %}
                                             <li class="zc-panel-submenu__item zc-panel-submenu__item_type_text">
                                                 <p class="zc-panel-submenu__item-text">{{ sub_menu.content|raw }}</p>

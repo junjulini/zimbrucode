@@ -20,7 +20,7 @@ use ZimbruCode\Component\Core\Traits\AssetTrait;
 use ZimbruCode\Component\Core\Traits\RenderTrait;
 
 /**
- * Class : Module kernel
+ * Class : Component/Core : Module kernel
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -33,11 +33,18 @@ abstract class ModuleKernel extends Kernel
     private $__DC;
     private $__MP;
 
+    /**
+     * Constructor
+     *
+     * @param DataCollector     $collector      Data collector object
+     * @param ModuleKernel|null $moduleParent   Parent module
+     * @since 1.0.0
+     */
     final public function __construct(DataCollector $collector, ModuleKernel $moduleParent = null)
     {
         $this->__DC = $collector;
 
-        // Set as multi use
+        // Set as multipurpose
         if (isset($this->__multiUse) && $this->__multiUse === true) {
             $this->__DC->add('multi-use', true);
         }
@@ -48,6 +55,11 @@ abstract class ModuleKernel extends Kernel
         }
     }
 
+    /**
+     * Module parent object
+     *
+     * @return ModuleKernel
+     */
     final public function moduleParent(): ModuleKernel
     {
         if ($this->__MP instanceof ModuleKernel) {
@@ -58,13 +70,14 @@ abstract class ModuleKernel extends Kernel
     }
 
     /**
-     * Add module value
+     * Add module data
      *
-     * @param string $path
-     * @param mix $value
+     * @param string $path    Array path
+     * @param mix    $value   Value
+     * @return self
      * @since 1.0.0
      */
-    final public function addModuleData(string $path, $value): ModuleKernel
+    final public function addModuleData(string $path, $value): self
     {
         if ($path) {
             $this->__DC->add("additional-data/{$path}", $value);
@@ -74,11 +87,11 @@ abstract class ModuleKernel extends Kernel
     }
 
     /**
-     * Get module value
+     * Get module data
      *
-     * @param  string  $path
-     * @param  mix $default
-     * @return mix
+     * @param  string $path      Array value
+     * @param  mix    $default   Default value
+     * @return mix               Item data
      * @since 1.0.0
      */
     final public function getModuleData(string $path = '', $default = false)
@@ -91,10 +104,10 @@ abstract class ModuleKernel extends Kernel
     }
 
     /**
-     * Remove module value
+     * Remove module data item
      *
-     * @param  string $path
-     * @return bool
+     * @param  string $path   Array path
+     * @return boolean        Action result
      * @since 1.0.0
      */
     final public function remModuleData(string $path): bool
@@ -109,15 +122,15 @@ abstract class ModuleKernel extends Kernel
     /**
      * Get module setting
      *
-     * @param  string $setting   Single setting
-     * @param  mix $default      Default value
-     * @return string/array      Settings or single setting
+     * @param  string $path      Array path
+     * @param  string $default   Default value
+     * @return mix               Setting value
      * @since 1.0.0
      */
-    final public function getModuleSetting(string $setting = '', $default = '')
+    final public function getModuleSetting(string $path = '', $default = '')
     {
-        if ($setting) {
-            return $this->__DC->get("settings/{$setting}", $default);
+        if ($path) {
+            return $this->__DC->get("settings/{$path}", $default);
         }
 
         return $this->__DC->get('settings');
@@ -126,14 +139,15 @@ abstract class ModuleKernel extends Kernel
     /**
      * Add module setting
      *
-     * @param string $setting   Setting key
-     * @param string $value     Value for setting
+     * @param string $path    Array path
+     * @param mix    $value   Value
+     * @return self
      * @since 1.0.0
      */
-    final public function addModuleSetting(string $setting, $value): ModuleKernel
+    final public function addModuleSetting(string $path, $value): self
     {
-        if ($setting) {
-            $this->__DC->add("settings/{$setting}", $value);
+        if ($path) {
+            $this->__DC->add("settings/{$path}", $value);
         }
 
         return $this;
@@ -142,12 +156,13 @@ abstract class ModuleKernel extends Kernel
     /**
      * Add module settings
      *
-     * @param array $value   Value for settings
+     * @param array $settings   Settings array
+     * @return self
      * @since 1.0.0
      */
-    final public function addModuleSettings(array $value): ModuleKernel
+    final public function addModuleSettings(array $settings): self
     {
-        $this->__DC->add('settings', $value);
+        $this->__DC->add('settings', $settings);
         return $this;
     }
 
@@ -165,7 +180,7 @@ abstract class ModuleKernel extends Kernel
     /**
      * Returns the module name
      *
-     * @return string   The Module name
+     * @return string   Module name
      * @since 1.0.0
      */
     final public function getModuleName(): string
@@ -179,9 +194,9 @@ abstract class ModuleKernel extends Kernel
     }
 
     /**
-     * Gets the module namespace
+     * Get module namespace
      *
-     * @return string   The Module namespace
+     * @return string   Module namespace
      * @since 1.0.0
      */
     final public function getModuleNamespace(): string
@@ -190,10 +205,10 @@ abstract class ModuleKernel extends Kernel
     }
 
     /**
-     * Gets the module directory path
+     * Get the path to the module directory
      *
-     * @param  string $path   Additional part of path
-     * @return string         The Module absolute path
+     * @param  string $path   Additional part of the path
+     * @return string         Module path
      * @since 1.0.0
      */
     final public function getModulePath(string $path = ''): string
@@ -202,10 +217,10 @@ abstract class ModuleKernel extends Kernel
     }
 
     /**
-     * Gets the module URL
+     * Get module URL
      *
-     * @param  string $url   Additional part of url
-     * @return string        The Module URL
+     * @param  string $url   Additional part of the URL
+     * @return string        Module URL
      * @since 1.0.0
      */
     final public function getModuleURL(string $url = ''): string
@@ -221,8 +236,8 @@ abstract class ModuleKernel extends Kernel
     /**
      * Get resource path
      *
-     * @param  string $path Additional part of path
-     * @return string       Resource path
+     * @param  string $path   Additional part of the path
+     * @return string         Resource path
      * @since 1.0.0
      */
     public function getModuleResourcePath(string $path = ''): string
@@ -233,8 +248,8 @@ abstract class ModuleKernel extends Kernel
     /**
      * Get resource URL
      *
-     * @param  string $url Additional part of URL
-     * @return string      Resource URL
+     * @param  string $url   Additional part of the URL
+     * @return string        Resource URL
      * @since 1.0.0
      */
     public function getModuleResourceURL(string $url = ''): string
@@ -243,15 +258,15 @@ abstract class ModuleKernel extends Kernel
     }
 
     /**
-     * Load synchronized module part
+     * Load the synchronized part of the module
      *
      * @param string $part      Module part name
      * @param string $service   Load as local service with name ...
      * @param mix    $data      Additional data
-     * @return object           Instance of module part
+     * @return ModuleKernel     Instance of module part
      * @since 1.0.0
      */
-    final public function loadModulePart(string $part, string $service = '', $data = null): object
+    final public function loadModulePart(string $part, string $service = '', $data = null): ModuleKernel
     {
         if (!$part) {
             throw new InvalidArgumentException('ZE0065');
@@ -276,10 +291,10 @@ abstract class ModuleKernel extends Kernel
      * Get module service
      *
      * @param string $service   Name of module service
-     * @return object           Instance of module part as local service
+     * @return ModuleKernel     Instance of a part of a module as a local service
      * @since 1.0.0
      */
-    final public function moduleService(string $service): object
+    final public function moduleService(string $service): ModuleKernel
     {
         if ($service && $moduleService = $this->__DC->get("module-services/{$service}")) {
             return $moduleService;

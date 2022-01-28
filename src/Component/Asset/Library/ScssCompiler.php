@@ -21,7 +21,7 @@ use ZimbruCode\Component\Common\Tools;
 use ZimbruCode\Component\Core\Kernel;
 
 /**
- * Class : Scss compiler
+ * Class : Component/Asset/Library : Scss compiler
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -35,9 +35,9 @@ class ScssCompiler
     public $cache  = '';
 
     // Options
-    public $vars   = [];    // Vars for SCSS
-    public $minify = true;  // Compress CSS : true/false
-    public $dev    = false; // When DEV is true, cache sys. not used
+    public $vars   = [];    // SCSS vars
+    public $minify = true;  // Compress CSS status
+    public $dev    = false; // If DEV is true, cache sys. not used
 
     // Other
     protected $data = [
@@ -48,10 +48,10 @@ class ScssCompiler
     ];
 
     /**
-     * Add import directory
+     * Add directory for parsing
      *
-     * @param string $path   Directory path
-     * @return void          This function does not return a value
+     * @param  string $path   Directory path
+     * @return void
      * @since 1.0.0
      */
     public function addDir(string $path): void
@@ -61,6 +61,14 @@ class ScssCompiler
         }
     }
 
+    /**
+     * Add namespace
+     *
+     * @param string $namespace   Namespace value
+     * @param string $path        Path value
+     * @return void
+     * @since 1.0.0
+     */
     public function addNamespace(string $namespace, string $path): void
     {
         if ($namespace && $path) {
@@ -71,8 +79,8 @@ class ScssCompiler
     /**
      * Add file for parsing
      *
-     * @param string $path   SCSS file
-     * @return void          This function does not return a value
+     * @param  string $path   File path
+     * @return void
      * @since 1.0.0
      */
     public function addFile(string $path): void
@@ -88,9 +96,9 @@ class ScssCompiler
     /**
      * Add var
      *
-     * @param string  $slug    Var slug
-     * @param mix     $value   Var
-     * @return void            This function does not return a value
+     * @param  string  $slug    Var slug
+     * @param  mix     $value   Var value
+     * @return void
      * @since 1.0.0
      */
     public function addVar(string $slug, $value = ''): void
@@ -103,9 +111,9 @@ class ScssCompiler
     /**
      * Add function
      *
-     * @param string   $name     Name of function
-     * @param callable $method   Function
-     * @return void              This function does not return a value
+     * @param  string   $name     Name of function
+     * @param  callable $method   Function
+     * @return void
      * @since 1.0.0
      */
     public function addFunction(string $name, callable $method): void
@@ -118,7 +126,7 @@ class ScssCompiler
     /**
      * Compile
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     public function compile(): void
@@ -127,10 +135,10 @@ class ScssCompiler
         $compiler   = new Compiler();
         $assetCache = new AssetCache;
 
-                                                        // Data preparing
-        $cachePath  = wp_normalize_path($this->cache);  // Set cache path
-        $inputPath  = wp_normalize_path($this->input);  // Set input path (SCSS File)
-        $outputPath = wp_normalize_path($this->output); // Set output path (CSS File)
+        // Data preparing
+        $cachePath  = wp_normalize_path($this->cache);  // Add cache path
+        $inputPath  = wp_normalize_path($this->input);  // Add input path (SCSS File)
+        $outputPath = wp_normalize_path($this->output); // Add output path (CSS File)
 
         if (empty($inputPath)) {
             throw new RuntimeException('ZE0034');
@@ -151,11 +159,11 @@ class ScssCompiler
         $md5AF           = md5(wp_json_encode($this->data['additional-files']));
         $executeLocation = $assetCache->addExecuteLocation(__CLASS__);
 
-        // Callback : Check output file if exist and vars if is different
+        // Callback : Check the output file if it exists and the variables if different
         $assetCache->addCheckFunction(function (array $args) use ($outputPath, $md5Vars, $md5AF, $executeLocation): bool {
             if (!file_exists($outputPath)) {
                 if (Kernel::dev()) {
-                    $msg = "Asset - {$executeLocation}/Cache : Additional checking : {$outputPath} : output file not found.";
+                    $msg = "Asset - {$executeLocation}/Cache : Additional checking : {$outputPath} : output file not found";
                     Kernel::dev()->addWarningMessage($msg);
                 }
 
@@ -164,7 +172,7 @@ class ScssCompiler
 
             if (empty($args['md5-vars']) || $args['md5-vars'] != $md5Vars) {
                 if (Kernel::dev()) {
-                    $msg = "Asset - {$executeLocation}/Cache : Additional checking : The list of vars is different.";
+                    $msg = "Asset - {$executeLocation}/Cache : Additional check: The list of vars is different";
                     Kernel::dev()->addWarningMessage($msg);
                 }
 
@@ -173,7 +181,7 @@ class ScssCompiler
 
             if (empty($args['md5-af']) || $args['md5-af'] != $md5AF) {
                 if (Kernel::dev()) {
-                    $msg = "Asset - {$executeLocation}/Cache : Additional checking : The list of additional files is different.";
+                    $msg = "Asset - {$executeLocation}/Cache : Additional checking : The list of additional files is different";
                     Kernel::dev()->addWarningMessage($msg);
                 }
 
@@ -260,7 +268,7 @@ class ScssCompiler
                 }
             }, $this->vars));
 
-            // Preparing import dirs
+            // Preparing import directories
             $importDirs = Kernel::getGlobalCache('asset/scss/import-dirs', []);
 
             foreach ($importDirs as $path) {
@@ -273,15 +281,18 @@ class ScssCompiler
                 }
             }
 
-            // Register functions
+            // Register custom functions
             $defaultFunctions = (new ScssDefaultFunctions)->get();
+
             if ($defaultFunctions && is_array($defaultFunctions)) {
                 foreach ($defaultFunctions as $name => $method) {
                     $compiler->registerFunction($name, $method, '');
                 }
             }
 
+            // Register global functions
             $globalFunctions = Kernel::getGlobalCache('asset/scss/functions');
+
             if ($globalFunctions && is_array($globalFunctions)) {
                 foreach ($globalFunctions as $name => $method) {
                     $compiler->registerFunction($name, $method, '');

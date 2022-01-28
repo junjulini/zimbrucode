@@ -17,7 +17,7 @@ use ZimbruCode\Component\Core\Kernel;
 use ZimbruCode\Component\Handler\CacheHandler;
 
 /**
- * Class : Fast cache
+ * Class : Component/Common : Fast cache
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -29,6 +29,11 @@ class FastCache
     protected $cacheID;
     protected $data = [];
 
+    /**
+     * Constructor
+     *
+     * @since 1.0.0
+     */
     public function __construct()
     {
         $cacheDir  = Kernel::service('app')->getCachePath(Kernel::getGlobal('core/component/fast-cache/dir', 'fast-cache'));
@@ -48,11 +53,11 @@ class FastCache
     }
 
     /**
-     * Add element data
+     * Add item
      *
-     * @param  string $key   Element key
-     * @param  mix $value    Element value
-     * @return void          This function does not return a value
+     * @param  string $key     Item key
+     * @param  mix    $value   Item value
+     * @return void
      * @since 1.0.0
      */
     public function add(string $key, $value = ''): void
@@ -66,11 +71,11 @@ class FastCache
     }
 
     /**
-     * Get element data
+     * Get item data
      *
-     * @param  string  $key       Element key
-     * @param  mix     $default   Element value
-     * @return boolean            Element data
+     * @param  string  $key       Item key
+     * @param  mix     $default   Default value
+     * @return mix                Item data
      * @since 1.0.0
      */
     public function get(string $key, $default = false)
@@ -83,10 +88,10 @@ class FastCache
     }
 
     /**
-     * Remove element
+     * Remove item
      *
-     * @param  string $key   Element key
-     * @return void          This function does not return a value
+     * @param  string $key   Item key
+     * @return void
      * @since 1.0.0
      */
     public function remove(string $key): void
@@ -104,9 +109,9 @@ class FastCache
     }
 
     /**
-     * Flush all data
+     * Remove all items
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     public function flush(): void
@@ -117,7 +122,7 @@ class FastCache
     /**
      * Dump data
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     public function dump(): void

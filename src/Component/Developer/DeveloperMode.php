@@ -16,7 +16,7 @@ use ZimbruCode\Component\Core\Kernel;
 use ZimbruCode\Component\Debug\DebugController;
 
 /**
- * Class : Developer mode
+ * Class : Component/Developer : Developer mode
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -31,6 +31,14 @@ class DeveloperMode
     protected $memoryUsage;
     protected $system;
 
+    /**
+     * Constructor
+     *
+     * @param string $type    Message type
+     * @param string $title   The headline of the message
+     * @param mix    $msg     Message data
+     * @since 1.0.0
+     */
     public function __construct(string $type, string $title, $msg)
     {
         $this->isDev  = Kernel::getGlobal('core/dev');
@@ -63,7 +71,7 @@ class DeveloperMode
     /**
      * Timing
      *
-     * @return object   TimingHelper
+     * @return Timing
      * @since 1.0.0
      */
     public function timing(): Timing
@@ -74,7 +82,7 @@ class DeveloperMode
     /**
      * Memory usage
      *
-     * @return object   MemoryUsage
+     * @return MemoryUsage
      * @since 1.0.0
      */
     public function mem(): MemoryUsage
@@ -85,7 +93,7 @@ class DeveloperMode
     /**
      * System functions
      *
-     * @return object   System
+     * @return System
      * @since 1.0.0
      */
     public function sys(): System
@@ -96,9 +104,9 @@ class DeveloperMode
     /**
      * Set dump message on screen
      *
-     * @param string $title   Title of message
-     * @param array  $data    Data of message
-     * @return void           This function does not return a value
+     * @param string $title   The headline of the message
+     * @param array  $data    Message data
+     * @return void
      * @since 1.0.0
      */
     public function dump(string $title = 'DEV-MSG', array $data = null): void
@@ -115,9 +123,11 @@ class DeveloperMode
     }
 
     /**
-     * Add log message on developer bar
+     * Add a log message to the developer bar
      *
-     * @return void   This function does not return a value
+     * @param string $title   The headline of the message
+     * @param string $msg     Message data
+     * @return void
      * @since 1.0.0
      */
     public function addLogMessage(string $title = '', $msg = ''): void
@@ -136,12 +146,14 @@ class DeveloperMode
     }
 
     /**
-     * Add warning message on developer bar
+     * Add a warning message to the developer bar
      *
-     * @return void   This function does not return a value
+     * @param string $title   The headline of the message
+     * @param string $msg     Message data
+     * @return void
      * @since 1.0.0
      */
-    public function addWarningMessage(string $title = '', $msg = '')
+    public function addWarningMessage(string $title = '', $msg = ''): void
     {
         if (!$this->isDev || !$this->config['dev-log']) {
             return;
@@ -157,9 +169,11 @@ class DeveloperMode
     }
 
     /**
-     * Add error message on developer bar
+     * Add a error message to the developer bar
      *
-     * @return void   This function does not return a value
+     * @param string $title   The headline of the message
+     * @param string $msg     Message data
+     * @return void
      * @since 1.0.0
      */
     public function addErrorMessage(string $title = '', $msg = ''): void
@@ -178,9 +192,11 @@ class DeveloperMode
     }
 
     /**
-     * Add info message on developer bar
+     * Add a info message to the developer bar
      *
-     * @return void   This function does not return a value
+     * @param string $title   The headline of the message
+     * @param string $msg     Message data
+     * @return void
      * @since 1.0.0
      */
     public function addInfoMessage(string $title = '', $msg = ''): void

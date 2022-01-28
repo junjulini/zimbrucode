@@ -23,7 +23,7 @@ use ZimbruCode\Component\Asset\Library\LocationDetector;
 use ZimbruCode\Component\Common\Tools;
 
 /**
- * Class : Asset data collector
+ * Class : Component/Asset/Library : Asset data collector
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -35,6 +35,12 @@ class AssetDataCollector
     protected $global = [];
     protected $location;
 
+    /**
+     * Constructor
+     *
+     * @param LocationDetector $location   Location detector object
+     * @since 1.0.0
+     */
     public function __construct(LocationDetector $location)
     {
         $this->location = $location;
@@ -43,7 +49,7 @@ class AssetDataCollector
     /**
      * Location
      *
-     * @return LocationDetector object
+     * @return LocationDetector
      * @since 1.0.0
      */
     public function location(): LocationDetector
@@ -52,12 +58,12 @@ class AssetDataCollector
     }
 
     /**
-     * Run filter
+     * Filter
      *
      * @param  Filter        $filter      Filter object
-     * @param  string        $assetName   Run filter only for concrete asset. Name of asset
+     * @param  string        $assetName   Run the filter only for a specific asset. Asset name
      * @param  callable|null $callback    Additional callback
-     * @return void                       This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     public function filter(Filter $filter, string $assetName = null, callable $callback = null): void
@@ -66,14 +72,15 @@ class AssetDataCollector
     }
 
     /**
-     * Registers an asset to the current asset data collector
+     * Add asset
      *
-     * @param string   $assetName            The asset name
-     * @param bool     $autoFilter           Preparing through default filters
-     * @param callable $callback             Callback for additional manipulations with assets
+     * @param  string|array   $asset        Asset name / Assets
+     * @param  boolean        $autoFilter   Preparing assets through filters
+     * @param  callable       $callback     Callback for additional asset manipulation
+     * @return self
      * @since 1.0.0
      */
-    public function add($asset, bool $autoFilter = false, callable $callback = null): AssetDataCollector
+    public function add($asset, bool $autoFilter = false, callable $callback = null): self
     {
         if (is_string($asset) || is_array($asset)) {
             $assetData = new AssetData($asset, $this->location);
@@ -100,9 +107,10 @@ class AssetDataCollector
      *
      * @param string    $assetName   Asset name
      * @param AssetData $assetData   Asset data
+     * @return self
      * @since 1.0.0
      */
-    public function addRaw(string $assetName, AssetData $assetData): AssetDataCollector
+    public function addRaw(string $assetName, AssetData $assetData): self
     {
         if ($assetName) {
             $this->data[$assetName] = $assetData;
@@ -112,10 +120,10 @@ class AssetDataCollector
     }
 
     /**
-     * Gets an asset by name
+     * Get asset
      *
-     * @param  string $asset               The asset name
-     * @return array|AssetData             The asset data
+     * @param  string $asset     Asset name
+     * @return array|AssetData   Asset data / Assets
      * @since 1.0.0
      */
     public function get(string $asset = null)
@@ -134,8 +142,8 @@ class AssetDataCollector
     /**
      * Checks if asset exit
      *
-     * @param string $asset  Asset name
-     * @return bool          True if the asset has been set, false if not
+     * @param string $asset   Asset name
+     * @return boolean        Result of checking
      * @since 1.0.0
      */
     public function has(string $asset): bool
@@ -148,10 +156,10 @@ class AssetDataCollector
     }
 
     /**
-     * Remove an asset by name
+     * Remove asset
      *
-     * @param  string $asset              The asset name
-     * @return bool                       False or True
+     * @param  string $asset   Asset name
+     * @return boolean         Removal result
      * @since 1.0.0
      */
     public function remove(string $asset): bool
@@ -167,22 +175,24 @@ class AssetDataCollector
     /**
      * Remove all assets
      *
+     * @return self
      * @since 1.0.0
      */
-    public function flush(): AssetDataCollector
+    public function flush(): self
     {
         $this->data = [];
         return $this;
     }
 
     /**
-     * Add additional global data for collector
+     * Add global data
      *
-     * @param string $path   The path in the array
-     * @param mix    $value  The value to set
+     * @param  string $path    Array path
+     * @param  mix    $value   Global value
+     * @return self
      * @since 1.0.0
      */
-    public function addGlobal(string $path, $value = ''): AssetDataCollector
+    public function addGlobal(string $path, $value = ''): self
     {
         if ($path) {
             Tools::addNode($this->global, $path, $value);
@@ -192,10 +202,11 @@ class AssetDataCollector
     }
 
     /**
-     * Get additional global data for collector
+     * Get global data
      *
-     * @param string $path     The path in the array
-     * @param mix    $default  Default value
+     * @param  string $path      Array path
+     * @param  mix    $default   Default value
+     * @return mix               Global value
      * @since 1.0.0
      */
     public function getGlobal(string $path, $default = false)

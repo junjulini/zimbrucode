@@ -25,6 +25,12 @@ import TPL__backup_notification from './tpl/backup-notification.html';
 const $ = jQuery;
 
 export default class Backup extends Kernel {
+
+    /**
+     * Constructor
+     * 
+     * @since 1.0.0
+     */
     constructor() {
         super();
 
@@ -46,6 +52,12 @@ export default class Backup extends Kernel {
         this.backupButton();
     }
 
+    /**
+     * Backup button
+     * 
+     * @return {null}   None
+     * @since 1.0.0
+     */
     backupButton() {
         this.click('.zc-metabox-panel-backup-button', () => {
             this.id = $('.zc-panel-template_wid').data('post-id');
@@ -65,16 +77,22 @@ export default class Backup extends Kernel {
                     this.errorCheck('MetaboxPanelBackup : Load content', errorMsg);
                 },
                 success: ()  => {
-                    this.save();
-                    this.deleteAll();
-                    this.deleteItem();
-                    this.restore();
+                    this.saveBackup();
+                    this.deleteAllBackups();
+                    this.deleteBackupItem();
+                    this.restoreBackup();
                 }
             });
         });
     }
 
-    save() {
+    /**
+     * Save backup
+     * 
+     * @return {null}   None
+     * @since 1.0.0
+     */
+    saveBackup() {
         $('.zc-popup').on('click', '.zc-popup-backup__save-button', (event) => {
             event.preventDefault();
             /* Act on the event */
@@ -110,7 +128,13 @@ export default class Backup extends Kernel {
         });
     }
 
-    deleteAll() {
+    /**
+     * Delete all backups
+     * 
+     * @return {null}   None
+     * @since 1.0.0
+     */
+    deleteAllBackups() {
         $('.zc-popup').on('click', '.zc-popup-backup__delete-button', (event) => {
             event.preventDefault();
             /* Act on the event */
@@ -136,7 +160,13 @@ export default class Backup extends Kernel {
         });
     }
 
-    deleteItem() {
+    /**
+     * Delete backup item
+     * 
+     * @return {null}   None
+     * @since 1.0.0
+     */
+    deleteBackupItem() {
         $('.zc-popup').on('click', '.zc-popup-backup__item-button_delete', (event) => {
             event.preventDefault();
             /* Act on the event */
@@ -166,7 +196,13 @@ export default class Backup extends Kernel {
         });
     }
 
-    restore() {
+    /**
+     * Restore backup
+     * 
+     * @return {null}   None
+     * @since 1.0.0
+     */
+    restoreBackup() {
         $('.zc-popup').on('click', '.zc-popup-backup__item-button_restore', (event) => {
             event.preventDefault();
             /* Act on the event */

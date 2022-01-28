@@ -13,11 +13,12 @@ namespace ZimbruCode\Module\Panel\Library;
 
 use SplFileInfo;
 use ZimbruCode\Component\Asset\AssetManager;
+use ZimbruCode\Component\Asset\Library\AssetDataCollector;
 use ZimbruCode\Component\Core\Kernel;
 use ZimbruCode\Component\Core\ModuleKernel;
 
 /**
- * Class : Asset handler
+ * Class : Module/Panel/Library : Asset handler
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -37,6 +38,12 @@ class AssetHandler
     protected $module;
     protected $assetManager;
 
+    /**
+     * Constructor
+     *
+     * @param ModuleKernel $module   Module object
+     * @since 1.0.0
+     */
     public function __construct(ModuleKernel $module)
     {
         $this->module       = $module;
@@ -52,11 +59,11 @@ class AssetHandler
     /**
      * Add assets
      *
-     * @param array/string $assets   Assets data
-     * @return AssetHandler
+     * @param array/string $assets   List of assets
+     * @return self
      * @since 1.0.0
      */
-    public function add($assets): AssetHandler
+    public function add($assets): self
     {
         if ($assets && is_array($assets)) {
             foreach ($assets as $asset) {
@@ -73,10 +80,10 @@ class AssetHandler
      * Add asset : last queue
      *
      * @param  string $path   Asset path
-     * @return AssetHandler
+     * @return self
      * @since 1.0.0
      */
-    public function addLast(string $path = ''): AssetHandler
+    public function addLast(string $path = ''): self
     {
         if ($path) {
             $this->lastAssets[] = $path;
@@ -88,11 +95,11 @@ class AssetHandler
     /**
      * Add scss file
      *
-     * @param  string $file   File path
-     * @return AssetHandler
+     * @param  string $file   Path to the Scss file
+     * @return self
      * @since 1.0.0
      */
-    public function addScssFile(string $file): AssetHandler
+    public function addScssFile(string $file): self
     {
         if ($file && file_exists($file)) {
             $this->scssData['files'][] = $file;
@@ -102,13 +109,13 @@ class AssetHandler
     }
 
     /**
-     * Add scss dir
+     * Add scss directory
      *
-     * @param  string $dir   Dir path
-     * @return AssetHandler
+     * @param  string $dir   Directory path
+     * @return self
      * @since 1.0.0
      */
-    public function addScssDir(string $dir): AssetHandler
+    public function addScssDir(string $dir): self
     {
         if ($dir && file_exists($dir)) {
             $this->scssData['dirs'][] = $dir;
@@ -120,12 +127,12 @@ class AssetHandler
     /**
      * Add scss function
      *
-     * @param  string   $name     Name of function
-     * @param  callable $method   Function
-     * @return AssetHandler
+     * @param  string   $name     Function name
+     * @param  callable $method   Callback
+     * @return self
      * @since 1.0.0
      */
-    public function addScssFunction(string $name, callable $method): AssetHandler
+    public function addScssFunction(string $name, callable $method): self
     {
         if ($name) {
             $this->scssData['functions'][] = [
@@ -138,30 +145,30 @@ class AssetHandler
     }
 
     /**
-     * Add scss var
+     * Add scss variable
      *
-     * @param  string $slug
-     * @param  mix    $value
-     * @return AssetHandler
+     * @param  string $name    Variable name
+     * @param  mix    $value   Variable value
+     * @return self
      * @since 1.0.0
      */
-    public function addScssVar(string $slug, $value = ''): AssetHandler
+    public function addScssVar(string $name, $value = ''): self
     {
-        if ($slug) {
-            $this->scssData['vars'][$slug] = $value;
+        if ($name) {
+            $this->scssData['vars'][$name] = $value;
         }
 
         return $this;
     }
 
     /**
-     * Add scss vars
+     * Add scss variables
      *
-     * @param array $vars   Pool of vars for SCSS
-     * @return AssetHandler
+     * @param array $vars   Variable list
+     * @return self
      * @since 1.0.0
      */
-    public function addScssVars(array $vars): AssetHandler
+    public function addScssVars(array $vars): self
     {
         if ($vars) {
             $this->scssData['vars'] = $vars;
@@ -173,10 +180,10 @@ class AssetHandler
     /**
      * Enroll assets
      *
-     * @return AssetHandler
+     * @return self
      * @since 1.0.0
      */
-    public function enroll(): AssetHandler
+    public function enroll(): self
     {
         if (!empty($this->lastAssets)) {
             foreach ($this->lastAssets as $lastAsset) {
@@ -184,7 +191,7 @@ class AssetHandler
             }
         }
 
-        $callbackForScssRender = function (string $type = '', object $collector = null, object $scss = null): void {
+        $callbackForScssRender = function (string $type = '', AssetDataCollector $collector = null, $scss = null): void {
             if (isset($type)) {
                 if ($type == 'scss-2') {
                     if (!empty($this->scssData['files'])) {
@@ -237,12 +244,12 @@ class AssetHandler
     }
 
     /**
-     * Dump assets
+     * Dump of assets
      *
-     * @return AssetHandler
+     * @return self
      * @since 1.0.0
      */
-    public function dump(): AssetHandler
+    public function dump(): self
     {
         $this->assetManager->dump();
         return $this;
@@ -254,10 +261,10 @@ class AssetHandler
      * @param  string $handle   The registered script handle you are attaching the data for
      * @param  string $name     The name of the variable which will contain the data
      * @param  array  $data     The data itself
-     * @return object           AssetHandler
+     * @return self
      * @since 1.0.0
      */
-    public function localize(string $handle, string $name, array $data = []): AssetHandler
+    public function localize(string $handle, string $name, array $data = []): self
     {
         if ($handle && $name) {
             $this->assetManager->localize($handle, $name, $data);

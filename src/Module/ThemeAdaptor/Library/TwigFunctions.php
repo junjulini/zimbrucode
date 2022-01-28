@@ -15,7 +15,7 @@ use ZimbruCode\Component\Handler\OptionHandler;
 use ZimbruCode\Component\TemplateBridges\TwigTemplateBridge;
 
 /**
- * Class : Twig functions
+ * Class : Module/ThemeAdaptor/Library : Twig functions
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -23,11 +23,26 @@ use ZimbruCode\Component\TemplateBridges\TwigTemplateBridge;
  */
 class TwigFunctions
 {
+    /**
+     * Constructor
+     *
+     * @param TwigTemplateBridge $ttb   TwigTemplateBridge object
+     * @since 1.0.0
+     */
     public function __construct(TwigTemplateBridge $ttb)
     {
         $ttb->addFunction('option', [$this, '__callback_option']);
     }
 
+    /**
+     * Callback : Get option value
+     *
+     * @param  string  $option    Option name
+     * @param  mix     $default   Default value
+     * @param  boolean $ao        Alternative option
+     * @return mix                Action result
+     * @since 1.0.0
+     */
     public function __callback_option(...$args)
     {
         return OptionHandler::getOption(...$args);

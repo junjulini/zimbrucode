@@ -9,7 +9,7 @@
  */
 
 /*
- * Script : Panel : Page mode
+ * Script : Panel - Page mode
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -65,7 +65,7 @@ zc.module.panel.addMode(($, panel) => {
             if (data <= 0) {
                 zc.confirm({
                     title: 'Error - AJAX',
-                    subject: 'Error : Cannot connect to AJAX Module or you are not logged. Page will be reloaded, ok?',
+                    subject: 'Error : Unable to connect to the AJAX module or you are not logged in. The page will reload, okay ?',
                     titleOK: panel.getVar('optionsResetOk'),
                     titleCancel: panel.getVar('optionsResetCancel'),
                     class: 'zc-panel-error-confirm',
@@ -80,25 +80,25 @@ zc.module.panel.addMode(($, panel) => {
             // Add wp body height
             panel.addConfig('wp-body-height', $(window).height());
 
-            panel.closeBlock();          // Init callback of close block.
-            panel.controlInit();         // Initialization of controls.
-            panel.controlHelp();         // Control help window.
-            panel.scrollbar();           // Initialization of scroll bar in panel.
-            panel.noMetaScaleIfMobile(); // Disable meta scale if mobile device.
-            panel.condition();           // Initialization of panel condition checker.
-            panel.ifChanged();           // Check if some changes was made.
-            panel.tooltip();             // Init tooltip
-            panel.menu();                // Panel menu.
+            panel.closeBlock();          // Initializing of "close block"
+            panel.controlInit();         // Initialization of controls
+            panel.controlHelp();         // Control help window
+            panel.scrollbar();           // Initialization of scroll bar in panel
+            panel.noMetaScaleIfMobile(); // Disable meta scale if mobile device
+            panel.condition();           // Initialization of panel condition checker
+            panel.ifChanged();           // Check if some changes was made
+            panel.tooltip();             // Initialization of tooltip
+            panel.menu();                // Panel menu
 
-            new BodySize;                 // Panel body size.
-            const oh = new OptionHandler; // Save/Reset function.
-            new QuickLinks;               // Initialization of panel button "Quick Links".
+            new BodySize;                 // Panel body size
+            const oh = new OptionHandler; // Options handler
+            new QuickLinks;               // Initialization of panel button "Quick Links"
 
             panel.addCache('option-handler', oh);
 
             setTimeout(() => {
-                $('.zc-panel-template__panel-loading').hide();  // Hide panel loading text.
-                $('.zc-panel').css('visibility', 'visible');    // Full display panel.
+                $('.zc-panel-template__panel-loading').hide();
+                $('.zc-panel').css('visibility', 'visible');
 
                 panel.addCache('first-start', true);
                 $(window).trigger('zc/panel/show-content');

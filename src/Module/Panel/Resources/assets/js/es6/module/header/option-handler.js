@@ -26,6 +26,12 @@ import TPL__reset_popup_notification from '../header/tpl/reset-popup-notificatio
 const $ = jQuery;
 
 export default class OptionHandler extends Kernel {
+
+    /**
+     * Constructor
+     * 
+     * @since 1.0.0
+     */
     constructor() {
         super();
 
@@ -36,18 +42,33 @@ export default class OptionHandler extends Kernel {
         this.reset();
     }
 
+    /**
+     * Show loading
+     * 
+     * @since 1.0.0
+     */
     showLoading() {
         $('.zc-panel-save-starter-button').hide();
         $('.zc-panel-loading-starter-button').css('display', 'flex');
         $('.zc-panel-reset-starter-button').prop('disabled', true).addClass('zc-panel-header__controller-button_disabled');
     }
 
+    /**
+     * Hide loading
+     * 
+     * @since 1.0.0
+     */
     hideLoading() {
         $('.zc-panel-save-starter-button').css('display', 'flex');
         $('.zc-panel-loading-starter-button').hide();
         $('.zc-panel-reset-starter-button').prop('disabled', false).removeClass('zc-panel-header__controller-button_disabled');
     }
 
+    /**
+     * Save options
+     * 
+     * @since 1.0.0
+     */
     save() {
         this.click('.zc-panel-save-starter-button', ($this) => {
             this.showLoading();
@@ -109,6 +130,11 @@ export default class OptionHandler extends Kernel {
         });
     }
 
+    /**
+     * Reset options
+     * 
+     * @since 1.0.0
+     */
     reset() {
         this.click('.zc-panel-reset-starter-button', () => {
             $(window).trigger('zc/panel/reset/start');

@@ -16,7 +16,7 @@ use ZimbruCode\Component\Handler\OptionHandler;
 use ZimbruCode\Module\Panel\Library\Shell\ControlShell as PanelControlShell;
 
 /**
- * Class : Meta control shell
+ * Class : Module/MetaboxPanel/Helper : Meta control shell
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode

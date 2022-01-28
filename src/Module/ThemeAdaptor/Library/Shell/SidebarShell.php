@@ -14,7 +14,7 @@ namespace ZimbruCode\Module\ThemeAdaptor\Library\Shell;
 use ZimbruCode\Component\TemplateBridges\Helper\ShellKernel;
 
 /**
- * Class : Sidebar shell
+ * Class : Module/ThemeAdaptor/Library/Shell : Sidebar shell
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -23,16 +23,24 @@ use ZimbruCode\Component\TemplateBridges\Helper\ShellKernel;
 class SidebarShell extends ShellKernel
 {
     /**
-     * Get widgets
+     * Display dynamic sidebar
      *
-     * @param mix $index   Name or ID of dynamic sidebar
+     * @param int|string $index   Index, name or ID of dynamic sidebar
      * @return void
+     * @since 1.0.0
      */
     public function get($index = null): void
     {
         dynamic_sidebar($index);
     }
 
+    /**
+     * Determines whether a sidebar contains widgets
+     *
+     * @param string|int $index   Sidebar name, id or number to check
+     * @return boolean            True if the sidebar has widgets, false otherwise
+     * @since 1.0.0
+     */
     public function has($index)
     {
         return is_active_sidebar($index);

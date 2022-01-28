@@ -11,12 +11,13 @@
 
 namespace ZimbruCode\Module\Panel\Library\Traits;
 
+use ZimbruCode\Component\TemplateBridges\Helper\ShellKernel;
 use ZimbruCode\Component\TemplateBridges\TwigTemplateBridge;
 use ZimbruCode\Module\Panel\Library\AssetHandler;
 use ZimbruCode\Module\Panel\Library\Shell\BaseShell;
 
 /**
- * Trait : Utility base functions
+ * Trait : Module/Panel/Library/Traits : Utility base functions
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -29,14 +30,15 @@ trait UtilityTrait
     /**
      * Add custom shell function
      *
-     * @param string   $name   Name of function
-     * @param callable $method
-     * @param void
+     * @param string   $name     Name of function
+     * @param callable $method   Callback
+     * @param string   $type     Part of the hook name
+     * @return void
      * @since 1.0.0
      */
     protected function addShellFunction(string $name, callable $method, string $type = 'base_shell'): void
     {
-        $this->addAction("zc/module/panel/{$this->getModuleSetting('slug')}/{$type}", function (object $shell) use ($name, $method): void {
+        $this->addAction("zc/module/panel/{$this->getModuleSetting('slug')}/{$type}", function (ShellKernel $shell) use ($name, $method): void {
             $shell->$name = function (...$args) use ($method) {
                 return call_user_func_array($method, $args);
             };
@@ -46,13 +48,14 @@ trait UtilityTrait
     /**
      * Render
      *
-     * @param  string  $template   Template path
-     * @param  array   $vars       Additional vars
-     * @param  bool    $return     Return content or echo
-     * @return string              HTML output
+     * @param  string   $template         Template path
+     * @param  array    $vars             Additional vars
+     * @param  boolean  $return           Return content or echo
+     * @param  callable $renderCallback   Render additional callback
+     * @return string|null                HTML output
      * @since 1.0.0
      */
-    protected function render(string $template = '', array $vars = [], bool $return = false, callable $renderCallback = null)
+    protected function render(string $template = '', array $vars = [], bool $return = false, callable $renderCallback = null): ?string
     {
         if ($template) {
             $shell = ($customBaseShell = $this->getModuleSetting('custom-base-shell')) ? new $customBaseShell($this) : new BaseShell($this);
@@ -90,6 +93,7 @@ trait UtilityTrait
                 return $ttb->render($template);
             } else {
                 echo $ttb->render($template);
+                return null;
             }
         }
     }

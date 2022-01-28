@@ -15,10 +15,12 @@ use InvalidArgumentException;
 use ReflectionObject;
 use ZimbruCode\Component\Common\Tools;
 use ZimbruCode\Component\Core\ModuleKernel;
+use ZimbruCode\Component\TemplateBridges\Helper\ShellKernel;
+use ZimbruCode\Component\TemplateBridges\TwigTemplateBridge;
 use ZimbruCode\Module\Panel\Library\Traits\ContentUtilityTrait;
 
 /**
- * Class : Control kernel
+ * Class : Module/Panel/Library : Control kernel
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -31,8 +33,8 @@ abstract class ControlKernel extends ModuleKernel
     /**
      * Get control path
      *
-     * @param  string $path   Additional part of path
-     * @return string         The control path
+     * @param  string $path   Additional part of the path
+     * @return string         Control path
      * @since 1.0.0
      */
     public function getControlPath(string $path = ''): string
@@ -43,8 +45,8 @@ abstract class ControlKernel extends ModuleKernel
     /**
      * Get control url
      *
-     * @param  string $url   Additional part of url
-     * @return string        The control URL
+     * @param  string $url   Additional part of the url
+     * @return string        Control URL
      * @since 1.0.0
      */
     public function getControlURL(string $url = ''): string
@@ -55,10 +57,10 @@ abstract class ControlKernel extends ModuleKernel
     /**
      * Add custom shell function
      *
-     * @param string $name   Name of function
-     * @param string $method
-     * @param string $type
-     * @return void          This function does not return a value
+     * @param string $name     Function name
+     * @param string $method   Callback
+     * @param string $type     Part of the hook name
+     * @return void
      * @since 1.0.0
      */
     protected function addShellFunction(string $name, string $method, string $type = 'control_shell'): void
@@ -67,7 +69,7 @@ abstract class ControlKernel extends ModuleKernel
             $method = [$this, $method];
         }
 
-        $this->addAction("zc/module/panel/{$this->getModuleSetting('slug')}/{$type}", function (object $shell) use ($name, $method): void {
+        $this->addAction("zc/module/panel/{$this->getModuleSetting('slug')}/{$type}", function (ShellKernel $shell) use ($name, $method): void {
             $shell->$name = function (...$args) use ($method) {
                 return call_user_func_array($method, $args);
             };
@@ -75,26 +77,26 @@ abstract class ControlKernel extends ModuleKernel
     }
 
     /**
-     * Add template var
+     * Add template variable
      *
-     * @param string $name
-     * @param mix    $value
-     * @return void   This function does not return a value
+     * @param string $name    Variable name
+     * @param mix    $value   Variable value
+     * @return void
      * @since 1.0.0
      */
     protected function addTemplateVar(string $name, $value = ''): void
     {
         if ($name) {
-            $this->addAction("zc/module/panel/{$this->getModuleSetting('slug')}/render", function (object $ttb) use ($name, $value): void {
+            $this->addAction("zc/module/panel/{$this->getModuleSetting('slug')}/render", function (TwigTemplateBridge $ttb) use ($name, $value): void {
                 $ttb->addVar($name, $value);
             });
         }
     }
 
     /**
-     * Add scss var
+     * Add scss variable
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     protected function addScssVar(...$args): void
@@ -106,7 +108,7 @@ abstract class ControlKernel extends ModuleKernel
      * Add control asset
      *
      * @param string $path   Asset path or package name
-     * @return void          This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     protected function addAsset(string $path): void
@@ -121,8 +123,8 @@ abstract class ControlKernel extends ModuleKernel
     /**
      * Localizes a registered script with data for a JavaScript variable
      *
-     * @param  array  $data   The data itself
-     * @return void           This function does not return a value
+     * @param  array $data   The data itself
+     * @return void
      * @since 1.0.0
      */
     protected function localize(array $data = []): void

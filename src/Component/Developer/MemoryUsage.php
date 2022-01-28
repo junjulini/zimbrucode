@@ -14,7 +14,7 @@ namespace ZimbruCode\Component\Developer;
 use ZimbruCode\Component\Core\Kernel;
 
 /**
- * Class : MemoryUsage
+ * Class : Component/Developer : Memory usage
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -27,9 +27,11 @@ class MemoryUsage
     protected static $realUsage = true;
 
     /**
-     * Start check memory usage
+     * Start checking memory usage
      *
-     * @return void   This function does not return a value
+     * @param string  $marker      Marker value
+     * @param boolean $realUsage   Set this to true to get total memory allocated from system, including unused pages. If not set or false only the used memory is reported.
+     * @return void
      * @since 1.0.0
      */
     public function start(string $marker = '', bool $realUsage = true): void
@@ -40,9 +42,9 @@ class MemoryUsage
     }
 
     /**
-     * Memory usage in end position
+     * Memory usage at the end of a position
      *
-     * @return int   Memory
+     * @return int   Memory amount in bytes
      * @since 1.0.0
      */
     public function segs(): int
@@ -53,7 +55,7 @@ class MemoryUsage
     /**
      * Converted memory
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.3
      */
     public function display(): void

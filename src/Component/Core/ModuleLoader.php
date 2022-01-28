@@ -19,7 +19,7 @@ use ZimbruCode\Component\Common\Tools;
 use ZimbruCode\Component\Core\Kernel;
 
 /**
- * Class : Module loader
+ * Class : Component/Core : Module loader
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -31,16 +31,21 @@ class ModuleLoader
     protected $group   = [];
     protected $isGroup = false;
 
+    /**
+     * Constructor
+     *
+     * @since 1.0.0
+     */
     public function __construct()
     {
         $this->flush();
     }
 
     /**
-     * Use module direct
+     * Get a module by name
      *
-     * @param  object $name   Short name of module
-     * @return object         Module class
+     * @param  string $name   Short name of module
+     * @return object         Module object
      * @since 1.0.0
      */
     public function __get($name)
@@ -49,12 +54,12 @@ class ModuleLoader
     }
 
     /**
-     * Get module path
+     * Get the path to the module directory
      *
-     * @param string  $module   Module name
-     * @param string  $path     Additional part of path
-     * @param mix     $default  Return value if not exist module
-     * @return mix              Module path
+     * @param string  $module    Module name
+     * @param string  $path      Additional part of the path
+     * @param mix     $default   Default value
+     * @return mix               Module path
      * @since 1.0.0
      */
     public function getModulePath(string $module, string $path = '', $default = false)
@@ -70,7 +75,7 @@ class ModuleLoader
      * Get module URL
      *
      * @param string  $module   Module name
-     * @param string  $url      Additional part of URL
+     * @param string  $url      Additional part of the URL
      * @param mix     $default  Return value if not exist module
      * @return mix              Module URL
      * @since 1.0.0
@@ -85,7 +90,7 @@ class ModuleLoader
      * Get module resource path
      *
      * @param string $module   Module name
-     * @param string $path     Additional part of path
+     * @param string $path     Additional part of the path
      * @return mix             Module resource path
      * @since 1.0.0
      */
@@ -99,7 +104,7 @@ class ModuleLoader
      * Get module resource URL
      *
      * @param string $module   Module name
-     * @param string $url      Additional part of URL
+     * @param string $url      Additional part of the URL
      * @return mix             Module resource URL
      * @since 1.0.0
      */
@@ -112,10 +117,11 @@ class ModuleLoader
     /**
      * Add namespace for search
      *
-     * @param string $namespace
+     * @param string $namespace   Namespace value
+     * @return self
      * @since 1.0.0
      */
-    public function addNamespace(string $namespace): ModuleLoader
+    public function addNamespace(string $namespace): self
     {
         if (!$namespace) {
             throw new InvalidArgumentException('ZE0068');
@@ -130,9 +136,10 @@ class ModuleLoader
      * Add settings
      *
      * @param array $setting   Module settings
+     * @return self
      * @since 1.0.0
      */
-    public function addSettings(array $settings): ModuleLoader
+    public function addSettings(array $settings): self
     {
         $this->config['settings'] = $settings;
         return $this;
@@ -142,9 +149,10 @@ class ModuleLoader
      * Add module as service
      *
      * @param string $name   Name of service
+     * @return self
      * @since 1.0.0
      */
-    public function addAsService(string $name): ModuleLoader
+    public function addAsService(string $name): self
     {
         if ($name) {
             $this->config['service'] = $name;
@@ -157,9 +165,10 @@ class ModuleLoader
      * Add module mode
      *
      * @param string $mode   Module mode
+     * @return self
      * @since 1.0.0
      */
-    public function addMode(string $mode): ModuleLoader
+    public function addMode(string $mode): self
     {
         if ($mode) {
             $this->config['mode'] = $mode;
@@ -172,9 +181,10 @@ class ModuleLoader
      * Add module config
      *
      * @param array|string $config   Module config
+     * @return self
      * @since 1.0.0
      */
-    public function addConfig($config): ModuleLoader
+    public function addConfig($config): self
     {
         if ($config) {
             if (is_string($config)) {
@@ -239,12 +249,12 @@ class ModuleLoader
     }
 
     /**
-     * Clear config
+     * Clear module loader configs
      *
-     * @return ModuleLoader
+     * @return self
      * @since 1.0.0
      */
-    public function flush(): ModuleLoader
+    public function flush(): self
     {
         $this->config = [
             'module'   => '',
@@ -260,10 +270,10 @@ class ModuleLoader
      * Use module
      *
      * @param  string $module   Module name
-     * @return ModuleLoader
+     * @return self
      * @since 1.0.0
      */
-    protected function useModule(string $module): ModuleLoader
+    protected function useModule(string $module): self
     {
         if ($module) {
             $this->config['module'] = $module;
@@ -275,6 +285,7 @@ class ModuleLoader
     /**
      * Build the module and run it
      *
+     * @return ModuleKernel|null
      * @since 1.0.0
      */
     protected function build(): ?ModuleKernel
@@ -314,6 +325,7 @@ class ModuleLoader
     /**
      * Preparing module data
      *
+     * @return ModuleKernel
      * @since 1.0.0
      */
     protected function prepModuleData(): ModuleKernel
@@ -328,12 +340,12 @@ class ModuleLoader
                   ->add('multi-use', false)
                   ->add('module-namespace', substr($module, 0, strrpos($module, '\\')));
 
-        // Init module
+        // Module initialization
         if (!(($module = new $module($collector)) instanceof ModuleKernel)) {
             throw new RuntimeException('ZE0072 - This module is not compatible : ' . get_class($module));
         }
 
-        // Set module path in collector
+        // Set the module path in the collector
         $collector->add('module-path', wp_normalize_path(dirname((new ReflectionObject($module))->getFileName())));
 
         // Check "MultiUse"
@@ -398,22 +410,22 @@ class ModuleLoader
     }
 
     /**
-     * Group modules
+     * Preparing group modules
      *
-     * @param string       $mode     Task
+     * @param string       $task     Task value
      * @param ModuleKernel $module   Module object
-     * @return bool
+     * @return boolean               Action result
      * @since 1.0.0
      */
-    protected function group(string $mode = '', ModuleKernel $module = null): bool
+    protected function group(string $task = '', ModuleKernel $module = null): bool
     {
-        if ($mode === 'init') {
+        if ($task === 'init') {
             $this->isGroup = true;
-        } else if ($mode === 'check') {
+        } else if ($task === 'check') {
             return ($this->isGroup === true);
-        } else if ($mode === 'add') {
+        } else if ($task === 'add') {
             $this->group[] = $module;
-        } else if ($mode === 'run') {
+        } else if ($task === 'run') {
             if (!empty($this->group)) {
                 foreach ($this->group as $module) {
                     $this->doAction($module);
@@ -434,7 +446,7 @@ class ModuleLoader
     /**
      * Do action before setup
      *
-     * @param ModuleKernel $module
+     * @param ModuleKernel $module   Module object
      * @return void
      * @since 1.0.0
      */

@@ -14,7 +14,7 @@ namespace ZimbruCode\Component\Handler\Traits;
 use ZimbruCode\Component\Common\Tools;
 
 /**
- * Trait : Session handler trait
+ * Trait : Component/Handler/Traits : Session handler
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -25,9 +25,9 @@ trait SessionHandlerTrait
     /**
      * Get data from session
      *
-     * @param  string  $path      Base path
+     * @param  string  $path      Array path
      * @param  mix     $default   Default value
-     * @return mix                Return data
+     * @return mix                Session data
      * @since 1.0.0
      */
     public static function getSession(string $path, $default = false)
@@ -40,9 +40,9 @@ trait SessionHandlerTrait
     /**
      * Add data to session
      *
-     * @param  string  $path    Base path
+     * @param  string  $path    Array path
      * @param  mix     $value   Value
-     * @return void             This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     public static function addSession(string $path, $value = ''): void
@@ -53,10 +53,10 @@ trait SessionHandlerTrait
     }
 
     /**
-     * Remove data from session
+     * Remove item from session
      *
-     * @param  string $path   Base path
-     * @return bool           Return false/true
+     * @param  string $path   Array path
+     * @return boolean        Action result
      * @since 1.0.0
      */
     public static function remSession(string $path): bool

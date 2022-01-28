@@ -33,18 +33,24 @@ class Module extends ModuleKernel
     /**
      * Module setup
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     public function setup(): void
     {
-        // Initialize search for custom templates
+        // Search for custom templates
         $this->initCustomTemplates();
 
-        // Template include
+        // Filters
         $this->addFilter('template_include', '__filter_template_include', 999999);
     }
 
+    /**
+     * Initializing search for custom templates
+     *
+     * @return void
+     * @since 1.0.0
+     */
     protected function initCustomTemplates(): void
     {
         if (file_exists($dir = self::service('app')->getViewPath())) {
@@ -64,9 +70,10 @@ class Module extends ModuleKernel
     }
 
     /**
-     * Search custom templates
+     * Search for custom templates 
      *
-     * @return void   This function does not return a value
+     * @param string $dir   Location of custom templates
+     * @return void
      * @since 1.0.0
      */
     protected function searchCustomTemplates(string $dir): void
@@ -96,17 +103,39 @@ class Module extends ModuleKernel
         }
     }
 
+    /**
+     * Advanced render
+     *
+     * @param mix ...$args   Render arguments
+     * @return Render
+     * @since 1.0.0
+     */
     public function advancedRender(...$args): Render
     {
         return new Render(...$args);
     }
 
+    /**
+     * MVC (Method/View/Controller)
+     *
+     * @param string $template         Template path
+     * @param array  $additionalData   Additional data for rendering
+     * @return MVC
+     * @since 1.0.0
+     */
     public function mvc(string $template, array $additionalData = []): MVC
     {
         return new MVC($template, $this->getModuleResourcePath('views'), $additionalData);
     }
 
-    public function __filter_register_templates($templates)
+    /**
+     * Filter : Register templates
+     *
+     * @param array $templates   Registered templates
+     * @return array             List of new templates
+     * @since 1.0.0
+     */
+    public function __filter_register_templates(array $templates): array
     {
         if (!empty($this->templates)) {
             $data = [];
@@ -121,7 +150,14 @@ class Module extends ModuleKernel
         return $templates;
     }
 
-    public function __filter_register_templates_files($template)
+    /**
+     * Filter : Register templates files
+     *
+     * @param string $template   Current template file
+     * @return string            New template file
+     * @since 1.0.0
+     */
+    public function __filter_register_templates_files(string $template): string
     {
         if (is_singular()) {
             $templates = get_post_meta(get_the_ID(), '_wp_page_template');
@@ -145,7 +181,7 @@ class Module extends ModuleKernel
      * @return string             WordPress template
      * @since 1.0.0
      */
-    public function __filter_template_include($wpTemplate)
+    public function __filter_template_include(string $wpTemplate): string
     {
         $tfh           = new TemplateFilesHandler;
         $tfh->location = self::service('app')->getViewPath();
@@ -200,12 +236,12 @@ class Module extends ModuleKernel
             }
         }
 
-        // Filter
+        // Hook
         $template = apply_filters('zc/module/theme_adaptor/template', $template);
 
         if ($template) {
             $this->mvc($template);
-            return false;
+            return '';
         } else {
             return $wpTemplate;
         }

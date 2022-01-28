@@ -16,7 +16,7 @@ use RuntimeException;
 use ZimbruCode\Component\Common\Tools;
 
 /**
- * Class : Global data operator
+ * Class : Component/Core : Global data operator
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -56,7 +56,7 @@ abstract class GlobalDataOperator
     ];
 
     /**
-     * RN : Root Node
+     * RN : Root node
      *
      * @var string
      * @since 1.0.0
@@ -77,7 +77,7 @@ abstract class GlobalDataOperator
      * @var string
      * @since 1.0.0
      */
-    private static $__OEM = '{PATH} - conditions are not fulfilled. Only next nodes are permitted in first position : {NODES}.';
+    private static $__OEM = '{PATH} - conditions are not met. Only the following nodes are allowed in the first position : {NODES}.';
 
     /**
      * Nodes cache
@@ -92,7 +92,7 @@ abstract class GlobalDataOperator
     /**
      * Get OEM ( Operator exception message )
      *
-     * @param  string $path   Base path
+     * @param  string $path   Array path
      * @return string         Exception message
      * @since 1.0.0
      */
@@ -104,9 +104,9 @@ abstract class GlobalDataOperator
     /**
      * Is on condition
      *
-     * @param  string  $path
-     * @param  string  $delimiter
-     * @return bool    true/false
+     * @param  string  $path        Array path
+     * @param  string  $delimiter   Path delimiter
+     * @return boolean              Result of checking
      * @since 1.0.0
      */
     private static function __isOnCondition(string $path, string $delimiter = '/'): bool
@@ -120,10 +120,28 @@ abstract class GlobalDataOperator
     }
 
     /**
+     * Is root node
+     *
+     * @param  string  $path        Array path
+     * @param  string  $delimiter   Path delimiter
+     * @return boolean              Result of checking
+     * @since 1.0.0
+     */
+    private static function __isRootNode(string $path, string $delimiter = '/'): bool
+    {
+        if ($path) {
+            $element = explode($delimiter, $path);
+            return (in_array($element[0], [self::$__RN]));
+        }
+
+        return false;
+    }
+
+    /**
      * Remove node from cache
      *
-     * @param  string $path   Node path
-     * @return void           This function does not return a value
+     * @param  string $path   Array path
+     * @return void
      * @since 1.0.0
      */
     private static function __removeFromNodesCache(string $path = ''): void
@@ -146,28 +164,10 @@ abstract class GlobalDataOperator
     }
 
     /**
-     * Is root node
-     *
-     * @param  string $path
-     * @param  string $delimiter
-     * @return bool   true/false
-     * @since 1.0.0
-     */
-    private static function __isRootNode(string $path, string $delimiter = '/'): bool
-    {
-        if ($path) {
-            $element = explode($delimiter, $path);
-            return (!in_array($element[0], [self::$__RN])) ? false : true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Add global var slug
+     * Add global slug variable
      *
      * @param  string $slug   Slug name
-     * @return void           This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     final protected static function addGlobalVarSlug(string $slug): void
@@ -185,7 +185,7 @@ abstract class GlobalDataOperator
     }
 
     /**
-     * Get global var slug
+     * Get global slug variable
      *
      * @return string   Slug name
      * @since 1.0.0
@@ -196,11 +196,11 @@ abstract class GlobalDataOperator
     }
 
     /**
-     * Get data from global var
+     * Get global data
      *
-     * @param  string  $path      Base path
-     * @param  mix     $default   Default value
-     * @return mix                Return data
+     * @param  string $path      Array path
+     * @param  mix    $default   Default value
+     * @return mix               Global data
      * @since 1.0.0
      */
     final public static function getGlobal(string $path, $default = false)
@@ -236,10 +236,10 @@ abstract class GlobalDataOperator
     /**
      * ifG : If global exist, return value1, if not, return value2
      *
-     * @param  string  $path      Base path
-     * @param  mix     $value1    Value 1
-     * @param  mix     $value2    Value 2
-     * @return mix                Return data
+     * @param  string  $path     Array path
+     * @param  mix     $value1   Value 1
+     * @param  mix     $value2   Value 2
+     * @return mix               Action result
      * @since 1.0.0
      */
     final public static function ifG(string $path, $value1, $value2)
@@ -250,11 +250,11 @@ abstract class GlobalDataOperator
     }
 
     /**
-     * Add data to global var
+     * Add global data
      *
-     * @param  string  $path    Base path
+     * @param  string  $path    Array path
      * @param  mix     $value   Value
-     * @return void             This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     final public static function addGlobal(string $path, $value): void
@@ -276,10 +276,10 @@ abstract class GlobalDataOperator
     }
 
     /**
-     * Remove data from global var
+     * Remove global item
      *
-     * @param  string $path   Base path
-     * @return bool           Return false/true
+     * @param  string $path   Array path
+     * @return boolean        Action result
      * @since 1.0.0
      */
     final public static function remGlobal(string $path): bool
@@ -303,10 +303,10 @@ abstract class GlobalDataOperator
     }
 
     /**
-     * Dump global
+     * Dump global data
      *
-     * @param  string $path   Base path
-     * @return void           This function does not return a value
+     * @param  string $path   Array path
+     * @return void
      * @since 1.0.0
      */
     final public static function dumpGlobal(string $path = ''): void

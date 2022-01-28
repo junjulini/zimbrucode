@@ -12,11 +12,9 @@
 namespace ZimbruCode\Component\Core\Traits;
 
 use ZimbruCode\Component\Asset\AssetManager;
-use ZimbruCode\Component\Asset\Filter\Combine;
-use ZimbruCode\Component\Core\Kernel;
 
 /**
- * Trait : Asset function
+ * Trait : Component/Core/Traits : Asset function
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -27,12 +25,14 @@ trait AssetTrait
     /**
      * Asset
      *
+     * @param mix ...$assets
      * @return AssetManager
      * @since 1.0.0
      */
     protected function asset(...$assets)
     {
         $path = '';
+
         if (method_exists($this, 'getModulePath')) {
             $path = $this->getModulePath();
         } elseif (method_exists($this, 'getPath')) {

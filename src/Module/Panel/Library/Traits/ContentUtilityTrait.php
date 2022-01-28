@@ -14,7 +14,7 @@ namespace ZimbruCode\Module\Panel\Library\Traits;
 use ZimbruCode\Component\Common\Tools;
 
 /**
- * Trait : Content utility base functions
+ * Trait : Module/Panel/Library/Traits : Content utility. Base functions
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -27,8 +27,8 @@ trait ContentUtilityTrait
      *
      * @param  array  $options   All options
      * @param  string $option    Option name
-     * @param  mix    $default   Default value if option not exist
-     * @return string            Return value of option
+     * @param  mix    $default   Default value
+     * @return mix               Action result
      * @since 1.0.0
      */
     public function getOIE(array $options = [], string $option = '', $default = '')
@@ -39,7 +39,7 @@ trait ContentUtilityTrait
     }
 
     /**
-     * Get build settings
+     * Get "build settings"
      *
      * @return array   Build settings
      * @since 1.0.0
@@ -71,21 +71,20 @@ trait ContentUtilityTrait
     /**
      * Add options
      *
-     * @param array $options   Mode options
+     * @param array $options   Options list
      * @since 1.0.0
      */
     public function addOptions(array $options)
     {
         $dbName = self::getGlobal('core/module/panel/db-name');
-
         return self::service('db')->add("{$dbName}.{$this->getModuleSetting('slug')}", $options, true);
     }
 
     /**
-     * Check if options is different from options in DB
+     * Check if the options are different from the options in the DB
      *
-     * @param  array $options   Mode options
-     * @return bool             True if different
+     * @param  array $options   Options list
+     * @return boolean          Result of checking
      * @since 1.0.0
      */
     public function isOptionsDifferent(array $options): bool
@@ -94,9 +93,9 @@ trait ContentUtilityTrait
     }
 
     /**
-     * Remove options
+     * Remove all options
      *
-     * @return bool   Result of manipulation
+     * @return boolean   Result of checking
      * @since 1.0.0
      */
     public function remOptions(): bool
@@ -109,7 +108,7 @@ trait ContentUtilityTrait
      * Get options
      *
      * @param  mix $default   Default value
-     * @return array          Mode options
+     * @return array          Options list
      * @since 1.0.0
      */
     public function getOptions($default = ''): array
@@ -123,7 +122,7 @@ trait ContentUtilityTrait
      *
      * @param  string $option    Name of option
      * @param  mix    $default   Default value
-     * @return mix
+     * @return mix               Option value
      * @since 1.0.0
      */
     public function getOption(string $option, $default = '')

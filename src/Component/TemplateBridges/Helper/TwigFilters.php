@@ -15,7 +15,7 @@ use ZimbruCode\Component\Common\Tools;
 use ZimbruCode\Component\TemplateBridges\TwigTemplateBridge;
 
 /**
- * Class : Twig filters
+ * Class : Component/TemplateBridge/Helper : Twig filters
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -23,6 +23,12 @@ use ZimbruCode\Component\TemplateBridges\TwigTemplateBridge;
  */
 class TwigFilters
 {
+    /**
+     * Constructor
+     *
+     * @param TwigTemplateBridge $ttb   TwigTemplateBridge object
+     * @since 1.0.0
+     */
     public function __construct(TwigTemplateBridge $ttb)
     {
         $ttb->addFilter('rs',          [$this, '__callback_stripslashes']);
@@ -31,7 +37,7 @@ class TwigFilters
     }
 
     /**
-     * Filter : Remove Slashes
+     * Callback : Remove Slashes
      *
      * @param  string $string   String from template
      * @return string           Modificated string
@@ -46,6 +52,13 @@ class TwigFilters
         return Tools::removeSlashes($string);
     }
 
+    /**
+     * Callback : Call function
+     *
+     * @param callable $function   Callback
+     * @return mix                 Action result
+     * @since 1.0.0
+     */
     public function __callback_fn(callable $function)
     {
         return call_user_func_array($function, []);

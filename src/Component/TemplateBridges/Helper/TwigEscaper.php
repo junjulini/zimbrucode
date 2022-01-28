@@ -15,7 +15,7 @@ use Twig\Environment;
 use ZimbruCode\Component\TemplateBridges\TwigTemplateBridge;
 
 /**
- * Class : Twig escaper
+ * Class : Component/TemplateBridge/Helper : Twig escaper
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -23,6 +23,12 @@ use ZimbruCode\Component\TemplateBridges\TwigTemplateBridge;
  */
 class TwigEscaper
 {
+    /**
+     * Constructor
+     *
+     * @param TwigTemplateBridge $ttb   TwigTemplateBridge object
+     * @since 1.0.0
+     */
     public function __construct(TwigTemplateBridge $ttb)
     {
         $ttb->addEscaper('esc_url',         [$this, '__callback_esc_url']);
@@ -41,41 +47,105 @@ class TwigEscaper
         $ttb->addEscaper('wp_rel_nofollow', [$this, '__callback_wp_rel_nofollow']);
     }
 
+    /**
+     * Callback : esc_url
+     *
+     * @param Environment $env      Environment object
+     * @param string|null $string   The URL to be cleaned
+     * @return string|null          Action result
+     * @since 1.0.0
+     */
     public function __callback_esc_url(Environment $env, ?string $string): ?string
     {
         return esc_url($string);
     }
 
+    /**
+     * Callback : esc_url_raw
+     *
+     * @param Environment $env      Environment object
+     * @param string|null $string   The URL to be cleaned
+     * @return string|null          Action result
+     * @since 1.0.0
+     */
     public function __callback_esc_url_raw(Environment $env, ?string $string): ?string
     {
         return esc_url_raw($string);
     }
 
+    /**
+     * Callback : esc_html
+     *
+     * @param Environment $env      Environment object
+     * @param string|null $string   HTML content
+     * @return string|null          Action result
+     * @since 1.0.0
+     */
     public function __callback_esc_html(Environment $env, ?string $string): ?string
     {
         return esc_html($string);
     }
 
+    /**
+     * Callback : esc_js
+     *
+     * @param Environment $env      Environment object
+     * @param string|null $string   JS content
+     * @return string|null          Action result
+     * @since 1.0.0
+     */
     public function __callback_esc_js(Environment $env, ?string $string): ?string
     {
         return esc_js($string);
     }
 
+    /**
+     * Callback : esc_textarea
+     *
+     * @param Environment $env      Environment object
+     * @param string|null $string   Text
+     * @return string|null          Action result
+     * @since 1.0.0
+     */
     public function __callback_esc_textarea(Environment $env, ?string $string): ?string
     {
         return esc_textarea($string);
     }
 
+    /**
+     * Callback : esc_attr
+     *
+     * @param Environment $env      Environment object
+     * @param string|null $string   HTML attribute
+     * @return string|null          Action result
+     * @since 1.0.0
+     */
     public function __callback_esc_attr(Environment $env, ?string $string): ?string
     {
         return esc_attr($string);
     }
 
+    /**
+     * Callback : wp_kses_post
+     *
+     * @param Environment $env      Environment object
+     * @param string|null $string   Post content to filter
+     * @return string|null          Action result
+     * @since 1.0.0
+     */
     public function __callback_wp_kses_post(Environment $env, ?string $string): ?string
     {
         return wp_kses_post($string);
     }
 
+    /**
+     * Callback : wp_rel_nofollow
+     *
+     * @param Environment $env      Environment object
+     * @param string|null $string   Content that may contain HTML A elements
+     * @return string|null          Action result
+     * @since 1.0.0
+     */
     public function __callback_wp_rel_nofollow(Environment $env, ?string $string): string
     {
         return wp_rel_nofollow($string);

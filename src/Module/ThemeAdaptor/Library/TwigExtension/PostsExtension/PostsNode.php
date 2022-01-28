@@ -15,7 +15,7 @@ use Twig\Compiler;
 use Twig\Node\Node;
 
 /**
- * Twig node class : Posts
+ * Class : Module/ThemeAdaptor/Library/TwigExtension/PostsExtension : Posts - Node
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -23,6 +23,15 @@ use Twig\Node\Node;
  */
 class PostsNode extends Node
 {
+    /**
+     * Constructor
+     *
+     * @param Node        $body     "Body" node
+     * @param Node|null   $values   "Values" node
+     * @param integer     $lineno
+     * @param string|null $tag
+     * @since 1.0.0
+     */
     public function __construct(Node $body, ?Node $values, int $lineno, string $tag = null)
     {
         $nodes = ['body' => $body];
@@ -34,6 +43,13 @@ class PostsNode extends Node
         parent::__construct($nodes, [], $lineno, $tag);
     }
 
+    /**
+     * Compile
+     *
+     * @param Compiler $compiler   Compiler object
+     * @return void
+     * @since 1.0.0
+     */
     public function compile(Compiler $compiler): void
     {
         $compiler->addDebugInfo($this);

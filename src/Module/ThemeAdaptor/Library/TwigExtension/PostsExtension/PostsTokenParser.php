@@ -16,7 +16,7 @@ use Twig\Token;
 use Twig\TokenParser\AbstractTokenParser;
 
 /**
- * Twig token parser class : Posts
+ * Class : Module/ThemeAdaptor/Library/TwigExtension/PostsExtension : Posts - Token parser
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -24,7 +24,14 @@ use Twig\TokenParser\AbstractTokenParser;
  */
 class PostsTokenParser extends AbstractTokenParser
 {
-    public function parse(Token $token): Node
+    /**
+     * Parse
+     *
+     * @param Token $token   Token object
+     * @return PostsNode
+     * @since 1.0.0
+     */
+    public function parse(Token $token): PostsNode
     {
         $stream = $this->parser->getStream();
         $values = null;
@@ -40,11 +47,24 @@ class PostsTokenParser extends AbstractTokenParser
         return new PostsNode($body, $values, $token->getLine(), $this->getTag());
     }
 
+    /**
+     * Test : Decide posts end
+     *
+     * @param Token $token   Token object
+     * @return boolean       Result of checking
+     * @since 1.0.0
+     */
     public function decidePostsEnd(Token $token): bool
     {
         return $token->test('endposts');
     }
 
+    /**
+     * Get tag
+     *
+     * @return string   Tag value
+     * @since 1.0.0
+     */
     public function getTag(): string
     {
         return 'posts';

@@ -15,7 +15,7 @@ use ZimbruCode\Component\Common\Tools;
 use ZimbruCode\Component\TemplateBridges\TwigTemplateBridge;
 
 /**
- * Trait : Render function
+ * Trait : Component/Core/Traits : Render function
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -24,12 +24,12 @@ use ZimbruCode\Component\TemplateBridges\TwigTemplateBridge;
 trait RenderTrait
 {
     /**
-     * Render
+     * Render TWIG template
      *
-     * @param  string  $template   Template path
-     * @param  array   $vars       Additional vars
-     * @param  bool    $return     Return content or echo
-     * @return string              HTML output
+     * @param  string  $template                Path of TWIG template
+     * @param  array   $vars                    Additional vars
+     * @param  boolean $return                  Return content or echo
+     * @return string|null|TwigTemplateBridge   HTML output
      * @since 1.0.2
      */
     protected function render(string $template = '', array $vars = [], bool $return = false, callable $renderCallback = null)
@@ -39,6 +39,7 @@ trait RenderTrait
 
             $renderTemplate = function (string $template, string $locationPath) use ($vars, $renderCallback): ?string {
                 $ttb = new TwigTemplateBridge;
+
                 $ttb->addLocationPath($locationPath);
                 $ttb->addCachePath(self::service('app')->getCachePath('twig'));
 

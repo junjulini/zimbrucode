@@ -9,7 +9,7 @@
  */
 
 /*
- * Script : ZimbruCode/Module/Cookie
+ * Script : ZimbruCode/Module : Cookie
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -19,10 +19,23 @@
 'use strict';
 
 export default class Cookie {
+
+    /**
+     * Constructor
+     * 
+     * @since 1.0.0
+     */
     constructor() {
         this.defaults = {};
     }
 
+    /**
+     * Extend attributes
+     * 
+     * @param  {...any} args   Attributes
+     * @return {object}        New attributes
+     * @since 1.0.0
+     */
     __extend(...args) {
         let i = 0, result = {};
 
@@ -37,6 +50,15 @@ export default class Cookie {
         return result;
     }
 
+    /**
+     * API
+     * 
+     * @param {string} key          Cookie name
+     * @param {mix}    value        Cookie value
+     * @param {object} attributes   Cookie attributes
+     * @return {mix}                Action result
+     * @since 1.0.0
+     */
     __api(key, value, attributes) {
         let result, converter = () => {};
 
@@ -125,23 +147,51 @@ export default class Cookie {
         return result;
     }
 
+    /**
+     * Add cookie
+     * 
+     * @param {string} key          Cookie name
+     * @param {mix}    value        Cookie value
+     * @param {object} attributes   Cookie attributes
+     * @since 1.0.0
+     */
     add(key, value, attributes) {
         this.__api(key, value, attributes);
     }
 
+    /**
+     * Get cookie
+     * 
+     * @param {string} key   Cookie name
+     * @return {mix}         Cookie data
+     * @since 1.0.0
+     */
     get(key) {
         return this.__api(key);
     }
 
-    getJSON() {
-        return this.__api.apply({
-            json: true
-        }, [].slice.call(arguments));
-    }
-
+    /**
+     * Remove cookie item
+     * 
+     * @param {string} key          Cookie name
+     * @param {object} attributes   Cookie attributes
+     * @since 1.0.0
+     */
     remove(key, attributes) {
         this.__api(key, '', this.__extend(attributes, {
             expires: -1
         }));
+    }
+
+    /**
+     * Json data
+     * 
+     * @return {mix}   Cookie data
+     * @since 1.0.0
+     */
+    getJSON() {
+        return this.__api.apply({
+            json: true
+        }, [].slice.call(arguments));
     }
 }

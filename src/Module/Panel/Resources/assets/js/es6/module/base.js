@@ -27,6 +27,12 @@ import Condition  from './condition';
 const $ = jQuery;
 
 export default class Base extends Kernel {
+
+    /**
+     * Constructor
+     * 
+     * @since 1.0.0
+     */
     constructor() {
         super();
 
@@ -45,11 +51,11 @@ export default class Base extends Kernel {
                 mobile: 10
             },
 
-            'bottom-margin': 42, 
-            'footer-height': 56,    // Height of footer
-            'header-height': 56,    // Height of header
-            'height-FAH':    112,   // Height of footer & header
-            'wp-body-height': 0,    // Wp body height
+            'bottom-margin': 42,
+            'footer-height': 56,  // Height of footer
+            'header-height': 56,  // Height of header
+            'height-FAH':    112, // Height of footer & header
+            'wp-body-height': 0,  // Wp body height
 
             'min-size': {
                 'body-height': 500, // Min panel body height
@@ -67,6 +73,12 @@ export default class Base extends Kernel {
         this.service('callback', new Callback);
     }
 
+    /**
+     * Check browser compatibility
+     * 
+     * @return {null}   None
+     * @since 1.0.0
+     */
     checkBrowserCompatibility() {
         try {
             new IntersectionObserver(a => {});
@@ -79,7 +91,7 @@ export default class Base extends Kernel {
     /**
      * Panel menu
      * 
-     * @return {null} None
+     * @return {null}   None
      * @since 1.0.0
      */
     menu() {
@@ -87,9 +99,9 @@ export default class Base extends Kernel {
     }
 
     /**
-     * Panel : Init callback of close block.
+     * Panel : Initiate a block close callback
      * 
-     * @return {null} None
+     * @return {null}   None
      * @since 1.0.0
      */
     closeBlock() {
@@ -99,7 +111,7 @@ export default class Base extends Kernel {
     /**
      * Panel scroll bar
      * 
-     * @return {null} None
+     * @return {null}   None
      * @since 1.0.0
      */
     scrollbar() {
@@ -142,7 +154,7 @@ export default class Base extends Kernel {
     /**
      * Change meta viewport if mobile
      * 
-     * @return {null} None
+     * @return {null}   None
      * @since 1.0.0
      */
     noMetaScaleIfMobile() {
@@ -152,9 +164,9 @@ export default class Base extends Kernel {
     }
 
     /**
-     * Panel condition checker.
+     * Conditions
      * 
-     * @type  {Object}
+     * @return {null}   None
      * @since 1.0.0
      */
     condition() {
@@ -162,9 +174,9 @@ export default class Base extends Kernel {
     }
 
     /**
-     * If some changes was made
+     * Check if any changes have been made
      * 
-     * @return {string} Message
+     * @return {string}   Message
      * @since 1.0.0
      */
     ifChanged() {
@@ -178,7 +190,7 @@ export default class Base extends Kernel {
     /**
      * Control help
      * 
-     * @return {null} None
+     * @return {null}   None
      * @since 1.0.0
      */
     controlHelp() {
@@ -199,9 +211,9 @@ export default class Base extends Kernel {
     }
 
     /**
-     * Controls initialization
+     * Initializing controls
      * 
-     * @return {null} None
+     * @return {null}   None
      * @since 1.0.0
      */
     controlInit() {
@@ -211,7 +223,7 @@ export default class Base extends Kernel {
     /**
      * Tooltip
      * 
-     * @return {null} None
+     * @return {null}   None
      * @since 1.0.0
      */
     tooltip() {

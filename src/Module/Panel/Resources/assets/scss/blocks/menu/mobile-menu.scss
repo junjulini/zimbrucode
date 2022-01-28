@@ -150,12 +150,12 @@
                 color: $alt-color__text !important;
             }
 
-            // Modifying : Type - Title
+            // Type : Title
             &_type_title .zc-panel-submenu__item-only-title {
                 color: $alt-color__text;
             }
 
-            // Modifying : Type - Text
+            // Type : Text
             &_type_text .zc-panel-submenu__item-text {
                 > b, > strong {
                     color: $panel_menu__text-active-color;

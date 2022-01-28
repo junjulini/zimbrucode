@@ -25,7 +25,7 @@ class Control extends ControlKernel
     /**
      * Control setup
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     public function setup(): void
@@ -34,12 +34,20 @@ class Control extends ControlKernel
             'title-range-error' => esc_html__('Permitted only number with next intervals : min = {MIN}, max = {MAX}', 'zc'),
         ]);
 
-        // Custom template function
+        // Custom template functions
         $this->addShellFunction('gridMark',     '__callback_grid_mark');
         $this->addShellFunction('trackPercent', '__callback_track_percent');
     }
 
-    public function __callback_grid_mark($value, $step)
+    /**
+     * Callback : Grid mark
+     *
+     * @param float  $value   Position
+     * @param string $step    Current step
+     * @return mix            Grid mark
+     * @since 1.0.0
+     */
+    public function __callback_grid_mark(float $value, string $step)
     {
         if ($value && $step) {
             $nod = strlen(substr(strrchr($step, '.'), 1));
@@ -49,7 +57,16 @@ class Control extends ControlKernel
         return 0;
     }
 
-    public function __callback_track_percent($value, $min, $max)
+    /**
+     * Track percent
+     *
+     * @param string $value   Position
+     * @param mix    $min     Minimum range
+     * @param mix    $max     Maximum range
+     * @return mix            Track percent
+     * @since 1.0.0
+     */
+    public function __callback_track_percent(string $value, $min, $max)
     {
         $value = str_replace(['px', '%'], '', $value);
         return (($value - $min) * 100) / ($max - $min);

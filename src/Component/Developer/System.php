@@ -16,7 +16,7 @@ use ZimbruCode\Component\Common\Tools;
 use ZimbruCode\Component\Core\Kernel;
 
 /**
- * Class : System functions
+ * Class : Component/Developer : System functions
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -27,7 +27,7 @@ class System
     /**
      * Dump system data
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     public function dumpSysData(): void
@@ -50,7 +50,7 @@ class System
     /**
      * Get system data
      *
-     * @return array   Data
+     * @return array   System data
      * @since 1.0.0
      */
     public function getSysData(): array
@@ -71,7 +71,7 @@ class System
     /**
      * Display system data
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     public function displaySysData(): void
@@ -84,9 +84,10 @@ class System
     /**
      * Get server CPU load
      *
+     * @return float   CPU load data
      * @since 1.0.0
      */
-    public function getServerLoad()
+    public function getServerLoad(): float
     {
         if (stristr(PHP_OS, 'win')) {
             if (!class_exists('COM')) {
@@ -114,10 +115,10 @@ class System
     /**
      * Get server memory usage
      *
-     * @return integer   Memory usage
+     * @return integer|null   Memory usage
      * @since 1.0.0
      */
-    public function getServerMemoryUsage()
+    public function getServerMemoryUsage(): ?int
     {
         if ($shell = shell_exec('free')) {
             $free     = $shell;
@@ -131,14 +132,14 @@ class System
 
             return intval($memory_usage) . '%';
         } else {
-            return 'Not compatible';
+            return null;
         }
     }
 
     /**
      * Get script memory usage
      *
-     * @return array   Data memory usage
+     * @return array   Memory usage
      * @since 1.0.0
      */
     public function getMemoryUsage(): array

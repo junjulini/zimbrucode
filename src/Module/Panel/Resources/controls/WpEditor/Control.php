@@ -15,7 +15,7 @@ use ZimbruCode\Component\Common\Tools;
 use ZimbruCode\Module\Panel\Library\ControlKernel;
 
 /**
- * Panel control : WP Editor
+ * Panel control : WP editor
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -26,7 +26,7 @@ class Control extends ControlKernel
     /**
      * Control setup
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     public function setup(): void

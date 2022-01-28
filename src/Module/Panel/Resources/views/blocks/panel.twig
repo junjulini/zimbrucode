@@ -107,7 +107,7 @@
                             <ul class="zc-panel-controls__sections">
                                 {% for manu in panel.getBuildSettings %}
 
-                                    {# If is panel section #}
+                                    {# If it's a panel section #}
                                     {% if manu.type == 'menuTab' and manu.id %}
                                         <li class="zc-panel-controls__section" data-section="section_{{ manu.id }}">
                                             <ul class="zc-panel-controls__list">
@@ -115,7 +115,7 @@
                                             </ul>
                                         </li>
 
-                                    {# If is panel parent section #}
+                                    {# If it's a panel parent section #}
                                     {% elseif manu.type == 'menuParentTab' %}
                                         {% for sub_menu in manu.content %}
                                             {% if sub_menu.type == 'menuTab' and sub_menu.id %}

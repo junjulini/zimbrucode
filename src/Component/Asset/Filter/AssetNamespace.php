@@ -17,7 +17,7 @@ use ZimbruCode\Component\Asset\Library\Filter;
 use ZimbruCode\Component\Asset\Library\NamespaceHandler;
 
 /**
- * Class : Filter - AssetNamespace
+ * Class : Component/Asset/Filter : Asset namespace
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -29,7 +29,7 @@ class AssetNamespace extends Filter
      * Each asset
      *
      * @param  AssetData $asset   Asset data
-     * @return void               This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     protected function each(AssetData $asset): void
@@ -53,15 +53,15 @@ class AssetNamespace extends Filter
     }
 
     /**
-     * Get assets from namespace
+     * Preparing assets namespaces
      *
-     * @param  AssetDataCollector $namespaceCollector   Collector from namespace
-     * @return void                                     This function does not return a value
+     * @param  AssetDataCollector $collector   Asset data collector
+     * @return void
      * @since 1.0.0
      */
-    protected function prepNamespace(AssetDataCollector $namespaceCollector): void
+    protected function prepNamespace(AssetDataCollector $collector): void
     {
-        foreach ($namespaceCollector->get() as $asset => $assetData) {
+        foreach ($collector->get() as $asset => $assetData) {
             $this->collector()->addRaw($asset, $assetData);
         }
     }

@@ -12,7 +12,7 @@
 namespace ZimbruCode\Component\Common;
 
 /**
- * Class : Mail
+ * Class : Component/Common : Mail
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -26,6 +26,11 @@ class Mail
     public $from    = false;
     public $email   = false;
 
+    /**
+     * Constructor
+     *
+     * @since 1.0.0
+     */
     public function __construct()
     {
         $this->subject = sprintf(esc_html__('[%s] message from Administrator', 'zc'), get_bloginfo('name'));
@@ -34,9 +39,9 @@ class Mail
     }
 
     /**
-     * Check if not error
+     * Check for errors
      *
-     * @return bool   Result
+     * @return boolean   Result of checking
      * @since 1.0.0
      */
     protected function error(): bool
@@ -59,14 +64,14 @@ class Mail
     /**
      * Send mail
      *
-     * @return bool   False / True
+     * @return boolean   Action result
      * @since 1.0.0
      */
     public function send(): bool
     {
         if (!$this->error()) {
             $headers = "From: {$this->from} <{$this->email}>\r\n";
-            $headers.= "Reply-To: {$this->email}\r\n";
+            $headers .= "Reply-To: {$this->email}\r\n";
 
             if (wp_mail($this->to, $this->subject, $this->body, $headers)) {
                 return true;

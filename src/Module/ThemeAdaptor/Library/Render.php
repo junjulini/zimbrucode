@@ -23,7 +23,7 @@ use ZimbruCode\Module\ThemeAdaptor\Library\TwigExtension\InitTwigExtensions;
 use ZimbruCode\Module\ThemeAdaptor\Library\TwigFunctions;
 
 /**
- * Class : Render
+ * Class : Module/ThemeAdaptor/Library : Render
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -41,6 +41,14 @@ class Render
         'template'  => '',
     ];
 
+    /**
+     * Constructor
+     *
+     * @param string  $template       Template path
+     * @param string  $locationPath   Templates directory path
+     * @param boolean $flush          "Flush" status
+     * @since 1.0.0
+     */
     public function __construct(string $template, string $locationPath = '', bool $flush = true)
     {
         if (!$template) {
@@ -58,6 +66,12 @@ class Render
         }
     }
 
+    /**
+     * Setup environment
+     *
+     * @return void
+     * @since 1.0.0
+     */
     public function setupEnvironment()
     {
         if (Kernel::getGlobal('core/module/theme-adaptor/cache')) {
@@ -71,6 +85,7 @@ class Render
         $this->menu    = new MenuShell;
 
         $gs = new GeneralShell;
+
         $this->general = $gs;
         $this->gen     = $gs;
 
@@ -92,22 +107,22 @@ class Render
             $this->ttb->addFilter($name, $method);
         }
 
-        // Action
+        // Hook
         do_action('zc/module/theme_adaptor/render', $this, $this->ttb);
 
         // Run loader & environment
         $this->ttb->addLoader();
         $this->ttb->addEnvironment();
 
-        // Set extensions
+        // TWIG extension initialization
         new InitTwigExtensions($this->ttb->getTWIG());
     }
 
     /**
-     * Get var
+     * Get variable
      *
-     * @param  string $name   Name of var
-     * @return string         Value of var
+     * @param  string $name   Variable name
+     * @return string         Variable value
      * @since 1.0.0
      */
     public function __get($name)
@@ -116,10 +131,10 @@ class Render
     }
 
     /**
-     * Add var (setter)
+     * Add variable (setter)
      *
-     * @param string $name    Name of var
-     * @param mix    $value   Value of var
+     * @param string $name    Variable name
+     * @param mix    $value   Variable value
      * @since 1.0.0
      */
     public function __set($name, $value)
@@ -128,9 +143,10 @@ class Render
     }
 
     /**
-     * Add var
+     * Get variable
      *
-     * @param string $name    Name of var
+     * @param  string $name   Variable name
+     * @return string         Variable value
      * @since 1.0.0
      */
     public function getVar(string $name)
@@ -139,10 +155,10 @@ class Render
     }
 
     /**
-     * Add var
+     * Add variable
      *
-     * @param string $name    Name of var
-     * @param mix    $value   Value of var
+     * @param string $name    Variable name
+     * @param mix    $value   Variable value
      * @since 1.0.0
      */
     public function addVar(...$args): void
@@ -151,9 +167,9 @@ class Render
     }
 
     /**
-     * Add vars
+     * Add variables
      *
-     * @param array $vars   Vars
+     * @param array $vars   List of variables
      * @since 1.0.0
      */
     public function addVars(array $vars): void
@@ -165,8 +181,8 @@ class Render
      * Add function
      *
      * @param  string   $name     Function name
-     * @param  callable $method   The function that will be called
-     * @return void               This function does not return a value
+     * @param  callable $method   Callback
+     * @return void
      * @since 1.0.0
      */
     public function addFunction(string $name, callable $method): void
@@ -182,8 +198,8 @@ class Render
      * Add escaper
      *
      * @param  string   $name     Escaper name
-     * @param  callable $method   The function that will be called
-     * @return void               This function does not return a value
+     * @param  callable $method   Callback
+     * @return void
      * @since 1.0.0
      */
     public function addEscaper(string $name, callable $method): void
@@ -199,8 +215,8 @@ class Render
      * Add filter
      *
      * @param  string   $name     Filter name
-     * @param  callable $method   The function that will be called
-     * @return void               This function does not return a value
+     * @param  callable $method   Callback
+     * @return void
      * @since 1.0.0
      */
     public function addFilter(string $name, callable $method): void
@@ -213,10 +229,11 @@ class Render
     }
 
     /**
-     * Add load path
+     * Add path to templates directory
      *
-     * @param string  $path        Path of template
-     * @param string  $namespace   Namespace of templates
+     * @param string  $path        Templates directory path
+     * @param string  $namespace   Templates namespace
+     * @return void
      * @since 1.0.0
      */
     public function addLocationPath(...$args): void
@@ -224,11 +241,23 @@ class Render
         $this->ttb->addLocationPath(...$args);
     }
 
+    /**
+     * Get the path to the template directory
+     *
+     * @return string   Templates directory path
+     * @since 1.0.0
+     */
     public function getLocationPath(): string
     {
         return $this->data['location-path'];
     }
 
+    /**
+     * Get template
+     *
+     * @return string   Template path
+     * @since 1.0.0
+     */
     public function getTemplate(): string
     {
         return $this->data['template'];
@@ -238,6 +267,7 @@ class Render
      * Render content
      *
      * @return void
+     * @since 1.0.0
      */
     public function renderContent(): void
     {

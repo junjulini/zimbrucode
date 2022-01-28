@@ -13,12 +13,13 @@ namespace ZimbruCode\Module\Panel\Library;
 
 use ZimbruCode\Component\Common\Tools;
 use ZimbruCode\Component\Core\ModuleKernel;
+use ZimbruCode\Component\TemplateBridges\TwigTemplateBridge;
 use ZimbruCode\Module\Panel\Library\Traits\ContentUtilityTrait;
 use ZimbruCode\Module\Panel\Library\TwigContextController;
 use ZimbruCode\Module\Panel\Library\TwigExtension\ControlsRenderTwigExtension;
 
 /**
- * Class : Control manager
+ * Class : Module/Panel/Library : Control manager
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -32,15 +33,15 @@ class ControlManager extends ModuleKernel
     protected $namespaces = [];
 
     /**
-     * Controls setup
+     * Manager setup
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     public function setup(): void
     {
-        // Set Twig extension
-        $this->addAction("zc/module/panel/{$this->getModuleSetting('slug')}/render", function (object $ttb): void {
+        // Add Twig extension
+        $this->addAction("zc/module/panel/{$this->getModuleSetting('slug')}/render", function (TwigTemplateBridge $ttb): void {
             $ttb->addExtension(new ControlsRenderTwigExtension($this));
         });
 
@@ -67,8 +68,8 @@ class ControlManager extends ModuleKernel
     /**
      * Get control
      *
-     * @param  string $name   Control name
-     * @return ControlKernel
+     * @param  string $name    Control name
+     * @return ControlKernel   Control object
      * @since 1.0.0
      */
     public function getControl(string $name): ?ControlKernel
@@ -85,8 +86,9 @@ class ControlManager extends ModuleKernel
     /**
      * Add control
      *
-     * @param string      $name    Control name
+     * @param string        $name      Control name
      * @param ControlKernel $control   Control object
+     * @return boolean                 Action result
      * @since 1.0.0
      */
     public function addControl(string $name, ControlKernel $control): bool
@@ -103,7 +105,7 @@ class ControlManager extends ModuleKernel
      * Remove control
      *
      * @param  string $name   Control name
-     * @return bool           Unset result
+     * @return boolean        Action result
      * @since 1.0.0
      */
     public function removeControl(string $name): bool
@@ -119,10 +121,10 @@ class ControlManager extends ModuleKernel
     }
 
     /**
-     * Search controls in build settings
+     * Search controls in "build settings"
      *
-     * @param  array  $settings
-     * @return void   This function does not return a value
+     * @param array $settings   Settings list
+     * @return void
      * @since 1.0.0
      */
     public function search(array $settings): void
@@ -157,8 +159,8 @@ class ControlManager extends ModuleKernel
      * Load control
      *
      * @param  string $control   Control class
-     * @param  string $control   Control type
-     * @return void              This function does not return a value
+     * @param  string $type      Control type
+     * @return void
      * @since 1.0.0
      */
     protected function load(string $control, string $type): void
@@ -166,20 +168,20 @@ class ControlManager extends ModuleKernel
         $this->addControl($type, $this->loadModulePart($control, false, $type));
 
         if (method_exists($this->getControl($type), 'each')) {
-            $this->addFilter("zc/module/panel/control/{$type}", function (array $context) use ($type): array {
+            $this->addFilter("zc/module/panel/control/{$type}", function (array $context) use ($type): array{
                 $this->getControl($type)->each(new TwigContextController($context));
 
                 return $context;
             });
         }
 
-        // Set scss asset
+        // Add scss asset
         $asset = self::getGlobal('core/module/panel/control-settings/assets/scss-file');
         $asset = $this->getControl($type)->getControlPath($asset);
 
         $this->getModuleData('asset')->addScssFile($asset);
 
-        // Set js asset
+        // Add js asset
         if (self::dev()) {
             $asset = self::getGlobal('core/module/panel/control-settings/assets/js-file');
         } else {
@@ -190,8 +192,8 @@ class ControlManager extends ModuleKernel
             $this->getModuleData('asset')->addLast($asset);
         }
 
-        // Set load path
-        $this->addAction("zc/module/panel/{$this->getModuleSetting('slug')}/render", function (object $ttb) use ($type): void {
+        // Set location of the control template
+        $this->addAction("zc/module/panel/{$this->getModuleSetting('slug')}/render", function (TwigTemplateBridge $ttb) use ($type): void {
             $controlDir = self::getGlobal('core/module/panel/control-settings/template-dir');
             $ttb->addLocationPath($this->getControl($type)->getControlPath($controlDir), $type);
         });

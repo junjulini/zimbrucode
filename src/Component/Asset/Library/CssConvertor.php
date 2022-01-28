@@ -11,14 +11,14 @@
 
 namespace ZimbruCode\Component\Asset\Library;
 
-new SplFileInfo;
+use SplFileInfo;
 use InvalidArgumentException;
 use RuntimeException;
 use ZimbruCode\Component\Common\Tools;
 use ZimbruCode\Component\Core\Kernel;
 
 /**
- * Class : Css convertor
+ * Class : Component/Asset/Library : Css convertor
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -34,7 +34,7 @@ class CssConvertor
      * Add asset
      *
      * @param string $asset   Asset path
-     * @return void           This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     public function addAsset(string $asset): void
@@ -51,10 +51,10 @@ class CssConvertor
     }
 
     /**
-     * Add output
+     * Add output file path
      *
      * @param string $output   Output file path
-     * @return void            This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     public function addOutput(string $output): void
@@ -70,7 +70,7 @@ class CssConvertor
      * Add asset content
      *
      * @param string $content   Content of asset
-     * @return void             This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     public function add(string $content): void
@@ -98,9 +98,9 @@ class CssConvertor
     }
 
     /**
-     * Convert paths to relative paths
+     * Converting paths to relative paths
      *
-     * @return string  New content
+     * @return string   New content
      * @since 1.0.0
      */
     public function convertPathToRelative(): string
@@ -140,7 +140,7 @@ class CssConvertor
     }
 
     /**
-     * Covert paths to base64 encoded data
+     * Converting paths to base64 encoded data
      *
      * @return array   New content
      * @since 1.0.0
@@ -167,9 +167,9 @@ class CssConvertor
                     $importExt = $config['import-ext'];
 
                     if (isset($importExt[$item->getExtension()]) && file_exists($item->getPathname())) {
-                        $max_size = $config['import-size'] * 1024;
+                        $maxSize = $config['import-size'] * 1024;
 
-                        if ($item->getSize() <= $max_size) {
+                        if ($item->getSize() <= $maxSize) {
                             $importContent     = base64_encode(file_get_contents($item->getPathname()));
                             $data['search'][]  = $clean;
                             $data['replace'][] = $importExt[$item->getExtension()] . ';base64,' . $importContent;

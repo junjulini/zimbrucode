@@ -20,7 +20,7 @@ use ZimbruCode\Component\Common\Tools;
 use ZimbruCode\Component\Core\Kernel;
 
 /**
- * Class : Filter - Combine
+ * Class : Component/Asset/Filter : Combine
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -41,9 +41,9 @@ class Combine extends Filter
     protected $cache;
 
     /**
-     * Setup filter
+     * Setup
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     protected function setup(): void
@@ -79,9 +79,9 @@ class Combine extends Filter
     }
 
     /**
-     * Preparing CSS assets
+     * CSS asset preparation
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     protected function prepCSSAssets(): void
@@ -95,7 +95,7 @@ class Combine extends Filter
 
         $this->cache->addPath($output . $this->cacheExt);
 
-        // Callback : Check output file if exist
+        // Callback : Check the output file if it exists
         $this->cache->addCheckFunction(function (array $args) use ($executeLocation, $output): bool {
             if (!file_exists($output)) {
                 if (Kernel::dev()) {
@@ -169,7 +169,7 @@ class Combine extends Filter
     /**
      * Preparing JavaScript assets
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     protected function prepJavaScriptAssets(): void
@@ -183,7 +183,7 @@ class Combine extends Filter
 
         $this->cache->addPath($output . $this->cacheExt);
 
-        // Callback : Check output file if exist
+        // Callback : Check the output file if it exists
         $this->cache->addCheckFunction(function (array $args) use ($executeLocation, $output): bool {
             if (!file_exists($output)) {
                 if (Kernel::dev()) {

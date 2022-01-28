@@ -22,7 +22,7 @@ use Redis;
 use ZimbruCode\Component\Core\Kernel;
 
 /**
- * Class : Cache handler
+ * Class : Component/Handler : Cache
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -33,6 +33,13 @@ class CacheHandler
     protected $fileCacheDir;
     protected $fileCacheExtension;
 
+    /**
+     * Constructor
+     *
+     * @param string $fileCacheDir         Cache file directory
+     * @param string $fileCacheExtension   Cache file extension
+     * @since 1.0.0
+     */
     public function __construct(string $fileCacheDir, string $fileCacheExtension = '.cache')
     {
         $this->fileCacheDir       = $fileCacheDir;
@@ -42,7 +49,7 @@ class CacheHandler
     /**
      * Get cache drive
      *
-     * @return object  Cache drive
+     * @return object   Cache drive
      * @since 1.0.0
      */
     public function getCacheDriver(): object

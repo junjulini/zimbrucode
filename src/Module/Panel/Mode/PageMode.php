@@ -11,12 +11,13 @@
 
 namespace ZimbruCode\Module\Panel\Mode;
 
+use WP_Admin_Bar;
 use ZimbruCode\Component\Handler\AjaxHandler;
 use ZimbruCode\Module\Panel\Library\Mode;
 use ZimbruCode\Module\Panel\Library\Traits\ControlTrait;
 
 /**
- * Class : Page mode
+ * Class : Module/Panel/Mode : Page mode
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -29,7 +30,7 @@ class PageMode extends Mode
     /**
      * Mode setup
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     public function setup(): void
@@ -47,11 +48,11 @@ class PageMode extends Mode
             $this->addAction('admin_enqueue_scripts', '__action_enqueue');
         }
 
-        // Add menu hook function
-        $action = (!$this->getModuleSetting('sub-menu')) ? '__action_register_panel' : '__action_register_submenu_panel';
+        // Menu hook
+        $action = (!$this->getModuleSetting('sub-menu')) ? '__action_register_menu_page' : '__action_register_submenu_page';
         $this->addAction('admin_menu', $action);
 
-        // Add admin bar hook function
+        // Admin bar hook
         if ($this->getModuleSetting('top-bar-menu') && current_user_can('administrator')) {
             $this->addAction('admin_bar_menu', '__action_bar_render', 999);
         }
@@ -63,9 +64,9 @@ class PageMode extends Mode
     }
 
     /**
-     * Callback : Creates html structure for panel
+     * Callback : Html-structure of the panel
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     public function __callback_html_structure(): void
@@ -93,7 +94,7 @@ class PageMode extends Mode
     /**
      * Action : Enqueue styles and scripts for panel
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     public function __action_enqueue(): void
@@ -130,14 +131,13 @@ class PageMode extends Mode
     }
 
     /**
-     * Action : Register panel
+     * Action : Register menu page
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
-    public function __action_register_panel(): void
+    public function __action_register_menu_page(): void
     {
-        // Menu page
         add_menu_page(
             $this->getModuleSetting('page-title'),
             $this->getModuleSetting('menu-title'),
@@ -153,12 +153,12 @@ class PageMode extends Mode
     }
 
     /**
-     * Action : Register submenu panel
+     * Action : Register submenu page
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
-    public function __action_register_submenu_panel(): void
+    public function __action_register_submenu_page(): void
     {
         add_submenu_page(
             $this->getModuleSetting('parent-slug'),
@@ -175,12 +175,12 @@ class PageMode extends Mode
     }
 
     /**
-     * Action : Set admin bar with panel items
+     * Action : Admin bar
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
-    public function __action_bar_render(object $wpAdminBar): void
+    public function __action_bar_render(WP_Admin_Bar $wpAdminBar): void
     {
         $slug   = self::getGlobal('core/slug') . '-' . $this->getModuleSetting('slug');
         $target = (!is_admin()) ? '_blank' : '';
@@ -264,7 +264,7 @@ class PageMode extends Mode
     /**
      * Ajax : Panel content
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     public function __ajax_load_panel_content(): void
@@ -275,11 +275,13 @@ class PageMode extends Mode
         $this->initControls();
 
         $content = $this->render('page-mode.twig', [], true);
+
         if ($this->getModuleSetting('ajax-response/minify')) {
             $content = trim(preg_replace('/>\s+</', '><', $content));
         }
 
         $oc = null;
+
         if ($this->getModuleSetting('ajax-response/gzip')) {
             $oc = (ini_get('zlib.output_compression') != '1') ? 'ob_gzhandler' : $oc;
         }
@@ -300,9 +302,9 @@ class PageMode extends Mode
     }
 
     /**
-     * Ajax : Panel options save
+     * Ajax : Save options
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     public function __ajax_save_options(): void
@@ -310,7 +312,7 @@ class PageMode extends Mode
         $ajax    = new AjaxHandler($this->getModuleSetting('nonce'), 'edit_theme_options');
         $options = $ajax->get('options');
 
-        // Filter : Options save - before
+        // Filter : Options save - Before
         $options = apply_filters('zc/module/panel/mode/page/options_save--before', $options, $ajax, $this);
         $options = apply_filters("zc/module/panel/{$this->getModuleSetting('slug')}/mode/page/options_save--before", $options, $ajax, $this);
 
@@ -318,7 +320,7 @@ class PageMode extends Mode
             if ($this->isOptionsDifferent($options)) {
                 if ($this->addOptions($options)) {
 
-                    // Hook : Options save - success
+                    // Hook : Options save - Success
                     do_action('zc/module/panel/mode/page/options_save--success', $options, $ajax, $this);
                     do_action("zc/module/panel/{$this->getModuleSetting('slug')}/mode/page/options_save--success", $options, $ajax, $this);
 
@@ -335,23 +337,22 @@ class PageMode extends Mode
     }
 
     /**
-     * Ajax : Panel options reset
+     * Ajax : Reset options
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     public function __ajax_reset_options(): void
     {
         $ajax = new AjaxHandler($this->getModuleSetting('nonce'), 'edit_theme_options');
 
-        // Hook : Options reset - before
+        // Hook : Options reset - Before
         do_action('zc/module/panel/mode/page/options_reset--before', $this, $ajax);
         do_action("zc/module/panel/{$this->getModuleSetting('slug')}/mode/page/options_reset--before", $this, $ajax);
 
-        $result = $this->remOptions();
+        if ($this->remOptions()) {
 
-        if ($result) {
-            // Hook : Options reset - success
+            // Hook : Options reset - Success
             do_action('zc/module/panel/mode/page/options_reset--success', $this, $ajax);
             do_action("zc/module/panel/{$this->getModuleSetting('slug')}/mode/page/options_reset--success", $this, $ajax);
 

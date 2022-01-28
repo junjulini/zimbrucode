@@ -23,11 +23,17 @@ import Kernel from '../kernel';
 const $ = jQuery;
 
 export default class PanelPageModeBodySize extends Kernel {
+
+    /**
+     * Constructor
+     * 
+     * @since 1.0.0
+     */
     constructor() {
         super();
 
-        this.height();
-        this.checkPanelWidth();
+        this.calcPanelHeight();
+        this.calcPanelWidth();
 
         let windowWidth  = window.innerWidth,
             windowHeight = window.innerHeight;
@@ -36,20 +42,25 @@ export default class PanelPageModeBodySize extends Kernel {
             if (window.innerWidth != windowWidth) {
                 windowWidth = window.innerWidth;
 
-                this.eraseMobileMenu(); // Erase mobile menu
-                this.height();          // Check panel height size
+                this.eraseMobileMenu();
+                this.calcPanelHeight();
             }
 
             if (this.isDesktopMode() && window.innerHeight != windowHeight) {
                 windowHeight = window.innerHeight;
 
-                this.calcHeight(); // Calculate panel height
-                this.height();     // Check panel height size
+                this.calcHeight();
+                this.calcPanelHeight();
             }
         });
     }
 
-    height() {
+    /**
+     * Calc panel height
+     * 
+     * @since 1.0.0
+     */
+    calcPanelHeight() {
         if (this.isDesktopMode()) {
             $('.zc-panel-controls').height('auto');
             $('.zc-panel-submenu__scrollbar-container').height('auto');
@@ -59,6 +70,27 @@ export default class PanelPageModeBodySize extends Kernel {
         }
     }
 
+    /**
+     * Calc panel width
+     * 
+     * @since 1.0.0
+     */
+    calcPanelWidth() {
+        const ro = new ResizeObserver(entries => {
+            if (entries[0] !== undefined) {
+                this.addModeSize(entries[0].contentRect.width);
+            }
+        });
+
+        ro.observe($('.zc-panel').get(0));
+    }
+
+     /**
+     * Add "mode size"
+     * 
+     * @param {string} width   Panel width
+     * @since 1.0.0
+     */
     addModeSize(width) {
         let mode = 'mode-1-';
 
@@ -73,15 +105,5 @@ export default class PanelPageModeBodySize extends Kernel {
         $('.zc-panel').attr('data-width', mode + width);
 
         $(window).trigger('zc/panel/size-changed');
-    }
-
-    checkPanelWidth() {
-        const ro = new ResizeObserver(entries => {
-            if (entries[0] !== undefined) {
-                this.addModeSize(entries[0].contentRect.width);
-            }
-        });
-
-        ro.observe($('.zc-panel').get(0));
     }
 }

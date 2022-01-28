@@ -25,12 +25,24 @@ import TPL__reset_popup_notification from '../header/tpl/reset-popup-notificatio
 const $ = jQuery;
 
 export default class Reset extends Kernel {
+
+    /**
+     * Constructor
+     * 
+     * @since 1.0.0
+     */
     constructor() {
         super();
 
         this.confirm();
     }
 
+    /**
+     * Confirm action
+     * 
+     * @return {null}   None
+     * @since 1.0.0
+     */
     confirm() {
         this.click('.zc-metabox-panel-reset-button', () => {
             zc.confirm({
@@ -46,10 +58,36 @@ export default class Reset extends Kernel {
                         id: $('.zc-panel-template_wid').data('post-id'),
                     }).then((response) => {
                         if (response.type === 'success') {
-                            this.successConfirm(popup, response);
+                            popup.remContent();
+                            popup.appendContent(zc.tpl(TPL__reset_popup_notification, {
+                                type: response.type ?? 'error',
+                                title: response.title ?? 'Error',
+                                content: response.content ?? 'Unknown error'
+                            }));
+                            popup.showContent();
+
+                            setTimeout(() => {
+                                location.reload();
+                            }, 2000);
+
                             $(window).trigger('zc/metabox-panel/reset/success-success');
                         } else {
-                            this.neutralConfirm(popup, response);
+                            popup.remContent();
+                            popup.appendContent(zc.tpl(TPL__reset_popup_notification, {
+                                type: response.type ?? 'error',
+                                title: response.title ?? 'Error',
+                                content: response.content ?? 'Unknown error',
+                                var_exit: this.getVar('exit')
+                            }));
+                            popup.showContent();
+
+                            $('.zc-popup').on('click', '.zc-panel-popup-notification__close-button', (event) => {
+                                event.preventDefault();
+                                /* Act on the event */
+
+                                popup.close();
+                            });
+
                             $(window).trigger('zc/metabox-panel/reset/success-info');
                         }
                     }).catch((errorMsg) => {
@@ -58,39 +96,6 @@ export default class Reset extends Kernel {
                     });
                 }
             });
-        });
-
-    }
-
-    successConfirm(popup, response) {
-        popup.remContent();
-        popup.appendContent(zc.tpl(TPL__reset_popup_notification, {
-            type: response.type ?? 'error',
-            title: response.title ?? 'Error',
-            content: response.content ?? 'Unknown error'
-        }));
-        popup.showContent();
-
-        setTimeout(() => {
-            location.reload();
-        }, 2000);
-    }
-
-    neutralConfirm(popup, response) {
-        popup.remContent();
-        popup.appendContent(zc.tpl(TPL__reset_popup_notification, {
-            type: response.type ?? 'error',
-            title: response.title ?? 'Error',
-            content: response.content ?? 'Unknown error',
-            var_exit: this.getVar('exit')
-        }));
-        popup.showContent();
-
-        $('.zc-popup').on('click', '.zc-panel-popup-notification__close-button', (event) => {
-            event.preventDefault();
-            /* Act on the event */
-
-            popup.close();
         });
     }
 }

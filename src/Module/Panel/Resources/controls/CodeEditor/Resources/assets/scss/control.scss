@@ -23,12 +23,15 @@
         .ace-wrapper {
             position: static;
         }
+
         .ace_editor {
             height: 200px;
         }
+
         .ace_gutter {
             z-index: 1 !important;
         }
+
         &.ace-chrome {
             border: 1px solid $bg-color__border__2;
             margin: 0;

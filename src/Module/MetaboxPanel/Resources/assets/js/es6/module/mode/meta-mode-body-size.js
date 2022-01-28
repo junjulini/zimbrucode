@@ -23,13 +23,19 @@ import Kernel from '../../../../../../../Panel/Resources/assets/js/es6/module/ke
 const $ = jQuery;
 
 export default class MetaModeBodySize extends Kernel {
+
+    /**
+     * Constructor
+     * 
+     * @since 1.0.0
+     */
     constructor() {
         super();
 
         let panelWidth = $('.zc-panel.zc-panel_mode_meta').width();
         if (panelWidth > 0) {
             this.checkPanelWidth();
-            this.metaHeight();
+            this.checkPanelHeight();
         } else {
             let interval = setInterval(() => {
                 panelWidth = $('.zc-panel.zc-panel_mode_meta').width();
@@ -38,29 +44,24 @@ export default class MetaModeBodySize extends Kernel {
                     clearInterval(interval);
 
                     this.checkPanelWidth();
-                    this.metaHeight();
+                    this.checkPanelHeight();
                 }
             }, 100);
         }
 
         zc.resize(() => {
-            this.eraseMobileMenu(); // Erase mobile menu
-            this.metaHeight();      // Check panel height size
+            this.eraseMobileMenu();
+            this.checkPanelHeight();
         });
     }
 
-    metaHeight() {
-        if (this.isDesktopMode()) {
-            $('.zc-panel.zc-panel_mode_meta').height('auto');
-            $('.zc-panel.zc-panel_mode_meta .zc-panel-controls').height('auto');
-            $('.zc-panel.zc-panel_mode_meta .zc-panel-submenu__scrollbar-container').height('auto');
-        } else {
-            $('.zc-panel.zc-panel_mode_meta').height('100%');
-            $('.zc-panel.zc-panel_mode_meta .zc-panel-controls').height('100%');
-            $('.zc-panel.zc-panel_mode_meta .zc-panel-submenu__scrollbar-container').height('100%');
-        }
-    }
-
+    /**
+     * Add mode size
+     * 
+     * @param {string} width   Panel width
+     * @return {null}          None
+     * @since 1.0.0
+     */
     addModeSize(width) {
         let mode = 'mode-1-';
 
@@ -77,6 +78,30 @@ export default class MetaModeBodySize extends Kernel {
         $(window).trigger('zc/panel/size-changed');
     }
 
+    /**
+     * Check panel height
+     * 
+     * @return {null}   None
+     * @since 1.0.0
+     */
+    checkPanelHeight() {
+        if (this.isDesktopMode()) {
+            $('.zc-panel.zc-panel_mode_meta').height('auto');
+            $('.zc-panel.zc-panel_mode_meta .zc-panel-controls').height('auto');
+            $('.zc-panel.zc-panel_mode_meta .zc-panel-submenu__scrollbar-container').height('auto');
+        } else {
+            $('.zc-panel.zc-panel_mode_meta').height('100%');
+            $('.zc-panel.zc-panel_mode_meta .zc-panel-controls').height('100%');
+            $('.zc-panel.zc-panel_mode_meta .zc-panel-submenu__scrollbar-container').height('100%');
+        }
+    }
+
+    /**
+     * Check panel width
+     * 
+     * @return {null}   None
+     * @since 1.0.0
+     */
     checkPanelWidth() {
         const ro = new ResizeObserver(entries => {
             if (entries[0] !== undefined) {

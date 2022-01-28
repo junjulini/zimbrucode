@@ -14,7 +14,7 @@ namespace ZimbruCode\Component\Handler;
 use ZimbruCode\Component\Handler\Traits\OptionHandlerTrait;
 
 /**
- * Class : Option handler
+ * Class : Component/Handler : Option
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode

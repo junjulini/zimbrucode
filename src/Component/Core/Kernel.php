@@ -20,7 +20,7 @@ use ZimbruCode\Component\Handler\Traits\RequestHandlerTrait;
 use ZimbruCode\Component\Handler\Traits\SessionHandlerTrait;
 
 /**
- * Class : Kernel
+ * Class : Component/Core : Kernel
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -33,7 +33,7 @@ abstract class Kernel extends GlobalDataOperator
     /**
      * Get environment
      *
-     * @return string  Environment
+     * @return string   Environment
      * @since 1.0.0
      */
     final public static function getEnvironment(): string
@@ -42,9 +42,12 @@ abstract class Kernel extends GlobalDataOperator
     }
 
     /**
-     * For developers
+     * Developer message
      *
-     * @return DeveloperMode
+     * @param string $type    Message type
+     * @param string $title   Message title
+     * @param string $msg     Message text
+     * @return DeveloperMode|null
      * @since 1.0.0
      */
     final public static function dev(string $type = '', string $title = 'Title', string $msg = ' ... '): ?DeveloperMode
@@ -53,11 +56,11 @@ abstract class Kernel extends GlobalDataOperator
     }
 
     /**
-     * Development or Production value
+     * Development or production data
      *
-     * @param  mix $value1
-     * @param  mix $value2
-     * @return mix
+     * @param  mix $value1   First value
+     * @param  mix $value2   Last value
+     * @return mix           Action result
      * @since 1.0.0
      */
     final public static function dop($value1, $value2)
@@ -68,6 +71,7 @@ abstract class Kernel extends GlobalDataOperator
     /**
      * Module loader
      *
+     * @param array $config   Module config
      * @return ModuleLoader
      * @since 1.0.0
      */
@@ -89,41 +93,42 @@ abstract class Kernel extends GlobalDataOperator
     }
 
     /**
-     * Get service ( or set )
+     * Get a service or register a new service
      *
-     * @param  string  $service   Service name
-     * @param  object  $handler   Service object ( for setter )
-     * @return object             Service object
+     * @param  string      $service   Service name
+     * @param  object|null $handler   Service object
+     * @return object|null            Service object or null
      * @since 1.0.0
      */
-    final public static function service(string $service, object $handler = null)
+    final public static function service(string $service, object $handler = null): ?object
     {
-        if ($service) {
-            if ($handler) {
-                if (!self::getGlobalCache("services/{$service}")) {
-                    self::addGlobalCache("services/{$service}", $handler);
-                } else {
-                    throw new RuntimeException("ZE0061 - This service exist : {$service}");
-                }
+        if ($handler) {
+            if (!self::getGlobalCache("services/{$service}")) {
+                self::addGlobalCache("services/{$service}", $handler);
+
+                return null;
             } else {
+                throw new RuntimeException("ZE0061 - This service exist : {$service}");
+            }
+        } else {
 
-                // WP Services
-                switch ($service) {
-                    case 'wpdb':
-                        if (isset($GLOBALS['wpdb'])) {
-                            return $GLOBALS['wpdb'];
-                        } else {
-                            throw new RuntimeException('ZE0062');
-                        }
-                        break;
-                }
+            // WP Services
+            switch ($service) {
+                case 'wpdb':
+                    if (isset($GLOBALS['wpdb'])) {
+                        return $GLOBALS['wpdb'];
+                    } else {
+                        throw new RuntimeException('ZE0062');
+                    }
 
-                // Local services
-                if ($object = self::getGlobalCache("services/{$service}")) {
-                    return $object;
-                } else {
-                    throw new RuntimeException("ZE0063 - This service don't exist : {$service}");
-                }
+                    break;
+            }
+
+            // Local services
+            if ($object = self::getGlobalCache("services/{$service}")) {
+                return $object;
+            } else {
+                throw new RuntimeException("ZE0063 - This service don't exist : {$service}");
             }
         }
     }

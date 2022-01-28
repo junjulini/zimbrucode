@@ -32,7 +32,7 @@
         animation: zc-panel-direct-notification-close .3s 1;
     }
 
-    // Error Notification
+    // Error notification
     &_type_error {
         background: $accent-color__4 !important;
 
@@ -49,7 +49,7 @@
         }
     }
 
-    // Info Notification
+    // Info notification
     &_type_info {
         background: #6FC3DA;
 
@@ -58,7 +58,7 @@
         }
     }
 
-    // Success Notification
+    // Success notification
     &_type_success {
         background: $accent-color__3;
 
@@ -67,7 +67,7 @@
         }
     }
 
-    // Warning Notification
+    // Warning notification
     &_type_warning {
         background: #EDF1A5;
         color: #545454;

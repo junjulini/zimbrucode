@@ -14,7 +14,7 @@ namespace ZimbruCode\Component\Asset\Library;
 use ZimbruCode\Component\Asset\Library\AssetDataCollector;
 
 /**
- * Class : Filter
+ * Class : Component/Asset/Library : Filter
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -28,10 +28,10 @@ abstract class Filter
     /**
      * Initialization of filter
      *
-     * @param  AssetDataCollector $collector   Collector object
-     * @param  string             $assetName   Name of asset
-     * @param  callable|null      $callback    Additional callback
-     * @return void                            This function does not return a value
+     * @param  AssetDataCollector $collector   Asset data collector object
+     * @param  string             $assetName   Asset name
+     * @param  callable|null      $callback    Callback function
+     * @return void
      * @since 1.0.0
      */
     final public function __init(AssetDataCollector $collector, string $assetName = null, callable $callback = null)
@@ -57,7 +57,7 @@ abstract class Filter
     }
 
     /**
-     * Assets collector
+     * Assets data collector
      *
      * @return AssetDataCollector object
      * @since 1.0.0
@@ -68,8 +68,10 @@ abstract class Filter
     }
 
     /**
-     * Run additional callback
+     * Run callback
      *
+     * @param  mix ...$args
+     * @return mix
      * @since 1.0.0
      */
     final protected function callback(...$args)

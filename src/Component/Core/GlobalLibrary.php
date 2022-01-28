@@ -14,7 +14,7 @@ namespace ZimbruCode\Component\Core;
 use ZimbruCode\Component\Handler\LibraryHandler;
 
 /**
- * Class : Global library
+ * Class : Component/Core : Global library
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -25,7 +25,7 @@ final class GlobalLibrary
     private $path;
 
     /**
-     * Global configs
+     * Constructor
      *
      * @since 1.0.0
      */
@@ -39,9 +39,9 @@ final class GlobalLibrary
     }
 
     /**
-     * Add package library
+     * Add packages
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     private function addPackageLibrary(): void
@@ -51,9 +51,9 @@ final class GlobalLibrary
     }
 
     /**
-     * Add icon font library
+     * Add font icons library
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     private function addIconFontLibrary(): void
@@ -66,7 +66,7 @@ final class GlobalLibrary
     /**
      * Add SCSS namespaces
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     private function addScssNamespace(): void

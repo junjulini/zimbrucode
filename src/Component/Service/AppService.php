@@ -17,7 +17,7 @@ use ZimbruCode\AppKernel;
 use ZimbruCode\Component\Common\Tools;
 
 /**
- * Class : Application service
+ * Class : Component/Service : Application
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -28,6 +28,14 @@ class AppService
     protected $app;
     protected $fs;
 
+    /**
+     * Constructor
+     *
+     * @param AppKernel $app        Application object
+     * @param string    $rootPath   Path to the root directory of the application
+     * @param string    $slug       Application slug
+     * @since 1.0.0
+     */
     public function __construct(AppKernel $app, string $rootPath, string $slug)
     {
         $this->app = $app;
@@ -43,7 +51,7 @@ class AppService
         $url = Tools::getURL($path) . '/';
         $this->app->addGlobal('app/url', $url);
 
-        // Root locations
+        // Root
         $rootPath = wp_normalize_path($rootPath);
         $this->app->addGlobal('app/root-file', $rootPath);
         $this->app->addGlobal('app/root-path', dirname($rootPath));
@@ -76,6 +84,7 @@ class AppService
 
         ################################################################################################################
 
+        // Var
         if ($this->app->getGlobal('app/var-upload-mode') === true) {
             if ($slug) {
                 $uploadDir = wp_get_upload_dir();
@@ -84,7 +93,6 @@ class AppService
                     $varsDirPath = wp_normalize_path("{$uploadDir['basedir']}/{$slug}");
                     $varsDirURL  = esc_url("{$uploadDir['baseurl']}/{$slug}");
 
-                    // Var
                     $var = $this->app->getGlobal('app/var-dir');
                     $this->app->addGlobal('app/var-path', "{$varsDirPath}/{$mid}");
                     $this->app->addGlobal('app/var-url', "{$varsDirURL}/{$mid}");
@@ -106,7 +114,6 @@ class AppService
                 }
             }
         } else {
-            // Var
             $var = $this->app->getGlobal('app/var-dir');
             $this->app->addGlobal('app/var-path', $this->getPath("{$var}{$mid}"));
             $this->app->addGlobal('app/var-url', $this->getURL("{$var}{$mid}"));
@@ -129,9 +136,9 @@ class AppService
     }
 
     /**
-     * Returns the app name (the class short name)
+     * Get application name (the class short name)
      *
-     * @return string   The app name
+     * @return string   Application name
      * @since 1.0.0
      */
     public function getName(): string
@@ -140,9 +147,9 @@ class AppService
     }
 
     /**
-     * Gets the app namespace
+     * Get application namespace
      *
-     * @return string   The app namespace
+     * @return string   Application namespace
      * @since 1.0.0
      */
     public function getNamespace(): string
@@ -152,9 +159,9 @@ class AppService
     }
 
     /**
-     * Get the app path
+     * Get application path
      *
-     * @return string   App path
+     * @return string   Application path
      * @since 1.0.0
      */
     public function getPath(string $path = ''): string
@@ -163,9 +170,9 @@ class AppService
     }
 
     /**
-     * Gets the app URL
+     * Get application URL
      *
-     * @return string   The app URL
+     * @return string   Application URL
      * @since 1.0.0
      */
     public function getURL(string $url = ''): string
@@ -174,7 +181,7 @@ class AppService
     }
 
     /**
-     * Get root file path
+     * Get the path to the root file
      *
      * @return string   Root file path
      * @since 1.0.0
@@ -185,10 +192,10 @@ class AppService
     }
 
     /**
-     * Get root path
+     * Get the path to the root directory
      *
-     * @param  string $path   Additional part of path
-     * @return string         Root path
+     * @param  string $path   Additional part of the path
+     * @return string         Root directory path
      * @since 1.0.0
      */
     public function getRootPath(string $path = ''): string
@@ -197,10 +204,10 @@ class AppService
     }
 
     /**
-     * Get root URL
+     * Get the url of the root directory
      *
-     * @param  string $url   Additional part of URL
-     * @return string        Root URL
+     * @param  string $url   Additional part of the URL
+     * @return string        Root directory URL
      * @since 1.0.0
      */
     public function getRootURL(string $url = ''): string
@@ -209,10 +216,10 @@ class AppService
     }
 
     /**
-     * Get resource path
+     * Get the path to the resource directory
      *
-     * @param  string $path   Additional part of path
-     * @return string         Resource path
+     * @param  string $path   Additional part of the path
+     * @return string         Resource directory path
      * @since 1.0.0
      */
     public function getResourcePath(string $path = ''): string
@@ -221,10 +228,10 @@ class AppService
     }
 
     /**
-     * Get resource URL
+     * Get the url of the resource directory
      *
-     * @param  string $url   Additional part of URL
-     * @return string        Resource URL
+     * @param  string $url   Additional part of the URL
+     * @return string        Resource directory URL
      * @since 1.0.0
      */
     public function getResourceURL(string $url = ''): string
@@ -233,10 +240,10 @@ class AppService
     }
 
     /**
-     * Get var path
+     * Get the path to the var directory
      *
-     * @param  string $path   Additional part of path
-     * @return string         Var path
+     * @param  string $path   Additional part of the path
+     * @return string         Var directory path
      * @since 1.0.0
      */
     public function getVarPath(string $path = ''): string
@@ -245,10 +252,10 @@ class AppService
     }
 
     /**
-     * Get var URL
+     * Get the url of the var directory
      *
-     * @param  string $url   Additional part of URL
-     * @return string        Var URL
+     * @param  string $url   Additional part of the URL
+     * @return string        Var directory URL
      * @since 1.0.0
      */
     public function getVarURL(string $url = ''): string
@@ -256,16 +263,21 @@ class AppService
         return esc_url($this->app->getGlobal('app/var-url') . $url);
     }
 
+    /**
+     * Remove var directory
+     *
+     * @return void
+     */
     public function removeVarDir(): void
     {
         $this->fs->remove($this->getVarPath());
     }
 
     /**
-     * Get cache path
+     * Get the path to the cache directory
      *
-     * @param  string $path   Additional part of path
-     * @return string         Cache path
+     * @param  string $path   Additional part of the path
+     * @return string         Cache directory path
      * @since 1.0.0
      */
     public function getCachePath(string $path = ''): string
@@ -274,10 +286,10 @@ class AppService
     }
 
     /**
-     * Get cache URL
+     * Get the url of the cache directory
      *
-     * @param  string $url   Additional part of URL
-     * @return string        Cache URL
+     * @param  string $url   Additional part of the URL
+     * @return string        Cache directory URL
      * @since 1.0.0
      */
     public function getCacheURL(string $url = ''): string
@@ -285,16 +297,21 @@ class AppService
         return esc_url($this->app->getGlobal('app/cache-url') . $url);
     }
 
+    /**
+     * Remove cache directory
+     *
+     * @return void
+     */
     public function removeCacheDir(): void
     {
         $this->fs->remove($this->getCachePath());
     }
 
     /**
-     * Get temp path
+     * Get path to temp directory
      *
-     * @param  string $path   Additional part of path
-     * @return string         Temp path
+     * @param  string $path   Additional part of the path
+     * @return string         Temp directory path
      * @since 1.0.0
      */
     public function getTempPath(string $path = ''): string
@@ -303,10 +320,10 @@ class AppService
     }
 
     /**
-     * Get temp URL
+     * Get temp directory url
      *
-     * @param  string $url   Additional part of URL
-     * @return string        Temp URL
+     * @param  string $url   Additional part of the URL
+     * @return string        Temp directory URL
      * @since 1.0.0
      */
     public function getTempURL(string $url = ''): string
@@ -314,16 +331,21 @@ class AppService
         return esc_url($this->app->getGlobal('app/temp-url') . $url);
     }
 
+    /**
+     * Remove temp directory
+     *
+     * @return void
+     */
     public function removeTempDir(): void
     {
         $this->fs->remove($this->getTempPath());
     }
 
     /**
-     * Get log path
+     * Get path to log directory
      *
-     * @param  string $path   Additional part of path
-     * @return string         Log path
+     * @param  string $path   Additional part of the path
+     * @return string         Log directory path
      * @since 1.0.0
      */
     public function getLogPath(string $path = ''): string
@@ -332,10 +354,10 @@ class AppService
     }
 
     /**
-     * Get log URL
+     * Get the url of the logs directory
      *
-     * @param  string $url   Additional part of URL
-     * @return string        Log URL
+     * @param  string $url   Additional part of the URL
+     * @return string        Log directory URL
      * @since 1.0.0
      */
     public function getLogURL(string $url = ''): string
@@ -343,16 +365,21 @@ class AppService
         return esc_url($this->app->getGlobal('app/log-url') . $url);
     }
 
+    /**
+     * Remove log directory
+     *
+     * @return void
+     */
     public function removeLogDir(): void
     {
         $this->fs->remove($this->getLogPath());
     }
 
     /**
-     * Get asset path
+     * Get the path to the resource directory
      *
-     * @param  string $path   Additional part of path
-     * @return string         Asset path
+     * @param  string $path   Additional part of the path
+     * @return string         Asset directory path
      * @since 1.0.0
      */
     public function getAssetPath(string $path = ''): string
@@ -361,10 +388,10 @@ class AppService
     }
 
     /**
-     * Get asset URL
+     * Get the URL of the resource directory
      *
-     * @param  string $url   Additional part of URL
-     * @return string        Asset URL
+     * @param  string $url   Additional part of the URL
+     * @return string        Asset directory URL
      * @since 1.0.0
      */
     public function getAssetURL(string $url = ''): string
@@ -373,10 +400,10 @@ class AppService
     }
 
     /**
-     * Get config path
+     * Get the path to the config directory
      *
-     * @param  string $path   Additional part of path
-     * @return string         Config path
+     * @param  string $path   Additional part of the path
+     * @return string         Config directory path
      * @since 1.0.0
      */
     public function getConfigPath(string $path = ''): string
@@ -385,10 +412,10 @@ class AppService
     }
 
     /**
-     * Get config URL
+     * Get the URL of the config directory
      *
-     * @param  string $url   Additional part of URL
-     * @return string        Config URL
+     * @param  string $url   Additional part of the URL
+     * @return string        Config directory URL
      * @since 1.0.0
      */
     public function getConfigURL(string $url = ''): string
@@ -397,10 +424,10 @@ class AppService
     }
 
     /**
-     * Get model path
+     * Get the path to the model directory
      *
-     * @param  string $path   Additional part of path
-     * @return string         Model path
+     * @param  string $path   Additional part of the path
+     * @return string         Model directory path
      * @since 1.0.0
      */
     public function getModelPath(string $path = ''): string
@@ -409,10 +436,10 @@ class AppService
     }
 
     /**
-     * Get model URL
+     * Get model directory URL
      *
-     * @param  string $url   Additional part of URL
-     * @return string        Model URL
+     * @param  string $url   Additional part of the URL
+     * @return string        Model directory URL
      * @since 1.0.0
      */
     public function getModelURL(string $url = ''): string
@@ -421,10 +448,10 @@ class AppService
     }
 
     /**
-     * Get view path
+     * Get the path to the view directory
      *
-     * @param  string $path   Additional part of path
-     * @return string         View path
+     * @param  string $path   Additional part of the path
+     * @return string         View directory path
      * @since 1.0.0
      */
     public function getViewPath(string $path = ''): string
@@ -433,10 +460,10 @@ class AppService
     }
 
     /**
-     * Get view URL
+     * Get the URL of the view directory
      *
-     * @param  string $url   Additional part of URL
-     * @return string        View URL
+     * @param  string $url   Additional part of the URL
+     * @return string        View directory URL
      * @since 1.0.0
      */
     public function getViewURL(string $url = ''): string

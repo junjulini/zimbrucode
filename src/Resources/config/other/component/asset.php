@@ -76,7 +76,7 @@ return [
             'svg'  => 'data:image/svg+xml',
             'woff' => 'data:application/x-font-woff',
         ],
-        'import-size' => 3, // import size of files in kb
+        'import-size' => 3, // Import file size in kb
     ],
 
     'fw-search-point'           => 'zimbrucode/src/',

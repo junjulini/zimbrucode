@@ -18,7 +18,7 @@ use ZimbruCode\Component\Handler\AjaxHandler;
 use ZimbruCode\Module\Panel\Library\Mode;
 
 /**
- * Class : Metabox panel backup
+ * Class : Module/MetaboxPanel/Helper : Metabox panel backup
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -29,6 +29,12 @@ class Backup extends Kernel
     protected $mode         = false;
     protected $backupDbName = false;
 
+    /**
+     * Constructor
+     *
+     * @param Mode $mode   Mode object
+     * @since 1.0.0
+     */
     public function __construct(Mode $mode)
     {
         $this->mode         = $mode;
@@ -39,11 +45,11 @@ class Backup extends Kernel
     }
 
     /**
-     * Get backup item content
+     * Get item content
      *
      * @param string $id     Item ID
      * @param string $name   Item name
-     * @return string
+     * @return string        Html content
      * @since 1.0.0
      */
     protected function getItemContent(string $id, string $name): string
@@ -57,9 +63,9 @@ class Backup extends Kernel
     /**
      * Get content for PopUp
      *
-     * @param AjaxHandler $ajax       AjaxHandler instance
+     * @param AjaxHandler $ajax       AjaxHandler object
      * @param string      $pageType   Page type [post, page, portfolio ...]
-     * @return void                   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     protected function getContent(AjaxHandler $ajax, string $pageType): void
@@ -89,9 +95,9 @@ class Backup extends Kernel
     /**
      * Save backup
      *
-     * @param AjaxHandler $ajax       AjaxHandler instance
+     * @param AjaxHandler $ajax       AjaxHandler object
      * @param string      $pageType   Page type [post, page, portfolio ...]
-     * @return void                   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     protected function save(AjaxHandler $ajax, string $pageType): void
@@ -170,9 +176,9 @@ class Backup extends Kernel
     /**
      * Delete all backups
      *
-     * @param AjaxHandler $ajax       AjaxHandler instance
+     * @param AjaxHandler $ajax       AjaxHandler object
      * @param string      $pageType   Page type [post, page, portfolio ...]
-     * @return void                   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     protected function delete(AjaxHandler $ajax, string $pageType): void
@@ -200,11 +206,11 @@ class Backup extends Kernel
     }
 
     /**
-     * Delete specifically backup
+     * Delete backup item
      *
-     * @param AjaxHandler $ajax       AjaxHandler instance
+     * @param AjaxHandler $ajax       AjaxHandler object
      * @param string      $pageType   Page type [post, page, portfolio ...]
-     * @return void                   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     protected function deleteItem(AjaxHandler $ajax, string $pageType): void
@@ -237,9 +243,9 @@ class Backup extends Kernel
     /**
      * Restore backup
      *
-     * @param AjaxHandler $ajax       AjaxHandler instance
+     * @param AjaxHandler $ajax       AjaxHandler object
      * @param string      $pageType   Page type [post, page, portfolio ...]
-     * @return void                   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     protected function restore(AjaxHandler $ajax, string $pageType): void
@@ -275,12 +281,12 @@ class Backup extends Kernel
     }
 
     /**
-     * Ajax : Backup
+     * Ajax : Backup action
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
-    public function __ajax_backup()
+    public function __ajax_backup(): void
     {
         $ajax     = new AjaxHandler($this->mode->getModuleSetting('nonce'), 'edit_pages');
         $pageType = implode('_', $this->mode->getModuleSetting('screen'));

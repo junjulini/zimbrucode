@@ -14,7 +14,7 @@ namespace ZimbruCode\Module\Panel\Library;
 use InvalidArgumentException;
 
 /**
- * Class : TWIG context controller
+ * Class : Module/Panel/Library : TWIG context controller
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -24,28 +24,49 @@ class TwigContextController
 {
     protected $context = [];
 
+    /**
+     * Constructor
+     *
+     * @param array $context   Context data
+     * @since 1.0.0
+     */
     public function __construct(array &$context)
     {
         $this->context = &$context;
     }
 
-    public function add(string $name, $value = ''): void
+    /**
+     * Add context data
+     *
+     * @param string $key     Item key
+     * @param string $value   Item value
+     * @return void
+     * @since 1.0.0
+     */
+    public function add(string $key, $value = ''): void
     {
-        if ($name) {
-            $this->context[$name] = $value;
+        if ($key) {
+            $this->context[$key] = $value;
         }
     }
 
-    public function get(string $name)
+    /**
+     * Get context data
+     *
+     * @param string $key   Item key
+     * @return mix          Item data
+     * @since 1.0.0
+     */
+    public function get(string $key)
     {
-        if (!$name) {
+        if (!$key) {
             throw new InvalidArgumentException('ZE0135');
         }
 
-        if (!isset($this->context[$name])) {
+        if (!isset($this->context[$key])) {
             throw new InvalidArgumentException('ZE0136');
         }
 
-        return $this->context[$name];
+        return $this->context[$key];
     }
 }

@@ -14,7 +14,7 @@ namespace ZimbruCode\Component\Debug;
 use Tracy\IBarPanel;
 
 /**
- * Class : DevLogTracyBarExtension
+ * Class : Component/Debug : Dev log tracy bar extension
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -27,7 +27,7 @@ class DevLogTracyBarExtension implements IBarPanel
     /**
      * Renders HTML code for custom tab
      *
-     * @return string
+     * @return string   HTML content
      * @since 1.0.0
      */
     public function getTab(): string
@@ -37,7 +37,6 @@ class DevLogTracyBarExtension implements IBarPanel
         }
 
         ob_start();
-
         ?>
         <svg version="1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" enable-background="new 0 0 48 48">
             <g fill="#90CAF9">
@@ -61,7 +60,7 @@ class DevLogTracyBarExtension implements IBarPanel
     /**
      * Renders HTML code for custom panel
      *
-     * @return string
+     * @return string   HTML content
      * @since 1.0.0
      */
     public function getPanel(): string

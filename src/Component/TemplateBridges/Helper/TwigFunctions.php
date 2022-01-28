@@ -13,10 +13,11 @@ namespace ZimbruCode\Component\TemplateBridges\Helper;
 
 use ZimbruCode\Component\Common\Tools;
 use ZimbruCode\Component\Core\Kernel;
+use ZimbruCode\Component\Developer\DeveloperMode;
 use ZimbruCode\Component\TemplateBridges\TwigTemplateBridge;
 
 /**
- * Class : Twig functions
+ * Class : Component/TemplateBridge/Helper : Twig functions
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -24,6 +25,12 @@ use ZimbruCode\Component\TemplateBridges\TwigTemplateBridge;
  */
 class TwigFunctions
 {
+    /**
+     * Constructor
+     *
+     * @param TwigTemplateBridge $ttb   TwigTemplateBridge object
+     * @since 1.0.0
+     */
     public function __construct(TwigTemplateBridge $ttb)
     {
         $ttb->addFunction('__',       '__');
@@ -49,31 +56,60 @@ class TwigFunctions
         $ttb->addFunction('do_shortcode', [$this, '__callback_do_shortcode']);
     }
 
+    /**
+     * Callback : Convert value to string
+     *
+     * @param mix $value   Value
+     * @return string      Converted value
+     * @since 1.0.0
+     */
     public function __callback_to_string($value): string
     {
         return (string) $value;
     }
 
+    /**
+     * Callback : do_action
+     *
+     * @param mix ...$args   Function arguments
+     * @return void          Action result
+     * @since 1.0.0
+     */
     public function __callback_action(...$args): void
     {
         call_user_func_array('do_action', $args);
     }
 
+    /**
+     * Callback : apply_filters
+     *
+     * @param mix ...$args   Function arguments
+     * @return void          Action result
+     * @since 1.0.0
+     */
     public function __callback_filter(...$args)
     {
         return call_user_func_array('apply_filters', $args);
     }
 
+    /**
+     * Callback : Call function
+     *
+     * @param callable $function   Callback
+     * @param mix      ...$args    Function arguments
+     * @return void                Action result
+     * @since 1.0.0
+     */
     public function __callback_fn(callable $function, ...$args)
     {
         return call_user_func_array($function, $args);
     }
 
     /**
-     * Request control
+     * HTTP request
      *
-     * @param  string $param
-     * @return mix
+     * @param  string $param   Param value
+     * @return mix             Action result
      * @since 1.0.0
      */
     public function __callback_request(...$args)
@@ -84,10 +120,10 @@ class TwigFunctions
     /**
      * For developers
      *
-     * @return object
+     * @return DeveloperMode|null
      * @since 1.0.0
      */
-    public function __callback_dev(): ?object
+    public function __callback_dev(): ?DeveloperMode
     {
         return Kernel::dev();
     }
@@ -95,8 +131,9 @@ class TwigFunctions
     /**
      * Get data from session
      *
-     * @param  string  $path      Base path
-     * @param  string  $default   Default value
+     * @param string  $path      Array path
+     * @param string  $default   Default value
+     * @return mix               Session data
      * @since 1.0.0
      */
     public function __callback_get_session(...$args)
@@ -107,7 +144,7 @@ class TwigFunctions
     /**
      * Dump data
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     public function __callback_dump(...$args): void
@@ -122,23 +159,39 @@ class TwigFunctions
     /**
      * Get htmlentities -> wp_json_encode | with ENT_QUOTES parameter
      *
-     * @param  array  $array
+     * @param array  $array   Data
+     * @return string         Array data in string format
      * @since 1.0.0
      */
-    public function __callback_get_HJWEP(array $array)
+    public function __callback_get_HJWEP(array $array): string
     {
         return Tools::getHJWEP($array);
     }
 
-    public function __callback_is_assoc($array)
+    /**
+     * Callback : Check if the array is associative
+     *
+     * @param  array   $array   Array for work
+     * @return boolean          Result of checking
+     * @since 1.0.0
+     */
+    public function __callback_is_assoc(array $array): bool
     {
-        if (empty($array) || !is_array($array)) {
+        if (empty($array)) {
             return false;
         }
 
         return Tools::arrayIsAssoc($array);
     }
 
+    /**
+     * Callback : do_shortcode
+     *
+     * @param string|null $content      Content to search for shortcodes
+     * @param boolean     $ignoreHtml   When true, shortcodes inside HTML elements will be skipped
+     * @return void
+     * @since 1.0.0
+     */
     public function __callback_do_shortcode(?string $content = '', bool $ignoreHtml = false): void
     {
         echo do_shortcode($content, $ignoreHtml);

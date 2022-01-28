@@ -15,7 +15,7 @@ use ZimbruCode\Component\Common\Tools;
 use ZimbruCode\Component\Core\Kernel;
 
 /**
- * Class : Library handler
+ * Class : Component/Handler : Library handler
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -26,47 +26,47 @@ class LibraryHandler
     /**
      * Add package
      *
-     * @param string $name   Name of package
-     * @param array  $source
-     * @return void          This function does not return a value
+     * @param string $packageName   Package name
+     * @param array  $package       Package data
+     * @return void
      * @since 1.0.0
      */
-    public static function addPackage(string $name, array $source)
+    public static function addPackage(string $packageName, array $package)
     {
-        if ($name) {
-            Kernel::addGlobalCache("library/package/{$name}", $source);
+        if ($packageName) {
+            Kernel::addGlobalCache("library/package/{$packageName}", $package);
         }
     }
 
     /**
      * Add packages
      *
-     * @param array $source
-     * @return void   This function does not return a value
+     * @param array $packages   List of packages
+     * @return void
      * @since 1.0.0
      */
-    public static function addPackages(array $source): void
+    public static function addPackages(array $packages): void
     {
         Kernel::addGlobalCache(
             'library/package',
             Tools::arrayMerge(
                 self::getPackages(),
-                $source
+                $packages
             )
         );
     }
 
     /**
-     * Get packages
+     * Get package
      *
-     * @param  string $name   Name of package
-     * @return array
+     * @param  string $packageName   Package name
+     * @return array|boolean         Package data
      * @since 1.0.0
      */
-    public static function getPackage(string $name)
+    public static function getPackage(string $packageName)
     {
-        if ($name) {
-            return Kernel::getGlobalCache("library/package/{$name}");
+        if ($packageName) {
+            return Kernel::getGlobalCache("library/package/{$packageName}");
         }
 
         return false;
@@ -75,7 +75,7 @@ class LibraryHandler
     /**
      * Get packages
      *
-     * @return array
+     * @return array   List of packages
      * @since 1.0.0
      */
     public static function getPackages(): array
@@ -86,21 +86,21 @@ class LibraryHandler
     /**
      * Remove package
      *
-     * @param  string $name   Name of package
-     * @return void           This function does not return a value
+     * @param  string $packageName   Package name
+     * @return void
      * @since 1.0.0
      */
-    public static function remPackage(string $name): void
+    public static function remPackage(string $packageName): void
     {
-        if ($name) {
-            Kernel::remGlobalCache("library/package/{$name}");
+        if ($packageName) {
+            Kernel::remGlobalCache("library/package/{$packageName}");
         }
     }
 
     /**
      * Remove packages
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     public static function remPackages()
@@ -111,9 +111,9 @@ class LibraryHandler
     /**
      * Add element
      *
-     * @param string $name     Name of element
+     * @param string $name     Element name
      * @param string $source   Source of element
-     * @return void            This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     public static function addElement(string $name, string $source): void
@@ -126,9 +126,8 @@ class LibraryHandler
     /**
      * Get element
      *
-     * @param  string $name   Name of element
-     * @return array          Source of element
-     * @since 1.0.0
+     * @param string $name     Element name
+     * @return array|boolean   Source of element
      */
     public static function getElement(string $name)
     {
@@ -142,8 +141,8 @@ class LibraryHandler
     /**
      * Remove element
      *
-     * @param  string $name   Name of element
-     * @return void           This function does not return a value
+     * @param  string $name   Element name
+     * @return void
      * @since 1.0.0
      */
     public static function remElement(string $name): void

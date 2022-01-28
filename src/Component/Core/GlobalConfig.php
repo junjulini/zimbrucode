@@ -12,7 +12,7 @@
 namespace ZimbruCode\Component\Core;
 
 /**
- * Class : Global configs
+ * Class : Component/Core : Global configs
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode

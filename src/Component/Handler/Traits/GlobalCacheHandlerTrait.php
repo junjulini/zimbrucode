@@ -15,7 +15,7 @@ use InvalidArgumentException;
 use ZimbruCode\Component\Core\Kernel;
 
 /**
- * Trait : Global cache handler trait
+ * Trait : Component/Handler/Traits : Global cache handler
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -24,7 +24,7 @@ use ZimbruCode\Component\Core\Kernel;
 trait GlobalCacheHandlerTrait
 {
     /**
-     * Add cache
+     * Add global cache
      *
      * @param string $key     Cache key
      * @param mix    $value   Cache value
@@ -40,7 +40,7 @@ trait GlobalCacheHandlerTrait
     }
 
     /**
-     * Get cache value
+     * Get global cache
      *
      * @param string $key   Cache key
      * @since 1.0.0
@@ -55,7 +55,7 @@ trait GlobalCacheHandlerTrait
     }
 
     /**
-     * Remove cache value
+     * Remove global cache item
      *
      * @param string $key   Cache key
      * @since 1.0.0
@@ -70,9 +70,9 @@ trait GlobalCacheHandlerTrait
     }
 
     /**
-     * Clear all cache values
+     * Remove all cache items
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     public static function flushGlobalCache(): void

@@ -25,15 +25,15 @@ class Control extends ControlKernel
     /**
      * Control setup
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     public function setup(): void
     {
-        // Set Attachment Image Src in shell
+        // Shell functions
         $this->addShellFunction('getAttachmentImageSrc', '__custom_shell_function');
 
-        // Additional vars for control.js
+        // Additional vars
         $this->localize([
             'window-title-1' => esc_html__('Add images to gallery', 'zc'),
             'window-text-1'  => esc_html__('Add images', 'zc'),
@@ -45,15 +45,16 @@ class Control extends ControlKernel
     }
 
     /**
-     * Custom shell function : Attachment Image Src
+     * Custom shell function : Attachment image path
      *
      * @param  string $value   Value from BD
-     * @return string          Image src
+     * @return string          Image path
      * @since 1.0.0
      */
     public function __custom_shell_function(string $value = ''): string
     {
         $image = wp_get_attachment_image_src($value, 'thumbnail');
+
         return $image[0];
     }
 }

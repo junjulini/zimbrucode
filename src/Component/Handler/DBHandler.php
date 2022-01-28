@@ -16,7 +16,7 @@ use ZimbruCode\Component\Common\Tools;
 use ZimbruCode\Component\Core\Kernel;
 
 /**
- * Class : DB handler
+ * Class : Component/Handler : DB
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -27,6 +27,12 @@ class DBHandler
     protected $data      = [];
     protected $tableName = false;
 
+    /**
+     * Constructor
+     *
+     * @param string $tableName   DB table name
+     * @since 1.0.0
+     */
     public function __construct(string $tableName = '')
     {
         if (!$slug = esc_sql(Kernel::getGlobal('app/slug'))) {
@@ -40,19 +46,19 @@ class DBHandler
         }
 
         $check = strcasecmp(Kernel::service('wpdb')->get_var("SHOW TABLES LIKE '{$this->tableName}'"), $this->tableName);
-
         $this->checkError();
 
         if (0 !== $check) {
             $charsetCollate = Kernel::service('wpdb')->get_charset_collate();
+
             $sql = "CREATE TABLE {$this->tableName} (
-                    id bigint(20) unsigned NOT NULL auto_increment,
-                    name varchar(191) NOT NULL default '',
-                    value longtext NOT NULL,
-                    autoload varchar(20) NOT NULL default 'yes',
-                    PRIMARY KEY  (id),
-                    UNIQUE KEY name (name)
-                ) {$charsetCollate};";
+                        id bigint(20) unsigned NOT NULL auto_increment,
+                        name varchar(191) NOT NULL default '',
+                        value longtext NOT NULL,
+                        autoload varchar(20) NOT NULL default 'yes',
+                        PRIMARY KEY  (id),
+                        UNIQUE KEY name (name)
+                    ) {$charsetCollate};";
 
             Kernel::service('wpdb')->query($sql);
             $this->checkError();
@@ -62,7 +68,7 @@ class DBHandler
     }
 
     /**
-     * Check if error in WPDB
+     * Check for errors in WPDB
      *
      * @return void
      * @since 1.0.0
@@ -75,11 +81,11 @@ class DBHandler
     }
 
     /**
-     * Get data from cache
+     * Get item data
      *
-     * @param  string  $path      The path in the array
-     * @param  mix     $default   Value to use if the path was not found
-     * @return mix
+     * @param  string  $path      Array path
+     * @param  mix     $default   Default value
+     * @return mix                Item value
      * @since 1.0.0
      */
     protected function getData(string $path, $default = false)
@@ -88,11 +94,11 @@ class DBHandler
     }
 
     /**
-     * Add data in cache
+     * Add item data
      *
-     * @param string $path   The path in the array
-     * @param mix    $value  The value to set
-     * @return void          This function does not return a value
+     * @param string $path   Array path
+     * @param mix    $value  Item value
+     * @return void
      * @since 1.0.0
      */
     protected function addData(string $path, $value): void
@@ -101,9 +107,9 @@ class DBHandler
     }
 
     /**
-     * Cache data
+     * Cache database table
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     protected function cacheData(): void
@@ -127,13 +133,13 @@ class DBHandler
     }
 
     /**
-     * Cache direct data if is not autoload
+     * Cache specific database table
      *
-     * @param  string $key  Name of item from DB
-     * @return bool         Result if item exist
+     * @param  string $key  Name of the table element from the database
+     * @return boolean      Result of checking
      * @since 1.0.0
      */
-    protected function cacheDirect(string $key): bool
+    protected function cacheSpecificData(string $key): bool
     {
         if ($key) {
             $prep = Kernel::service('wpdb')->prepare("SELECT value FROM {$this->tableName} WHERE name = %s LIMIT 1", $key);
@@ -158,12 +164,12 @@ class DBHandler
     }
 
     /**
-     * Add
+     * Add data for an item in a database table
      *
-     * @param string  $path         Path to a specific option to extract
-     * @param string  $value        New value
-     * @param bool    $autoUpdate   Auto update data
-     * @param bool    $autoload     Auto load data
+     * @param string  $path         Array path
+     * @param string  $value        Value
+     * @param boolean $autoUpdate   Auto-update of data in the database
+     * @param boolean $autoload     Autoloading data from the database
      * @since 1.0.0
      */
     public function add(string $path = '', $value = '', bool $autoUpdate = false, bool $autoload = true): bool
@@ -177,7 +183,7 @@ class DBHandler
                 $first = strstr($path, '/', true);
 
                 if (!isset($this->data[$first])) {
-                    $this->cacheDirect($first);
+                    $this->cacheSpecificData($first);
                 }
             }
 
@@ -214,11 +220,11 @@ class DBHandler
     }
 
     /**
-     * Get
+     * Get the data of an item in a database table
      *
-     * @param  string  $path      Path to a specific option to extract
+     * @param  string  $path      Array path
      * @param  mix     $default   Default value
-     * @return mix                Value from DB
+     * @return mix                Database item value
      * @since 1.0.0
      */
     public function get(string $path = '', $default = false)
@@ -230,7 +236,7 @@ class DBHandler
                 if (isset($this->data[$first])) {
                     return Tools::getNode($this->data, $path, $default);
                 } else {
-                    if ($this->cacheDirect($first)) {
+                    if ($this->cacheSpecificData($first)) {
                         return Tools::getNode($this->data, $path, $default);
                     } else {
                         return $default;
@@ -240,7 +246,7 @@ class DBHandler
                 if (isset($this->data[$path])) {
                     return Tools::getNode($this->data, $path, $default);
                 } else {
-                    if ($this->cacheDirect($path)) {
+                    if ($this->cacheSpecificData($path)) {
                         return Tools::getNode($this->data, $path, $default);
                     } else {
                         return $default;
@@ -253,11 +259,11 @@ class DBHandler
     }
 
     /**
-     * Remove
+     * Remove database table item
      *
-     * @param  string  $path         Path to a specific option to extract
-     * @param  bool    $autoUpdate   Auto update data
-     * @return bool                  Result of manipulation
+     * @param  string  $path         Array path
+     * @param  boolean $autoUpdate   Auto-update of data in the database
+     * @return boolean               Action result
      * @since 1.0.0
      */
     public function remove(string $path = '', $autoUpdate = false)
@@ -269,7 +275,7 @@ class DBHandler
                 if (isset($this->data[$first])) {
                     $result = Tools::unsetNode($this->data, $path);
                 } else {
-                    if ($this->cacheDirect($first)) {
+                    if ($this->cacheSpecificData($first)) {
                         $result = Tools::unsetNode($this->data, $path);
                     } else {
                         return false;
@@ -279,7 +285,7 @@ class DBHandler
                 if (isset($this->data[$path])) {
                     $result = Tools::unsetNode($this->data, $path);
                 } else {
-                    if ($this->cacheDirect($path)) {
+                    if ($this->cacheSpecificData($path)) {
                         $result = Tools::unsetNode($this->data, $path);
                     } else {
                         return false;
@@ -312,9 +318,9 @@ class DBHandler
     }
 
     /**
-     * Full remove data
+     * Remove all items from the database table
      *
-     * @return bool   Result of removing
+     * @return boolean   Result of removing
      * @since 1.0.0
      */
     public function flush(): bool
@@ -327,7 +333,7 @@ class DBHandler
     }
 
     /**
-     * Dump data
+     * Dump database table
      *
      * @return void
      * @since 1.0.0
@@ -337,6 +343,12 @@ class DBHandler
         Tools::dump($this->data);
     }
 
+    /**
+     * Get database table data
+     *
+     * @return mix   Action result
+     * @since 1.0.0
+     */
     public function getAllData()
     {
         $output   = false;

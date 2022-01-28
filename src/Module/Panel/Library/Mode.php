@@ -15,7 +15,7 @@ use ZimbruCode\Component\Core\ModuleKernel;
 use ZimbruCode\Module\Panel\Library\Traits\UtilityTrait;
 
 /**
- * Class : Mode
+ * Class : Module/Panel/Library : Mode
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode

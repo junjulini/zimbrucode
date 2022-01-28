@@ -17,7 +17,7 @@ use Twig\Token;
 use Twig\TokenParser\AbstractTokenParser;
 
 /**
- * Twig token parser class : Have posts
+ * Class : Module/ThemeAdaptor/Library/TwigExtension/HavePostsExtension :  Have posts - Token parser
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -25,7 +25,14 @@ use Twig\TokenParser\AbstractTokenParser;
  */
 class HavePostsTokenParser extends AbstractTokenParser
 {
-    public function parse(Token $token): Node
+    /**
+     * Parse
+     *
+     * @param Token $token   Token object
+     * @return HavePostsNode
+     * @since 1.0.0
+     */
+    public function parse(Token $token): HavePostsNode
     {
         $stream = $this->parser->getStream();
         $lineno = $token->getLine();
@@ -63,16 +70,36 @@ class HavePostsTokenParser extends AbstractTokenParser
         return new HavePostsNode($body, $values, $else, $lineno, $this->getTag());
     }
 
+    /**
+     * Test : Decide have posts fork
+     *
+     * @param Token $token   Token object
+     * @return boolean       Result of checking
+     * @since 1.0.0
+     */
     public function decideHavePostsFork(Token $token): bool
     {
         return $token->test(['else', 'endhaveposts']);
     }
 
+    /**
+     * Test : Decide have posts end
+     *
+     * @param Token $token   Token object
+     * @return boolean       Result of checking
+     * @since 1.0.0
+     */
     public function decideHavePostsEnd(Token $token): bool
     {
         return $token->test(['endhaveposts']);
     }
 
+    /**
+     * Get tag
+     *
+     * @return string   Tag value
+     * @since 1.0.0
+     */
     public function getTag(): string
     {
         return 'haveposts';

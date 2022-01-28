@@ -18,19 +18,19 @@ use Tracy\Debugger;
 use ZimbruCode\Component\Core\Kernel;
 
 /**
- * Class : Tools
+ * Class : Component/Common : Tools
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.3
+ * @since   1.1.0
  */
 class Tools
 {
     /**
-     * Array value copy to key
+     * Copying an array value to a key
      *
-     * @param  array  $array   Array for work
-     * @return array           Return new modificated array
+     * @param  array $array   Array for work
+     * @return array          Return a new modified array
      * @since 1.0.0
      */
     public static function arrayValueToKey(array $array): array
@@ -45,10 +45,10 @@ class Tools
     }
 
     /**
-     * Array key copy to value
+     * Copying an array key to a value
      *
      * @param  array  $array   Array for work
-     * @return array           Return new modificated array
+     * @return array           Return a new modificated array
      * @since 1.0.0
      */
     public static function arrayKeyToValue(array $array): array
@@ -63,10 +63,10 @@ class Tools
     }
 
     /**
-     * Check if array is associative
+     * Check if the array is associative
      *
-     * @param  array  $array   Array for work
-     * @return bool            Return true or false
+     * @param  array   $array   Array for work
+     * @return boolean          Result of checking
      * @since 1.0.0
      */
     public static function arrayIsAssoc(array $array): bool
@@ -75,11 +75,12 @@ class Tools
     }
 
     /**
-     * Merge more arrays in one
+     * Merge two arrays
      *
-     * @param array   $array1   First array
-     * @param array   $array2   Last array
-     * @param string  $mode     Mode : d (Default), wk (Without key), s (Strict)
+     * @param  array   $array1   First array
+     * @param  array   $array2   Last array
+     * @param  string  $mode     Mode : d (Default), wk (Without key), s (Strict)
+     * @return array             Return a new modificated array
      * @since 1.0.0
      */
     public static function arrayMerge(array $array1, array $array2, string $mode = 'd'): array
@@ -116,11 +117,11 @@ class Tools
     }
 
     /**
-     * Computes the difference of arrays
+     * Check if two arrays are different
      *
-     * @param mix $array1   The array to compare from
-     * @param mix $array2   An array to compare against
-     * @return bool         Return true ( if different ) or false
+     * @param  mix $array1   First array
+     * @param  mix $array2   Last array
+     * @return boolean       Result of checking
      * @since 1.0.0
      */
     public static function arrayDiff($array1, $array2): bool
@@ -136,18 +137,17 @@ class Tools
     }
 
     /**
-     * Add a value in a nested array based on path
+     * Add value to nested array based on path
      *
-     * @param  array  $array       The array to modify
-     * @param  string $path        The path in the array
-     * @param  mix    $value       The value to set
-     * @param  string $delimiter   The separator for the path
-     * @return void                This function does not return a value
+     * @param  array  $array       Array for work
+     * @param  string $path        Array path
+     * @param  mix    $value       New value
+     * @param  string $delimiter   Path separator
+     * @return void
      * @since 1.0.0
      */
     public static function addNode(array &$array, string $path, &$value, string $delimiter = '/'): void
     {
-        // Fail if the path is empty
         if (!$path) {
             throw new InvalidArgumentException('ZE0042');
         }
@@ -166,17 +166,16 @@ class Tools
     }
 
     /**
-     * Get value an array by using "root/branch/leaf" notation
+     * Get value from nested array based on path
      *
-     * @param  array  $array
-     * @param  string $path      Path to a specific option to extract
-     * @param  mix    $default   Value to use if the path was not found
-     * @return mix
+     * @param  array  $array     Array for work
+     * @param  string $path      Array path
+     * @param  mix    $default   Default value
+     * @return mix               Action result
      * @since 1.0.0
      */
     public static function getNode(array $array, string $path, $default = null, string $delimiter = '/')
     {
-        // Fail if the path is empty
         if (!$path) {
             throw new InvalidArgumentException('ZE0043');
         }
@@ -200,16 +199,15 @@ class Tools
     }
 
     /**
-     * Unset value an array by using "root/branch/leaf" notation
+     * Remove element from nested array based on path
      *
-     * @param  array  $array
-     * @param  string $path   Path to a specific option to extract
-     * @return bool          true/false
+     * @param  array  $array   Array for work
+     * @param  string $path    Array path
+     * @return boolean         Action result
      * @since 1.0.0
      */
     public static function unsetNode(array &$array, string $path, string $delimiter = '/'): bool
     {
-        // Fail if the path is empty
         if (!$path) {
             throw new InvalidArgumentException('ZE0044');
         }
@@ -240,13 +238,13 @@ class Tools
     }
 
     /**
-     * Inserts a new key/value after the key in the array.
+     * Inserts a new key / value after some position in the array
      *
-     * @param  $array       An array to insert in to.
-     * @param  $node        The node to insert after.
-     * @param  $newNode     The new node to insert.
-     * @param  $value       An value to insert.
-     * @return The new array if the key exists, FALSE otherwise.
+     * @param  $array     Array for work
+     * @param  $node      The node to be inserted after
+     * @param  $newNode   Node after which a new node needs to be installed.
+     * @param  $value     Value to insert
+     * @return array      Return a new modificated array
      * @since 1.0.0
      */
     public static function appendNode(array $array, string $node, string $newNode, $value, bool $after = true)
@@ -279,15 +277,15 @@ class Tools
     /**
      * Image resize
      *
-     * @param  mix      $image   ID or URL
-     * @param  bool     $isURL
-     * @param  integer  $width
-     * @param  integer  $height
-     * @param  bool     $crop
-     * @return string            URL of resized image
+     * @param integer|string $image    Image ID or URL
+     * @param boolean        $isURL    Use image as URL
+     * @param integer        $width    Image width
+     * @param integer        $height   Image height
+     * @param boolean        $crop     Crop image
+     * @return array                   Image data
      * @since 1.0.0
      */
-    public static function resizeImg($image, bool $isURL = false, int $width = 9999, int $height = 9999, bool $crop = false)
+    public static function resizeImg($image, bool $isURL = false, int $width = 9999, int $height = 9999, bool $crop = false): array
     {
         $filePath = $imageSrc = $extension = $noExtPath = '';
 
@@ -317,11 +315,11 @@ class Tools
 
             $croppedImgPath = "{$noExtPath}-{$width}x{$height}{$extension}";
 
-            // checking if the file size is larger than the target size
-            // if it is smaller or the same size, stop right here and return
+            // Checking if the file size is larger than the target size
+            // If it is smaller or the same size, stop right here and return
             if ($imageSrc[1] > $width || $imageSrc[2] > $height) {
 
-                // the file is larger, check if the resized version already exists (for $crop = true but will also work for $crop = false if the sizes match)
+                // The file is larger, check if the resized version already exists (for $crop = true but will also work for $crop = false if the sizes match)
                 if (file_exists($croppedImgPath)) {
                     $croppedImgURL = str_replace(basename($imageSrc[0]), basename($croppedImgPath), $imageSrc[0]);
                     $finalImage    = [
@@ -336,11 +334,11 @@ class Tools
                 // $crop = false
                 if ($crop === false) {
 
-                    // calculate the size proportionally
+                    // Calculate the size proportionally
                     $proportionalSize = wp_constrain_dimensions($imageSrc[1], $imageSrc[2], $width, $height);
                     $resizedImgPath   = "{$noExtPath}-{$proportionalSize[0]}x{$proportionalSize[1]}{$extension}";
 
-                    // checking if the file already exists
+                    // Checking if the file already exists
                     if (file_exists($resizedImgPath)) {
                         $resizedImgURL = str_replace(basename($imageSrc[0]), basename($resizedImgPath), $imageSrc[0]);
                         $finalImage    = [
@@ -353,8 +351,9 @@ class Tools
                     }
                 }
 
-                // no cache files - let's finally resize it
+                // No cache files - let's finally resize it
                 $img = wp_get_image_editor($filePath);
+
                 if (!is_wp_error($img)) {
                     $img->resize($width, $height, $crop);
                     $savedImg = $img->save();
@@ -366,7 +365,7 @@ class Tools
                     $newImg = $imageSrc[0];
                 }
 
-                // resized output
+                // Resized output
                 $finalImage = [
                     'url'    => $newImg,
                     'width'  => $savedImg['width'],
@@ -376,7 +375,7 @@ class Tools
                 return $finalImage;
             }
 
-            // default output - without resizing
+            // Default output - without resizing
             $finalImage = [
                 'url'    => $imageSrc[0],
                 'width'  => $imageSrc[1],
@@ -390,12 +389,12 @@ class Tools
     }
 
     /**
-     * Cut string
+     * Cut string / text
      *
      * @param  string  $input    String / text
      * @param  integer $n        Number of symbols
-     * @param  bool    $return   Return or Echo
-     * @return string            Return string / text with modification
+     * @param  boolean $return   Return or Echo
+     * @return string            Return modificated string / text
      * @since 1.0.0
      */
     public static function cut(string $input, int $n = 20, bool $return = false)
@@ -414,19 +413,19 @@ class Tools
     }
 
     /**
-     * Script Condition
+     * Script condition
      *
-     * @param  array  $data
-     * @param  string $condition
-     * @return void   This function does not return a value
+     * @param  array  $scripts     List of scripts
+     * @param  string $condition   Condition when displaying scripts
+     * @return void
      * @since 1.0.0
      */
-    public static function scriptCondition(array $data, string $condition = 'lt IE 9'): void
+    public static function scriptCondition(array $scripts, string $condition = 'lt IE 9'): void
     {
         $output = sprintf("<!--[if %s]>\n", $condition);
 
-        foreach ($data as $item) {
-            $output .= sprintf("<script src=\"%s\"></script>\n", $item);
+        foreach ($scripts as $script) {
+            $output .= sprintf("<script src=\"%s\"></script>\n", $script);
         }
 
         $output .= sprintf("<![endif]-->\n");
@@ -488,9 +487,9 @@ class Tools
     }
 
     /**
-     * Check is child theme
+     * Check if the current theme is a child theme
      *
-     * @return bool   true/false
+     * @return boolean   Result of checking
      * @since 1.0.0
      */
     public static function isChildTheme(): bool
@@ -503,10 +502,10 @@ class Tools
     }
 
     /**
-     * Get posts in array where is only id and title
+     * Get posts in array format, where only ID and Title
      *
-     * @param  string $args
-     * @return array
+     * @param  string $args   Arguments to retrieve posts
+     * @return array          Lists of posts
      * @since 1.0.0
      */
     public static function getPWIT(array $args = []): array
@@ -526,8 +525,8 @@ class Tools
     /**
      * Get htmlentities -> wp_json_encode | with ENT_QUOTES parameter
      *
-     * @param  array  $array
-     * @return string
+     * @param  array  $array   Data
+     * @return string          Array data in string format
      * @since 1.0.0
      */
     public static function getHJWEP(array $array): string
@@ -536,10 +535,10 @@ class Tools
     }
 
     /**
-     * Check if is image file
+     * Check that the file format is image
      *
      * @param  string $image   File
-     * @return bool            true/false
+     * @return boolean         Result of checking
      * @since 1.0.0
      */
     public static function checkImage(string $image): bool
@@ -573,8 +572,8 @@ class Tools
     /**
      * PRE
      *
-     * @param  array $data array
-     * @return void   This function does not return a value
+     * @param  array $data   Array data
+     * @return void
      * @since 1.0.0
      */
     public static function pre(array $data): void
@@ -585,10 +584,10 @@ class Tools
     }
 
     /**
-     * Remove slashes
+     * Remove the slashes in the string
      *
      * @param  string $input   Input string
-     * @return string          Clean string
+     * @return string          Cleared string
      * @since 1.0.0
      */
     public static function removeSlashes(string $input): string
@@ -605,9 +604,9 @@ class Tools
     /**
      * Replace spaces
      *
-     * @param  string $input   Input string
-     * @param  string $replace
-     * @return string
+     * @param  string $input     Input string
+     * @param  string $replace   The replacement value that replaces found spaces
+     * @return string            Action result
      * @since 1.0.0
      */
     public static function replaceSpaces(string $input, string $replace = '-'): string
@@ -620,25 +619,25 @@ class Tools
     }
 
     /**
-     * Get multi site ID
+     * Get multisite ID
      *
      * @param  string $delimiter   Delimiter for ID
-     * @param  mix    $default     Return value if not multi site
+     * @param  mix    $default     Default value
      * @return string              Multi site ID
      * @since 1.0.0
      */
     public static function getMultiSiteID(string $delimiter = '', $default = false): string
     {
-        $delimiter = ($delimiter) ? $delimiter : Kernel::getGlobal('app/network-site-delimiter');
+        $delimiter = $delimiter ?: Kernel::getGlobal('app/network-site-delimiter');
         return (is_multisite()) ? $delimiter . get_current_blog_id() : $default;
     }
 
     /**
-     * Cut server part from path
+     * Cut the server part from the path
      *
-     * @param  string  $path   Path
-     * @param  bool    $nm     Normal mode
-     * @return bool            None
+     * @param  string  $path   Path value
+     * @param  boolean $nm     Mode : normal or not
+     * @return boolean         Action result
      * @since 1.0.0
      */
     public static function cutServerPartFromPath(string $path, bool $nm = false): string
@@ -661,10 +660,10 @@ class Tools
     }
 
     /**
-     * Get URL of file
+     * Convert local path to URL
      *
-     * @param  string $path
-     * @return string
+     * @param  string $path   Path value
+     * @return string         Action result
      * @since 1.0.0
      */
     public static function getURL(string $path): string
@@ -689,10 +688,10 @@ class Tools
     }
 
     /**
-     * Get path
+     * Convert local URL to path
      *
-     * @param  string $url
-     * @return path
+     * @param  string $url   URL value
+     * @return path          Action result
      * @since 1.0.0
      */
     public static function getPath(string $url): string
@@ -709,45 +708,42 @@ class Tools
     }
 
     /**
-     * Is path
+     * Check if string is path
      *
-     * @param  string  $path
-     * @return bool
+     * @param  string  $str   String data
+     * @return boolean        Result of checking
      * @since 1.0.0
      */
-    public static function isPath(string $path): bool
+    public static function isPath(string $str): bool
     {
-        if ($path && !empty($_SERVER['DOCUMENT_ROOT'])) {
-            $path        = wp_normalize_path($path);
-            $templateDir = wp_normalize_path($_SERVER['DOCUMENT_ROOT']);
-
-            return (0 === strpos($path, $templateDir));
+        if ($str && !empty($_SERVER['DOCUMENT_ROOT'])) {
+            return (0 === strpos(wp_normalize_path($str), wp_normalize_path($_SERVER['DOCUMENT_ROOT'])));
         }
 
         return false;
     }
 
     /**
-     * Is url
+     * Check if string is URL
      *
-     * @param  string  $url
-     * @return bool
+     * @param  string  $str   String data
+     * @return boolean        Result of checking
      * @since 1.0.0
      */
-    public static function isURL(string $url): bool
+    public static function isURL(string $str): bool
     {
-        if ($url) {
-            return (filter_var($url, FILTER_VALIDATE_URL) === false) ? false : true;
+        if ($str) {
+            return (filter_var($str, FILTER_VALIDATE_URL) === false) ? false : true;
         }
 
         return false;
     }
 
     /**
-     * Check if path is from local server
+     * Check if the path from the current server
      *
-     * @param  string  $path   Path
-     * @return bool           true/false
+     * @param  string  $path   Path value
+     * @return boolean         Result of checking
      * @since 1.0.0
      */
     public static function isLocalPath(string $path): bool
@@ -768,10 +764,10 @@ class Tools
     }
 
     /**
-     * Check if url is local
+     * Check if the URL from the current server
      *
-     * @param  string  $url   Url
-     * @return bool           true/false
+     * @param  string  $url   URL value
+     * @return boolean        Result of checking
      * @since 1.0.0
      */
     public static function isLocalURL(string $url): bool
@@ -786,7 +782,7 @@ class Tools
     /**
      * Parse info format
      *
-     * @param  string $data   Content of info file
+     * @param  string $data   Content
      * @return array          Parsed data
      * @since 1.0.0
      */
@@ -809,7 +805,7 @@ class Tools
             @msx', $data, $matches, PREG_SET_ORDER)) {
 
             foreach ($matches as $match) {
-                // Fetch the key and value string.
+                // Fetch the key and value string
                 $i = 0;
                 foreach (['key', 'value1', 'value2', 'value3'] as $var) {
                     $$var = $match[$i] ?: '';
@@ -817,12 +813,12 @@ class Tools
 
                 $value = stripslashes(substr($value1, 1, -1)) . stripslashes(substr($value2, 1, -1)) . $value3;
 
-                // Parse array syntax.
+                // Parse array syntax
                 $keys   = preg_split('/\]?\[/', rtrim($key, ']'));
                 $last   = array_pop($keys);
                 $parent = &$info;
 
-                // Create nested arrays.
+                // Create nested arrays
                 foreach ($keys as $key) {
                     if ($key == '') {
                         $key = count($parent);
@@ -833,12 +829,12 @@ class Tools
                     $parent = &$parent[$key];
                 }
 
-                // Handle PHP constants.
+                // Handle PHP constants
                 if (preg_match('/^\w+$/i', $value) && defined($value)) {
                     $value = constant($value);
                 }
 
-                // Insert actual value.
+                // Insert actual value
                 if ($last == '') {
                     $last = count($parent);
                 }
@@ -851,13 +847,13 @@ class Tools
     }
 
     /**
-     * Add content in the file
+     * Add content to file
      *
      * @param  string  $file        File path
-     * @param  string  $content     Content for file
+     * @param  string  $content     The string that is to be written
      * @param  string  $filter      Format : simple '', serialize, json
-     * @param  bool    $condition   Condition if file exist
-     * @return bool                 None
+     * @param  boolean $condition   Condition : If file exist
+     * @return boolean              Action result
      * @since 1.0.0
      */
     public static function fWrite(string $file, string $content = '', string $filter = '', bool $condition = false): bool
@@ -979,15 +975,19 @@ class Tools
         $relPath = $to;
 
         foreach ($from as $depth => $dir) {
+
             // Find first non-matching dir
             if ($dir === $to[$depth]) {
+
                 // Ignore this directory
                 array_shift($relPath);
             } else {
+
                 // Get number of remaining dirs to $from
                 $remaining = count($from) - $depth;
                 if ($remaining > 1) {
-                    // add traversals up to first matching dir
+
+                    // Add traversals up to first matching dir
                     $padLength = (count($relPath) + $remaining - 1) * -1;
                     $relPath   = array_pad($relPath, $padLength, '..');
                     break;
@@ -1001,10 +1001,11 @@ class Tools
     }
 
     /**
-     * Default dump
+     * Dump
      *
      * @param mix $data   Data for dumping
      * @return void
+     * @since 1.0.0
      */
     public static function dump($data): void
     {
@@ -1021,6 +1022,7 @@ class Tools
      *
      * @param array $data   The directories and namespaces
      * @return void
+     * @since 1.0.0
      */
     public static function addPsr4(array $data): void
     {
@@ -1035,14 +1037,24 @@ class Tools
         }
     }
 
-    public static function removeClassAction(string $tag, string $class = '', $method = null, $priority = null)
+    /**
+     * Remove class action
+     *
+     * @param string       $hookName   The action hook to which the function to be removed is hooked
+     * @param string       $class      Class name
+     * @param mix          $method     Class method
+     * @param integer|null $priority   The exact priority used when adding the original action callback
+     * @return void
+     * @since 1.0.0
+     */
+    public static function removeClassAction(string $hookName, string $class = '', $method = null, int $priority = null)
     {
         global $wp_filter;
 
-        if (isset($wp_filter[$tag])) {
+        if (isset($wp_filter[$hookName])) {
             $len = strlen($method);
 
-            foreach ($wp_filter[$tag] as $_priority => $actions) {
+            foreach ($wp_filter[$hookName] as $_priority => $actions) {
 
                 if ($actions) {
                     foreach ($actions as $functionKey => $data) {
@@ -1064,19 +1076,19 @@ class Tools
                                     if ($_class !== '' && $_class == $class) {
                                         if (is_numeric($priority)) {
                                             if ($_priority == $priority) {
-                                                return $wp_filter[$tag]->remove_filter($tag, $functionKey, $_priority);
+                                                return $wp_filter[$hookName]->remove_filter($hookName, $functionKey, $_priority);
                                             }
                                         } else {
-                                            return $wp_filter[$tag]->remove_filter($tag, $functionKey, $_priority);
+                                            return $wp_filter[$hookName]->remove_filter($hookName, $functionKey, $_priority);
                                         }
                                     }
                                 } else {
                                     if (is_numeric($priority)) {
                                         if ($_priority == $priority) {
-                                            return $wp_filter[$tag]->remove_filter($tag, $functionKey, $_priority);
+                                            return $wp_filter[$hookName]->remove_filter($hookName, $functionKey, $_priority);
                                         }
                                     } else {
-                                        return $wp_filter[$tag]->remove_filter($tag, $functionKey, $_priority);
+                                        return $wp_filter[$hookName]->remove_filter($hookName, $functionKey, $_priority);
                                     }
                                 }
 
@@ -1090,15 +1102,23 @@ class Tools
         return false;
     }
 
-    public static function jsonDecode(string $json, string $msg = ''): array
+    /**
+     * Decodes a JSON string
+     *
+     * @param string $json           The json string being decoded
+     * @param string $errorMsgPart   Part of error message
+     * @return array                 Decoded array data
+     * @since 1.0.0
+     */
+    public static function jsonDecode(string $json, string $errorMsgPart = ''): array
     {
         $data = json_decode($json, true);
 
         if (json_last_error() !== JSON_ERROR_NONE) {
             $errorMsg = 'JSON Decode - ' . json_last_error_msg();
 
-            if ($msg) {
-                $errorMsg = "{$msg} : {$errorMsg}";
+            if ($errorMsgPart) {
+                $errorMsg = "{$errorMsgPart} : {$errorMsg}";
             }
 
             throw new RuntimeException($errorMsg);

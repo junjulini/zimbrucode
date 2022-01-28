@@ -55,6 +55,8 @@
 
 .zc-panel-template {
     position: relative;
+    padding: 10px;
+    padding-top: 0;
 
     &__panel-loading {
         overflow-y: auto;
@@ -86,8 +88,4 @@
 
 .zc-metabox-panel-backup-button {
     line-height: 32px;
-}
-
-.edit-post-layout__metaboxes:not(:empty) {
-    padding-bottom: 24px;
 }

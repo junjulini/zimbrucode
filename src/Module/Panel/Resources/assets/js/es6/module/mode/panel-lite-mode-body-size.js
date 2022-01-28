@@ -23,6 +23,12 @@ import Kernel from '../kernel';
 const $ = jQuery;
 
 export default class PanelModeLiteBodySize extends Kernel {
+
+    /**
+     * Constructor
+     * 
+     * @since 1.0.0
+     */
     constructor() {
         super();
 
@@ -35,6 +41,12 @@ export default class PanelModeLiteBodySize extends Kernel {
         ro.observe($('.zc-panel').get(0));
     }
 
+    /**
+     * Add "mode size"
+     * 
+     * @param {string} width   Panel width
+     * @since 1.0.0
+     */
     addModeSize(width) {
         let mode = 'mode-1-';
 

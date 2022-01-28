@@ -10,7 +10,7 @@
  */
 
 return [
-    'mode'     => null, // If null, do auto. ( apc, memcache, memcached, file, redis )
+    'mode'     => null, // If null, do it automatically. ( apc, memcache, memcached, file, redis )
     'settings' => [
         'memcache'  => [
             'host' => '127.0.0.1',

@@ -16,7 +16,7 @@ use ZimbruCode\Module\ThemeAdaptor\Library\TwigExtension\HavePostsExtension\Have
 use ZimbruCode\Module\ThemeAdaptor\Library\TwigExtension\PostsExtension\PostsTokenParser;
 
 /**
- * Class : Initialization of Twig Extensions
+ * Class : Module/ThemeAdaptor/Library/TwigExtension : Initialization of twig extensions
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -24,6 +24,12 @@ use ZimbruCode\Module\ThemeAdaptor\Library\TwigExtension\PostsExtension\PostsTok
  */
 class InitTwigExtensions
 {
+    /**
+     * Constructor
+     *
+     * @param Environment $twig   Environment TWIG object
+     * @since 1.0.0
+     */
     public function __construct(Environment $twig)
     {
         // Posts extension

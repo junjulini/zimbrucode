@@ -23,6 +23,12 @@ import Kernel from '../../../../../../../Panel/Resources/assets/js/es6/module/ke
 const $ = jQuery;
 
 export default class MetaLiteModeBodySize extends Kernel {
+
+    /**
+     * Constructor
+     * 
+     * @since 1.0.0
+     */
     constructor() {
         super();
 
@@ -42,6 +48,13 @@ export default class MetaLiteModeBodySize extends Kernel {
         }
     }
 
+    /**
+     * Add mode size
+     * 
+     * @param {string} width   Panel width
+     * @return {null}          None
+     * @since 1.0.0
+     */
     addModeSize(width) {
         let mode = 'mode-1-';
 
@@ -58,6 +71,12 @@ export default class MetaLiteModeBodySize extends Kernel {
         $(window).trigger('zc/panel/size-changed');
     }
 
+    /**
+     * Check the panel width
+     * 
+     * @return {null}   None
+     * @since 1.0.0
+     */
     checkPanelWidth() {
         const ro = new ResizeObserver(entries => {
             if (entries[0] !== undefined) {

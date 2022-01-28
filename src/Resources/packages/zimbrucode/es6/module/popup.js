@@ -9,7 +9,7 @@
  */
 
 /*
- * Script : ZimbruCode/Module/PopUp
+ * Script : ZimbruCode/Module : PopUp
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -23,6 +23,12 @@ import TPL__popup from './tpl/popup.html';
 const $ = jQuery;
 
 export default class PopUp {
+
+    /**
+     * Constructor
+     * 
+     * @since 1.0.0
+     */
     constructor() {
         this.id = `zc-popup-${zc.uniqueID()}`;
     }
@@ -30,10 +36,11 @@ export default class PopUp {
     /**
      * Add popup
      * 
-     * @return {null} None
+     * @param {object} customSettings   PopUp custom settings
+     * @return {null}                   None
      * @since 1.0.0
      */
-    add(options) {
+    add(customSettings) {
         const defaults = {
             title: 'PopUp Title',
             jsonRequest: {},
@@ -49,7 +56,7 @@ export default class PopUp {
             class: ''
         };
 
-        const settings = $.extend({}, defaults, options),
+        const settings = $.extend({}, defaults, customSettings),
               structure = zc.tpl(TPL__popup, {
                   id: this.id,
                   class: settings.class,
@@ -102,7 +109,9 @@ export default class PopUp {
     /**
      * Calc popup window size
      * 
-     * @return {null} None
+     * @param {integer} height   Window height
+     * @param {integer} width    Window width
+     * @return {null}            None
      * @since 1.0.0
      */
     size(height, width) {
@@ -141,7 +150,7 @@ export default class PopUp {
     /**
      * Hide content
      * 
-     * @return {null} None
+     * @return {null}   None
      * @since 1.0.0
      */
     hideContent() {
@@ -152,7 +161,7 @@ export default class PopUp {
     /**
      * Show content
      * 
-     * @return {null} None
+     * @return {null}   None
      * @since 1.0.0
      */
     showContent() {
@@ -164,7 +173,7 @@ export default class PopUp {
     /**
      * Hide loading
      * 
-     * @return {null} None
+     * @return {null}   None
      * @since 1.0.0
      */
     hideLoading() {
@@ -174,7 +183,7 @@ export default class PopUp {
     /**
      * Show loading
      * 
-     * @return {null} None
+     * @return {null}   None
      * @since 1.0.0
      */
     showLoading() {
@@ -183,7 +192,8 @@ export default class PopUp {
 
     /**
      * Erase content
-     * @return {null} None
+     * 
+     * @return {null}   None
      * @since 1.0.0
      */
     remContent() {
@@ -192,7 +202,8 @@ export default class PopUp {
 
     /**
      * Append content
-     * @return {null} None
+     * 
+     * @return {null}   None
      * @since 1.0.0
      */
     appendContent(content) {
@@ -202,7 +213,7 @@ export default class PopUp {
     /**
      * Close
      * 
-     * @return {null} None
+     * @return {null}   None
      * @since 1.0.0
      */
     close() {

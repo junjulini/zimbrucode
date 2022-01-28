@@ -22,7 +22,7 @@ use ZimbruCode\Component\Common\Tools;
 use ZimbruCode\Component\Core\Kernel;
 
 /**
- * Class : Asset manager
+ * Class : Component/Asset : Asset manager
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -35,6 +35,11 @@ class AssetManager
     protected $callbacks = [];
     protected $nh;
 
+    /**
+     * Constructor
+     *
+     * @since 1.0.0
+     */
     public function __construct(bool $autoFilter = true, string $customLocation = '')
     {
         $this->autoFilter($autoFilter);
@@ -48,10 +53,10 @@ class AssetManager
     }
 
     /**
-     * Disable or enable auto filter
+     * Disable or enable automatic filter
      *
-     * @param  bool $autoFilter   Auto filter option : true/false
-     * @return bool               Auto filter option
+     * @param  boolean $autoFilter   Auto filter status : true/false
+     * @return boolean               Auto filter status
      * @since 1.0.0
      */
     public function autoFilter(bool $autoFilter = null): bool
@@ -64,9 +69,9 @@ class AssetManager
     }
 
     /**
-     * Gets an asset by name
+     * Get an asset by name
      *
-     * @param string $asset   The asset name
+     * @param string $asset   Asset name
      * @return AssetData
      * @since 1.0.0
      */
@@ -78,9 +83,10 @@ class AssetManager
     /**
      * Registers an asset
      *
+     * @return self
      * @since 1.0.0
      */
-    public function add($asset, callable $callback = null): AssetManager
+    public function add($asset, callable $callback = null): self
     {
         if ($asset) {
             $this->collector->add($asset, $this->autoFilter(), $callback);
@@ -89,7 +95,14 @@ class AssetManager
         return $this;
     }
 
-    public function addAssets(array $assets): AssetManager
+    /**
+     * Add assets
+     *
+     * @param array $assets   Assets array
+     * @return self
+     * @since 1.0.0
+     */
+    public function addAssets(array $assets): self
     {
         if ($assets) {
             foreach ($assets as $asset) {
@@ -107,10 +120,10 @@ class AssetManager
     }
 
     /**
-     * Remove an asset by name
+     * Check if an asset exists
      *
-     * @param string $asset  The asset name
-     * @return bool          True if the asset has been set, false if not
+     * @param string $asset   Asset name
+     * @return boolean        Result of checking
      * @since 1.0.0
      */
     public function has(string $asset): bool
@@ -119,12 +132,13 @@ class AssetManager
     }
 
     /**
-     * Remove an asset by name
+     * Remove asset
      *
-     * @param string $asset   The asset name
+     * @param string $asset   Asset name
+     * @return self
      * @since 1.0.0
      */
-    public function remove(string $asset): AssetManager
+    public function remove(string $asset): self
     {
         $this->collector->remove($asset);
         return $this;
@@ -133,24 +147,39 @@ class AssetManager
     /**
      * Remove all assets
      *
+     * @return self
      * @since 1.0.0
      */
-    public function flush(): AssetManager
+    public function flush(): self
     {
         $this->collector->flush();
         return $this;
     }
 
-    public function filter(...$args): AssetManager
+    /**
+     * Run filter
+     *
+     * @param mix ...$args
+     * @return self
+     * @since 1.0.0
+     */
+    public function filter(...$args): self
     {
         $this->collector->filter(...$args);
         return $this;
     }
 
-    public function combine(string $name): AssetManager
+    /**
+     * Combine all assets into one file
+     *
+     * @param string $name   Output file name
+     * @return self
+     * @since 1.0.0
+     */
+    public function combine(string $name): self
     {
         if ($this->collector->get() && $name && !Kernel::dev()) {
-            $callback = function (object $collector, array $data) use ($name): array{
+            $callback = function (AssetDataCollector $collector, array $data) use ($name): array {
                 $data['settings']['js']['output-name']  = $name;
                 $data['settings']['css']['output-name'] = $name;
 
@@ -164,12 +193,12 @@ class AssetManager
     }
 
     /**
-     * Dump data
+     * Dump assets data
      *
-     * @return void
+     * @return self
      * @since 1.0.0
      */
-    public function dump(): AssetManager
+    public function dump(): self
     {
         Tools::dump($this->collector);
         return $this;
@@ -178,11 +207,11 @@ class AssetManager
     /**
      * Enroll assets
      *
-     * @param  string $logTitle   Additional log title
-     * @return void               This function does not return a value
+     * @param  string $logTitle   Log title
+     * @return self
      * @since 1.0.0
      */
-    public function enroll(string $logTitle = ''): AssetManager
+    public function enroll(string $logTitle = ''): self
     {
         if (Kernel::dev()) {
             Kernel::dev()->addLogMessage("Asset : {$logTitle}", $this->collector->get());
@@ -204,10 +233,10 @@ class AssetManager
     /**
      * Enroll assets as namespace
      *
-     * @return void   This function does not return a value
+     * @return self
      * @since 1.0.0
      */
-    public function enrollAsNamespace(string $namespace = ''): AssetManager
+    public function enrollAsNamespace(string $namespace = ''): self
     {
         $this->nh->add($namespace, $this->collector);
         return $this;
@@ -219,10 +248,10 @@ class AssetManager
      * @param  string $handle   The registered script handle you are attaching the data for
      * @param  string $name     The name of the variable which will contain the data
      * @param  array  $data     The data itself
-     * @return bool
+     * @return self
      * @since 1.0.0
      */
-    public function localize(string $handle, string $name, array $data = []): AssetManager
+    public function localize(string $handle, string $name, array $data = []): self
     {
         if ($handle && $name) {
             foreach ($this->collector->get() as $asset) {
@@ -236,7 +265,16 @@ class AssetManager
         }
     }
 
-    public function addInlineScript(string $handle, string $data, string $position = 'after'): AssetManager
+    /**
+     * Adds extra code to a registered script
+     *
+     * @param string $handle     Name of the script to add the inline script to
+     * @param string $data       String containing the JavaScript to be added
+     * @param string $position   Whether to add the inline script before the handle or after
+     * @return self
+     * @since 1.0.0
+     */
+    public function addInlineScript(string $handle, string $data, string $position = 'after'): self
     {
         if ($handle) {
             foreach ($this->collector->get() as $asset) {
@@ -250,7 +288,15 @@ class AssetManager
         }
     }
 
-    public function addInlineStyle(string $handle, string $data): AssetManager
+    /**
+     * Add extra CSS styles to a registered stylesheet
+     *
+     * @param string $handle   Name of the stylesheet to add the extra styles to
+     * @param string $data     String containing the CSS styles to be added
+     * @return self
+     * @since 1.0.0
+     */
+    public function addInlineStyle(string $handle, string $data): self
     {
         if ($handle) {
             foreach ($this->collector->get() as $asset) {
@@ -265,13 +311,14 @@ class AssetManager
     }
 
     /**
-     * Add preventive callback
+     * Add callback
      *
      * @param string   $asset      Asset ID
-     * @param callable $callback   Callback for asset
+     * @param callable $callback   Callback function
+     * @return self
      * @since 1.0.0
      */
-    public function addCallback(string $asset, callable $callback): AssetManager
+    public function addCallback(string $asset, callable $callback): self
     {
         if ($asset) {
             $this->callbacks[$asset] = $callback;
@@ -281,13 +328,14 @@ class AssetManager
     }
 
     /**
-     * Add scss vars
+     * Add SCSS vars
      *
-     * @param  string $assetName  Name of SCSS file
-     * @param  array  $vars       Vars for SCSS Render
+     * @param string $assetName   SCSS file name
+     * @param array  $vars        Vars for SCSS Render
+     * @return self
      * @since 1.0.0
      */
-    public function addScssVars(string $assetName, array $vars): AssetManager
+    public function addScssVars(string $assetName, array $vars): self
     {
         if ($assetName && $vars) {
             $assetName = str_replace('/', '\\', $assetName);
@@ -299,14 +347,15 @@ class AssetManager
     }
 
     /**
-     * Add global scss vars
+     * Add global SCSS vars
      *
      * @param array  $vars          Vars for SCSS Render
-     * @param string $assetName     Name of SCSS file
-     * @param string $restriction   Restriction : vars for app/admin mode
+     * @param string $assetName     SCSS file name
+     * @param string $restriction   Restriction : app or admin mode
+     * @return self
      * @since 1.0.0
      */
-    public function addGlobalScssVars(array $vars, string $assetName = '', string $restriction = 'app'): AssetManager
+    public function addGlobalScssVars(array $vars, string $assetName = '', string $restriction = 'app'): self
     {
         if ($vars) {
             $globalVars   = Kernel::getGlobalCache('asset/scss/vars', []);
@@ -322,7 +371,15 @@ class AssetManager
         return $this;
     }
 
-    public function addScssNamespace(string $namespace, string $location): AssetManager
+    /**
+     * Add SCSS namespace
+     *
+     * @param string $namespace   Namespace value
+     * @param string $location    Path
+     * @return self
+     * @since 1.0.0
+     */
+    public function addScssNamespace(string $namespace, string $location): self
     {
         if ($namespace && $location) {
             Kernel::addGlobalCache("asset/scss/namespace/{$namespace}", $location);

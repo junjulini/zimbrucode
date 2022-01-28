@@ -23,25 +23,24 @@ import Backup   from './module/header/backup';
 import Reset    from './module/header/reset';
 
 zc.module.panel.addMode(($, panel) => {
-
     panel.addConfig('height-FAH', 56);
     panel.addConfig('min-size/mode2', 780);
 
-    panel.closeBlock();          // Init callback of close block.
-    panel.controlInit();         // Initialization of controls.
-    panel.controlHelp();         // Control help window.
-    panel.scrollbar();           // Initialization of scroll bar in panel.
-    panel.noMetaScaleIfMobile(); // Disable meta scale if mobile device.
-    panel.condition();           // Initialization of panel condition checker.
-    panel.tooltip();             // Init tooltip
-    panel.menu();                // Panel menu.
+    panel.closeBlock();          // Initializing of "close block"
+    panel.controlInit();         // Initialization of controls
+    panel.controlHelp();         // Control help window
+    panel.scrollbar();           // Initialization of scroll bar
+    panel.noMetaScaleIfMobile(); // Disable meta scale if mobile device
+    panel.condition();           // Initialization of panel condition checker
+    panel.tooltip();             // Initialization of tooltip
+    panel.menu();                // Panel menu
 
-    new BodySize; // Panel body size.
-    new Backup;   // Meta backup, import/export.
-    new Reset;    // Reset meta options.
+    new BodySize; // Panel body size
+    new Backup;   // Meta backup, import/export
+    new Reset;    // Reset meta options
 
-    $('.zc-panel-template__panel-loading').hide(); // Hide panel loading text.
-    $('.zc-panel.zc-panel_mode_meta').css('visibility', 'visible');   // Full display panel.
+    $('.zc-panel-template__panel-loading').hide();
+    $('.zc-panel.zc-panel_mode_meta').css('visibility', 'visible');
 
     /**
      * Disable save button

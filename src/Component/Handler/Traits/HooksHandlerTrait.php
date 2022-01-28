@@ -14,7 +14,7 @@ namespace ZimbruCode\Component\Handler\Traits;
 use InvalidArgumentException;
 
 /**
- * Trait : Hooks handler trait
+ * Trait : Component/Handler/Traits : Hooks handler
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -29,7 +29,7 @@ trait HooksHandlerTrait
      * @param mix     $method         The name of the function you wish to be hooked
      * @param integer $priority       Used to specify the order in which the functions associated with a particular action are executed
      * @param integer $acceptedArgs   The number of arguments the hooked function accepts
-     * @return void                   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     protected function addAction(string $hook, $method, int $priority = 10, int $acceptedArgs = 1): void
@@ -54,10 +54,10 @@ trait HooksHandlerTrait
     /**
      * Remove action : This function removes a function attached to a specified action hook
      *
-     * @param string  $hook           The name of the action to which $method is hooked
-     * @param mix     $method         The name of the function which should be removed
-     * @param integer $priority       Used to specify the order in which the functions associated with a particular action are executed
-     * @return void                   This function does not return a value
+     * @param string  $hook       The name of the action to which $method is hooked
+     * @param mix     $method     The name of the function which should be removed
+     * @param integer $priority   Used to specify the order in which the functions associated with a particular action are executed
+     * @return void
      * @since 1.0.0
      */
     protected function remAction(string $hook, $method, int $priority = 10): void
@@ -84,8 +84,8 @@ trait HooksHandlerTrait
      *
      * @param string  $hook     The name of the action to which $method is hooked
      * @param mix     $method   The name of the function you wish to be hooked
-     * @param bool    $nopriv   For non unauthenticated users
-     * @return void             This function does not return a value
+     * @param boolean $nopriv   For non unauthenticated users
+     * @return void
      * @since 1.0.0
      */
     protected function addAjax(string $hook, $method, bool $nopriv = false): void
@@ -112,7 +112,7 @@ trait HooksHandlerTrait
      * @param mix     $method         The name of the function to be called when the custom Filter is applied
      * @param integer $priority       Used to specify the order in which the functions associated with a particular action are executed
      * @param integer $acceptedArgs   The number of arguments the function(s) accept(s)
-     * @return void                   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     protected function addFilter(string $tag, $method, int $priority = 10, int $acceptedArgs = 1): void
@@ -140,7 +140,7 @@ trait HooksHandlerTrait
      * @param string  $tag        The action hook to which the function to be removed is hooked
      * @param mix     $method     The callback for the function which should be removed
      * @param integer $priority   The priority of the function (as defined when the function was originally hooked)
-     * @return void               This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     protected function remFilter(string $tag, $method, int $priority = 10): void
@@ -165,9 +165,9 @@ trait HooksHandlerTrait
     /**
      * Add shortcode
      *
-     * @param string $tag      Shortcode tag to be searched in post content
-     * @param mix    $method   Hook to run when shortcode is found
-     * @return void            This function does not return a value
+     * @param string $tag      Shortcode tag
+     * @param mix    $method   Callback
+     * @return void
      * @since 1.0.0
      */
     protected function addShortCode(string $tag, $method): void
@@ -192,8 +192,8 @@ trait HooksHandlerTrait
     /**
      * Do shortcode
      *
-     * @param  string  $tag      Content to search for shortcodes
-     * @param  bool $return   Return or echo
+     * @param string  $tag      Shortcode tag
+     * @param boolean $return   Return or echo
      * @since 1.0.0
      */
     protected function doShortCode(string $tag, bool $return = false)
@@ -212,8 +212,8 @@ trait HooksHandlerTrait
     /**
      * Remove shortcode
      *
-     * @param  string $tag   Shortcode tag to remove hook
-     * @return void          This function does not return a value
+     * @param  string $tag   Shortcode tag
+     * @return void
      * @since 1.0.0
      */
     protected function remShortCode(string $tag): void

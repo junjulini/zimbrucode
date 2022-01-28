@@ -15,7 +15,7 @@ use ZimbruCode\Component\Common\Tools;
 use ZimbruCode\Component\Handler\Traits\HooksHandlerTrait;
 
 /**
- * Class : WordPress Template
+ * Class : Component/TemplateBridge : WordPress Template
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -31,8 +31,8 @@ class WPTemplateBridge
     /**
      * Add location for custom templates files
      *
-     * @param string $location   Patch
-     * @return void              This function does not return a value
+     * @param string $location   Directory patch
+     * @return void
      * @since 1.0.0
      */
     public function addLocation(string $location): void
@@ -46,10 +46,10 @@ class WPTemplateBridge
      * Add custom templates
      *
      * @param array $templates   Templates list
-     * @return array             This function does not return a value
+     * @return void
      * @since 1.0.0
      */
-    public function add(array $templates): array
+    public function add(array $templates): void
     {
         $this->templates = Tools::arrayMerge($this->templates, $templates);
     }
@@ -57,7 +57,7 @@ class WPTemplateBridge
     /**
      * Register custom templates
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     public function register(): void
@@ -77,6 +77,8 @@ class WPTemplateBridge
      * Filter : Adds our template to the pages cache in order to trick WordPress
      * into thinking the template file exists where it doesn't really exist.
      *
+     * @param mix $atts
+     * @return mix
      * @since 1.0.0
      */
     public function __filter_register_templates($atts)
@@ -113,7 +115,7 @@ class WPTemplateBridge
      * @return string             New template file
      * @since 1.0.0
      */
-    public function __filter_view_template($template)
+    public function __filter_view_template(string $template): string
     {
         global $post;
 

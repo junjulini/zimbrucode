@@ -18,7 +18,7 @@ use ZimbruCode\Component\Common\Tools;
 use ZimbruCode\Component\Core\Kernel;
 
 /**
- * Class : Filter - SCSS
+ * Class : Component/Asset/Filter : SCSS
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -39,9 +39,9 @@ class SCSS extends Filter
     protected $cacheExt;
 
     /**
-     * Setup filter
+     * Setup
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     protected function setup(): void
@@ -65,7 +65,7 @@ class SCSS extends Filter
      * Each asset
      *
      * @param  AssetData $asset   Asset data
-     * @return void               This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     protected function each(AssetData $asset): void

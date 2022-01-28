@@ -10,18 +10,18 @@
  */
 
 return [
-    'version'    => ($version = '1.0.3'),
-    'slug'       => ($slug = 'zc'),
-    'name'       => 'ZimbruCode',
+    'version'                      => ($version = '1.0.3'),
+    'slug'                         => ($slug = 'zc'),
+    'name'                         => 'ZimbruCode',
 
     // Author details
-    'author'     => [
+    'author'                       => [
         'main-website' => 'https://junjulini.com',
     ],
 
-    // For dev
-    'dev'        => false,
-    'dev-config' => [
+    // For developing
+    'dev'                          => false,
+    'dev-config'                   => [
         'dev-log'      => true,
         'script-debug' => true,
         'max-depth'    => 40,
@@ -29,9 +29,12 @@ return [
         'environment'  => false,
     ],
 
-    // Module configs
-    'module'     => require __DIR__ . '/other/module.php',
+    // Twig environment : Auto reload status
+    'twig-environment-auto-reload' => true,
 
-    // Component configs
-    'component'  => require __DIR__ . '/other/component.php',
+    // Modules configs
+    'module'                       => require __DIR__ . '/other/module.php',
+
+    // Components configs
+    'component'                    => require __DIR__ . '/other/component.php',
 ];

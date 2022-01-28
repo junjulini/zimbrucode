@@ -23,6 +23,12 @@ import Kernel from './kernel';
 const $ = jQuery;
 
 export default class Condition extends Kernel {
+
+    /**
+     * Constructor
+     * 
+     * @since 1.0.0
+     */
     constructor() {
         super();
 
@@ -35,9 +41,9 @@ export default class Condition extends Kernel {
     }
 
     /**
-     * Initial parsing
+     * Find items
      * 
-     * @return {null} None
+     * @return {null}   None
      * @since 1.0.0
      */
     firstStart() {
@@ -50,6 +56,12 @@ export default class Condition extends Kernel {
         });
     }
 
+    /**
+     * Check if any item has changed
+     * 
+     * @return {null}   None
+     * @since 1.0.0
+     */
     onChange() {
         $('.zc-panel .zc-panel-controls').on('change', '[data-option]', (event) => {
             event.preventDefault();
@@ -79,7 +91,7 @@ export default class Condition extends Kernel {
     /**
      * Cache data
      * 
-     * @return {null} None
+     * @return {null}   None
      * @since 1.0.0
      */
     dataCaching() {
@@ -101,10 +113,12 @@ export default class Condition extends Kernel {
     /**
      * Parse by conditions
      * 
-     * @return {null} None
+     * @param {object}  control      Control object
+     * @param {boolean} firstStart   First start
+     * @return {null}                None
      * @since 1.0.0
      */
-    parse(control, direct) {
+    parse(control, firstStart) {
         let passed,
             conditions = this.prepConditions(control.data('condition')),
             operator   = (control.data('condition-operator') || 'and').toLowerCase();
@@ -174,7 +188,7 @@ export default class Condition extends Kernel {
             }
         });
 
-        if (direct && direct !== undefined) {
+        if (firstStart && firstStart !== undefined) {
             if (passed) {
                 control.addClass('zc-panel-controls__item_show');
                 control.data('condition-show', true);
@@ -204,7 +218,7 @@ export default class Condition extends Kernel {
     /**
      * Preparing conditions
      * 
-     * @return {null} None
+     * @return {null}   None
      * @since 1.0.0
      */
     prepConditions(condition) {

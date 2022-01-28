@@ -16,7 +16,7 @@ use ZimbruCode\Component\Common\Tools;
 use ZimbruCode\Component\Core\Kernel;
 
 /**
- * Class : Ajax handler
+ * Class : Component/Handler : Ajax
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -26,9 +26,16 @@ class AjaxHandler
 {
     protected $inputJsonType = true;
     protected $inputJsonData = [];
+    protected $data          = [];
 
-    protected $data = [];
-
+    /**
+     * Constructor
+     *
+     * @param string  $action           Ajax action
+     * @param string  $userCapability   User capability
+     * @param boolean $inputJsonType    Preparing AJAX action in Json format
+     * @since 1.0.0
+     */
     public function __construct(string $action = '', string $userCapability = '', bool $inputJsonType = true)
     {
         if ($action) {
@@ -52,6 +59,12 @@ class AjaxHandler
         }
     }
 
+    /**
+     * Get input json data
+     *
+     * @return array   Input json data
+     * @since 1.0.0
+     */
     public function getInputJsonData(): array
     {
         return $this->inputJsonData;
@@ -60,7 +73,7 @@ class AjaxHandler
     /**
      * Get ajax data
      *
-     * @return array  Ajax data
+     * @return array   Ajax data
      * @since 1.0.0
      */
     public function getData(): array
@@ -73,7 +86,7 @@ class AjaxHandler
      *
      * @param  string $capability   Role or capability
      * @param  mix    $args         (Optional) further parameters, typically starting with an object ID
-     * @return bool                 Current user has capability
+     * @return boolean              Current user has capability
      * @since 1.0.0
      */
     public function checkUser(string $capability, $args = null): bool
@@ -82,10 +95,10 @@ class AjaxHandler
     }
 
     /**
-     * Get control
+     * Get request data
      *
-     * @param  string $param
-     * @return mix
+     * @param  string $param   Param name
+     * @return mix             Request data
      * @since 1.0.0
      */
     public function get(string $param, $default = '')
@@ -98,10 +111,10 @@ class AjaxHandler
     }
 
     /**
-     * Add value
+     * Add item
      *
-     * @param string|array $name
-     * @param mix $value
+     * @param string|array $name   Item name
+     * @param mix $value           Item value
      * @since 1.0.0
      */
     public function add($name, $value = ''): AjaxHandler
@@ -116,9 +129,9 @@ class AjaxHandler
     }
 
     /**
-     * Remove value
+     * Remove item
      *
-     * @param string $name
+     * @param string $name   Item name
      * @since 1.0.0
      */
     public function remove(string $name = ''): AjaxHandler
@@ -135,8 +148,9 @@ class AjaxHandler
     /**
      * Send response
      *
+     * @param string|array $data    Response data
+     * @param mix          $value   Single response data
      * @return void
-     * @since 1.0.0
      */
     public function send($data = '', $value = false): void
     {
@@ -193,9 +207,9 @@ class AjaxHandler
     /**
      * Verify that a nonce is correct and unexpired with the respect to a specified action
      *
-     * @param string $nonce     Nonce to verify
-     * @param string $action    Action name. Should give the context to what is taking place and be the same when the nonce was created
-     * @return bool/integer     Boolean false if the nonce is invalid. Otherwise, returns an integer with the value : 1 /2
+     * @param string $nonce      Nonce to verify
+     * @param string $action     Action name. Should give the context to what is taking place and be the same when the nonce was created
+     * @return boolean/integer   Boolean false if the nonce is invalid. Otherwise, returns an integer with the value : 1 /2
      * @since 1.0.0
      */
     public static function checkNonce(string $nonce, string $action)
@@ -210,8 +224,8 @@ class AjaxHandler
      * The standard function verifies the AJAX request, to prevent any processing of requests which are passed in by third-party sites or systems.
      *
      * @param  string  $action   Action nonce
-     * @param  bool    $die      (optional) whether to die if the nonce is invalid
-     * @return bool              If parameter $die is set to false, this function will return a boolean of true if the check passes or false if the check fails
+     * @param  boolean $die      (optional) whether to die if the nonce is invalid
+     * @return boolean           If parameter $die is set to false, this function will return a boolean of true if the check passes or false if the check fails
      * @since 1.0.0
      */
     public static function checkAjaxReferer(string $action, bool $die = true)

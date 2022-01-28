@@ -14,7 +14,7 @@ namespace ZimbruCode\Module\Panel\Controls\ToggleButton;
 use ZimbruCode\Module\Panel\Library\ControlKernel;
 
 /**
- * Panel control : Toggle Button
+ * Panel control : Toggle button
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode

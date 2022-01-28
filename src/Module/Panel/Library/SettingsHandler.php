@@ -15,7 +15,7 @@ use ZimbruCode\Component\Common\Callback;
 use ZimbruCode\Component\Common\Tools;
 
 /**
- * Class : Settings handler
+ * Class :  Module/Panel/Library : Settings handler
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -35,22 +35,34 @@ class SettingsHandler
 
     protected $ignore = false;
 
+    /**
+     * Constructor
+     *
+     * @since 1.0.0
+     */
     public function __construct()
     {
         $this->callback = new Callback;
     }
 
+    /**
+     * Set status of "ignore" setting
+     *
+     * @param boolean $status   Status
+     * @return void
+     * @since 1.0.0
+     */
     public function ignore(bool $status): void
     {
         $this->ignore = $status;
     }
 
     /**
-     * Get control setting
+     * Get control settings
      *
-     * @param string $path      Path to a specific setting to extract
-     * @param mix    $default   Default value if setting not exist
-     * @return mix              Return setting or default value
+     * @param string $path      Array path
+     * @param mix    $default   Default value
+     * @return mix              Setting value
      * @since 1.0.0
      */
     public function get(string $path, $default = '')
@@ -69,10 +81,10 @@ class SettingsHandler
     }
 
     /**
-     * Add build settings
+     * Add settings
      *
-     * @param array $settings   Build settings from panel module
-     * @return void             This function does not return a value
+     * @param array $settings   Settings list
+     * @return void
      * @since 1.0.0
      */
     public function addSettings(array $settings): void
@@ -81,9 +93,9 @@ class SettingsHandler
     }
 
     /**
-     * Exclude controls from checking
+     * Exclude controls from checklist
      *
-     * @param string $controlName   Name of control
+     * @param string $controlName   Control name
      * @return void
      * @since 1.0.0
      */
@@ -94,16 +106,23 @@ class SettingsHandler
         }
     }
 
+    /**
+     * Add a basic check function
+     *
+     * @param callable $checker   Callback
+     * @return void
+     * @since 1.0.0
+     */
     public function addMainChecker(callable $checker): void
     {
         $this->callback->add('main-checker', $checker);
     }
 
     /**
-     * Add additional checker function
+     * Add an additional check function
      *
-     * @param callable $checker   Checker function for preparing controls settings
-     * @return void               This function does not return a value
+     * @param callable $checker   Callback
+     * @return void
      * @since 1.0.0
      */
     public function addAdditionalChecker(callable $checker): void
@@ -112,11 +131,11 @@ class SettingsHandler
     }
 
     /**
-     * Add data
+     * Add temporary data
      *
-     * @param string $key     Key
-     * @param mix    $value   Value
-     * @return void           This function does not return a value
+     * @param string $key     Item key
+     * @param mix    $value   Item value
+     * @return void
      * @since 1.0.0
      */
     public function addData(string $key, $value = ''): void
@@ -127,9 +146,9 @@ class SettingsHandler
     }
 
     /**
-     * Get data
+     * Get temporary data
      *
-     * @return array   Return data
+     * @return array   Temporary data
      * @since 1.0.0
      */
     public function getData(): array
@@ -138,27 +157,32 @@ class SettingsHandler
         return $this->data;
     }
 
-    public function flush()
+    /**
+     * Remove all temporary data
+     *
+     * @return void
+     */
+    public function flush(): void
     {
         $this->data    = [];
         $this->control = [];
     }
 
     /**
-     * Search default settings from control
+     * Finding default settings from controls
      *
-     * @param  array  $settings   Build settings from panel
-     * @return void               This function does not return a value
+     * @param  array $settings   List of settings
+     * @return void
      * @since 1.0.0
      */
     public function search(array $settings): void
     {
-        foreach ($settings as $setting) {
-            if (!is_array($setting)) {
+        foreach ($settings as $controlSettings) {
+            if (!is_array($controlSettings)) {
                 continue;
             }
 
-            $this->control = $setting;
+            $this->control = $controlSettings;
 
             $id      = $this->get('id');
             $type    = $this->get('type');
@@ -166,10 +190,10 @@ class SettingsHandler
 
             if ($this->ignore === true) {
                 if (!$this->get('ignore')) {
-                    $this->check($id, $type, $setting);
+                    $this->check($id, $type, $controlSettings);
                 }
             } else {
-                $this->check($id, $type, $setting);
+                $this->check($id, $type, $controlSettings);
             }
 
             if ($content && is_array($content)) {
@@ -179,20 +203,20 @@ class SettingsHandler
     }
 
     /**
-     * Check
+     * Check settings
      *
-     * @param string $id
-     * @param string $type
-     * @param array  $setting
+     * @param string $id        Control ID
+     * @param string $type      Control type
+     * @param array  $setting   Control settings
      * @return void
      * @since 1.0.0
      */
-    protected function check(string $id, string $type, array $setting): void
+    protected function check(string $id, string $type, array $settings): void
     {
         if ($id && $type && !in_array($type, $this->exclude)) {
-            $this->callback->run('main-checker', $this, $setting);
+            $this->callback->run('main-checker', $this, $settings);
         }
 
-        $this->callback->run('additional-checker', $this, $setting);
+        $this->callback->run('additional-checker', $this, $settings);
     }
 }

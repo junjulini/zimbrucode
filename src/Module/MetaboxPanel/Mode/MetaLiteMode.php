@@ -12,11 +12,12 @@
 namespace ZimbruCode\Module\MetaboxPanel\Mode;
 
 use ZimbruCode\Component\Handler\AjaxHandler;
+use ZimbruCode\Component\TemplateBridges\TwigTemplateBridge;
 use ZimbruCode\Module\Panel\Library\Mode;
 use ZimbruCode\Module\Panel\Library\Traits\ControlTrait;
 
 /**
- * Class : Meta lite mode
+ * Class : Module/MetaboxPanel/Mode : Meta lite mode
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -29,21 +30,21 @@ class MetaLiteMode extends Mode
     /**
      * Mode setup
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     public function setup(): void
     {
-        // Hooks
+        // Actions
         $this->addAction('admin_menu',                          '__action_register_panel');
         $this->addAction('save_post',                           '__action_save_options');
         $this->addAction('load-' . ($GLOBALS['pagenow'] ?? ''), '__action_preparing');
     }
 
     /**
-     * Callback : Creates html structure for panel
+     * Callback : Create html structure for panel
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     public function __callback_html_structure(): void
@@ -58,7 +59,7 @@ class MetaLiteMode extends Mode
         $this->render('@meta/meta-lite-mode.twig', [
             'nonce' => AjaxHandler::getNonce($this->getModuleSetting('nonce')),
             'id'    => get_the_ID(),
-        ], false, function (object $ttb): void {
+        ], false, function (TwigTemplateBridge $ttb): void {
             $ttb->addLocationPath($this->getModuleSetting('meta-module-resource') . '/views', 'meta');
         });
 
@@ -69,7 +70,7 @@ class MetaLiteMode extends Mode
     /**
      * Action : Preparing controls & assets
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     public function __action_preparing(): void
@@ -89,7 +90,7 @@ class MetaLiteMode extends Mode
     /**
      * Action : Enqueue styles and scripts for panel
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     public function __action_enqueue($hook): void
@@ -131,9 +132,9 @@ class MetaLiteMode extends Mode
     }
 
     /**
-     * Action : Register panel
+     * Action : Registration of panel
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     public function __action_register_panel(): void
@@ -151,7 +152,8 @@ class MetaLiteMode extends Mode
     /**
      * Action : Panel options save
      *
-     * @param  int $postID
+     * @param int $postID   Post ID
+     * @return null|mix
      * @since 1.0.0
      */
     public function __action_save_options(int $postID)
@@ -185,7 +187,7 @@ class MetaLiteMode extends Mode
 
                 foreach ($options as $key => $value) {
                     if (strpos($key, $prefix) !== false) {
-                        $key = str_replace($prefix, '', $key);
+                        $key          = str_replace($prefix, '', $key);
                         $output[$key] = stripslashes_deep($value);
                     }
                 }

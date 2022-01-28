@@ -21,14 +21,20 @@
 const $ = jQuery;
 
 export default class Kernel {
+
+    /**
+     * Constructor
+     * 
+     * @since 1.0.0
+     */
     constructor() {
         this.global = zc.getModuleData('panel');
     }
 
     /**
-     * Panel scroll bar top
+     * Scroll bar : Move to top position
      * 
-     * @return {null} None
+     * @return {null}   None
      * @since 1.0.0
      */
     scrollbarTop() {
@@ -38,7 +44,7 @@ export default class Kernel {
     /**
      * Calculate panel height
      * 
-     * @return {null} None
+     * @return {null}   None
      * @since 1.0.0
      */
     calcHeight() {
@@ -50,7 +56,7 @@ export default class Kernel {
     /**
      * Erase mobile menu
      * 
-     * @return {null} None
+     * @return {null}   None
      * @since 1.0.0
      */
     eraseMobileMenu() {
@@ -71,19 +77,19 @@ export default class Kernel {
     }
 
     /**
-     * Is desktop mode
+     * Check if the mode is desktop
      * 
-     * @return {Boolean} Return "true" if body width is bigger then "min-size.mode2"
+     * @return {boolean}   Return "true" if body width is bigger then "min-size.mode2"
      * @since 1.0.0
      */
     isDesktopMode() {
         return ($('.zc-panel').width() >= this.getConfig('min-size/mode2'));
     }
 
-     /**
-     * Error check, in AJAX or other
+    /**
+     * Error checking, in AJAX or elsewhere
      * 
-     * @return {null} None
+     * @return {null}   None
      * @since 1.0.0
      */
     errorCheck(mainMsg, errorMsg) {
@@ -93,11 +99,11 @@ export default class Kernel {
                 $('.zc-popup').remove();
             }
 
-            console.error(mainMsg);
+            console.error(errorMsg);
 
             zc.confirm({
-                title: errorMsg,
-                subject: `${mainMsg} Page will be reloaded, ok?`,
+                title: mainMsg,
+                subject: `${errorMsg} <br> Page will be reloaded, ok?`,
                 class: 'zc-panel-error-confirm',
                 ok: () => {
                     location.reload();
@@ -107,10 +113,11 @@ export default class Kernel {
     }
 
     /**
-     * Get global var
+     * Get global variable
      * 
-     * @param {string} key   Key/Path
-     * @param {mix}    def   If not found, return "def"
+     * @param {string} key   Object path
+     * @param {mix}    def   Default value
+     * @return {mix}         Action result
      * @since 1.0.0
      */
     getVar(key, def) {
@@ -123,10 +130,11 @@ export default class Kernel {
     }
 
     /**
-     * Add global var value
+     * Add global variable value
      * 
-     * @param {string} key   Key/Path
-     * @param {mix}    data  Var value
+     * @param {string} key   Object path
+     * @param {mix}    data  Variable value
+     * @return {null}        None
      * @since 1.0.0
      */
     addVar(key, data) {
@@ -136,8 +144,9 @@ export default class Kernel {
     /**
      * Add global cache value
      * 
-     * @param {string} key   Key/Path
+     * @param {string} key   Object path
      * @param {mix}    data  Cache value
+     * @return {null}        None
      * @since 1.0.0
      */
     addCache(key, data) {
@@ -147,8 +156,9 @@ export default class Kernel {
     /**
      * Get global cache
      * 
-     * @param {string} key   Key/Path
-     * @param {mix}    def   If not found, return "def"
+     * @param {string} key   Object path
+     * @param {mix}    def   Default value
+     * @return {mix}         Action result
      * @since 1.0.0
      */
     getCache(key, def) {
@@ -163,7 +173,9 @@ export default class Kernel {
     /**
      * Remove element from cache object
      * 
-     * @param {string} key   Key/Path
+     * @param {string} key   Object path
+     * @return {null}        None
+     * @since 1.0.0
      */
     remCache(key) {
         zc.deepFindAndSetting(this.global.cache, key, false, true);
@@ -172,8 +184,9 @@ export default class Kernel {
     /**
      * Add global config value
      * 
-     * @param {string} key   Key/Path
+     * @param {string} key   Object path
      * @param {mix}    data  Config value
+     * @return {null}        None
      * @since 1.0.0
      */
     addConfig(key, data) {
@@ -183,8 +196,9 @@ export default class Kernel {
     /**
      * Get global config
      * 
-     * @param {string} key   Key/Path
-     * @param {mix}    def   If not found, return "def"
+     * @param {string} key   Object path
+     * @param {mix}    def   Default value
+     * @return {mix}         Action result
      * @since 1.0.0
      */
     getConfig(key, def) {
@@ -196,6 +210,14 @@ export default class Kernel {
         }
     }
 
+    /**
+     * Service
+     * 
+     * @param {string}   name       Service name
+     * @param {callable} callback   Callback
+     * @return {object}             Service instance
+     * @since 1.0.0
+     */
     service(name, callback) {
         if (name !== undefined && typeof name === 'string') {
             if ($.isFunction(callback) || typeof callback === 'object') {
@@ -211,6 +233,15 @@ export default class Kernel {
         }
     }
 
+    /**
+     * Attach an event handler function for one or more events to the selected elements
+     * 
+     * @param {string}   events           One or more space-separated event types and optional namespaces, such as "click" or "keydown.myPlugin"
+     * @param {string}   selector         A selector string to filter the descendants of the selected elements that trigger the event
+     * @param {callable} handler          A function to execute when the event is triggered
+     * @param {boolean}  preventDefault   True if "preventDefault" must be used
+     * @since 1.0.0
+     */
     on(events, selector, handler, preventDefault = false) {
         $('.zc-panel').on(events, selector, (event) => {
             if (preventDefault === true) {
@@ -221,6 +252,14 @@ export default class Kernel {
         });
     }
 
+    /**
+     * Attach an event handler function for one or more events to the selected elements
+     * 
+     * @param {string}   selector         A selector string to filter the descendants of the selected elements that trigger the event
+     * @param {callable} handler          A function to execute when the event is triggered
+     * @param {boolean}  preventDefault   True if "preventDefault" must be used
+     * @since 1.0.0
+     */
     click(selector, handler, preventDefault = true) {
         this.on('click', selector, handler, preventDefault);
     }

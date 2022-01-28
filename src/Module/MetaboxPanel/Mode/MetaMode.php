@@ -12,12 +12,13 @@
 namespace ZimbruCode\Module\MetaboxPanel\Mode;
 
 use ZimbruCode\Component\Handler\AjaxHandler;
+use ZimbruCode\Component\TemplateBridges\TwigTemplateBridge;
 use ZimbruCode\Module\MetaboxPanel\Helper\Backup;
 use ZimbruCode\Module\Panel\Library\Mode;
 use ZimbruCode\Module\Panel\Library\Traits\ControlTrait;
 
 /**
- * Class : Meta mode
+ * Class : Module/MetaboxPanel/Mode : Meta mode
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -30,12 +31,12 @@ class MetaMode extends Mode
     /**
      * Mode setup
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     public function setup(): void
     {
-        // Hooks
+        // Actions
         $this->addAction('admin_menu',                          '__action_register_panel');
         $this->addAction('save_post',                           '__action_save_options');
         $this->addAction('load-' . ($GLOBALS['pagenow'] ?? ''), '__action_preparing');
@@ -43,29 +44,29 @@ class MetaMode extends Mode
         // Ajax
         $this->addAjax("zc/module/metabox_panel/reset_{$this->getModuleSetting('slug')}", '__ajax_options_reset');
 
-        // Metabox panel backup init
+        // Initializing backup functions
         new Backup($this);
     }
 
     /**
      * Alternative render
      *
-     * @param string $path   Path of template
+     * @param string $path   Template path
      * @param array  $data   Additional data for rendering
-     * @return void          Result of render
+     * @return void          Html content
      * @since 1.0.0
      */
     public function altRender(string $path, array $data = []): string
     {
-        return $this->render("@meta/${path}", $data, true, function (object $ttb): void {
+        return $this->render("@meta/${path}", $data, true, function (TwigTemplateBridge $ttb): void {
             $ttb->addLocationPath("{$this->getModuleSetting('meta-module-resource')}/views", 'meta');
         });
     }
 
     /**
-     * Callback : Creates html structure for panel
+     * Callback : Create html structure for panel
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     public function __callback_html_structure(): void
@@ -80,7 +81,7 @@ class MetaMode extends Mode
         $this->render('@meta/meta-mode.twig', [
             'nonce' => AjaxHandler::getNonce($this->getModuleSetting('nonce')),
             'id'    => get_the_ID(),
-        ], false, function ($ttb) {
+        ], false, function (TwigTemplateBridge $ttb): void {
             $ttb->addLocationPath($this->getModuleSetting('meta-module-resource') . '/views', 'meta');
         });
 
@@ -91,7 +92,7 @@ class MetaMode extends Mode
     /**
      * Action : Preparing controls & assets
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     public function __action_preparing(): void
@@ -111,7 +112,7 @@ class MetaMode extends Mode
     /**
      * Action : Enqueue styles and scripts for panel
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     public function __action_enqueue($hook): void
@@ -151,9 +152,9 @@ class MetaMode extends Mode
     }
 
     /**
-     * Action : Register panel
+     * Action : Registration of panel
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     public function __action_register_panel(): void
@@ -169,10 +170,10 @@ class MetaMode extends Mode
     }
 
     /**
-     * Action : Panel options save
+     * Action : Save options
      *
-     * @param  int $postID
-     * @return mix   Post id or null
+     * @param  int $postID   Post ID
+     * @return null|mix
      * @since 1.0.0
      */
     public function __action_save_options(int $postID)
@@ -206,7 +207,7 @@ class MetaMode extends Mode
 
                 foreach ($options as $key => $value) {
                     if (strpos($key, $prefix) !== false) {
-                        $key = str_replace($prefix, '', $key);
+                        $key          = str_replace($prefix, '', $key);
                         $output[$key] = stripslashes_deep($value);
                     }
                 }
@@ -219,9 +220,9 @@ class MetaMode extends Mode
     }
 
     /**
-     * Ajax : Panel options reset
+     * Ajax : Reset options
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     public function __ajax_options_reset(): void

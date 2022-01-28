@@ -12,7 +12,7 @@
 namespace ZimbruCode\Module\ThemeAdaptor\Library;
 
 /**
- * Class : Template files handler
+ * Class : Module/ThemeAdaptor/Library : Template files handler
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode

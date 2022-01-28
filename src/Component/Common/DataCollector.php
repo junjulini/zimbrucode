@@ -14,7 +14,7 @@ namespace ZimbruCode\Component\Common;
 use ZimbruCode\Component\Common\Tools;
 
 /**
- * Class : Data collector
+ * Class : Component/Common : Data collector
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -25,24 +25,25 @@ class DataCollector
     protected $data = [];
 
     /**
-     * Add value
+     * Add data
      *
-     * @param string $path
-     * @param mix $value
+     * @param  string $path    Array path
+     * @param  mix    $value   Value
+     * @return self
      * @since 1.0.0
      */
-    public function add(string $path, $value = ''): DataCollector
+    public function add(string $path, $value = ''): self
     {
         Tools::addNode($this->data, $path, $value);
         return $this;
     }
 
     /**
-     * Get value
+     * Get data
      *
-     * @param  string  $path
-     * @param  mix $default
-     * @return mix
+     * @param  string  $path      Array path
+     * @param  mix     $default   Default value
+     * @return mix                Item data
      * @since 1.0.0
      */
     public function get(string $path, $default = false)
@@ -51,10 +52,10 @@ class DataCollector
     }
 
     /**
-     * Remove
+     * Remove item
      *
-     * @param  string $path
-     * @return bool
+     * @param  string $path   Array path
+     * @return boolean        Action result
      * @since 1.0.0
      */
     public function remove(string $path): bool
@@ -65,7 +66,7 @@ class DataCollector
     /**
      * Dump data
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     public function dump(): void

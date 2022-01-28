@@ -23,6 +23,12 @@ import Kernel from '../kernel';
 const $ = jQuery;
 
 export default class QuickLinks extends Kernel {
+
+    /**
+     * Constructor
+     * 
+     * @since 1.0.0
+     */
     constructor() {
         super();
 
@@ -30,6 +36,11 @@ export default class QuickLinks extends Kernel {
         this.closeBlock();
     }
 
+    /**
+     * Starter button
+     * 
+     * @since 1.0.0
+     */
     starterButton() {
         this.click('.zc-panel-quick-links-starter-button', ($this) => {
             const data = {
@@ -54,6 +65,11 @@ export default class QuickLinks extends Kernel {
         });
     }
 
+    /**
+     * Close block
+     * 
+     * @since 1.0.0
+     */
     closeBlock() {
         $(window).on('zc/close-block.zc-panel', () => {
             if ($('.zc-panel-quick-links-starter-button').hasClass('zc-panel-quick-links-starter-button_active')) {

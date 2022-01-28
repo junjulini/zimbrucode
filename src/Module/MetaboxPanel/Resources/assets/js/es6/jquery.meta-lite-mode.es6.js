@@ -21,13 +21,12 @@
 import BodySize from './module/mode/meta-lite-mode-body-size';
 
 zc.module.panel.addMode(($, panel) => {
+    panel.controlInit(); // Initialization of controls
+    panel.controlHelp(); // Control help window
+    panel.condition();   // Initialization of panel condition checker
+    panel.tooltip();     // Initialization of tooltip
 
-    panel.controlInit(); // Initialization of controls.
-    panel.controlHelp(); // Control help window.
-    panel.condition();   // Initialization of panel condition checker.
-    panel.tooltip();     // Init tooltip
-
-    // Panel body size.
+    // Panel body size
     new BodySize;
 
     // Active section
@@ -35,8 +34,8 @@ zc.module.panel.addMode(($, panel) => {
     panel.addCache('menu/current-section', section);
     $(window).trigger('zc/panel/menu/item-change-ICP', [section]);
 
-    $('.zc-panel-template__panel-loading').hide(); // Hide panel loading text.
-    $('.zc-panel.zc-panel_mode_meta-lite').css('visibility', 'visible');   // Full display panel.
+    $('.zc-panel-template__panel-loading').hide();
+    $('.zc-panel.zc-panel_mode_meta-lite').css('visibility', 'visible');
 
     /**
      * Disable save button

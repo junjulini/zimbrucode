@@ -27,7 +27,7 @@
     overflow: hidden;
     display: flex;
 
-    // Info Notification
+    // Info notification
     &_type_info {
         background: #6FC3DA;
 
@@ -36,7 +36,7 @@
         }
     }
 
-    // Success Notification
+    // Success notification
     &_type_success {
         background: $accent-color__3;
 
@@ -49,7 +49,7 @@
         }
     }
 
-    // Success Notification
+    // Success notification
     &_type_error {
         background: $accent-color__4;
 

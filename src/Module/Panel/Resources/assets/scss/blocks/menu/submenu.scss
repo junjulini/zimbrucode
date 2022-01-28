@@ -127,12 +127,12 @@
             }
         }
 
-        // Modifying : Type - Simple
+        // Type : Simple
         &_type_simple {
             cursor: pointer;
         }
 
-        // Modifying : Type - Title
+        // Type : Title
         &_type_title .zc-panel-submenu__item-only-title {
             font-size: 9px;
             font-weight: 500;
@@ -142,14 +142,14 @@
             cursor: default;
         }
 
-        // Modifying : Type - Delimiter
+        // Type : Delimiter
         &_type_delimiter {
             min-height: 1px;
             border-bottom: 1px solid $bg-color__border__2;
             margin: 20px 20px 10px 20px;
         }
 
-        // Modifying : Type - Text
+        // Type : Text
         &_type_text .zc-panel-submenu__item-text {
             color: $text-color__all;
 

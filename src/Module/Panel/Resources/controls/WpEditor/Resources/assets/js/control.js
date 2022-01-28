@@ -9,7 +9,7 @@
  */
 
 /*
- * Control script : WP Editor
+ * Control script : WP editor
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode

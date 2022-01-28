@@ -16,7 +16,7 @@ use ZimbruCode\Component\Asset\Library\AssetDataCollector;
 use ZimbruCode\Component\Core\Kernel;
 
 /**
- * Class : Namespace handler
+ * Class : Component/Asset/Library : Namespace handler
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -28,6 +28,12 @@ class NamespaceHandler
     protected $namespaceSymbol;
     protected $globalNamespace;
 
+    /**
+     * Constructor
+     *
+     * @param string $namespace   Asset namespace
+     * @since 1.0.0
+     */
     public function __construct(string $namespace = '')
     {
         $this->globalNamespace = Kernel::getGlobal('core/component/asset/filter/namespace/global-namespace');
@@ -41,9 +47,9 @@ class NamespaceHandler
     }
 
     /**
-     * Clear namespace
+     * Prepare namespace
      *
-     * @return string  Namespace
+     * @return string   Namespace
      * @since 1.0.0
      */
     public function name(): string
@@ -52,9 +58,9 @@ class NamespaceHandler
     }
 
     /**
-     * Check if word is namespace
+     * Check if namespace is a word
      *
-     * @return bool   False or True
+     * @return boolean   Result of checking
      * @since 1.0.0
      */
     public function is(): bool
@@ -63,9 +69,9 @@ class NamespaceHandler
     }
 
     /**
-     * Check if exist namespace
+     * Check if namespace is registered
      *
-     * @return bool   False or True
+     * @return boolean   Result of checking
      * @since 1.0.0
      */
     public function has(): bool
@@ -76,12 +82,12 @@ class NamespaceHandler
     /**
      * Add namespace
      *
-     * @param  string             $namespace   Name of namespace
-     * @param  AssetDataCollector $collector   Assets collector
-     * @return NamespaceHandler object
+     * @param  string             $namespace   Namespace value
+     * @param  AssetDataCollector $collector   Assets data collector object
+     * @return self
      * @since 1.0.0
      */
-    public function add(string $namespace = '', AssetDataCollector $collector = null): NamespaceHandler
+    public function add(string $namespace = '', AssetDataCollector $collector = null): self
     {
         if (empty($namespace)) {
             $namespace = Kernel::getGlobal('core/component/asset/filter/namespace/global-namespace');
@@ -100,9 +106,9 @@ class NamespaceHandler
     }
 
     /**
-     * Get assets collector from namespace
+     * Get assets by current namespace
      *
-     * @return array
+     * @return array   Assets data
      * @since 1.0.0
      */
     public function collector(): array

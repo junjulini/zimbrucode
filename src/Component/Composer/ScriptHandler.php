@@ -20,7 +20,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
 /**
- * Class : Script handler
+ * Class : Component/Composer : Script handler
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -33,8 +33,8 @@ class ScriptHandler
     /**
      * Install theme script
      *
-     * @param  Event  $event
-     * @return void   This function does not return a value
+     * @param  Event $event   Event object
+     * @return void
      * @since 1.0.0
      */
     public static function installTheme(Event $event): void
@@ -117,8 +117,8 @@ class ScriptHandler
     /**
      * Install plugin script
      *
-     * @param  Event  $event
-     * @return void   This function does not return a value
+     * @param  Event $event   Event object
+     * @return void
      * @since 1.0.0
      */
     public static function installPlugin(Event $event): void
@@ -195,8 +195,8 @@ class ScriptHandler
     /**
      * Clear cache script
      *
-     * @param  Event  $event
-     * @return void   This function does not return a value
+     * @param  Event $event   Event object
+     * @return void
      * @since 1.0.0
      */
     public static function clearCache(Event $event): void
@@ -237,8 +237,8 @@ class ScriptHandler
     /**
      * Clear var script
      *
-     * @param  Event  $event
-     * @return void   This function does not return a value
+     * @param  Event $event   Event object
+     * @return void
      * @since 1.0.0
      */
     public static function clearVar(Event $event): void
@@ -279,8 +279,8 @@ class ScriptHandler
     /**
      * New module script
      *
-     * @param  Event  $event
-     * @return void   This function does not return a value
+     * @param  Event $event   Event object
+     * @return void
      * @since 1.0.0
      */
     public static function newModule(Event $event): void
@@ -301,7 +301,7 @@ class ScriptHandler
             return;
         }
 
-        if ($module = self::checkModuleName($event, $moduleDir)) {
+        if ($module = self::getModuleName($event, $moduleDir)) {
             $fs = new Filesystem;
 
             try {
@@ -355,13 +355,14 @@ class ScriptHandler
     }
 
     /**
-     * Check module name
+     * Check if module exist
      *
-     * @param  Event  $event
-     * @param  string $moduleDir   App modules dir
+     * @param  Event  $event       Event object
+     * @param  string $moduleDir   Module directory
      * @return string              Module name
+     * @since 1.0.0
      */
-    protected static function checkModuleName(Event $event, $moduleDir): ?string
+    protected static function getModuleName(Event $event, $moduleDir): ?string
     {
         $args = $event->getArguments();
         $name = (!empty($args[0])) ? $args[0] : false;
@@ -381,8 +382,8 @@ class ScriptHandler
     /**
      * New control script
      *
-     * @param  Event  $event
-     * @return void   This function does not return a value
+     * @param  Event $event   Event object
+     * @return void
      * @since 1.0.0
      */
     public static function newControl(Event $event): void
@@ -467,9 +468,10 @@ class ScriptHandler
     /**
      * Check control data
      *
-     * @param  Event  $event
-     * @param  string $moduleDir   App modules dir
+     * @param  Event  $event       Event object
+     * @param  string $moduleDir   Module directory
      * @return array               Control data ( name, module location )
+     * @since 1.0.0
      */
     protected static function checkControlData(Event $event, string $moduleDir): ?array
     {
@@ -499,8 +501,8 @@ class ScriptHandler
     /**
      * Minify script
      *
-     * @param  Event  $event
-     * @return void   This function does not return a value
+     * @param  Event $event   Event object
+     * @return void
      * @since 1.0.0
      */
     public static function minify(Event $event): void

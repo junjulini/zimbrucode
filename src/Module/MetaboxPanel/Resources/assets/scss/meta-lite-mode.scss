@@ -34,6 +34,8 @@
 
 .zc-panel-template {
     position: relative;
+    padding: 10px;
+    padding-top: 0;
 
     body.block-editor-page & {
         border: 1px solid #e2e4e7;
@@ -104,8 +106,4 @@
         bottom: auto;
         top: auto;
     }
-}
-
-.edit-post-layout__metaboxes:not(:empty) {
-    padding-bottom: 24px;
 }

@@ -21,14 +21,20 @@
 const $ = jQuery;
 
 export default class Callback {
+
+    /**
+     * Constructor
+     * 
+     * @since 1.0.0
+     */
     constructor() {
         this.callback = {};
     }
 
     /**
-     * Add panel callback
+     * Add callback
      * 
-     * @return {null} None
+     * @return {null}   None
      * @since 1.0.0
      */
     add(name, callback, additional) {
@@ -45,9 +51,9 @@ export default class Callback {
     }
 
      /**
-     * Run panel callback
+     * Run callback
      * 
-     * @return {null} None
+     * @return {null}   None
      * @since 1.0.0
      */
     run(name) {

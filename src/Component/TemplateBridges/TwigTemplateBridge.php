@@ -27,7 +27,7 @@ use ZimbruCode\Component\TemplateBridges\Helper\TwigFilters;
 use ZimbruCode\Component\TemplateBridges\Helper\TwigFunctions;
 
 /**
- * Class : Twig Template
+ * Class : Component/TemplateBridge : Twig Template
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -47,18 +47,23 @@ class TwigTemplateBridge
         'extensions' => [],
     ];
 
+    /**
+     * Constructor
+     *
+     * @param boolean $loadDefaultShells   Load default shells if value true
+     */
     public function __construct(bool $loadDefaultShells = true)
     {
-        // Set filters
+        // Twig filters
         new TwigFilters($this);
 
-        // Set escapers
+        // Twig escapers
         new TwigEscaper($this);
 
-        // Set functions
+        // Twig functions
         new TwigFunctions($this);
 
-        // Set shells
+        // Default shells
         if ($loadDefaultShells === true) {
             $gs = new GlobalShell;
 
@@ -71,7 +76,7 @@ class TwigTemplateBridge
     /**
      * Get TWIG Environment
      *
-     * @return Environment  TWIG Environment
+     * @return Environment   TWIG Environment
      * @since 1.0.0
      */
     public function getTWIG(): Environment
@@ -86,7 +91,7 @@ class TwigTemplateBridge
     /**
      * Get TWIG filesystem loader
      *
-     * @return FilesystemLoader  TWIG filesystem loader
+     * @return FilesystemLoader   TWIG filesystem loader
      * @since 1.0.0
      */
     public function getLoader(): FilesystemLoader
@@ -101,7 +106,7 @@ class TwigTemplateBridge
     /**
      * Get var
      *
-     * @param  string $name   Name of var
+     * @param string $name   Var name
      * @since 1.0.0
      */
     public function __get(string $name)
@@ -116,8 +121,8 @@ class TwigTemplateBridge
     /**
      * Add var (setter)
      *
-     * @param string $name    Name of var
-     * @param mix    $value   Value of var
+     * @param string $name    Var name
+     * @param mix    $value   Var value
      * @since 1.0.0
      */
     public function __set(string $name, $value)
@@ -132,7 +137,7 @@ class TwigTemplateBridge
     /**
      * Get var
      *
-     * @param  string $name   Name of var
+     * @param string $name   Var name
      * @since 1.0.0
      */
     public function getVar(string $name)
@@ -149,7 +154,7 @@ class TwigTemplateBridge
     /**
      * Get vars
      *
-     * @return array   Vars
+     * @return array   List of vars
      * @since 1.0.0
      */
     public function getVars(): array
@@ -160,9 +165,9 @@ class TwigTemplateBridge
     /**
      * Add var
      *
-     * @param string $name    Name of var
-     * @param mix    $value   Value of var
-     * @return void           This function does not return a value
+     * @param string $name    Var name
+     * @param mix    $value   Var value
+     * @return void
      * @since 1.0.0
      */
     public function addVar(string $name, $value): void
@@ -175,7 +180,7 @@ class TwigTemplateBridge
     /**
      * Add vars
      *
-     * @param array $vars   Vars
+     * @param array $vars   List of vars
      * @since 1.0.0
      */
     public function addVars(array $vars): void
@@ -184,11 +189,11 @@ class TwigTemplateBridge
     }
 
     /**
-     * Add load path
+     * Add path to templates directory
      *
-     * @param string  $path        Path of template
-     * @param string  $namespace   Namespace of templates
-     * @return void                This function does not return a value
+     * @param string  $path        Templates directory path
+     * @param string  $namespace   Templates namespace
+     * @return void
      * @since 1.0.0
      */
     public function addLocationPath(string $path, string $namespace = null): void
@@ -208,7 +213,7 @@ class TwigTemplateBridge
      * Add cache path
      *
      * @param string $cache   Cache path
-     * @return void           This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     public function addCachePath(string $path): void
@@ -228,8 +233,8 @@ class TwigTemplateBridge
      * Add function
      *
      * @param  string   $name     Function name
-     * @param  callable $method   The function that will be called
-     * @return void               This function does not return a value
+     * @param  callable $method   Callback
+     * @return void
      * @since 1.0.0
      */
     public function addFunction(string $name, callable $method): void
@@ -245,8 +250,8 @@ class TwigTemplateBridge
      * Add escaper
      *
      * @param  string   $name     Escaper name
-     * @param  callable $method   The function that will be called
-     * @return void               This function does not return a value
+     * @param  callable $method   Callback
+     * @return void
      * @since 1.0.0
      */
     public function addEscaper(string $name, callable $method): void
@@ -262,8 +267,8 @@ class TwigTemplateBridge
      * Add filter
      *
      * @param  string   $name     Filter name
-     * @param  callable $method   The function that will be called
-     * @return void               This function does not return a value
+     * @param  callable $method   Callback
+     * @return void
      * @since 1.0.0
      */
     public function addFilter(string $name, callable $method): void
@@ -279,7 +284,7 @@ class TwigTemplateBridge
      * Add extension
      *
      * @param  AbstractExtension $extension   Extension object
-     * @return void                           This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     public function addExtension(AbstractExtension $extension): void
@@ -290,7 +295,7 @@ class TwigTemplateBridge
     /**
      * Add loader
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     public function addLoader(): void
@@ -325,7 +330,7 @@ class TwigTemplateBridge
     /**
      * Add Environment
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     public function addEnvironment(): void
@@ -333,32 +338,31 @@ class TwigTemplateBridge
         $cache      = ($this->cachePath) ? new FilesystemCache($this->cachePath, FilesystemCache::FORCE_BYTECODE_INVALIDATION) : false;
         $this->twig = new Environment($this->getLoader(), [
             'cache'       => $cache,
-            //'auto_reload' => Kernel::dop(true, false),
-            'auto_reload' => true,
+            'auto_reload' => Kernel::getGlobal('core/twig-environment-auto-reload'),
         ]);
 
-        // Set functions
+        // Functions
         if (!empty($this->data['functions'])) {
             foreach ($this->data['functions'] as $name => $method) {
                 $this->twig->addFunction(new TwigFunction($name, $method));
             }
         }
 
-        // Set escapers
+        // Escapers
         if (!empty($this->data['escapers'])) {
             foreach ($this->data['escapers'] as $name => $method) {
                 $this->twig->getExtension(\Twig\Extension\EscaperExtension::class)->setEscaper($name, $method);
             }
         }
 
-        // Set filters
+        // Filters
         if (!empty($this->data['filters'])) {
             foreach ($this->data['filters'] as $name => $method) {
                 $this->twig->addFilter(new TwigFilter($name, $method));
             }
         }
 
-        // Set extensions
+        // Extensions
         if (!empty($this->data['extensions'])) {
             foreach ($this->data['extensions'] as $extension) {
                 $this->twig->addExtension($extension);
@@ -372,8 +376,8 @@ class TwigTemplateBridge
     /**
      * Render template
      *
-     * @param  string $template template name
-     * @return string           html
+     * @param  string $template   Template name
+     * @return string             Html content
      * @since 1.0.0
      */
     public function renderTemplate(string $template): string
@@ -388,8 +392,8 @@ class TwigTemplateBridge
     /**
      * Render
      *
-     * @param  string $template   Template start
-     * @return string             Html
+     * @param  string $template   Template name
+     * @return string             Html content
      * @since 1.0.0
      */
     public function render(string $template = ''): string

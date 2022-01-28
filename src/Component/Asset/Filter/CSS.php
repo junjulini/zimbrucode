@@ -15,7 +15,7 @@ use ZimbruCode\Component\Asset\Library\AssetData;
 use ZimbruCode\Component\Asset\Library\Filter;
 
 /**
- * Class : Filter - CSS
+ * Class : Component/Asset/Filter : CSS
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -27,7 +27,7 @@ class CSS extends Filter
      * Each asset
      *
      * @param  AssetData $asset   Asset data
-     * @return void               This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     public function each(AssetData $asset): void

@@ -11,11 +11,11 @@
 
 namespace ZimbruCode\Module\ThemeAdaptor\Library\TwigExtension\HavePostsExtension;
 
-use Twig\Node\Node;
 use Twig\Compiler;
+use Twig\Node\Node;
 
 /**
- * Twig node class : Have posts
+ * Class : Module/ThemeAdaptor/Library/TwigExtension/HavePostsExtension : Have posts - Node
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -23,6 +23,16 @@ use Twig\Compiler;
  */
 class HavePostsNode extends Node
 {
+    /**
+     * Constructor
+     *
+     * @param Node        $body     "Body" node
+     * @param Node|null   $values   "Values" node
+     * @param Node|null   $else     "Else" node
+     * @param integer     $lineno
+     * @param string|null $tag
+     * @since 1.0.0
+     */
     public function __construct(Node $body, ?Node $values, ?Node $else, int $lineno, string $tag = null)
     {
         $nodes = ['body' => $body];
@@ -38,6 +48,13 @@ class HavePostsNode extends Node
         parent::__construct($nodes, [], $lineno, $tag);
     }
 
+    /**
+     * Compile
+     *
+     * @param Compiler $compiler   Compiler object
+     * @return void
+     * @since 1.0.0
+     */
     public function compile(Compiler $compiler): void
     {
         $compiler->addDebugInfo($this);
@@ -57,17 +74,18 @@ class HavePostsNode extends Node
                 ->indent()
                 ->write('global $wp_query;' . "\n")
                 ->write('$query = $wp_query;' . "\n")
-            ->outdent()
+                ->outdent()
             ->write('}' . "\n")
             ->write('if ($query->have_posts()) {' . "\n")
                 ->indent()
                 ->subcompile($this->getNode('body'));
 
         if ($this->hasNode('else')) {
-            $compiler->outdent()
+            $compiler
+                ->outdent()
                 ->write('} else {' . "\n")
-                    ->indent()
-                    ->subcompile($this->getNode('else'));
+                ->indent()
+                ->subcompile($this->getNode('else'));
         }
 
         $compiler->outdent()->write('}' . "\n");

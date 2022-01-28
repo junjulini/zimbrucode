@@ -22,7 +22,7 @@ use ZimbruCode\Component\Handler\DBHandler;
 use ZimbruCode\Component\Service\AppService;
 
 /**
- * Class : Application Kernel
+ * Class : Application kernel
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -33,47 +33,47 @@ abstract class AppKernel extends Kernel
     use AssetTrait;
 
     /**
-     * Initialization new app
+     * Initializing a new application
      *
-     * @param  string      $slug           Slug name of global var
-     * @param  string      $mode           Mode of app ( theme / plugin )
-     * @param  bool        $dev            Dev environment
-     * @param  string      $rootPath       ( Only for plugin mode ) plugin file path
-     * @param  bool        $session        Disable or enable "session_start()"
-     * @param  ClassLoader $composer       Instance of ClassLoader
-     * @return void                        This function does not return a value
+     * @param  string      $slug       Global variable slug name
+     * @param  string      $mode       Application mode ( theme / plugin )
+     * @param  boolean     $dev        Development environment
+     * @param  string      $rootPath   Plugin file path ( Plugin mode only )
+     * @param  boolean     $session    Status of "session_start()"
+     * @param  ClassLoader $composer   Instance of ClassLoader ( Composer )
+     * @return void
      * @since 1.0.0
      */
     final public function __construct(string $slug, string $mode = 'theme', bool $dev = false, string $rootPath = '', bool $session = false, ClassLoader $composer = null)
     {
-        // Checking doubling of application
+        // Check if the application is duplicated
         $this->__checkAppDuplicate($slug);
 
         // Session start
         $this->__initSession($session);
 
-        // Initialization of global configs
+        // Initializing global configs
         new GlobalConfig;
 
-        // Set DEV environment
+        // Set up development environment
         $this->__setEnvironment($dev);
 
-        // Initialization of global library
+        // Global library initialization
         new GlobalLibrary;
 
         // Application instance
         self::addGlobalCache('app-instance', $this);
 
-        // Initialization of services [mode : before]
+        // Service initialization [mode : before]
         $this->__initServices('before', $composer, $rootPath, $slug);
 
         // Application configs
         $this->__appConfig($mode);
 
-        // Initialization of services [mode : after]
+        // Service initialization [mode : after]
         $this->__initServices('after');
 
-        // Set modules namespace
+        // Set module namespace
         self::module()->addNamespace($this->getNamespace() . '\\' . self::getGlobal('app/module-namespace-dir'));
 
         // Run setup
@@ -82,32 +82,33 @@ abstract class AppKernel extends Kernel
         // Load modules from config file
         $this->__loadModules();
 
-        // Run theme adaptor
+        // Launch theme adapter
         $this->__initThemeAdaptor();
 
         // Callback after load all modules
         $this->__callbackAfter();
 
-        // Load textdomain
+        // Load text domain
         $this->addAction('init', function (): void {
             load_theme_textdomain('zc', __DIR__ . '/Resources/languages');
         });
     }
 
     /**
-     * Checking doubling of application
+     * Check if the application is duplicated
      *
      * @param string $slug   Slug (GVS)
-     * @return void          This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     private function __checkAppDuplicate(string $slug): void
     {
         $appClass = str_replace('\\', '-', get_class($this));
+
         if (!self::getGlobal("@/app-class/{$appClass}")) {
             self::addGlobal("@/app-class/{$appClass}", true);
 
-            // Set global var slug (GVS)
+            // Set global slug variable (GVS)
             self::addGlobalVarSlug($slug);
         } else {
             throw new RuntimeException("ZE0001 - This application is duplicated : {$appClass}");
@@ -115,10 +116,10 @@ abstract class AppKernel extends Kernel
     }
 
     /**
-     * Init session
+     * Session initialization
      *
-     * @param bool $session   Enable/Disable session
-     * @return void           This function does not return a value
+     * @param boolean $session   Session status
+     * @return void
      * @since 1.0.0
      */
     private function __initSession(bool $session): void
@@ -131,20 +132,20 @@ abstract class AppKernel extends Kernel
     /**
      * Initialization of global configs and global library
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     private function __initGlobalConfigAndLibrary(): void
     {
-        new GlobalConfig;  // Set global configs
-        new GlobalLibrary; // Set global library
+        new GlobalConfig;
+        new GlobalLibrary;
     }
 
     /**
-     * Set environment
+     * Set up development environment
      *
-     * @param bool $dev   True/False if Dev environment
-     * @return void       This function does not return a value
+     * @param boolean $dev   The status of the development environment
+     * @return void
      * @since 1.0.0
      */
     private function __setEnvironment(bool $dev): void
@@ -156,12 +157,12 @@ abstract class AppKernel extends Kernel
     }
 
     /**
-     * Init services
+     * Initialization of services
      *
-     * @param string      $mode       Mode of loading services
-     * @param ClassLoader $composer   Instance of Composer ClassLoader
-     * @param string      $rootPath   File path where was initialized app class
-     * @return void                   This function does not return a value
+     * @param string      $mode       Service loading mode
+     * @param ClassLoader $composer   Instance of ClassLoader (Composer)
+     * @param string      $rootPath   The path to the file where the application class was initialized
+     * @return void
      * @since 1.0.0
      */
     private function __initServices(string $mode = 'before', ClassLoader $composer = null, string $rootPath = null, string $slug = ''): void
@@ -183,11 +184,11 @@ abstract class AppKernel extends Kernel
     }
 
     /**
-     * Set app mode
+     * Set up application mode
      *
-     * @param string  $mode    App mode
-     * @param bool    $check   Check if mode is different
-     * @return void            This function does not return a value
+     * @param string  $mode    Application mode
+     * @param boolean $check   Check if mode is different
+     * @return void
      * @since 1.0.0
      */
     private function __setMode(string $mode, bool $check = false): void
@@ -213,7 +214,7 @@ abstract class AppKernel extends Kernel
      * Init app configs
      *
      * @param string $mode   App mode
-     * @return void          This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     private function __appConfig(string $mode): void
@@ -225,9 +226,9 @@ abstract class AppKernel extends Kernel
     }
 
     /**
-     * Merge custom app config with global config and init config method
+     * Combine the custom configuration of the application with the global configuration and call the "config" method
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     private function __customAppConfig(): void
@@ -246,16 +247,16 @@ abstract class AppKernel extends Kernel
             }
         }
 
-        // Set app configs
+        // Call "config" method
         if (method_exists($this, 'config')) {
             $this->config();
         }
     }
 
     /**
-     * Set default app configs
+     * Set up default application configs
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.1
      */
     private function __defaultAppConfig(): void
@@ -294,7 +295,7 @@ abstract class AppKernel extends Kernel
     /**
      * Load modules from config file
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     private function __loadModules(): void
@@ -309,9 +310,9 @@ abstract class AppKernel extends Kernel
     }
 
     /**
-     * Initialization of ThemeAdaptor module
+     * Initializing the "ThemeAdaptor" module
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     private function __initThemeAdaptor(): void
@@ -324,7 +325,7 @@ abstract class AppKernel extends Kernel
     /**
      * Callback after load all modules
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     private function __callbackAfter(): void
@@ -337,9 +338,9 @@ abstract class AppKernel extends Kernel
     }
 
     /**
-     * Returns the app name ( the class short name )
+     * Returns the name of the application (short name of the class)
      *
-     * @return string   The app name
+     * @return string   Application name
      * @since 1.0.0
      */
     final public function getName(): string
@@ -348,9 +349,9 @@ abstract class AppKernel extends Kernel
     }
 
     /**
-     * Gets the app namespace
+     * Gets the namespace of the application
      *
-     * @return string   The app namespace
+     * @return string   Application namespace
      * @since 1.0.0
      */
     final public function getNamespace(): string
@@ -359,9 +360,9 @@ abstract class AppKernel extends Kernel
     }
 
     /**
-     * Get the app path
+     * Get application path
      *
-     * @return string   App path
+     * @return string   Application path
      * @since 1.0.0
      */
     final public function getPath(string $path = ''): string
@@ -370,9 +371,9 @@ abstract class AppKernel extends Kernel
     }
 
     /**
-     * Gets the app URL
+     * Gets the url of the application
      *
-     * @return string   The app URL
+     * @return string   Application URL
      * @since 1.0.0
      */
     final public function getURL(string $url = ''): string
@@ -383,7 +384,7 @@ abstract class AppKernel extends Kernel
     /**
      * Get resource path
      *
-     * @param  string $path   Additional part of path
+     * @param  string $path   Additional part of the path
      * @return string         Resource path
      * @since 1.0.0
      */
@@ -395,7 +396,7 @@ abstract class AppKernel extends Kernel
     /**
      * Get resource URL
      *
-     * @param  string $url   Additional part of URL
+     * @param  string $url   Additional part of the URL
      * @return string        Resource URL
      * @since 1.0.0
      */
@@ -405,9 +406,9 @@ abstract class AppKernel extends Kernel
     }
 
     /**
-     * Get root file path ( only for plugin mode )
+     * Get the path to the root file
      *
-     * @return string   Plugin file path
+     * @return string   The path to the root file
      * @since 1.0.0
      */
     final public function getRootFilePath(): string
@@ -416,7 +417,7 @@ abstract class AppKernel extends Kernel
     }
 
     /**
-     * App setup
+     * Application setup
      *
      * @since 1.0.0
      */

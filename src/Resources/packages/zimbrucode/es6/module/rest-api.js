@@ -9,7 +9,7 @@
  */
 
 /*
- * Script : ZimbruCode/Module/PopUp
+ * Script : ZimbruCode/Module : RestAPI
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -21,32 +21,88 @@
 const $ = jQuery;
 
 export default class RestAPI {
+
+    /**
+     * Constructor
+     * 
+     * @param {string} url     Rest URl
+     * @param {string} nonce   Nonce
+     * @since 1.0.0
+     */
     constructor(url, nonce) {
         this.restURL = url;
         this.restNonce = nonce;
     }
 
+    /**
+     * Get item
+     * 
+     * @param {string} path   Rest API path
+     * @param {object} data   Action data
+     * @return {mix}          Action result
+     * @since 1.0.0
+     */
     get(path, data = {}) {
         return this.__ajax('GET', path, data);
     }
 
+    /**
+     * Create item
+     * 
+     * @param {string} path   Rest API path
+     * @param {object} data   Action data
+     * @return {mix}          Action result
+     * @since 1.0.0
+     */
     create(path, data = {}) {
         return this.__ajax('POST', path, data);
     }
 
+    /**
+     * Update item
+     * 
+     * @param {string} path   Rest API path
+     * @param {object} data   Action data
+     * @return {mix}          Action result
+     * @since 1.0.0
+     */
     update(path, data = {}) {
         return this.__ajax('PUT', path, data);
     }
 
+    /**
+     * Delete item
+     * 
+     * @param {string} path   Rest API path
+     * @param {object} data   Action data
+     * @return {mix}          Action result
+     * @since 1.0.0
+     */
     delete(path) {
         return this.__ajax('DELETE', path);
     }
 
+    /**
+     * Get full path
+     * 
+     * @param {string} path    RestAPI path
+     * @return {string}        Full path
+     * @since 1.0.0
+     */
     query(path) {
         return this.restURL + path;
     }
 
-    __ajax(method = 'GET', path, data) {
+    /**
+     * Ajax
+     * 
+     * @param {string} method    Ajax method
+     * @param {string} path      RestAPI path
+     * @param {object} data      Options to be passed to the server
+     * @return {mix}             Action result
+     * @since 1.0.0
+     */
+    __ajax(method = 'GET', path, data = {}) {
         const callbacks = {};
 
         const options = {

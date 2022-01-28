@@ -14,7 +14,7 @@ namespace ZimbruCode\Component\Common;
 use RuntimeException;
 
 /**
- * Class : Callback
+ * Class : Component/Common : Callback
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -27,10 +27,10 @@ class Callback
     /**
      * Add callback
      *
-     * @param string   $name       Name of callback
-     * @param callable $callback   Function ( object )
-     * @param string   $id         Return identifier
-     * @return void                This function does not return a value
+     * @param string   $name       Callback name
+     * @param callable $callback   Function
+     * @param string   $id         Identifier
+     * @return void
      * @since 1.0.0
      */
     public function add(string $name, callable $callback, string $id = ''): void
@@ -47,7 +47,9 @@ class Callback
     /**
      * Run callback
      *
-     * @return array   Functions results
+     * @param  string $name   Callback name
+     * @param  mix    ...$args
+     * @return array          Callbacks results
      * @since 1.0.0
      */
     public function run(string $name, ...$args)
@@ -57,6 +59,7 @@ class Callback
         }
 
         $output = [];
+
         if (!empty($this->callback[$name])) {
             foreach ($this->callback[$name] as $key => $function) {
                 if (is_callable($function)) {
@@ -71,8 +74,8 @@ class Callback
     /**
      * Remove callback
      *
-     * @param  string $name   Name of callback
-     * @return void           This function does not return a value
+     * @param  string $name   Callback name
+     * @return void
      * @since 1.0.0
      */
     public function remove(string $name): void
@@ -85,7 +88,7 @@ class Callback
     /**
      * Remove all callback's
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     public function flush(): void

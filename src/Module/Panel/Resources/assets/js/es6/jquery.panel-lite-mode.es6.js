@@ -9,7 +9,7 @@
  */
 
 /*
- * Script : Panel : Lite mode
+ * Script : Panel - Lite mode
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -25,17 +25,17 @@ import QuickLinks    from './module/header/quick-links';
 zc.module.panel.addMode(($, panel) => {
 
     setTimeout(() => {
-        panel.closeBlock();          // Init callback of close block.
-        panel.controlInit();         // Initialization of controls.
-        panel.controlHelp();         // Control help window.
-        panel.scrollbar();           // Initialization of scroll bar in panel.
-        panel.noMetaScaleIfMobile(); // Disable meta scale if mobile device.
-        panel.condition();           // Initialization of panel condition checker.
+        panel.closeBlock();          // Initializing of "close block"
+        panel.controlInit();         // Initialization of controls
+        panel.controlHelp();         // Control help window
+        panel.scrollbar();           // Initialization of scroll bar in panel
+        panel.noMetaScaleIfMobile(); // Disable meta scale if mobile device
+        panel.condition();           // Initialization of panel condition checker
         panel.ifChanged();           // Check if some changes was made
-        panel.tooltip();             // Init tooltip
+        panel.tooltip();             // Initialization of tooltip
 
-        new BodySize;                 // Panel body size.
-        const oh = new OptionHandler; // Save/Reset function.
+        new BodySize;                 // Panel body size
+        const oh = new OptionHandler; // Options handler
         new QuickLinks;               // Initialization of panel button "Quick Links".
 
         panel.addCache('option-handler', oh);
@@ -45,8 +45,8 @@ zc.module.panel.addMode(($, panel) => {
         panel.addCache('menu/current-section', section);
         $(window).trigger('zc/panel/menu/item-change-ICP', [section]);
 
-        $('.zc-panel-template__panel-loading').hide(); // Hide panel loading text.
-        $('.zc-panel').css('visibility', 'visible');   // Full display panel.
+        $('.zc-panel-template__panel-loading').hide();
+        $('.zc-panel').css('visibility', 'visible');
 
         $(window).trigger('zc/panel/show-content');
     }, 100);

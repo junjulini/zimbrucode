@@ -20,7 +20,7 @@ use ZimbruCode\Module\Panel\Library\ControlManager;
 use ZimbruCode\Module\Panel\Library\Shell\ControlShell;
 
 /**
- * Class : Control render - Twig Extension
+ * Class : Module/Panel/Library/TwigExtension : Control render - Twig Extension
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -30,21 +30,53 @@ class ControlsRenderTwigExtension extends AbstractExtension
 {
     protected $__panel;
 
+    /**
+     * Constructor
+     *
+     * @param ControlManager $panel   Panel object
+     * @since 1.0.0
+     */
     public function __construct(ControlManager $panel)
     {
         $this->__panel = $panel;
     }
 
+    /**
+     * Get name
+     *
+     * @return string   Name
+     * @since 1.0.0
+     */
+    public function getName(): string
+    {
+        return 'controls_render';
+    }
+
+    /**
+     * Get functions
+     *
+     * @return array
+     * @since 1.0.0
+     */
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('render', [$this, '__ext_render'], ['needs_environment' => true, 'needs_context' => true, 'is_safe' => ['all']]),
+            new TwigFunction('render', [$this, '__callback_render'], ['needs_environment' => true, 'needs_context' => true, 'is_safe' => ['all']]),
         ];
     }
 
-    public function __ext_render(Environment $env, $context, $controls = [])
+    /**
+     * Callback : Render
+     *
+     * @param Environment $env        Environment object
+     * @param array       $context    Context data
+     * @param array       $controls   List of controls
+     * @return string                 Action result
+     * @since 1.0.0
+     */
+    public function __callback_render(Environment $env, array $context, array $controls = []): string
     {
-        $result = null;
+        $result = '';
 
         if (!empty($controls)) {
             foreach ($controls as $control) {
@@ -78,10 +110,5 @@ class ControlsRenderTwigExtension extends AbstractExtension
         }
 
         return $result;
-    }
-
-    public function getName(): string
-    {
-        return 'controls_render';
     }
 }

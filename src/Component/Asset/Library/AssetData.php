@@ -19,7 +19,7 @@ use ZimbruCode\Component\Common\Tools;
 use ZimbruCode\Component\Core\Kernel;
 
 /**
- * Class : Asset data
+ * Class : Component/Asset/Library : Asset data
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -32,6 +32,11 @@ class AssetData
     protected $data;
     protected $location;
 
+    /**
+     * Constructor
+     * 
+     * @since 1.0.0
+     */
     public function __construct($asset, LocationDetector $location)
     {
         if ($asset) {
@@ -81,8 +86,9 @@ class AssetData
     /**
      * Asset type
      *
-     * @param  string $type       Option for asset type
-     * @return string|AssetData   Asset type
+     * @param string  $type    Asset type
+     * @param boolean $check   Check if the value exists before setting the asset type
+     * @return string|AssetData
      * @since 1.0.0
      */
     public function type(string $type = '', bool $check = false)
@@ -106,8 +112,9 @@ class AssetData
     /**
      * Asset name
      *
-     * @param  string $name       Option for asset name
-     * @return string|AssetData   Asset name
+     * @param  string  $name    Asset name
+     * @param  boolean $check   Check if the value exists before setting the asset name
+     * @return string|AssetData
      * @since 1.0.0
      */
     public function name(string $name = '', bool $check = false)
@@ -129,10 +136,11 @@ class AssetData
     }
 
     /**
-     * Asset url
+     * Asset URL
      *
-     * @param  string $url        Option for asset url
-     * @return string|AssetData   Asset url
+     * @param  string  $url     Asset URL
+     * @param  boolean $check   Check if the value exists before setting the asset name
+     * @return string|AssetData
      * @since 1.0.0
      */
     public function url(string $url = '', bool $check = false)
@@ -156,8 +164,9 @@ class AssetData
     /**
      * Asset deps
      *
-     * @param  array $deps       Option for asset deps
-     * @return array|AssetData   Asset deps
+     * @param  array   $deps    Asset deps
+     * @param  boolean $check   Check if the value exists before setting the asset deps
+     * @return array|AssetData
      * @since 1.0.0
      */
     public function deps(array $deps = [], bool $check = false)
@@ -181,8 +190,9 @@ class AssetData
     /**
      * Asset version
      *
-     * @param  string $version    Option for asset version
-     * @return string|AssetData   Asset version
+     * @param  string  $version   Asset version
+     * @param  boolean $check     Check if the value exists before setting the asset version
+     * @return string|AssetData
      * @since 1.0.0
      */
     public function version(string $version = '', bool $check = false)
@@ -204,10 +214,29 @@ class AssetData
     }
 
     /**
-     * Asset media
+     * Asset dynamic version
      *
-     * @param  bool $media      Option for asset media
-     * @return bool|AssetData   Asset media
+     * @return string   Dynamic version
+     * @since 1.0.0
+     */
+    public function dynamicVersion(): string
+    {
+        $version = Kernel::getGlobal('app/version');
+        $hash    = hash_file('adler32', $this->getPath());
+
+        if ($hash) {
+            $version = "{$version}.{$hash}";
+        }
+
+        return $version;
+    }
+
+    /**
+     * Asset media status
+     *
+     * @param  boolean $media   Asset media status
+     * @param  boolean $check   Check if the value exists before setting the asset media
+     * @return boolean|AssetData
      * @since 1.0.0
      */
     public function media(bool $media = null, bool $check = false)
@@ -229,10 +258,11 @@ class AssetData
     }
 
     /**
-     * Asset footer : if script set for footer
+     * Asset footer status ( If script set for footer )
      *
-     * @param  bool $footer     Option for asset footer
-     * @return bool|AssetData   Asset footer
+     * @param  boolean $footer   Asset footer status
+     * @param  boolean $check    Check if the value exists before setting the asset footer
+     * @return boolean|AssetData
      * @since 1.0.0
      */
     public function footer(bool $footer = null, bool $check = false)
@@ -254,21 +284,21 @@ class AssetData
     }
 
     /**
-     * Remove all asset data
+     * Clear all asset data
      *
-     * @return AssetData object
+     * @return self
      * @since 1.0.0
      */
-    public function flush(): AssetData
+    public function flush(): self
     {
         $this->data = Kernel::getGlobal('core/component/asset/default-data');
         return $this;
     }
 
     /**
-     * Get raw identification of asset
+     * Get raw asset data
      *
-     * @return string   Identification of asset
+     * @return string   Raw asset data
      * @since 1.0.0
      */
     public function raw(): string
@@ -277,32 +307,20 @@ class AssetData
     }
 
     /**
-     * Additional info of asset
+     * Additional information about the asset
      *
-     * @return SplFileInfo object
+     * @return SplFileInfo
      * @since 1.0.0
      */
-    public function info(): object
+    public function info(): SplFileInfo
     {
         return $this->info;
     }
 
-    public function dynamicVersion()
-    {
-        $version = Kernel::getGlobal('app/version');
-        $hash    = hash_file('adler32', $this->getPath());
-
-        if ($hash) {
-            $version = "{$version}.{$hash}";
-        }
-
-        return $version;
-    }
-
     /**
-     * Check if asset is file
+     * Check if the asset is a file
      *
-     * @return bool   True of False
+     * @return boolean   Result of checking
      * @since 1.0.0
      */
     public function isFile(): bool
@@ -310,13 +328,19 @@ class AssetData
         return ($this->info->getExtension()) ? true : false;
     }
 
+    /**
+     * Asset file type
+     *
+     * @return string|AssetData
+     * @since 1.0.0
+     */
     public function fileType()
     {
         return $this->type() ?: $this->info()->getExtension();
     }
 
     /**
-     * Get asset path if is file
+     * Get the path of the asset
      *
      * @return string   Asset path
      * @since 1.0.0
@@ -331,7 +355,7 @@ class AssetData
     }
 
     /**
-     * Get asset URL
+     * Get the URL of the asset
      *
      * @return string   Asset URL
      * @since 1.0.0
@@ -341,16 +365,23 @@ class AssetData
         return Tools::getURL($this->getPath());
     }
 
-    public function addData(array $data): AssetData
+    /**
+     * Add asset data
+     *
+     * @param  array $data   Asset data
+     * @return self
+     * @since 1.0.0
+     */
+    public function addData(array $data): self
     {
         $this->data = $data;
         return $this;
     }
 
     /**
-     * Asset data
+     * Get asset data
      *
-     * @return array   All asset data
+     * @return array   Asset data
      * @since 1.0.0
      */
     public function getData(): array
@@ -361,11 +392,12 @@ class AssetData
     /**
      * Add additional asset data
      *
-     * @param string $id    Identifier
-     * @param array  $data  Additional data
+     * @param  string $id     Identifier
+     * @param  array  $data   Additional data
+     * @return self
      * @since 1.0.0
      */
-    public function addAdditionalData(string $id, array $data): AssetData
+    public function addAdditionalData(string $id, array $data): self
     {
         if ($id && !empty($data)) {
             $this->data['additional-data'][$id] = $data;
@@ -378,19 +410,19 @@ class AssetData
      * Get additional asset data
      *
      * @param  string $id   Identifier
-     * @return array|bool   Additional asset data
+     * @return array        Additional asset data
      * @since 1.0.0
      */
-    public function getAdditionalData(string $id)
+    public function getAdditionalData(string $id): array
     {
-        return $this->data['additional-data'][$id] ?? false;
+        return $this->data['additional-data'][$id] ?? [];
     }
 
     /**
      * Generate asset name
      *
-     * @param  bool $withCoreSlug   With next prefix : zc
-     * @return string               Generated asset name
+     * @param  boolean $withCoreSlug   With next prefix : zc
+     * @return string                  Name of the generated asset
      * @since 1.0.0
      */
     public function generateName(bool $withCoreSlug = true): string

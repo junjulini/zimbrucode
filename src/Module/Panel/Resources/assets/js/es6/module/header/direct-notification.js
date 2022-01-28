@@ -24,6 +24,12 @@ import TPL__direct_notification from './tpl/direct-notification.html';
 const $ = jQuery;
 
 export default class DirectNotification extends Kernel {
+
+    /**
+     * Constructor
+     * 
+     * @since 1.0.0
+     */
     constructor() {
         super();
 

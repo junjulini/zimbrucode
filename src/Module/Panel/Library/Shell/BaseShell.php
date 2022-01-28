@@ -17,7 +17,7 @@ use ZimbruCode\Component\Core\ModuleKernel;
 use ZimbruCode\Component\TemplateBridges\Helper\ShellKernel;
 
 /**
- * Class : Base shell
+ * Class : Module/Panel/Library/Shell : Base shell
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -28,6 +28,12 @@ class BaseShell extends ShellKernel
     protected $panel;
     protected $customMethod = [];
 
+    /**
+     * Constructor
+     *
+     * @param ModuleKernel $panel   Object
+     * @since 1.0.0
+     */
     public function __construct(ModuleKernel $panel)
     {
         $this->panel = $panel;
@@ -50,13 +56,13 @@ class BaseShell extends ShellKernel
      * @return string   Module namespace
      * @since 1.0.0
      */
-    public function getModuleNamespace(): string 
+    public function getModuleNamespace(): string
     {
         return $this->panel->getModuleNamespace();
     }
 
     /**
-     * Get module path
+     * Get the path to the module directory
      *
      * @return string   Module path
      * @since 1.0.0
@@ -82,7 +88,7 @@ class BaseShell extends ShellKernel
      *
      * @param  string $setting   Setting name
      * @param  mix    $default   Default value
-     * @return string/array      Settings or single setting
+     * @return string/array      Action result
      * @since 1.0.0
      */
     public function getModuleSetting(...$args)
@@ -91,9 +97,9 @@ class BaseShell extends ShellKernel
     }
 
     /**
-     * Get build options
+     * Get "build options"
      *
-     * @return array   Options
+     * @return array   List of options
      * @since 1.0.0
      */
     public function getBuildSettings(): array
@@ -115,7 +121,7 @@ class BaseShell extends ShellKernel
     /**
      * Get resource path
      *
-     * @param  string $path   Additional part of path
+     * @param  string $path   Additional part of the path
      * @return string         Resource path
      * @since 1.0.0
      */
@@ -127,7 +133,7 @@ class BaseShell extends ShellKernel
     /**
      * Get resource URL
      *
-     * @param  string $url   Additional part of URL
+     * @param  string $url   Additional part of the URL
      * @return string        Resource URL
      * @since 1.0.0
      */
@@ -139,6 +145,7 @@ class BaseShell extends ShellKernel
     /**
      * Debug
      *
+     * @return void
      * @since 1.0.0
      */
     public function debug(): void
@@ -156,10 +163,10 @@ class BaseShell extends ShellKernel
     /**
      * Get panel mode instance
      *
-     * @return ModuleKernel  Panel mode
+     * @return ModuleKernel
      * @since 1.0.0
      */
-    public function getModeInstance()
+    public function getModeInstance(): ModuleKernel
     {
         return $this->panel;
     }

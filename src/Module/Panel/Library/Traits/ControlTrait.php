@@ -15,7 +15,7 @@ use RuntimeException;
 use ZimbruCode\Component\Common\Tools;
 
 /**
- * Trait : Control base functions
+ * Trait : Module/Panel/Library/Traits : Control base functions
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -26,7 +26,7 @@ trait ControlTrait
     /**
      * Initialization of controls
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     public function initControls(): void
@@ -35,10 +35,10 @@ trait ControlTrait
     }
 
     /**
-     * Merge controls localize vars with custom
+     * Combine assets variables with custom variables
      *
-     * @param  array  $data   You custom vars
-     * @return array          Prepared data
+     * @param  array  $data   Custom variables
+     * @return array          Combine assets variables
      * @since 1.0.0
      */
     public function mergeControlsLocalizeVars(array $data): array

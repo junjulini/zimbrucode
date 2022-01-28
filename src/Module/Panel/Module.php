@@ -30,25 +30,25 @@ class Module extends ModuleKernel
     /**
      * Module setup
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     public function setup(): void
     {
         if ($this->getModuleSetting()) {
 
-            // Check build settings if not empty
+            // Check if "build settings" are not empty
             if (!$this->getModuleSetting('build-settings', [])) {
                 if (!file_exists($this->getModuleSetting('build-settings-file'))) {
                     throw new InvalidArgumentException('ZE0125');
                 }
             }
 
-            // Panel hook before
+            // Panel hook : Before
             do_action('zc/module/panel/setup_before', $this);
             do_action("zc/module/panel/{$this->getModuleSetting('slug')}/setup_before", $this);
 
-            // Preparing build settings
+            // Preparing "build settings"
             $this->prepBuildSettings();
 
             // Check panel mode
@@ -57,22 +57,22 @@ class Module extends ModuleKernel
             // Preparing panel settings
             $this->prepSettings();
 
-            // Load asset handler
+            // Load "asset handler"
             $this->addModuleData('asset', new AssetHandler($this));
 
             // Load panel mode
             $this->loadMode();
 
-            // Panel hook after
+            // Panel hook : After
             do_action('zc/module/panel/setup_after', $this);
             do_action("zc/module/panel/{$this->getModuleSetting('slug')}/setup_after", $this);
         }
     }
 
     /**
-     * Preparing build settings
+     * Preparing "build settings"
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     protected function prepBuildSettings(): void
@@ -85,9 +85,9 @@ class Module extends ModuleKernel
     }
 
     /**
-     * Check panel mode
+     * Check the panel mode type
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     protected function checkMode(): void
@@ -117,7 +117,7 @@ class Module extends ModuleKernel
     /**
      * Preparing panel settings
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     protected function prepSettings(): void
@@ -133,7 +133,7 @@ class Module extends ModuleKernel
     /**
      * Load panel mode
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     protected function loadMode(): void
@@ -150,6 +150,7 @@ class Module extends ModuleKernel
      *
      * @param string $mode    Mode name
      * @param string $class   Mode class name
+     * @return ModuleKernel
      * @since 1.0.0
      */
     public function addCustomMode(string $mode, string $class): ModuleKernel
@@ -172,6 +173,7 @@ class Module extends ModuleKernel
      *
      * @param string $path        Controls namespace path
      * @param string $namespace   Controls namespace
+     * @return ModuleKernel
      * @since 1.0.0
      */
     public function addCustomControlsNamespace(string $path, string $namespace): ModuleKernel

@@ -23,6 +23,12 @@ import Kernel from './kernel';
 const $ = jQuery;
 
 export default class Menu extends Kernel {
+
+    /**
+     * Constructor
+     * 
+     * @since 1.0.0
+     */
     constructor() {
         super();
 
@@ -32,14 +38,14 @@ export default class Menu extends Kernel {
         this.submenuItem    = false;
         this.menuParentItem = false;
 
-        this.desktop(); // Init desktop mode
-        this.mobile();  // Init mobile mode
+        this.desktop();
+        this.mobile();
     }
 
     /**
      * Remove condition : submenu-active
      * 
-     * @return {null} None
+     * @return {null}   None
      * @since 1.0.0
      */
     removeSubmenuActive() {
@@ -50,7 +56,7 @@ export default class Menu extends Kernel {
     /**
      * Add condition : submenu-active
      * 
-     * @return {null} None
+     * @return {null}   None
      * @since 1.0.0
      */
     addSubmenuActive() {
@@ -59,9 +65,9 @@ export default class Menu extends Kernel {
     }
 
     /**
-     * Is submenu active
+     * Check if submenu is activated
      * 
-     * @return {null} None
+     * @return {null}   None
      * @since 1.0.0
      */
     isSubmenuActive() {
@@ -71,7 +77,7 @@ export default class Menu extends Kernel {
     /**
      * Display section
      * 
-     * @return {null} None
+     * @return {null}   None
      * @since 1.0.0
      */
     displaySection(menuItemID) {
@@ -147,9 +153,9 @@ export default class Menu extends Kernel {
     }
 
     /**
-     * Preparing menu item
+     * Preparing a menu item
      * 
-     * @return {null} None
+     * @return {null}   None
      * @since 1.0.0
      */
     prepMenuItem(menuItemID) {
@@ -169,7 +175,7 @@ export default class Menu extends Kernel {
     /**
      * Desktop mode
      * 
-     * @return {null} None
+     * @return {null}   None
      * @since 1.0.0
      */
     desktop() {
@@ -240,7 +246,7 @@ export default class Menu extends Kernel {
     /**
      * Mobile mode
      * 
-     * @return {null} None
+     * @return {null}   None
      * @since 1.0.0
      */
     mobile() {

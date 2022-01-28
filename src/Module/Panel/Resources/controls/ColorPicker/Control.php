@@ -14,7 +14,7 @@ namespace ZimbruCode\Module\Panel\Controls\ColorPicker;
 use ZimbruCode\Module\Panel\Library\ControlKernel;
 
 /**
- * Panel control : Color Picker
+ * Panel control : Color picker
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -25,7 +25,7 @@ class Control extends ControlKernel
     /**
      * Control setup
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     public function setup(): void

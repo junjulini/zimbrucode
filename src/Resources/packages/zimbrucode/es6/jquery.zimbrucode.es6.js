@@ -29,6 +29,12 @@ import TPL__alert   from './tpl/alert.html';
 const $ = jQuery;
 
 class ZimbruCode {
+
+    /**
+     * Constructor
+     * 
+     * @since 1.0.0
+     */
     constructor() {
         // Modules objects
         this.module = {};
@@ -46,7 +52,9 @@ class ZimbruCode {
     /**
      * Add module
      * 
-     * @return {null} None
+     * @param {string}   name     Module name
+     * @param {callable} module   Callback
+     * @return {null}             None
      * @since 1.0.0
      */
     addModule(name, module) {
@@ -55,9 +63,10 @@ class ZimbruCode {
     }
 
     /**
-     * Initialization module data
+     * Initialization of module
      * 
-     * @return {null} None
+     * @param {string} name   Module name
+     * @return {null}         None
      * @since 1.0.0
      */
     initModuleData(name) {
@@ -67,7 +76,9 @@ class ZimbruCode {
     /**
      * Add module data
      * 
-     * @return {null} None
+     * @param {string} name   Module name
+     * @param {object} data   Module data
+     * @return {null}         None
      * @since 1.0.0
      */
     addModuleData(name, data = {}) {
@@ -77,6 +88,8 @@ class ZimbruCode {
     /**
      * Get module data
      * 
+     * @param {string} name   Module name
+     * @return {object}       Module data
      * @since 1.0.0
      */
     getModuleData(name) {
@@ -86,6 +99,7 @@ class ZimbruCode {
     /**
      * Generate unique ID
      * 
+     * @return {integer}   Unique ID
      * @since 1.0.0
      */
     uniqueID() {
@@ -93,9 +107,12 @@ class ZimbruCode {
     }
 
     /**
-     * Data replace in subject
+     * Replace all occurrences of the search string with the replacement string
      * 
-     * @return {null} None
+     * @param {array}  search    The value being searched for, otherwise known as the needle
+     * @param {array}  replace   The replacement value that replaces found search values
+     * @param {string} subject   The string or array being searched and replaced on, otherwise known as the haystack
+     * @return {string}          String with replaced values
      * @since 1.0.0
      */
     strReplace(search, replace, subject) {
@@ -154,7 +171,11 @@ class ZimbruCode {
     /**
      * Deep find and setting
      * 
-     * @return {null} None
+     * @param {object}  obj      Object data
+     * @param {string}  path     Object path
+     * @param {mix}     value    Value
+     * @param {boolean} remove   "True" if the item needs to be removed
+     * @return {mix}             Item value
      * @since 1.0.0
      */
     deepFindAndSetting(obj, path, value, remove = false) {
@@ -203,7 +224,7 @@ class ZimbruCode {
     /**
      * Check if is mobile
      * 
-     * @return {null} None
+     * @return {boolean}   Result of checking
      * @since 1.0.0
      */
     isMobile() {
@@ -237,6 +258,9 @@ class ZimbruCode {
     /**
      * Round
      * 
+     * @param {string} value
+     * @param {mix}    exp 
+     * @return {string}   Action result
      * @since 1.0.0
      */
     round(value, exp) {
@@ -264,7 +288,9 @@ class ZimbruCode {
     /**
      * Resize
      * 
-     * @return {null} None
+     * @param {callable} callbackWidth    Callback 1
+     * @param {callable} callbackHeight   Callback 2
+     * @return {null}                     None
      * @since 1.0.0
      */
     resize(callbackWidth, callbackHeight) {
@@ -293,6 +319,8 @@ class ZimbruCode {
     /**
      * Clone an object
      * 
+     * @param {object} object   An object that will receive the new properties
+     * @return {object}         Cloned object
      * @since 1.0.0
      */
     clone(object) {
@@ -300,8 +328,10 @@ class ZimbruCode {
     }
 
     /**
-     * Random string
+     * Get random string
      * 
+     * @param {integer} length   Generated string length
+     * @return {string}          Generated string
      * @since 1.0.0
      */
     randomCode(length) {
@@ -319,6 +349,9 @@ class ZimbruCode {
     /**
      * Parse data
      * 
+     * @param {object}  data        Data object
+     * @param {boolean} stringify   If "true" will be "stringify"
+     * @return {boolean}            Action result
      * @since 1.0.0
      */
     parse(data, stringify) {
@@ -326,8 +359,10 @@ class ZimbruCode {
     }
 
     /**
-     * Check if json
+     * Check if string format is json
      * 
+     * @param {string} str   String
+     * @return {boolean}     Result of checking
      * @since 1.0.0
      */
     isJson(str) {
@@ -341,17 +376,20 @@ class ZimbruCode {
     }
 
     /**
-     * Strstr
      * 
+     * @param {string}  haystack   The input string
+     * @param {string}  needle
+     * @param {boolean} beforeNeedle
+     * @return {string|boolean}    Returns the portion of string, or false if needle is not found
      * @since 1.0.0
      */
-    strstr(haystack, needle, bool) {
+    strstr(haystack, needle, beforeNeedle) {
         const pos = haystack.indexOf(needle);
 
         if (pos == -1) {
             return false;
         } else {
-            if (bool) {
+            if (beforeNeedle) {
                 return haystack.substr(0, pos);
             } else {
                 return haystack.slice(pos);
@@ -362,10 +400,14 @@ class ZimbruCode {
     /**
      * Capitalize first letter
      * 
+     * @param {string}  str   The input string
+     * @param {boolean} force
+     * @return {string}       Action result
      * @since 1.0.0
      */
     ucfirst(str, force) {
         str = force ? str.toLowerCase() : str || '';
+
         return str.replace(/(\b)([a-zA-Z])/, (firstLetter) => {
             return firstLetter.toUpperCase();
         });
@@ -376,6 +418,7 @@ class ZimbruCode {
      * 
      * @param {object} parameters   Query parameters
      * @param {string} url          URL
+     * @return {string}             Action result
      * @since 1.0.0
      */
     addQueryString(parameters = {}, url) {
@@ -431,6 +474,7 @@ class ZimbruCode {
      * 
      * @param {object} parameters   Query parameters
      * @param {string} url          URL
+     * @return {string}             Action result
      * @since 1.0.0
      */
     removeQueryString(parameters = [], url) {
@@ -469,6 +513,7 @@ class ZimbruCode {
     /**
      * PopUp
      * 
+     * @return {null}  None
      * @since 1.0.0
      */
     popup() {
@@ -478,10 +523,11 @@ class ZimbruCode {
     /**
      * Confirm PopUp
      * 
-     * @return {null} None
+     * @param {object} customSettings   PopUp custom settings
+     * @return {null}                   None
      * @since 1.0.0
      */
-    confirm(options) {
+    confirm(customSettings) {
         const popup = this.popup();
 
         const defaults = {
@@ -501,7 +547,7 @@ class ZimbruCode {
             class: ''
         };
 
-        let settings = $.extend({}, defaults, options),
+        let settings = $.extend({}, defaults, customSettings),
             html = '';
 
         if (settings.html) {
@@ -541,10 +587,11 @@ class ZimbruCode {
     /**
      * Prompt PopUp
      * 
-     * @return {null} None
+     * @param {object} customSettings  PopUp custom settings
+     * @return {null}                  None
      * @since 1.0.0
      */
-    prompt(options) {
+    prompt(customSettings) {
         const popup = this.popup();
 
         const defaults = {
@@ -566,7 +613,7 @@ class ZimbruCode {
             class: ''
         };
 
-        let settings = $.extend({}, defaults, options),
+        let settings = $.extend({}, defaults, customSettings),
             html = '';
 
         if (settings.html) {
@@ -614,10 +661,11 @@ class ZimbruCode {
     /**
      * Alert PopUp
      * 
-     * @return {null} None
+     * @param {object} customSettings  PopUp custom settings
+     * @return {null}                  None
      * @since 1.0.0
      */
-    alert(options) {
+    alert(customSettings) {
         const popup = this.popup();
 
         const defaults = {
@@ -633,7 +681,7 @@ class ZimbruCode {
             class: ''
         };
 
-        let settings = $.extend({}, defaults, options),
+        let settings = $.extend({}, defaults, customSettings),
             html = '';
 
         if (settings.html) {
@@ -662,11 +710,18 @@ class ZimbruCode {
         });
     }
 
+    /**
+     * Input range
+     * 
+     * @param {string} mode   Action mode
+     * @param {object} data   General data
+     * @since 1.0.0
+     */
     inputRange(mode, data = {}) {
         if (mode && data.el !== undefined) {
             const priv = {};
 
-            // Has line background
+            // Check if there is a line background
             const containerLBClass = data.containerLBClass || '';
             priv.hasLB = data.el.parent().hasClass(containerLBClass);
 
@@ -700,7 +755,7 @@ class ZimbruCode {
                 }
             };
 
-            // Setup indicator current
+            // Setup indicator
             priv.indicatorCurrent = (changeCurrentValue = false) => {
                 const hideFromTo = data.settings.hide_from_to || false;
 
@@ -749,7 +804,7 @@ class ZimbruCode {
                 return 0;
             };
 
-            // Mode : Init
+            // Mode : Initialization
             priv.initMode = () => {
                 priv.indicatorCurrent();
                 priv.indicatorsShowHide();
@@ -809,34 +864,41 @@ class ZimbruCode {
      /**
      * Rest API
      * 
-     * @param {string} url   WordPress rest API URL
-     * @param {string} nonce WordPress X nonce for RestAPI
+     * @param {string} url     WordPress rest API URL
+     * @param {string} nonce   WordPress X nonce for RestAPI
      * @since 1.0.0
      */
     restAPI(url, nonce) {
         return new RestAPI(url, nonce);
     }
 
-    event(url, config) {
+    /**
+     * Event source
+     * 
+     * @param {string} url        URL of the source
+     * @param {object} settings   Event settings
+     * @since 1.0.0
+     */
+    event(url, settings) {
         const urlHandler = new URL(url);
 
-        if (config.data !== undefined) {
-            $.each(config.data, (key, value) => {
+        if (settings.data !== undefined) {
+            $.each(settings.data, (key, value) => {
                 urlHandler.searchParams.append(key, value);
             });
         }
 
         const evtSource = new window.EventSource(urlHandler.href);
 
-        if (config.listener !== undefined) {
-            if ($.isFunction(config.listener)) {
+        if (settings.listener !== undefined) {
+            if ($.isFunction(settings.listener)) {
                 evtSource.addEventListener('message', (event) => {
                     const response = JSON.parse(event.data);
 
-                    config.listener(response, evtSource);
+                    settings.listener(response, evtSource);
                 });
-            } else if (typeof config.listener === 'object') {
-                $.each(config.listener, (key, callback) => {
+            } else if (typeof settings.listener === 'object') {
+                $.each(settings.listener, (key, callback) => {
                     evtSource.addEventListener(key, (event) => {
                         const response = JSON.parse(event.data);
     
@@ -846,13 +908,21 @@ class ZimbruCode {
             }
         }
 
-        if (config.error !== undefined) {
+        if (settings.error !== undefined) {
             evtSource.onerror = (error) => {
-                config.error(error, evtSource);
+                settings.error(error, evtSource);
             };
         }
     }
 
+    /**
+     * 
+     * @param {string} action   AJAX action name
+     * @param {string} nonce    AJAX nonce
+     * @param {object} options  Options to be passed to the server
+     * @return {mix}            Action result
+     * @since 1.0.0
+     */
     async jsonRequest(action, nonce = '', options = {}) {
         let attempts   = 4;
         const interval = 1000;
@@ -902,9 +972,11 @@ class ZimbruCode {
     /**
      * AJAX
      * 
+     * @param {object} customSettings   AJAX custom settings
+     * @return {object}                 AJAX instance
      * @since 1.0.0
      */
-     ajax(settings) {
+     ajax(customSettings) {
         const defaults = {
             method: 'post',
             url: ajaxurl,
@@ -921,7 +993,7 @@ class ZimbruCode {
         const interval = 1000;
         const iterations = 4;
 
-        settings = $.extend({}, defaults, settings);
+        settings = $.extend({}, defaults, customSettings);
 
         const preparedSettings = this.clone(settings);
 
@@ -959,5 +1031,5 @@ class ZimbruCode {
     }
 }
 
-// Initialization of class : ZimbruCode
+// Class initialization : ZimbruCode
 window.zc = new ZimbruCode();

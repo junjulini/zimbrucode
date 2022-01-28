@@ -16,7 +16,7 @@ use ZimbruCode\Module\Panel\Library\Mode;
 use ZimbruCode\Module\Panel\Library\Traits\ControlTrait;
 
 /**
- * Class : Lite mode
+ * Class : Module/Panel/Mode : Lite mode
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -29,7 +29,7 @@ class LiteMode extends Mode
     /**
      * Mode setup
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     public function setup(): void
@@ -47,8 +47,8 @@ class LiteMode extends Mode
             $this->addAction('admin_enqueue_scripts', '__action_enqueue');
         }
 
-        // Add menu hook function
-        $action = (!$this->getModuleSetting('parent-slug')) ? '__action_register_panel' : '__action_register_submenu_panel';
+        // Menu hook
+        $action = (!$this->getModuleSetting('parent-slug')) ? '__action_register_menu_page' : '__action_register_submenu_page';
         $this->addAction('admin_menu', $action);
 
         // Ajax
@@ -59,7 +59,7 @@ class LiteMode extends Mode
     /**
      * Callback : Creates html structure for panel
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     public function __callback_html_structure(): void
@@ -77,7 +77,7 @@ class LiteMode extends Mode
     /**
      * Action : Enqueue styles and scripts for panel
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     public function __action_enqueue(): void
@@ -114,14 +114,13 @@ class LiteMode extends Mode
     }
 
     /**
-     * Action : Register panel
+     * Action : Register menu page
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
-    public function __action_register_panel(): void
+    public function __action_register_menu_page(): void
     {
-        // Menu page
         add_menu_page(
             $this->getModuleSetting('page-title'),
             $this->getModuleSetting('menu-title'),
@@ -137,12 +136,12 @@ class LiteMode extends Mode
     }
 
     /**
-     * Action : Register submenu panel
+     * Action : Register submenu page
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
-    public function __action_register_submenu_panel(): void
+    public function __action_register_submenu_page(): void
     {
         add_submenu_page(
             $this->getModuleSetting('parent-slug'),
@@ -159,9 +158,9 @@ class LiteMode extends Mode
     }
 
     /**
-     * Ajax : Panel options save
+     * Ajax : Save options
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     public function __ajax_save_options(): void
@@ -169,7 +168,7 @@ class LiteMode extends Mode
         $ajax    = new AjaxHandler($this->getModuleSetting('nonce'), 'edit_theme_options');
         $options = $ajax->get('options');
 
-        // Filter : Options save - before
+        // Filter : Options save - Before
         $options = apply_filters('zc/module/panel/mode/lite/options_save--before', $options, $ajax, $this);
         $options = apply_filters("zc/module/panel/{$this->getModuleSetting('slug')}/mode/lite/options_save--before", $options, $ajax, $this);
 
@@ -177,7 +176,7 @@ class LiteMode extends Mode
             if ($this->isOptionsDifferent($options)) {
                 if ($this->addOptions($options)) {
 
-                    // Hook : Options save - success
+                    // Hook : Options save - Success
                     do_action('zc/module/panel/mode/lite/options_save--success', $options, $ajax, $this);
                     do_action("zc/module/panel/{$this->getModuleSetting('slug')}/mode/lite/options_save--success", $options, $ajax, $this);
 
@@ -194,23 +193,22 @@ class LiteMode extends Mode
     }
 
     /**
-     * Ajax : Panel options reset
+     * Ajax : Reset options
      *
-     * @return void   This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     public function __ajax_reset_options(): void
     {
         $ajax = new AjaxHandler($this->getModuleSetting('nonce'), 'edit_theme_options');
 
-        // Hook : Options reset - before
+        // Hook : Options reset - Before
         do_action('zc/module/panel/mode/lite/options_reset--before', $this, $ajax);
         do_action("zc/module/panel/{$this->getModuleSetting('slug')}/mode/lite/options_reset--before", $this, $ajax);
 
-        $result = $this->remOptions();
+        if ($this->remOptions()) {
 
-        if ($result) {
-            // Hook : Options reset - success
+            // Hook : Options reset - Success
             do_action('zc/module/panel/mode/lite/options_reset--success', $this, $ajax);
             do_action("zc/module/panel/{$this->getModuleSetting('slug')}/mode/lite/options_reset--success", $this, $ajax);
 

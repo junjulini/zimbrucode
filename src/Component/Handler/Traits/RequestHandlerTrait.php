@@ -12,7 +12,7 @@
 namespace ZimbruCode\Component\Handler\Traits;
 
 /**
- * Trait : Request handler trait
+ * Trait : Component/Handler/Traits : Request handler
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -20,8 +20,16 @@ namespace ZimbruCode\Component\Handler\Traits;
  */
 trait RequestHandlerTrait
 {
+    /**
+     * HTTP Request
+     *
+     * @param string $param     Param name
+     * @param string $default   Default value
+     * @return mix              Request data
+     * @since 1.0.0
+     */
     public static function request(string $param, $default = '')
     {
-        return !empty($_REQUEST[$param]) ? $_REQUEST[$param] : $default;
+        return $_REQUEST[$param] ?? $default;
     }
 }

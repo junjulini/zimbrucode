@@ -13,64 +13,54 @@ namespace ZimbruCode\Module\Panel\Library\Shell;
 
 use ZimbruCode\Component\Core\Kernel;
 use ZimbruCode\Module\Panel\Library\ControlManager;
+use ZimbruCode\Component\TemplateBridges\Helper\ShellKernel;
 
 /**
- * Class : Control shell
+ * Class : Module/Panel/Library/Shell : Control shell
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
  * @since   1.0.0
  */
-class ControlShell
+class ControlShell extends ShellKernel
 {
     protected $panel;
     protected $controlData  = [];
     protected $customMethod = [];
 
+    /**
+     * Constructor
+     *
+     * @param ControlManager $panel   Panel object
+     * @param array $controlData      Control data
+     * @since 1.0.0
+     */
     public function __construct(ControlManager $panel, array $controlData)
     {
         $this->panel       = $panel;
         $this->controlData = $controlData;
     }
 
+    /**
+     * Get control data
+     *
+     * @param string $setting   Setting name
+     * @param mix    $default   Default value
+     * @return mix              Control data
+     * @since 1.0.0
+     */
     protected function getControlData(string $setting, $default = null)
     {
         return $this->controlData[$setting] ?? $default;
     }
 
     /**
-     * Set custom method
+     * Get control option
      *
-     * @param string   $name   Method name
-     * @param callable $method
-     * @return void            This function does not return a value
+     * @param string $option    Option name
+     * @param mix    $default   Default value
+     * @return mix              Option value
      * @since 1.0.0
-     */
-    public function __set(string $name, callable $method)
-    {
-        $this->customMethod[$name] = $method;
-    }
-
-    /**
-     * Call custom method
-     *
-     * @param  string $name   Method name
-     * @param  array  $args   Method args
-     * @return mix            Method return after calling
-     * @since 1.0.0
-     */
-    public function __call(string $name, array $args)
-    {
-        if (!empty($this->customMethod[$name]) && is_callable($this->customMethod[$name])) {
-            return call_user_func_array($this->customMethod[$name], $args);
-        }
-    }
-
-    /**
-     * Control saved option
-     *
-     * @param mix $default
-     * @return mix
      */
     public function option(string $option = null, $default = null)
     {
@@ -81,10 +71,11 @@ class ControlShell
     }
 
     /**
-     * Control URL
+     * Get control URL
      *
-     * @param string $default
-     * @return mix
+     * @param string $url   Additional part of the URL
+     * @return string       Control URL
+     * @since 1.0.0
      */
     public function url(string $url = ''): string
     {
@@ -92,10 +83,11 @@ class ControlShell
     }
 
     /**
-     * Control path
+     * Get control path
      *
-     * @param string $default
-     * @return mix
+     * @param string $path   Additional part of the path
+     * @return string        Control path
+     * @since 1.0.0
      */
     public function path(string $path = ''): string
     {
@@ -105,10 +97,11 @@ class ControlShell
     ####################################################################################################################
 
     /**
-     * Control type
+     * Control : Type
      *
-     * @param mix
-     * @return mix
+     * @param mix $default   Default value
+     * @return mix           Type
+     * @since 1.0.0
      */
     public function type($default = null)
     {
@@ -116,10 +109,11 @@ class ControlShell
     }
 
     /**
-     * Control ID
+     * Control : ID
      *
-     * @param mix
-     * @return mix
+     * @param mix $default   Default value
+     * @return mix           ID
+     * @since 1.0.0
      */
     public function ID($default = '')
     {
@@ -128,10 +122,11 @@ class ControlShell
     }
 
     /**
-     * Control title
+     * Control : Title
      *
-     * @param mix
-     * @return mix
+     * @param mix $default   Default value
+     * @return mix           Title
+     * @since 1.0.0
      */
     public function title($default = null)
     {
@@ -139,10 +134,11 @@ class ControlShell
     }
 
     /**
-     * Control description
+     * Control : Description
      *
-     * @param mix
-     * @return mix
+     * @param mix $default   Default value
+     * @return mix           Description
+     * @since 1.0.0
      */
     public function desc($default = null)
     {
@@ -150,10 +146,11 @@ class ControlShell
     }
 
     /**
-     * Control style/styles
+     * Control : Styles
      *
-     * @param mix
-     * @return mix
+     * @param mix $default   Default value
+     * @return mix           Styles
+     * @since 1.0.0
      */
     public function style($default = null)
     {
@@ -161,10 +158,11 @@ class ControlShell
     }
 
     /**
-     * Control classes
+     * Control : Classes
      *
-     * @param mix
-     * @return mix
+     * @param mix $default   Default value
+     * @return mix           Classes
+     * @since 1.0.0
      */
     public function classes($default = null)
     {
@@ -172,10 +170,11 @@ class ControlShell
     }
 
     /**
-     * Control full width
+     * Control : Full width
      *
-     * @param mix
-     * @return mix
+     * @param mix $default   Default value
+     * @return mix           Full width status
+     * @since 1.0.0
      */
     public function fullWidth($default = false)
     {
@@ -183,10 +182,11 @@ class ControlShell
     }
 
     /**
-     * Control border line
+     * Control : Border line
      *
-     * @param mix
-     * @return mix
+     * @param mix $default   Default value
+     * @return mix           Border line
+     * @since 1.0.0
      */
     public function borderLine($default = false)
     {
@@ -194,10 +194,11 @@ class ControlShell
     }
 
     /**
-     * Control ratio ( desc/content )
+     * Control : Ratio ( desc/content )
      *
-     * @param mix
-     * @return mix
+     * @param mix $default   Default value
+     * @return mix           Ratio
+     * @since 1.0.0
      */
     public function ratio($default = null)
     {
@@ -205,10 +206,11 @@ class ControlShell
     }
 
     /**
-     * Control help
+     * Control : Help
      *
-     * @param mix
-     * @return mix
+     * @param mix $default   Default value
+     * @return mix           Help content
+     * @since 1.0.0
      */
     public function help($default = null)
     {
@@ -216,11 +218,12 @@ class ControlShell
     }
 
     /**
-     * Control ignore ( do not save )
+     * Control : Ignore
      *
-     * @param mix
-     * @param bool   $return
-     * @return mix
+     * @param mix     $default   Default value
+     * @param boolean $return    Return or echo
+     * @return mix               Ignore status
+     * @since 1.0.0
      */
     public function ignore($default = null, bool $return = false)
     {
@@ -234,10 +237,11 @@ class ControlShell
     }
 
     /**
-     * Control default value
+     * Control : Default value
      *
-     * @param mix
-     * @return mix
+     * @param mix $default   Default value
+     * @return mix           Control default value
+     * @since 1.0.0
      */
     public function defaultValue($default = null)
     {
@@ -245,10 +249,11 @@ class ControlShell
     }
 
     /**
-     * Control condition
+     * Control : Condition
      *
-     * @param mix
-     * @return mix
+     * @param mix $default   Default value
+     * @return mix           Condition
+     * @since 1.0.0
      */
     public function condition($default = null)
     {
@@ -256,10 +261,11 @@ class ControlShell
     }
 
     /**
-     * Control operator
+     * Control : Operator
      *
-     * @param mix
-     * @return mix
+     * @param mix $default   Default value
+     * @return mix           Operator
+     * @since 1.0.0
      */
     public function operator($default = null)
     {
@@ -267,10 +273,11 @@ class ControlShell
     }
 
     /**
-     * Control internal content ( controls )
+     * Control : Internal content ( controls )
      *
-     * @param mix
-     * @return mix
+     * @param mix $default   Default value
+     * @return mix           Internal content
+     * @since 1.0.0
      */
     public function content($default = null)
     {
@@ -278,10 +285,11 @@ class ControlShell
     }
 
     /**
-     * Control additional settings
+     * Control : Additional settings
      *
-     * @param mix
-     * @return mix
+     * @param mix $default   Default value
+     * @return mix           Additional settings
+     * @since 1.0.0
      */
     public function settings($default = null)
     {

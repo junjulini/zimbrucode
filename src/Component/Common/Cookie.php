@@ -14,7 +14,7 @@ namespace ZimbruCode\Component\Common;
 use ZimbruCode\Component\Common\Tools;
 
 /**
- * Class : Cookie
+ * Class : Component/Common : Cookie
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -25,9 +25,9 @@ class Cookie
     /**
      * Get cookie
      *
-     * @param  string $name     Name of cookie
-     * @param  mix    $default  Default value in case if null
-     * @param  string $filter   Format : simple '', serialize, json
+     * @param  string $name      Cookie name
+     * @param  mix    $default   Default value
+     * @param  string $filter    Format : simple '', serialize, json
      * @return mix
      * @since 1.0.0
      */
@@ -57,11 +57,11 @@ class Cookie
     /**
      * Add cookie
      *
-     * @param string $name     Name of cookie
-     * @param mix    $data     Data for cookie
-     * @param int    $time     Time for cookie
+     * @param string $name     Cookie name
+     * @param mix    $data     Cookie data
+     * @param int    $time     Cookie time
      * @param string $filter   Format : simple '', serialize, json
-     * @return void            This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     public function add(string $name, $data, int $time = 0, string $filter = 'serialize'): void
@@ -88,8 +88,8 @@ class Cookie
     /**
      * Remove cookie
      *
-     * @param  string $name   Name of cookie
-     * @return void           This function does not return a value
+     * @param  string $name   Cookie name
+     * @return void
      * @since 1.0.0
      */
     public function remove(string $name): void
@@ -109,8 +109,8 @@ class Cookie
     /**
      * Remove data in cookie
      *
-     * @param  string $name   Name of cookie
-     * @return void           This function does not return a value
+     * @param  string $name   Cookie name
+     * @return void
      * @since 1.0.0
      */
     public function removeOnlyData(string $name): void

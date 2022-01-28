@@ -17,7 +17,7 @@ use ZimbruCode\Component\Asset\Library\NamespaceHandler;
 use ZimbruCode\Component\Handler\LibraryHandler;
 
 /**
- * Class : Filter - Package
+ * Class : Component/Asset/Filter : Package
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -29,7 +29,7 @@ class Package extends Filter
      * Each asset
      *
      * @param  AssetData $asset   Asset data
-     * @return void               This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     protected function each(AssetData $asset): void

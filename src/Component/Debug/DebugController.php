@@ -17,7 +17,7 @@ use ZimbruCode\Component\Common\Tools;
 use ZimbruCode\Component\Core\Kernel;
 
 /**
- * Class : Debug
+ * Class : Component/Debug : Debug controller
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -28,8 +28,8 @@ class DebugController
     /**
      * Initialization of debugger : Tracy
      *
-     * @param  array $args   Debugger args
-     * @return void          This function does not return a value
+     * @param  array $args   Debugger arguments
+     * @return void
      * @since 1.0.0
      */
     public static function runTracy(array $args = []): void
@@ -75,7 +75,7 @@ class DebugController
      * @param string $title      Title in message
      * @param string $tabTitle   Error title, If you use a WP_Error object, the title will be by default the one you added in $data['title']
      * @param array  $args       Optional arguments to control behavior
-     * @return void              This function does not return a value
+     * @return void
      * @since 1.0.0
      */
     public static function addErrorMessage(string $message, string $title = 'Error', string $tabTitle = 'Error', array $args = []): void

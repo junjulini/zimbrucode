@@ -14,7 +14,7 @@ namespace ZimbruCode\Component\Handler\Traits;
 use ZimbruCode\Component\Core\Kernel;
 
 /**
- * Trait : Option handler trait
+ * Trait : Component/Handler/Traits : Option handler
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -23,10 +23,10 @@ use ZimbruCode\Component\Core\Kernel;
 trait OptionHandlerTrait
 {
     /**
-     * Prep option path
+     * Preparing option
      *
-     * @param  string $option   Option path
-     * @return string           Prepared option path
+     * @param  string $option   Option name
+     * @return string           Prepared option
      * @since 1.0.0
      */
     private static function __prepOption(string $option): string
@@ -42,10 +42,10 @@ trait OptionHandlerTrait
     /**
      * Get option value
      *
-     * @param  string $option    Option name
-     * @param  mix    $default   Default value
-     * @param  bool   $ao        Alternative option
-     * @return mix               Return option value if exist
+     * @param  string  $option    Option name
+     * @param  mix     $default   Default value
+     * @param  boolean $ao        Alternative option
+     * @return mix                Action result
      * @since 1.0.0
      */
     public static function getOption(string $option, $default = '', bool $ao = false)
@@ -59,12 +59,12 @@ trait OptionHandlerTrait
     }
 
     /**
-     * Check if exist app option
+     * Check if option exists
      *
-     * @param  string  $option   Option of app
-     * @param  mix     $type     Type of function
-     * @param  bool    $ao       Alternative option
-     * @return boolean           Return true or false
+     * @param  string  $option   Option name
+     * @param  mix     $type     Type of action
+     * @param  boolean $ao       Alternative option
+     * @return boolean           Result of checking
      * @since 1.0.0
      */
     public static function hasOption(string $option, $type = false, bool $ao = false): bool
@@ -85,12 +85,12 @@ trait OptionHandlerTrait
     }
 
     /**
-     * Get meta data
+     * Get meta value
      *
-     * @param  string $meta      Meta name
-     * @param  string $default   Default value
-     * @param  int    $id        Custom post ID
-     * @return string            Return meta data
+     * @param  string  $meta      Meta name
+     * @param  string  $default   Default value
+     * @param  integer $id        Post ID
+     * @return mix                Action result
      * @since 1.0.0
      */
     public static function getMeta(string $meta = null, $default = '', int $id = null)

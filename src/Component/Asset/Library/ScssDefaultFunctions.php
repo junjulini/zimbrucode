@@ -14,7 +14,7 @@ namespace ZimbruCode\Component\Asset\Library;
 use ZimbruCode\Component\Common\Tools;
 
 /**
- * Class : SCSS default functions
+ * Class : Component/Asset/Library : SCSS default functions
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode

@@ -18,7 +18,7 @@ use ZimbruCode\Component\Common\Tools;
 use ZimbruCode\Component\Core\Kernel;
 
 /**
- * Class : Location detector
+ * Class : Component/Asset/Library : Location detector
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -30,6 +30,12 @@ class LocationDetector
     protected $root;
     protected $defaultLocation = [];
 
+    /**
+     * Constructor
+     *
+     * @param string $location   Location of assets
+     * @since 1.0.0
+     */
     public function __construct(string $location)
     {
         if (!$location) {
@@ -49,9 +55,9 @@ class LocationDetector
     }
 
     /**
-     * Get path of asset if exist
+     * Get the path to the asset
      *
-     * @param  string $path   Name or path of asset
+     * @param  string $path   Name or path to the asset
      * @return string         Asset path
      * @since 1.0.0
      */
@@ -71,10 +77,10 @@ class LocationDetector
     }
 
     /**
-     * Preparing path defined as string
+     * Preparing a path defined as a string
      *
      * @param  string $path   Path of asset
-     * @return string         Full path of asset
+     * @return string         Prepared asset path
      * @since 1.0.0
      */
     protected function definedAsString(string $path): string
@@ -109,10 +115,10 @@ class LocationDetector
     }
 
     /**
-     * Preparing path defined as path
+     * Preparing a path defined as a path
      *
      * @param  string $path   Path of asset
-     * @return string         Full path of asset
+     * @return string         Prepared asset path
      * @since 1.0.0
      */
     protected function definedAsPath(string $path): string
@@ -125,10 +131,10 @@ class LocationDetector
     }
 
     /**
-     * Preparing path defined as URL
+     * Preparing a path defined as a URL
      *
      * @param  string $path   Path of asset
-     * @return string         Full path of asset
+     * @return string         Prepared asset path
      * @since 1.0.0
      */
     protected function definedAsURL(string $path): string

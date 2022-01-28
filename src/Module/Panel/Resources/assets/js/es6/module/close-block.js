@@ -23,6 +23,12 @@ import Kernel from './kernel';
 const $ = jQuery;
 
 export default class CloseBlock extends Kernel {
+
+    /**
+     * Constructor
+     * 
+     * @since 1.0.0
+     */
     constructor() {
         super();
 
@@ -46,9 +52,9 @@ export default class CloseBlock extends Kernel {
     }
 
     /**
-     * Show close block
+     * Show "close block"
      * 
-     * @return {null} None
+     * @return {null}  None
      * @since 1.0.0
      */
     show() {
@@ -57,9 +63,9 @@ export default class CloseBlock extends Kernel {
     }
 
     /**
-     * Hide close block
+     * Hide "close block"
      * 
-     * @return {null} None
+     * @return {null}   None
      * @since 1.0.0
      */
     hide() {
@@ -75,14 +81,15 @@ export default class CloseBlock extends Kernel {
     }
 
     /**
-     * Hide block definitely
+     * Hide definitely "close block"
      * 
-     * @return {null} None
+     * @return {null}   None
      * @since 1.0.0
      */
     hideDefinitely() {
         $('.zc-panel-controls__close-block').removeClass('zc-panel-controls__close-block_active');
         this.isOpen = 0;
+
         $(window).trigger('zc/close-block');
     }
 }
