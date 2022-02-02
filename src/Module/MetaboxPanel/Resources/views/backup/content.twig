@@ -19,13 +19,13 @@
 <div class="zc-popup-backup">
     <div class="zc-popup-backup__close-block"></div>
     <div class="zc-popup-backup__save-meta">
-        <input id="zc-popup-backup-name" type="text" placeholder="{{ __('Insert name of backup', 'zc') }}" class="zc-popup-backup__input">
-        <label for="zc-popup-backup-name" class="zc-popup-backup__label">{{ __('Can make backup only for already stored data.', 'zc') }}</label>
+        <input id="zc-popup-backup-name" type="text" placeholder="{{ __('Insert the backup name', 'zc') }}" class="zc-popup-backup__input">
+        <label for="zc-popup-backup-name" class="zc-popup-backup__label">{{ __('Can only backup data already saved.', 'zc') }}</label>
         <button class="zc-popup-backup__save-button zc-popup-backup__save-button_accent">{{ __('Save', 'zc') }}</button>
     </div>
     <div class="zc-popup-backup__info-bar">
         <span class="zc-popup-backup__number-of"><b class="zc-popup-backup__number">{{ count }}</b> {{ __('Backups', 'zc') }}</span>
-        <button title="{{ __('Delete all', 'zc') }}" class="zc-popup-backup__delete-button zc-icon-delete"></button>
+        <button title="{{ __('Delete everything', 'zc') }}" class="zc-popup-backup__delete-button zc-icon-delete"></button>
     </div>
     <div class="zc-popup-backup__no-backups{{ active }}">
         <i class="zc-popup-backup__nb-icon zc-icon-flag"></i>

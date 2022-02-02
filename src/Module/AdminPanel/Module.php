@@ -31,7 +31,7 @@ class Module extends ModuleKernel
      */
     public function setup(): void
     {
-        self::addGlobal('core/module/admin-panel/settings/page-title', self::getGlobal('app/name') . esc_html__(' Options', 'zc'));
+        self::addGlobal('core/module/admin-panel/settings/page-title', self::getGlobal('app/name') . ' ' . esc_html__('Options', 'zc'));
         self::addGlobal('core/module/admin-panel/settings/menu-title', self::getGlobal('app/name'));
         self::addGlobal('core/module/admin-panel/settings/menu-slug', self::getGlobal('app/slug') . '_panel');
 

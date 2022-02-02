@@ -47,12 +47,12 @@ return [
                 'success' => [
                     'type'    => 'success',
                     'title'   => esc_html__('Success', 'zc'),
-                    'content' => esc_html__('Options deleted. Page will be reloaded ...', 'zc'),
+                    'content' => esc_html__('Options removed. The page will be reloaded ...', 'zc'),
                 ],
                 'failure' => [
                     'type'    => 'info',
                     'title'   => esc_html__('Info', 'zc'),
-                    'content' => esc_html__('No options for deleting.', 'zc'),
+                    'content' => esc_html__('There are no options to be removed.', 'zc'),
                 ],
             ],
 
@@ -60,7 +60,7 @@ return [
                 'success' => [
                     'type'    => 'success',
                     'title'   => esc_html__('Success', 'zc'),
-                    'content' => esc_html__('Options restored. Page will be reloaded ...', 'zc'),
+                    'content' => esc_html__('Options restored. The page will be reloaded ...', 'zc'),
                 ],
             ],
         ],

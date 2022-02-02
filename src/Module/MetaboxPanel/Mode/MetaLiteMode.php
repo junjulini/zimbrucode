@@ -120,7 +120,7 @@ class MetaLiteMode extends Mode
         if (!$result) {
             $this->asset()->enroll()->localize($handle, 'zcPanelVars', $this->mergeControlsLocalizeVars([
                 'browser-error-title'   => esc_html__('MetaboxPanel error', 'zc'),
-                'browser-error-subject' => esc_html__('Your browser is old. Please update your browser or download Chrome / Opera / Firefox', 'zc'),
+                'browser-error-subject' => esc_html__('Your browser is out of date. Please upgrade your browser or download Chrome/Edge/Opera/Firefox', 'zc'),
                 'prefix-slug'           => self::getGlobal('core/module/panel/prefix-slug'),
             ]));
         } else {

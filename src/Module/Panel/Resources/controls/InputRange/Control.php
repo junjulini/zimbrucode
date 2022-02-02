@@ -31,7 +31,7 @@ class Control extends ControlKernel
     public function setup(): void
     {
         $this->localize([
-            'title-range-error' => esc_html__('Permitted only number with next intervals : min = {MIN}, max = {MAX}', 'zc'),
+            'title-range-error' => esc_html__('Only number is allowed with the following intervals : min = {MIN}, max = {MAX}', 'zc'),
         ]);
 
         // Custom template functions
