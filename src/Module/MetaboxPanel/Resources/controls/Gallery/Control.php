@@ -30,9 +30,6 @@ class Control extends ControlKernel
      */
     public function setup(): void
     {
-        // Shell functions
-        $this->addShellFunction('getAttachmentImageSrc', '__custom_shell_function');
-
         // Additional vars
         $this->localize([
             'window-title-1' => esc_html__('Add images to gallery', 'zc'),
@@ -42,16 +39,19 @@ class Control extends ControlKernel
             'button-title-1' => esc_html__('Change image', 'zc'),
             'button-title-2' => esc_html__('Remove image', 'zc'),
         ]);
+
+        // Template functions
+        $this->addTemplateFunction('getAttachmentImageSrc', '__callback_get_attachment_image_src');
     }
 
     /**
-     * Custom shell function : Attachment image path
+     * Callback : Get attachment image path
      *
      * @param  string $value   Value from BD
      * @return string          Image path
      * @since 1.0.0
      */
-    public function __custom_shell_function(string $value = ''): string
+    public function __callback_get_attachment_image_src(string $value = ''): string
     {
         $image = wp_get_attachment_image_src($value, 'thumbnail');
 

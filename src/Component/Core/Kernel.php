@@ -12,6 +12,7 @@
 namespace ZimbruCode\Component\Core;
 
 use RuntimeException;
+use ZimbruCode\AppKernel;
 use ZimbruCode\Component\Core\ModuleLoader;
 use ZimbruCode\Component\Developer\DeveloperMode;
 use ZimbruCode\Component\Handler\Traits\GlobalCacheHandlerTrait;
@@ -131,5 +132,16 @@ abstract class Kernel extends GlobalDataOperator
                 throw new RuntimeException("ZE0063 - This service don't exist : {$service}");
             }
         }
+    }
+
+    /**
+     * Application instance
+     *
+     * @return AppKernel
+     * @since 1.0.0
+     */
+    final public function app(): AppKernel
+    {
+        return self::getGlobalCache('app-instance');
     }
 }

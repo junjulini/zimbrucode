@@ -55,7 +55,7 @@ abstract class ControlKernel extends ModuleKernel
     }
 
     /**
-     * Add custom shell function
+     * Add template function
      *
      * @param string $name     Function name
      * @param string $method   Callback
@@ -63,7 +63,7 @@ abstract class ControlKernel extends ModuleKernel
      * @return void
      * @since 1.0.0
      */
-    protected function addShellFunction(string $name, string $method, string $type = 'control_shell'): void
+    protected function addTemplateFunction(string $name, string $method, string $type = 'control_shell'): void
     {
         if (!is_callable($method)) {
             $method = [$this, $method];

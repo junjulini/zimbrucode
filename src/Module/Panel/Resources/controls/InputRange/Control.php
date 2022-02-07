@@ -34,9 +34,9 @@ class Control extends ControlKernel
             'title-range-error' => esc_html__('Only number is allowed with the following intervals : min = {MIN}, max = {MAX}', 'zc'),
         ]);
 
-        // Custom template functions
-        $this->addShellFunction('gridMark',     '__callback_grid_mark');
-        $this->addShellFunction('trackPercent', '__callback_track_percent');
+        // Template functions
+        $this->addTemplateFunction('gridMark',     '__callback_grid_mark');
+        $this->addTemplateFunction('trackPercent', '__callback_track_percent');
     }
 
     /**
@@ -58,7 +58,7 @@ class Control extends ControlKernel
     }
 
     /**
-     * Track percent
+     * Callback : Track percent
      *
      * @param string $value   Position
      * @param mix    $min     Minimum range
