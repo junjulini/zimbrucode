@@ -19,6 +19,12 @@ use ZimbruCode\Module\ThemeAdaptor\Library\Shell\MenuShell;
 use ZimbruCode\Module\ThemeAdaptor\Library\Shell\PostShell;
 use ZimbruCode\Module\ThemeAdaptor\Library\Shell\QueryShell;
 use ZimbruCode\Module\ThemeAdaptor\Library\Shell\SidebarShell;
+use ZimbruCode\Module\ThemeAdaptor\Library\Shell\CommentsShell;
+use ZimbruCode\Module\ThemeAdaptor\Library\Shell\CategoryShell;
+use ZimbruCode\Module\ThemeAdaptor\Library\Shell\AttachmentShell;
+use ZimbruCode\Module\ThemeAdaptor\Library\Shell\SearchShell;
+use ZimbruCode\Module\ThemeAdaptor\Library\Shell\AuthorShell;
+use ZimbruCode\Module\ThemeAdaptor\Library\Shell\BodyShell;
 use ZimbruCode\Module\ThemeAdaptor\Library\TwigExtension\InitTwigExtensions;
 use ZimbruCode\Module\ThemeAdaptor\Library\TwigFunctions;
 
@@ -79,10 +85,16 @@ class Render
         }
 
         // Default shells
-        $this->post    = new PostShell;
-        $this->query   = new QueryShell;
-        $this->sidebar = new SidebarShell;
-        $this->menu    = new MenuShell;
+        $this->post       = new PostShell;
+        $this->query      = new QueryShell;
+        $this->sidebar    = new SidebarShell;
+        $this->menu       = new MenuShell;
+        $this->comments   = new CommentsShell;
+        $this->category   = new CategoryShell;
+        $this->attachment = new AttachmentShell;
+        $this->search     = new SearchShell;
+        $this->author     = new AuthorShell;
+        $this->body       = new BodyShell;
 
         $gs = new GeneralShell;
 
