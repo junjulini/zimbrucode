@@ -21,15 +21,28 @@ namespace ZimbruCode\Component\Handler\Traits;
 trait RequestHandlerTrait
 {
     /**
-     * HTTP Request
+     * HTTP Request : Post
      *
      * @param string $param     Param name
      * @param string $default   Default value
      * @return mix              Request data
      * @since 1.0.0
      */
-    public static function request(string $param, $default = '')
+    public static function rPost(string $param, $default = '')
     {
-        return $_REQUEST[$param] ?? $default;
+        return !empty($_POST[$param]) ? $_POST[$param] : $default;
+    }
+
+    /**
+     * HTTP Request : Get
+     *
+     * @param string $param     Param name
+     * @param string $default   Default value
+     * @return mix              Request data
+     * @since 1.0.0
+     */
+    public static function rGet(string $param, $default = '')
+    {
+        return !empty($_GET[$param]) ? $_GET[$param] : $default;
     }
 }

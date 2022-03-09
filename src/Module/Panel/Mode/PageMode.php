@@ -36,7 +36,7 @@ class PageMode extends Mode
     public function setup(): void
     {
         // Preparing controls & assets
-        if (self::request('page') == $this->getModuleSetting('menu-slug')) {
+        if (self::rGet('page') == $this->getModuleSetting('menu-slug')) {
 
             // Remove screen options
             $this->addFilter('screen_options_show_screen', '__return_false');

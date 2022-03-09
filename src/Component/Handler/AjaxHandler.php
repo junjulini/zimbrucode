@@ -97,16 +97,24 @@ class AjaxHandler
     /**
      * Get request data
      *
-     * @param  string $param   Param name
-     * @return mix             Request data
+     * @param  string $param     Param name
+     * @param  mix    $default   Default value
+     * @param  string $type      Request type
+     * @return mix               Request data
      * @since 1.0.0
      */
-    public function get(string $param, $default = '')
+    public function get(string $param, $default = '', string $type = 'get')
     {
         if ($this->inputJsonType === true) {
             return $this->inputJsonData[$param] ?? $default;
         } else {
-            return Kernel::request($param, $default);
+            if ($type === 'get') {
+                return Kernel::rGet($param, $default);
+            } elseif ($type === 'post') {
+                return Kernel::rPost($param, $default);
+            } else {
+                return Kernel::rGet($param, $default);
+            }
         }
     }
 
