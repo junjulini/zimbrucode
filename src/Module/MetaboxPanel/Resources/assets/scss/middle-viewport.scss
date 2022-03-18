@@ -126,6 +126,10 @@
     .zc-panel-content {
         box-shadow: -10px 0 17px -5px $panel_menu__shadow-color;
 
+        body.rtl & {
+            box-shadow: 10px 0 17px -5px $panel_menu__shadow-color;
+        }
+
         &_submenu-active {
             margin-left: $panel_menu__width !important;
 

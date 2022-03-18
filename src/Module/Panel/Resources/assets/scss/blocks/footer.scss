@@ -66,6 +66,11 @@
         transition: opacity .5s;
         margin-right: 20px;
 
+        body.rtl & {
+            margin-right: initial;
+            margin-left: 20px;
+        }
+
         &:hover {
             opacity: 1;
         }

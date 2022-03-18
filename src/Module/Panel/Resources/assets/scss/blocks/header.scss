@@ -34,6 +34,11 @@
 
     .zc-panel[data-width|="mode-3"] .zc-panel-content_submenu-active & {
         border-left: 1px solid $panel_menu__border-color;
+
+        body.rtl & {
+            border-left: none;
+            border-right: 1px solid $panel_menu__border-color;
+        }
     }
 
     &__section-title {
@@ -68,6 +73,11 @@
 
         &_right {
             margin-left: auto;
+
+            body.rtl & {
+                margin-left: initial;
+                margin-right: auto;
+            }
         }
     }
 

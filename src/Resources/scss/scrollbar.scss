@@ -37,6 +37,11 @@
         border-top: 5px solid rgba(0, 0, 0, 0);
         border-bottom: 5px solid rgba(0, 0, 0, 0);
         background-clip: padding-box;
+
+        body.rtl & {
+            border-right: none;
+            border-left: 6px solid rgba(0, 0, 0, 0);
+        }
     }
 
     &:hover {

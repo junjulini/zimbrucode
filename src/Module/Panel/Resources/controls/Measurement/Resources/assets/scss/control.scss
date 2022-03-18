@@ -28,6 +28,7 @@
     &__container {
         display: block;
         margin-right: 70px;
+        position: relative;
 
         &_only {
             margin-right: 40px;
@@ -52,6 +53,10 @@
         @include def-transition(color);
         z-index: 2;
 
+        body.rtl & {
+            left: 0;
+        }
+
         &:hover {
             color: $accent-color__2;
         }
@@ -71,6 +76,7 @@
         right: 0;
         height: 33px;
         margin-left: 23px;
+        margin-right: -69px;
         z-index: 1;
         display: none;
         cursor: no-drop;
@@ -80,17 +86,23 @@
         }
     }
 
+    &_only &__inherit-container {
+        margin-right: -39px;
+    }
+
+    &_no-unit &__inherit-container {
+        margin-right: 1px;
+    }
+
     &__inherit-msg {
+        @include center-flex;
         position: absolute;
         background: #ffffff;
-        top: 6px;
-        padding: 2px 0px 2px 6px;
-        margin-right: 71px;
+        top: 1px;
         right: 0;
         left: 0;
-        height: 17px;
-        display: flex;
-        align-items: center;
+        height: calc(100% - 2px);
+        border-radius: 0px 3px 3px 0px;
     }
 
     &__input {
@@ -123,6 +135,10 @@
         padding-right: 7px !important;
         border-radius: 3px !important;
 
+        body.rtl & {
+            padding-right: 26px !important;
+        }
+
         &:focus {
             outline: none !important;
             border-color: $accent-color__2 !important;
@@ -145,19 +161,11 @@
         background: $bg-color__1;
         top: 0;
         bottom: 0;
-        right: 75px;
+        right: 7px;
         margin: auto;
         border: 1px solid $bg-color__border__1;
         box-sizing: border-box;
         border-radius: 2px;
-    }
-
-    &_only:not(.zc-panel-control-measurement_no-unit) &__spinners {
-        right: 45px !important;
-    }
-
-    &_no-unit &__spinners {
-        right: 7px !important;
     }
 
     &__spinner-button {
@@ -366,6 +374,10 @@
         }
     }
 
+    &_no-unit &__select {
+        display: none;
+    }
+
     .chosen-container {
         position: absolute;
         top: 0px;
@@ -381,6 +393,10 @@
         .chosen-drop {
             background: $bg-color__1 !important;
         }
+    }
+
+    &_no-unit .chosen-container {
+        display: none;
     }
 
     &__only-unit {
@@ -433,6 +449,14 @@
             background: $bg-color__1 !important;
             line-height: normal !important;
             box-shadow: none !important;
+            text-align: center;
+            padding-right: 23px !important;
+        }
+    }
+
+    &_no-unit, &_only {
+        &.zc-panel-control-measurement_mobile::after {
+            display: none;
         }
     }
 }

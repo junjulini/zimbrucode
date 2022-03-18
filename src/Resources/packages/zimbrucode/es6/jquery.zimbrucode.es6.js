@@ -766,8 +766,14 @@ class ZimbruCode {
                         priv.currentIndicator.text(priv.currentValue + priv.postfix);
                     }
 
+                    let direction = 'left';
+
+                    if ($('body').hasClass('rtl')) {
+                        direction = 'right';
+                    }
+
                     const currentIndicatorWidth = priv.currentIndicator.outerWidth() || 0;
-                    const calcPositionStyle     = `left: calc(${priv.trackPercent}% - ${((currentIndicatorWidth - thumbSize) / 2) + (priv.trackPercent / 100) * thumbSize}px)`; 
+                    const calcPositionStyle     = `${direction}: calc(${priv.trackPercent}% - ${((currentIndicatorWidth - thumbSize) / 2) + (priv.trackPercent / 100) * thumbSize}px)`; 
 
                     priv.currentIndicator.attr('style', calcPositionStyle);
                 }
@@ -782,16 +788,30 @@ class ZimbruCode {
                     const CD = priv.currentIndicator.get(0).getBoundingClientRect();
                     const RD = priv.rightIndicator.get(0).getBoundingClientRect();
 
-                    if (LD.right + 1 > CD.left) {
-                        priv.leftIndicator.css('visibility', 'hidden');
+                    if ($('body').hasClass('rtl')) {
+                        if (RD.right - 1 > CD.left) {
+                            priv.rightIndicator.css('visibility', 'hidden');
+                        } else {
+                            priv.rightIndicator.css('visibility', 'visible');
+                        }
+
+                        if (LD.left + 1 < CD.right) {
+                            priv.leftIndicator.css('visibility', 'hidden');
+                        } else {
+                            priv.leftIndicator.css('visibility', 'visible');
+                        }
                     } else {
-                        priv.leftIndicator.css('visibility', 'visible');
-                    }
-        
-                    if (RD.left - 1 < CD.right) {
-                        priv.rightIndicator.css('visibility', 'hidden');
-                    } else {
-                        priv.rightIndicator.css('visibility', 'visible');
+                        if (LD.right + 1 > CD.left) {
+                            priv.leftIndicator.css('visibility', 'hidden');
+                        } else {
+                            priv.leftIndicator.css('visibility', 'visible');
+                        }
+            
+                        if (RD.left - 1 < CD.right) {
+                            priv.rightIndicator.css('visibility', 'hidden');
+                        } else {
+                            priv.rightIndicator.css('visibility', 'visible');
+                        }
                     }
                 }
             };

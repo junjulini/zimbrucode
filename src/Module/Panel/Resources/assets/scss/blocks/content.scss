@@ -29,8 +29,18 @@
         right: 0;
         position: absolute;
 
+        body.rtl & {
+            left: 0;
+            right: $panel_menu__width;
+        }
+
         &_submenu-active {
             left: $panel_menu__full-width;
+
+            body.rtl & {
+                left: 0;
+                right: $panel_menu__full-width;
+            }
         }
     }
 }

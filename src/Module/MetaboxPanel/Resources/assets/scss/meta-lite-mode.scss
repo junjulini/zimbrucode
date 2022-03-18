@@ -56,6 +56,10 @@
     min-height: auto;
     z-index: 1;
 
+    body.rtl & {
+        margin: 0;
+    }
+
     &[data-width|="mode-3"] {
         position: relative;
         left: auto;
@@ -89,6 +93,10 @@
         bottom: auto;
         left: 0 !important;
         right: auto;
+
+        body.rtl & {
+            right: 0;
+        }
 
         &_submenu-active {
             margin-left: $panel_menu__full-width;

@@ -23,6 +23,11 @@
     top: 0;
     left: 0;
 
+    body.rtl & {
+        left: initial;
+        right: 0;
+    }
+
     &_submenu-active {
         width: $panel_menu__full-width;
     }
@@ -33,6 +38,10 @@
         background: $alt-color__bg-1;
         box-shadow: inset -10px 0 17px -5px $panel_menu__shadow-color;
         position: relative;
+
+        body.rtl & {
+            box-shadow: inset 10px 0 17px -5px rgb(0 0 0 / 26%);
+        }
 
         .zc-panel[data-width|="mode-3"] & {
             min-height: $panel__min-height;
@@ -54,6 +63,11 @@
         color: $alt-color__text;
         font-size: 21px;
         margin-left: 20px;
+
+        body.rtl & {
+            margin-left: initial;
+            margin-right: 20px;
+        }
     }
 
     &__title {
@@ -157,6 +171,11 @@
             text-transform: uppercase;
             cursor: default;
             margin-left: 20px;
+
+            body.rtl & {
+                margin-left: initial;
+                margin-right: 20px;
+            }
         }
 
         // Modifying : Type - Delimiter
@@ -174,6 +193,11 @@
         position: relative;
         top: -1px;
 
+        body.rtl & {
+            margin-left: initial;
+            margin-right: 20px;
+        }
+
         // Modifying : Pointer
         &_pointer {
             font-size: 14px;
@@ -181,6 +205,15 @@
             margin-left: auto;
             margin-right: 15px;
             top: 1px;
+
+            body.rtl & {
+                margin-right: auto;
+                margin-left: 15px;
+
+                &:before {
+                    @include icon-content(chevron_left);
+                }
+            }
         }
     }
 

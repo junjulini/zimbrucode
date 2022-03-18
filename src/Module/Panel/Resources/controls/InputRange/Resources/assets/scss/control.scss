@@ -18,6 +18,7 @@
 
 .zc-panel-control-range {
     display: flex;
+    column-gap: 10px;
 
     &__container {
         display: flex;
@@ -47,6 +48,11 @@
         
         &_left {
             margin-right: auto;
+
+            body.rtl & {
+                margin-right: initial;
+                margin-left: auto;
+            }
         }
 
         &_current {
@@ -56,10 +62,20 @@
             color: #ffffff;
             background: $accent-color__2;
             white-space: nowrap;
+
+            body.rtl & {
+                left: initial;
+                right: 0;
+            }
         }
 
         &_right {
-            margin-left: auto
+            margin-left: auto;
+
+            body.rtl & {
+                margin-left: initial;
+                margin-right: auto;
+            }
         }
     }
 
@@ -89,6 +105,10 @@
         background: linear-gradient(to right, $accent-color__1, $accent-color__1), $bg-color__border__2;
         background-size: 0% 100%;
         background-repeat: no-repeat;
+
+        body.rtl & {
+            background-position: right center;
+        }
 
         &:focus {
             outline: none;
@@ -171,8 +191,7 @@
         &_type_text {
             display: block;
             margin: 0;
-            width: 90% !important;
-            margin-left: 10% !important;
+            width: 100% !important;
             border: 1px solid $bg-color__border__1 !important;
             background-color: #ffffff !important;
             border-radius: 3px !important;

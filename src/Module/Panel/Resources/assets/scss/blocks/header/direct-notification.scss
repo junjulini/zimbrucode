@@ -37,7 +37,11 @@
         background: $accent-color__4 !important;
 
         .zc-panel-direct-notification__icon-container {
-            border-right-color: rgba(255, 255, 255, 0.1);
+            border-right-color: rgba(255, 255, 255, 0.1) !important;
+
+            body.rtl & {
+                border-left-color: rgba(255, 255, 255, 0.1) !important;
+            }
         }
 
         .zc-panel-direct-notification__icon:before {
@@ -45,7 +49,11 @@
         }
 
         .zc-panel-direct-notification__close-controller {
-            border-left-color: rgba(255, 255, 255, 0.1);
+            border-left-color: rgba(255, 255, 255, 0.1) !important;
+
+            body.rtl & {
+                border-right-color: rgba(255, 255, 255, 0.1) !important;
+            }
         }
     }
 
@@ -75,6 +83,10 @@
 
         .zc-panel-direct-notification__icon-container {
             border-right-color: rgba(84, 84, 84, 0.2);
+
+            body.rtl & {
+                border-left-color: rgba(84, 84, 84, 0.2);
+            }
         }
 
         .zc-panel-direct-notification__icon {
@@ -92,6 +104,10 @@
         .zc-panel-direct-notification__close-controller {
             border-left-color: rgba(84, 84, 84, 0.2);
 
+            body.rtl & {
+                border-right-color: rgba(84, 84, 84, 0.2);
+            }
+
             &:hover {
                 background: rgba(255, 255, 255, 0.3);
             }
@@ -108,6 +124,11 @@
         height: 56px;
         border-right: 1px solid rgba(255, 255, 255, 0.2);
         @include center-flex;
+
+        body.rtl & {
+            border-right: none;
+            border-left: 1px solid rgba(255, 255, 255, 0.2);
+        }
     }
 
     &__icon {
@@ -122,6 +143,11 @@
         row-gap: 5px;
         margin-left: 20px;
         justify-content: center;
+
+        body.rtl & {
+            margin-left: initial;
+            margin-right: 20px;
+        }
     }
 
     &__title {
@@ -143,6 +169,13 @@
         @include def-transition(background);
         margin-left: auto;
         @include center-flex;
+
+        body.rtl & {
+            margin-left: initial;
+            margin-right: auto;
+            border-left: none;
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+        }
 
         &:hover {
             background: rgba(255, 255, 255, 0.15);

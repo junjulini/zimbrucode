@@ -34,6 +34,16 @@
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
 
+    h1, h2, h3, h4, h5, h6 {
+        font-family: $default-font;
+        font-weight: 500;
+    }
+
+    body.rtl & {
+        margin-right: 0;
+        margin-left: 20px;
+    }
+
     p {
         font-size: 13px;
         line-height: 1.5em;
@@ -61,6 +71,11 @@
 
     @media screen and (max-width: 782px) {
         margin-right: 10px;
+
+        body.rtl & {
+            margin-right: 0;
+            margin-left: 10px;
+        }
     }
 
     &[data-width|="mode-3"] {

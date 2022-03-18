@@ -66,6 +66,13 @@
                 background: transparent;
                 padding-right: 5px;
 
+                body.rtl & {
+                    padding-right: 0;
+                    padding-left: 5px;
+                    right: initial;
+                    left: 0;
+                }
+
                 &:before {
                     content: '';
                     width: 0;

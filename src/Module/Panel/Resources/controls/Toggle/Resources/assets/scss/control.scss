@@ -46,6 +46,11 @@
         @include center-flex;
         font-size: 22px;
 
+        body.rtl & {
+            right: initial;
+            left: 0;
+        }
+
         &:hover {
             color: $text-color__title;
         }
@@ -79,6 +84,7 @@
 
     &__title {
         color: $text-color__title;
+        font-weight: 400;
     }
 
     &__container {

@@ -54,6 +54,11 @@
             width: 5px;
             height: 100%;
             background: #ffffff;
+
+            body.rtl & {
+                right: initial;
+                left: -5px;
+            }
         }
     }
 }

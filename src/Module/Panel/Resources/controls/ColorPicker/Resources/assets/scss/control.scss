@@ -54,6 +54,10 @@
         right: 3px;
         background: url(data:image/gif;base64,R0lGODlhBgAGAIABAMPDw////yH5BAEKAAEALAAAAAAGAAYAAAIKhIMGGMrs0pGgAAA7);
         box-shadow: 0px 0px 4px $bg-color__box-shadow__2;
+
+        body.rtl & {
+            right: 5px;
+        }
     }
 
     .cp-app, .cp-app div {

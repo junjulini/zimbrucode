@@ -53,6 +53,11 @@
 
         .zc-scrollbar_active & {
             margin-right: 7px;
+
+            body.rtl & {
+                margin-right: 20px;
+                margin-left: 7px;
+            }
         }
 
         .zc-panel[data-width|="mode-1"] & {
@@ -152,7 +157,6 @@
         font-size: 14.5px;
         color: $text-color__title;
         display: block;
-        font-weight: 500;
         cursor: default;
 
         .zc-panel[data-width|="mode-1"] &,

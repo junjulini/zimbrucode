@@ -109,6 +109,11 @@
         padding: 5px 0;
         display: flex;
         justify-content: flex-end;
+        column-gap: 5px;
+
+        body.rtl & {
+            justify-content: flex-start;
+        }
     }
 
     &__close-button {
@@ -119,7 +124,6 @@
         height: 28px;
         cursor: pointer;
         @include def-transition(background);
-        margin-right: 5px;
 
         &:hover {
             background: rgba(255, 255, 255, 0.25);

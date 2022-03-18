@@ -73,6 +73,7 @@
 
 .zc-panel {
     z-index: 1;
+    margin: 0 !important;
 
     body.block-editor-page & {
         box-sizing: border-box;

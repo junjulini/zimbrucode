@@ -95,6 +95,8 @@
         &__container {
             border-right: none !important;
             background: $alt-color__bg-1 !important;
+            left: $panel_menu__width;
+            right: initial;
         }
 
         &__header-section {
@@ -111,12 +113,21 @@
 
                 .zc-panel-submenu__header-icon {
                     color: $alt-color__text !important;
+
+                    body.rtl & {
+                        order: 1;
+                        margin-right: 0;
+                    }
                 }
 
                 .zc-panel-submenu__header-section-title {
                     color: $alt-color__text !important;
                     cursor: pointer;
                     @include def-transition(color);
+
+                    body.rtl & {
+                        margin-right: 20px;
+                    }
 
                     &:hover {
                         color: $alt-color__text !important;
@@ -171,14 +182,27 @@
         box-shadow: -10px 0 17px -5px $panel_menu__shadow-color;
         @include def-transition(transform);
 
+        body.rtl & {
+            box-shadow: 10px 0 17px -5px $panel_menu__shadow-color;
+        }
+
         &_mobile-menu-visible {
             @include translateX($panel_menu__width);
+
+            body.rtl & {
+                @include translateX(0px - $panel_menu__width);
+            }
         }
     }
 
     .zc-panel-header {
         &__section-title {
             padding-left: 20px !important;
+
+            body.rtl & {
+                padding-left: 0px !important;
+                padding-right: 20px !important;
+            }
         }
 
         &__controller-button {

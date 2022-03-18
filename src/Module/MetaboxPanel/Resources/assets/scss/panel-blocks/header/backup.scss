@@ -81,6 +81,12 @@
         cursor: pointer;
         @include def-transition(background);
 
+        body.rtl & {
+            right: initial;
+            left: -1px;
+            border-radius: 3px 0 0 3px;
+        }
+
         &:hover {
             border-color: rgba(95, 193, 164, 0.85);
             background: rgba(95, 193, 164, 0.85);
@@ -132,6 +138,11 @@
         color: $text-color__alt;
         outline: none;
         @include def-transition(color);
+
+        body.rtl & {
+            right: initial;
+            left: 0;
+        }
 
         &:hover {
             color: $accent-color__4;
@@ -221,6 +232,16 @@
 
         &_delete:hover {
             color: $accent-color__4;
+        }
+
+        body.rtl & {
+            right: initial;
+            left: 3px;
+
+            &_restore {
+                right: initial;
+                left: 20px;
+            }
         }
     }
 }

@@ -129,6 +129,11 @@
         padding-left: 15px;
         cursor: default;
         @include truncate;
+
+        body.rtl & {
+            padding-left: 0;
+            padding-right: 15px;
+        }
     }
 
     &__close {
@@ -140,6 +145,11 @@
         color: rgba(255, 255, 255, 0.5);
         border-left: 1px solid rgba(0, 0, 0 ,0.1);
         @include def-transition(background);
+
+        body.rtl & {
+            border-left: none;
+            border-right: 1px solid rgba(0, 0, 0 ,0.1);
+        }
 
         &:hover {
             background: $alt-color__bg-2;
