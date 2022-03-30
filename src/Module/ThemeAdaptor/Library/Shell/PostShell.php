@@ -37,13 +37,20 @@ class PostShell extends ShellKernel
     /**
      * Get post title
      *
+     * @param boolean $return   Echo/Return
      * @param integer $postID   Post ID
      * @return void
      * @since 1.0.0
      */
-    public function title(int $postID = 0): string
+    public function title(bool $return = false, int $postID = 0)
     {
-        return get_the_title($postID);
+        $data = get_the_title($postID);
+
+        if ($return === true) {
+            return $data;
+        } else {
+            echo $data;
+        }
     }
 
     /**
