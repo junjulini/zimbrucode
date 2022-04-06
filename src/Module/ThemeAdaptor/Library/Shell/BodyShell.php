@@ -84,10 +84,10 @@ class BodyShell extends ShellKernel
      *
      * @param string $sep           How to separate the various items within the page title. Default '»'
      * @param string $seplocation   Location of the separator ('left' or 'right')
-     * @return string               Action result
+     * @return mix                  Action result
      * @since 1.0.0
      */
-    public function title(string $sep = '&raquo;', string $seplocation = ''): string
+    public function title(string $sep = '&raquo;', string $seplocation = '')
     {
         return wp_title($sep, true, $seplocation);
     }
