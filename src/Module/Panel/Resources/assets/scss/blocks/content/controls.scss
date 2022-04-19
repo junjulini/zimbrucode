@@ -122,6 +122,13 @@
             border-bottom-width: 3px;
         }
 
+        &_visual-alert {
+            border-radius: 3px;
+            padding: 10px !important;
+            margin: -10px;
+            animation: zc-panel-control-visual-alert 2s;
+        }
+
         &:last-child:not(.zc-panel-controls__item_show-border-line-last), &_hide-border-line-last {
             border-bottom: none !important;
             padding-bottom: 0 !important;
@@ -202,6 +209,15 @@
             &:hover {
                 color: $accent-color__2;
             }
+        }
+    }
+
+    @keyframes zc-panel-control-visual-alert {
+        0% {
+            background-color: transparentize($accent-color__5, 0.5);
+        }
+        100% {
+            background-color: transparent;
         }
     }
 }

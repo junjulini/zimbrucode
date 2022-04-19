@@ -80,7 +80,7 @@ export default class Menu extends Kernel {
      * @return {null}   None
      * @since 1.0.0
      */
-    displaySection(menuItemID) {
+    displaySection(menuItemID, itemID) {
         const menuItem = $(`.zc-panel-menu li[data-menu-item-id="${menuItemID}"]`);
 
         // Add icon
@@ -150,6 +150,45 @@ export default class Menu extends Kernel {
         // Add global data
         this.menuItem   = menuItem;
         this.menuItemID = menuItemID;
+
+        const standardScrollbar = $('.zc-panel-content .zc-scrollbar');
+
+        standardScrollbar.scrollTop(0);
+
+        if (itemID) {
+            const item = $(`.zc-panel-controls [name=${this.getVar('prefix-slug')}${itemID}]`).closest('.zc-panel-controls__item');
+
+            if (item.length !== 0) {
+                setTimeout(() => {
+                    const scrollbarType   = standardScrollbar.css('position') || 'absolute';
+                    const scrollbarObject = (scrollbarType == 'absolute') ? standardScrollbar : $('html, body');
+                    const panelHeader     = $('.zc-panel-header');
+
+                    let differenceInSize = panelHeader.offset().top || 0;
+                    differenceInSize += panelHeader.height() || 0;
+
+                    if (scrollbarType == 'absolute') {
+                        differenceInSize += standardScrollbar.height() / 2;
+                    }
+
+                    const scrollTop = item.offset().top - differenceInSize;
+
+                    scrollbarObject.animate({
+                        scrollTop: scrollTop
+                    }, 'fast', () => {
+                        setTimeout(() => {
+                            item.addClass('zc-panel-controls__item_visual-alert');
+
+                            setTimeout(() => {
+                                item.removeClass('zc-panel-controls__item_visual-alert');
+                            }, 3000);
+                        }, 300);
+                    });
+                }, 300);
+            } else {
+                window.location.hash = menuItemID;
+            }
+        }
     }
 
     /**
@@ -158,18 +197,16 @@ export default class Menu extends Kernel {
      * @return {null}   None
      * @since 1.0.0
      */
-    prepMenuItem(menuItemID) {
+    prepMenuItem(menuItemID, itemID) {
         if (!this.isSubmenuItem) {
             this.menuItem.removeClass('zc-panel-menu__item_active');
-            this.displaySection(menuItemID);
+            this.displaySection(menuItemID, itemID);
         } else {
             this.menuItem.removeClass('zc-panel-submenu__item_active');
             this.menuParentItem.removeClass('zc-panel-menu__item_active');
             this.submenuItem.removeClass('zc-panel-submenu__container_active');
-            this.displaySection(menuItemID);
+            this.displaySection(menuItemID, itemID);
         }
-
-        $('.zc-panel-content .zc-scrollbar').scrollTop(0);
     }
 
     /**
@@ -180,9 +217,17 @@ export default class Menu extends Kernel {
      */
     desktop() {
         let menuItemID = '';
+        let itemID     = undefined;
 
         if ($.param.fragment()) {
             menuItemID = $.param.fragment() || '';
+
+            const data = this.getItemID(menuItemID);
+
+            if (data !== false) {
+                menuItemID = data.part1;
+                itemID     = data.part2;
+            }
         }
 
         if ($(`.zc-panel-menu li[data-menu-item-id="${menuItemID}"]`).length === 0) {
@@ -197,18 +242,26 @@ export default class Menu extends Kernel {
             }
         }
 
-        this.displaySection(menuItemID);
+        this.displaySection(menuItemID, itemID);
 
         // When hash change
         $(window).on('hashchange.zc-panel', (event) => {
             let menuItemID = $.param.fragment() ? $.param.fragment() : '';
+            let itemID     = undefined;
+
+            const data = this.getItemID(menuItemID);
+
+            if (data !== false) {
+                menuItemID = data.part1;
+                itemID     = data.part2;
+            }
 
             if ($(`.zc-panel-menu li[data-menu-item-id="${menuItemID}"]`).length === 0) {
                 menuItemID = undefined;
             }
 
             if (menuItemID !== undefined) {
-                this.prepMenuItem(menuItemID);
+                this.prepMenuItem(menuItemID, itemID);
             }
         });
 
@@ -310,5 +363,23 @@ export default class Menu extends Kernel {
             this.scrollbarTop();
             window.location.hash = '';
         });
+    }
+
+    getItemID(menuItemID) {
+        if (menuItemID) {
+            if (menuItemID.indexOf('/') != -1) {
+                const part1 = zc.strstr(menuItemID, '/', true);
+                const part2 = zc.strReplace(['/'], [''], zc.strstr(menuItemID, '/', false));
+
+                if (part1 && part2) {
+                    return {
+                        part1: part1,
+                        part2: part2
+                    };
+                }
+            }
+        }
+
+        return false;
     }
 }
