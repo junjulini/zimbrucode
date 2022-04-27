@@ -185,9 +185,9 @@ export default class Menu extends Kernel {
                         }, 300);
                     });
                 }, 300);
-            } else {
-                window.location.hash = menuItemID;
             }
+
+            window.location.hash = menuItemID;
         }
     }
 

@@ -322,13 +322,12 @@ class Tools
                 // The file is larger, check if the resized version already exists (for $crop = true but will also work for $crop = false if the sizes match)
                 if (file_exists($croppedImgPath)) {
                     $croppedImgURL = str_replace(basename($imageSrc[0]), basename($croppedImgPath), $imageSrc[0]);
-                    $finalImage    = [
+
+                    return [
                         'url'    => $croppedImgURL,
                         'width'  => $width,
                         'height' => $height,
                     ];
-
-                    return $finalImage;
                 }
 
                 // $crop = false
@@ -341,13 +340,12 @@ class Tools
                     // Checking if the file already exists
                     if (file_exists($resizedImgPath)) {
                         $resizedImgURL = str_replace(basename($imageSrc[0]), basename($resizedImgPath), $imageSrc[0]);
-                        $finalImage    = [
+
+                        return [
                             'url'    => $resizedImgURL,
                             'width'  => $proportionalSize[0],
                             'height' => $proportionalSize[1],
                         ];
-
-                        return $finalImage;
                     }
                 }
 
@@ -357,32 +355,28 @@ class Tools
                 if (!is_wp_error($img)) {
                     $img->resize($width, $height, $crop);
                     $savedImg = $img->save();
+
+                    if ($savedImg['file']) {
+                        $newImg = str_replace(basename($imageSrc[0]), $savedImg['file'], $imageSrc[0]);
+                    } else {
+                        $newImg = $imageSrc[0];
+                    }
+    
+                    // Resized output
+                    return [
+                        'url'    => $newImg,
+                        'width'  => $savedImg['width'],
+                        'height' => $savedImg['height'],
+                    ];
                 }
-
-                if ($savedImg['file']) {
-                    $newImg = str_replace(basename($imageSrc[0]), $savedImg['file'], $imageSrc[0]);
-                } else {
-                    $newImg = $imageSrc[0];
-                }
-
-                // Resized output
-                $finalImage = [
-                    'url'    => $newImg,
-                    'width'  => $savedImg['width'],
-                    'height' => $savedImg['height'],
-                ];
-
-                return $finalImage;
             }
 
             // Default output - without resizing
-            $finalImage = [
+            return [
                 'url'    => $imageSrc[0],
                 'width'  => $imageSrc[1],
                 'height' => $imageSrc[2],
             ];
-
-            return $finalImage;
         } else {
             return ['url' => ''];
         }
