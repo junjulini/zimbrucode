@@ -33,7 +33,7 @@
         height: 33px !important;
         min-height: 33px !important;
         line-height: normal !important;
-        @include appearance(none !important);
+        appearance: none !important;
 
         &:focus {
             outline: none;

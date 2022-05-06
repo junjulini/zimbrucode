@@ -69,10 +69,10 @@
     }
 
     &__image-preview {
-        @include grab-cursor;
+        cursor: grab;
 
         &:active {
-            @include grab-cursor(true);
+            cursor: grabbing;
         }
     }
 

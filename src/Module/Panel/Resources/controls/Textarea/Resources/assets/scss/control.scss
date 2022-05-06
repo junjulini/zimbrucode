@@ -29,7 +29,7 @@
     font-size: 13px;
     min-height: 150px !important;
     line-height: normal !important;
-    @include appearance(none !important);
+    appearance: none !important;
 
     &:focus {
         outline: none;
