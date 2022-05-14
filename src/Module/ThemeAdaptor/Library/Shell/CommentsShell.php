@@ -107,6 +107,6 @@ class CommentsShell extends ShellKernel
      */
     public function pagination($args = [])
     {
-        return paginate_comments_links();
+        return paginate_comments_links($args);
     }
 }
