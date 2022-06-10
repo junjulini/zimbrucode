@@ -70,11 +70,16 @@ return [
 
     // Package : Color picker
     'colorpicker' => [
-        'styles'  => [],
+        'styles'  => [
+            'pickr-monolith' => [
+                'path'    => $path . '/packages/colorpicker/monolith.min.css',
+                'version' => '1.8.2',
+            ],
+        ],
         'scripts' => [
-            'colorpicker' => [
-                'path'    => $path . '/packages/colorpicker/colorPicker.min.js',
-                'version' => '1.0',
+            'pickr' => [
+                'path'    => $path . '/packages/colorpicker/pickr.min.js',
+                'version' => '1.8.2',
             ],
         ],
     ],

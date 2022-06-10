@@ -25,27 +25,46 @@ zc.module.panel.addControl(($, panel) => {
         const settings = el.data('settings') || {};
 
         const defaults = {
-            size: 2,
-            animationSpeed: 0,
-            multipleInstances: true,
-            noResize: true,
-            memoryColors: [
-                {r: 242, g: 76, b: 61, a: 1},
-                {r: 36, g: 123, b: 160, a: 1},
-                {r: 255, g: 224, b: 102, a: 1},
-                {r: 44, g: 62, b: 80, a: 1},
-                {r: 240, g: 61, b: 91, a: 1},
-                {r: 227, g: 123, b: 64, a: 1},
-                {r: 110, g: 193, b: 102, a: 1},
-                {r: 89, g: 79, b: 79, a: 1}
-            ],
-            renderEC: (colors, mode, options, color) => {
-                $(options.patch).parent().find('.zc-panel-control-colorpicker__live-color').css('background', color);
-                $(options.patch).val(color).change();
+            el: el.get(0),
+            theme: 'monolith',
+            useAsButton: true,
+            default: el.val() || '#FFFFFF',
+            components: {
+                preview: false,
+                opacity: true,
+                hue: true,
+                interaction: {
+                    hex: true,
+                    rgba: true,
+                    hsla: false,
+                    hsva: false,
+                    cmyk: false,
+                    input: true,
+                    clear: false,
+                    save: false
+                }
             }
         };
-        
-        el.zcColorPicker($.extend({}, defaults, settings));
+
+        const pickr = Pickr.create($.extend({}, defaults, settings));
+
+        pickr.on('change', (color) => {
+            const root = pickr.getRoot();
+            const representation = pickr.getColorRepresentation();
+
+            let currentColor = '';
+
+            if (representation == 'HEXA') {
+                currentColor = color.toHEXA().toString();
+            } else if (representation == 'RGBA') {
+                currentColor = color.toRGBA().toString(0);
+            }
+
+            $(root.button).parent().find('.zc-panel-control-colorpicker__live-color').css('background', currentColor);
+            $(root.button).val(currentColor).change();
+
+            pickr.applyColor(false);
+        });
     };
 
     const observer = new IntersectionObserver((entries, observer) => {
