@@ -48,21 +48,45 @@ zc.module.panel.addControl(($, panel) => {
 
         const pickr = Pickr.create($.extend({}, defaults, settings));
 
+        const priv = {
+            prepColor: (color) => {
+                const representation = pickr.getColorRepresentation();
+
+                let currentColor = '';
+
+                if (representation == 'HEXA') {
+                    currentColor = color.toHEXA().toString();
+                } else if (representation == 'RGBA') {
+                    currentColor = color.toRGBA().toString(0);
+                }
+
+                return currentColor;
+            },
+            preInit: (item, oldColor) => {
+                const currentColor = $(item).val();
+
+                if (!currentColor) {
+                    priv.changeColor(item, '#FFFFFF');
+                } else if (currentColor !== oldColor) {
+                    pickr.setColor(currentColor);
+                }
+            },
+            changeColor: (item, color) => {
+                $(item).parent().find('.zc-panel-control-colorpicker__live-color').css('background', color);
+                $(item).val(color).change();
+            }
+        };
+
+        pickr.on('show', (color) => {
+            const root = pickr.getRoot();
+
+            priv.preInit(root.button, priv.prepColor(color));
+        });
+
         pickr.on('change', (color) => {
             const root = pickr.getRoot();
-            const representation = pickr.getColorRepresentation();
 
-            let currentColor = '';
-
-            if (representation == 'HEXA') {
-                currentColor = color.toHEXA().toString();
-            } else if (representation == 'RGBA') {
-                currentColor = color.toRGBA().toString(0);
-            }
-
-            $(root.button).parent().find('.zc-panel-control-colorpicker__live-color').css('background', currentColor);
-            $(root.button).val(currentColor).change();
-
+            priv.changeColor(root.button, priv.prepColor(color));
             pickr.applyColor(false);
         });
     };
