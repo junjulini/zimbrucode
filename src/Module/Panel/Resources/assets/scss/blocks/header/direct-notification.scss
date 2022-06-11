@@ -22,7 +22,7 @@
     min-height: $panel_header__height;
     background: $accent-color__4;
     z-index: 101;
-    color: #ffffff;
+    color: #FFFFFF;
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.4);
     animation: zc-panel-direct-notification-active .3s 1;
     display: flex;
@@ -115,7 +115,7 @@
     }
 
     *::selection {
-        background: #ffffff;
+        background: #FFFFFF;
         color: $alt-color__bg-1;
     }
 

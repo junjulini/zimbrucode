@@ -33,14 +33,14 @@
 
     &::-webkit-scrollbar-thumb, &::-webkit-scrollbar-thumb:hover {
         background: $bg-color__scroll-bar;
-        border-right: 6px solid rgba(0, 0, 0, 0);
-        border-top: 5px solid rgba(0, 0, 0, 0);
-        border-bottom: 5px solid rgba(0, 0, 0, 0);
+        border-right: 6px solid #00000000;
+        border-top: 5px solid #00000000;
+        border-bottom: 5px solid #00000000;
         background-clip: padding-box;
 
         body.rtl & {
             border-right: none;
-            border-left: 6px solid rgba(0, 0, 0, 0);
+            border-left: 6px solid #00000000;
         }
     }
 

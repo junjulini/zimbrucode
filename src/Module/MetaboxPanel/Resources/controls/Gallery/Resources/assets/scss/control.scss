@@ -27,7 +27,7 @@
         border: 1px solid rgba(0 ,0, 0, 0.04);
         border-radius: 3px;
         background: $accent-color__1;
-        color: #ffffff;
+        color: #FFFFFF;
         font-weight: 500;
         cursor: pointer;
         text-transform: uppercase;
@@ -94,12 +94,12 @@
         @include center-flex;
 
         &_change-image:hover {
-            color: #ffffff;
+            color: #FFFFFF;
             background: $accent-color__2;
         }
 
         &_remove-image:hover {
-            color: #ffffff;
+            color: #FFFFFF;
             background: $accent-color__4;
         }
 

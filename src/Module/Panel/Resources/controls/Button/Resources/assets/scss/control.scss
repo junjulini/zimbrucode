@@ -33,7 +33,7 @@
     @include def-transition(all);
 
     &:hover {
-        background: #ffffff;
+        background: #FFFFFF;
         color: $accent-color__2;
     }
 
@@ -43,12 +43,12 @@
 
     &_active {
         background: $accent-color__1;
-        color: #ffffff;
+        color: #FFFFFF;
         border: 1px solid rgba(0 ,0, 0, 0.04);
 
         &:hover {
             background: #69D4B4;
-            color: #ffffff;
+            color: #FFFFFF;
         }
     }
 }

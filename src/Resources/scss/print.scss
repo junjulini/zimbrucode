@@ -12,7 +12,7 @@
 @media print {
     *, *:before, *:after {
         background: transparent !important;
-        color: #000 !important;
+        color: #000000 !important;
         box-shadow: none !important;
         text-shadow: none !important;
     }
@@ -36,7 +36,7 @@
     }
 
     pre, blockquote {
-        border: 1px solid #999;
+        border: 1px solid #999999;
         page-break-inside: avoid;
     }
 

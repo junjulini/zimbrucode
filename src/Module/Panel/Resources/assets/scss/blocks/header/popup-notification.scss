@@ -23,7 +23,7 @@
     right: 10px;
     bottom: 10px;
     background: $accent-color__4;
-    color: #ffffff;
+    color: #FFFFFF;
     overflow: hidden;
     display: flex;
 
@@ -59,7 +59,7 @@
     }
 
     *::selection {
-        background: #ffffff;
+        background: #FFFFFF;
         color: $alt-color__bg-1;
     }
 
@@ -92,7 +92,7 @@
         display: block;
         font-weight: 500;
         font-size: 14px;
-        color: #ffffff;
+        color: #FFFFFF;
         padding: 0 5px 0 10px;
     }
 
@@ -118,7 +118,7 @@
     &__close-button {
         border: 1px solid rgba(255, 255, 255, 0.2);
         background: rgba(255, 255, 255, 0.15);
-        color: #ffffff;
+        color: #FFFFFF;
         padding: 4px 30px;
         height: 28px;
         cursor: pointer;

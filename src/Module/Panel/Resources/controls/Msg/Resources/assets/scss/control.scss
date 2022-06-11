@@ -20,19 +20,19 @@
     display: flex;
     padding: 10px 0;
     width: 100%;
-    background: #ffe3e3;
-    color: white;
+    background: #FFE3E3;
+    color: #FFFFFF;
     border-radius: 3px;
-    border: 1px solid #e4aeae;
+    border: 1px solid #E4AEAE;
     box-sizing: border-box;
 
     &_mode_error {
-        background: #ffe3e3;
-        border: 1px solid #e4aeae;
+        background: #FFE3E3;
+        border: 1px solid #E4AEAE;
     }
 
     &_mode_error &__icon {
-        color: #e08c8c;
+        color: #E08C8C;
 
         &:not([class*="zc-icon-"])::before {
             @include icon(highlight_off);
@@ -40,12 +40,12 @@
     }
 
     &_mode_info {
-        background: #ddf1ff;
-        border: 1px solid #98c8e8;
+        background: #DDF1FF;
+        border: 1px solid #98C8E8;
     }
 
     &_mode_info &__icon {
-        color: #77b3da;
+        color: #77B3DA;
 
         &:not([class*="zc-icon-"])::before {
             @include icon(error_outline);
@@ -53,8 +53,8 @@
     }
 
     &_mode_success {
-        background: #cff3d7;
-        border: 1px solid #93dca2;
+        background: #CFF3D7;
+        border: 1px solid #93DCA2;
     }
 
     &_mode_success &__icon {
@@ -66,12 +66,12 @@
     }
 
     &_mode_warning {
-        background: #fff0c3;
-        border: 1px solid #ffd966;
+        background: #FFF0C3;
+        border: 1px solid #FFD966;
     }
 
     &_mode_warning &__icon {
-        color: #f7c839;
+        color: #F7C839;
 
         &:not([class*="zc-icon-"])::before {
             @include icon(warning);
@@ -79,7 +79,7 @@
     }
 
     *::selection {
-        background: #ffffff;
+        background: #FFFFFF;
         color: #3C3C3C;
     }
 
@@ -92,7 +92,7 @@
 
     &__icon {
         font-size: 37px;
-        color: #e08c8c;
+        color: #E08C8C;
     }
 
     &__content {

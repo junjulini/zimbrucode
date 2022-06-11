@@ -67,7 +67,7 @@
 
     *::selection {
         background: $accent-color__1;
-        color: #ffffff;
+        color: #FFFFFF;
     }
 
     @media screen and (max-width: 782px) {
@@ -131,13 +131,13 @@
 .zc-panel-save-starter-button {
     &:hover {
         background: $accent-color__3;
-        color: #ffffff;
+        color: #FFFFFF;
     }
 }
 
 .zc-panel-reset-starter-button {
     &:hover {
         background: $accent-color__4;
-        color: #ffffff;
+        color: #FFFFFF;
     }
 }

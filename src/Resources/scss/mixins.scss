@@ -19,23 +19,23 @@
 }
 
 // Linear-gradient
-@mixin linear-gradient($direction : to bottom, $startColor : #000, $endColor : #EEE) {
+@mixin linear-gradient($direction : to bottom, $startColor : #000000, $endColor : #EEEEEE) {
     background : $startColor;
     background : linear-gradient($direction, $startColor, $endColor);
 }
 
 // Gradient
-@mixin gradient($startColor : #eee, $endColor : white) {
+@mixin gradient($startColor : #EEEEEE, $endColor : #FFFFFF) {
     @include linear-gradient(to bottom, $startColor, $endColor);
 }
 
 // Horizontal-gradient
-@mixin horizontal-gradient($startColor : #eee, $endColor : white) {
+@mixin horizontal-gradient($startColor : #EEEEEE, $endColor : #FFFFFF) {
     @include linear-gradient(to left, $startColor, $endColor);
 }
 
 // Radial-gradient
-@mixin radial-gradient($hvPosition : center center, $shapeSize : circle cover, $startColor : #ffffff, $endColor : #000000) {
+@mixin radial-gradient($hvPosition : center center, $shapeSize : circle cover, $startColor : #FFFFFF, $endColor : #000000) {
     background : $startColor;
     background : radial-gradient($hvPosition, $shapeSize, $startColor, $endColor)
 }
