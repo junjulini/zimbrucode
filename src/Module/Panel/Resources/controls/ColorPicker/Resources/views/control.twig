@@ -20,11 +20,10 @@
 
 {% set value      = control.option %}
 {% set background = value ? 'style="background: ' ~ value ~ '"' %}
-{% set readonly   = glob.wp_is_mobile ? 'readonly="true"' %}
 
 {% block content %}
     <div class="zc-panel-control-colorpicker">
-        <input type="text" name="{{ control.ID }}" placeholder="{{ control.settings.placeholder }}" value="{{ value }}" id="{{ control.ID }}" class="zc-panel-control-colorpicker__input" {{ control.ignore }} data-option data-settings="{{ control.settings|json_encode() }}" data-colorpicker="colorpicker" autocomplete="off" {{ readonly|raw }}>
+        <input type="text" name="{{ control.ID }}" placeholder="{{ control.settings.placeholder }}" value="{{ value }}" id="{{ control.ID }}" class="zc-panel-control-colorpicker__input" {{ control.ignore }} data-option data-settings="{{ control.settings|json_encode() }}" autocomplete="off" readonly="true">
         <div class="zc-panel-control-colorpicker__live-color" {{ background|raw }}></div>
     </div>
 {% endblock %}
