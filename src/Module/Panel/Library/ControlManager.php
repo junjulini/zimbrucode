@@ -15,8 +15,8 @@ use ZimbruCode\Component\Common\Tools;
 use ZimbruCode\Component\Core\ModuleKernel;
 use ZimbruCode\Component\TemplateBridges\TwigTemplateBridge;
 use ZimbruCode\Module\Panel\Library\Traits\ContentUtilityTrait;
-use ZimbruCode\Module\Panel\Library\TwigContextController;
-use ZimbruCode\Module\Panel\Library\TwigExtension\ControlsRenderTwigExtension;
+use ZimbruCode\Module\Panel\Library\Twig\ContextController;
+use ZimbruCode\Module\Panel\Library\Twig\ControlsRenderTwigExtension;
 
 /**
  * Class : Module/Panel/Library : Control manager
@@ -168,8 +168,8 @@ class ControlManager extends ModuleKernel
         $this->addControl($type, $this->loadModulePart($control, false, $type));
 
         if (method_exists($this->getControl($type), 'each')) {
-            $this->addFilter("zc/module/panel/control/{$type}", function (array $context) use ($type): array{
-                $this->getControl($type)->each(new TwigContextController($context));
+            $this->addFilter("zc/module/panel/control/{$type}", function (array $context) use ($type): array {
+                $this->getControl($type)->each(new ContextController($context));
 
                 return $context;
             });

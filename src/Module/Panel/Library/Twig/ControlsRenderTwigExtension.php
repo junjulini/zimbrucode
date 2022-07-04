@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ZimbruCode\Module\Panel\Library\TwigExtension;
+namespace ZimbruCode\Module\Panel\Library\Twig;
 
 use Twig\Environment;
 use Twig\Error\LoaderError;

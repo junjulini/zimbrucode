@@ -143,24 +143,6 @@ class BaseShell extends ShellKernel
     }
 
     /**
-     * Debug
-     *
-     * @return void
-     * @since 1.0.0
-     */
-    public function debug(): void
-    {
-        if (Kernel::getGlobal('core/module/panel/control-settings/debug-mode')) {
-            $data = [
-                'id'     => $this->getID(),
-                'option' => $this->getOption(),
-            ];
-
-            Tools::dump($data);
-        }
-    }
-
-    /**
      * Get panel mode instance
      *
      * @return ModuleKernel

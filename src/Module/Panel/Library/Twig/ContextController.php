@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ZimbruCode\Module\Panel\Library;
+namespace ZimbruCode\Module\Panel\Library\Twig;
 
 use InvalidArgumentException;
 
@@ -18,9 +18,9 @@ use InvalidArgumentException;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
-class TwigContextController
+class ContextController
 {
     protected $context = [];
 
@@ -53,11 +53,11 @@ class TwigContextController
     /**
      * Get context data
      *
-     * @param string $key   Item key
-     * @return mix          Item data
+     * @param string  $key   Item key
+     * @return mix           Item data
      * @since 1.0.0
      */
-    public function get(string $key)
+    public function get(string $key = '')
     {
         if (!$key) {
             throw new InvalidArgumentException('ZE0135');
@@ -68,5 +68,16 @@ class TwigContextController
         }
 
         return $this->context[$key];
+    }
+
+    /**
+     * Get context
+     *
+     * @return array   Context
+     * @since 1.1.0
+     */
+    public function getContext(): array
+    {
+        return $this->context;
     }
 }

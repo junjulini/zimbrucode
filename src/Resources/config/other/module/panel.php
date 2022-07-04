@@ -27,7 +27,6 @@ return [
             'js-file'     => '/Resources/assets/js/control.js',
             'min-js-file' => '/Resources/assets/js/control.min.js',
         ],
-        'debug-mode'    => false,
         'exclude'       => [
             'menuTab',
             'menuParentTab',
