@@ -77,7 +77,7 @@ export default class OptionHandler extends Kernel {
 
             const priv = {};
 
-            priv.prepOptions = () => {
+            priv.procOptions = () => {
                 const options = {};
 
                 $('.zc-panel .zc-panel-controls [data-option]').each((index, el) => {
@@ -104,7 +104,7 @@ export default class OptionHandler extends Kernel {
             };
 
             zc.jsonRequest(`zc/module/panel/save_${this.getVar('slug')}`, this.getVar('nonce'), {
-                options: priv.prepOptions(),
+                options: priv.procOptions(),
             }).then((response) => {
                 $(window).trigger('zc/panel/save/success-start');
 

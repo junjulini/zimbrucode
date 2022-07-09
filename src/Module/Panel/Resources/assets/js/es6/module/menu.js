@@ -192,12 +192,12 @@ export default class Menu extends Kernel {
     }
 
     /**
-     * Preparing a menu item
+     * Processing a menu item
      * 
      * @return {null}   None
      * @since 1.0.0
      */
-    prepMenuItem(menuItemID, itemID) {
+    procMenuItem(menuItemID, itemID) {
         if (!this.isSubmenuItem) {
             this.menuItem.removeClass('zc-panel-menu__item_active');
             this.displaySection(menuItemID, itemID);
@@ -261,7 +261,7 @@ export default class Menu extends Kernel {
             }
 
             if (menuItemID !== undefined) {
-                this.prepMenuItem(menuItemID, itemID);
+                this.procMenuItem(menuItemID, itemID);
             }
         });
 
@@ -337,7 +337,7 @@ export default class Menu extends Kernel {
                 }
 
                 if (menuItemID !== undefined) {
-                    this.prepMenuItem(menuItemID);
+                    this.procMenuItem(menuItemID);
                 }
 
                 this.service('close-block').show();

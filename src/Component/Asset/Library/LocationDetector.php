@@ -57,7 +57,7 @@ class LocationDetector
     /**
      * Get the path to the asset
      *
-     * @param  string $path   Name or path to the asset
+     * @param  string $path   Part of path
      * @return string         Asset path
      * @since 1.0.0
      */
@@ -77,10 +77,10 @@ class LocationDetector
     }
 
     /**
-     * Preparing a path defined as a string
+     * Path : Defined as a string
      *
      * @param  string $path   Path of asset
-     * @return string         Prepared asset path
+     * @return string         Elaborated path
      * @since 1.0.0
      */
     protected function definedAsString(string $path): string
@@ -115,10 +115,10 @@ class LocationDetector
     }
 
     /**
-     * Preparing a path defined as a path
+     * Path : Defined as a path
      *
      * @param  string $path   Path of asset
-     * @return string         Prepared asset path
+     * @return string         Elaborated path
      * @since 1.0.0
      */
     protected function definedAsPath(string $path): string
@@ -131,10 +131,10 @@ class LocationDetector
     }
 
     /**
-     * Preparing a path defined as a URL
+     * Path : Defined as a URL
      *
      * @param  string $path   Path of asset
-     * @return string         Prepared asset path
+     * @return string         Elaborated path
      * @since 1.0.0
      */
     protected function definedAsURL(string $path): string

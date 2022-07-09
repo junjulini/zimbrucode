@@ -149,7 +149,7 @@ class ZimbruCode {
      * Template handler
      * 
      * @param {string} tpl  Template HTML
-     * @param {object} data Data for preparing template
+     * @param {object} data Template data
      * @since 1.0.0
      */
     tpl(tpl = '', data = {}) {
@@ -1015,14 +1015,14 @@ class ZimbruCode {
 
         settings = $.extend({}, defaults, customSettings);
 
-        const preparedSettings = this.clone(settings);
+        const processedSettings = this.clone(settings);
 
         if ($.isFunction(settings.before)) {
-            preparedSettings.beforeSend = settings.before;
-            delete preparedSettings.before;
+            processedSettings.beforeSend = settings.before;
+            delete processedSettings.before;
         }
 
-        preparedSettings.success = (response, textStatus, jqXHR) => {
+        processedSettings.success = (response, textStatus, jqXHR) => {
             if (response < 0) {
                 if ($.isFunction(settings.error)) {
                     settings.error(jqXHR, textStatus);
@@ -1034,11 +1034,11 @@ class ZimbruCode {
             }
         };
 
-        preparedSettings.error = (jqXHR, textStatus) => {
+        processedSettings.error = (jqXHR, textStatus) => {
             if (checkN <= iterations) {
                 setTimeout(() => {
                     checkN ++;
-                    $.ajax(preparedSettings);
+                    $.ajax(processedSettings);
                 }, interval);
             } else {
                 if ($.isFunction(settings.error)) {
@@ -1047,7 +1047,7 @@ class ZimbruCode {
             }
         };
 
-        return $.ajax(preparedSettings);
+        return $.ajax(processedSettings);
     }
 }
 

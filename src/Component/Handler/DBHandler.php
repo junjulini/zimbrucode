@@ -142,8 +142,8 @@ class DBHandler
     protected function cacheSpecificData(string $key): bool
     {
         if ($key) {
-            $prep = Kernel::service('wpdb')->prepare("SELECT value FROM {$this->tableName} WHERE name = %s LIMIT 1", $key);
-            $row  = Kernel::service('wpdb')->get_row($prep);
+            $data = Kernel::service('wpdb')->prepare("SELECT value FROM {$this->tableName} WHERE name = %s LIMIT 1", $key);
+            $row  = Kernel::service('wpdb')->get_row($data);
 
             $this->checkError();
 

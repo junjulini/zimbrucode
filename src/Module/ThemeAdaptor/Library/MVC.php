@@ -20,6 +20,7 @@ use ZimbruCode\Component\Handler\Traits\GlobalCacheHandlerTrait;
 use ZimbruCode\Component\Handler\Traits\OptionHandlerTrait;
 use ZimbruCode\Component\Handler\Traits\RequestHandlerTrait;
 use ZimbruCode\Component\Handler\Traits\SessionHandlerTrait;
+use ZimbruCode\Component\Handler\Traits\HooksHandlerTrait;
 
 /**
  * Class : Module/ThemeAdaptor/Library : MVC - The controller that handles the model and view layers to work together
@@ -30,7 +31,7 @@ use ZimbruCode\Component\Handler\Traits\SessionHandlerTrait;
  */
 class MVC
 {
-    use OptionHandlerTrait, GlobalCacheHandlerTrait, RequestHandlerTrait, SessionHandlerTrait;
+    use OptionHandlerTrait, GlobalCacheHandlerTrait, RequestHandlerTrait, SessionHandlerTrait, HooksHandlerTrait;
 
     protected $__render;
 

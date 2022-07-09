@@ -33,7 +33,7 @@ class AjaxHandler
      *
      * @param string  $action           Ajax action
      * @param string  $userCapability   User capability
-     * @param boolean $inputJsonType    Preparing AJAX action in Json format
+     * @param boolean $inputJsonType    Return result in JSON format
      * @since 1.0.0
      */
     public function __construct(string $action = '', string $userCapability = '', bool $inputJsonType = true)

@@ -47,7 +47,7 @@ class NamespaceHandler
     }
 
     /**
-     * Prepare namespace
+     * Get namespace
      *
      * @return string   Namespace
      * @since 1.0.0

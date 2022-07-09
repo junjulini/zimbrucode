@@ -48,14 +48,14 @@ class Module extends ModuleKernel
             do_action('zc/module/panel/setup_before', $this);
             do_action("zc/module/panel/{$this->getModuleSetting('slug')}/setup_before", $this);
 
-            // Preparing "build settings"
-            $this->prepBuildSettings();
+            // Processing "build settings"
+            $this->procBuildSettings();
 
             // Check panel mode
             $this->checkMode();
 
-            // Preparing panel settings
-            $this->prepSettings();
+            // Processing panel settings
+            $this->procSettings();
 
             // Load "asset handler"
             $this->addModuleData('asset', new AssetHandler($this));
@@ -70,12 +70,12 @@ class Module extends ModuleKernel
     }
 
     /**
-     * Preparing "build settings"
+     * Processing "build settings"
      *
      * @return void
      * @since 1.0.0
      */
-    protected function prepBuildSettings(): void
+    protected function procBuildSettings(): void
     {
         if ($this->getModuleSetting('build-settings')) {
             $this->addModuleData('build-settings', $this->getModuleSetting('build-settings'));
@@ -115,12 +115,12 @@ class Module extends ModuleKernel
     }
 
     /**
-     * Preparing panel settings
+     * Processing panel settings
      *
      * @return void
      * @since 1.0.0
      */
-    protected function prepSettings(): void
+    protected function procSettings(): void
     {
         if (self::getGlobal("core/module/panel/settings/{$this->getModuleData('mode')}")) {
             $this->addModuleSettings(Tools::arrayMerge(
@@ -138,9 +138,11 @@ class Module extends ModuleKernel
      */
     protected function loadMode(): void
     {
-        $mode = ($mode = self::getGlobal("core/module/panel/mode/{$this->getModuleData('mode')}"))
-        ? $mode
-        : $this->getModuleData("custom-mode/{$this->getModuleData('mode')}");
+        if (self::getGlobal("core/module/panel/mode/{$this->getModuleData('mode')}")) {
+            $mode = self::getGlobal("core/module/panel/mode/{$this->getModuleData('mode')}");
+        } else {
+            $mode = $this->getModuleData("custom-mode/{$this->getModuleData('mode')}");
+        }
 
         $this->loadModulePart($mode);
     }
