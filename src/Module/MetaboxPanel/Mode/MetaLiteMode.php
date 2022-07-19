@@ -99,7 +99,7 @@ class MetaLiteMode extends Mode
         do_action("zc/module/metabox_panel/{$this->getModuleSetting('slug')}/mode/lite/enqueue--before");
 
         $handle = self::dop('jquery.panel', 'jquery.panel.min');
-        $result = array_filter(wp_scripts()->queue, function (string $var) use ($handle) {
+        $result = array_filter(wp_scripts()->queue, function (string $var) use ($handle): bool {
             return strpos($var, $handle) !== false;
         });
 

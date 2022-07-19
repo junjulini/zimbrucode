@@ -137,6 +137,18 @@ class AjaxHandler
     }
 
     /**
+     * Check if element exists
+     *
+     * @param string $name   Item name
+     * @return boolean       Action result
+     * @since 1.1.0
+     */
+    public function has(string $name): bool
+    {
+        return ($this->get($name));
+    }
+
+    /**
      * Remove item
      *
      * @param string $name   Item name
@@ -145,12 +157,36 @@ class AjaxHandler
     public function remove(string $name = ''): AjaxHandler
     {
         if ($name) {
-            unset($this->data[$name]);
+            if (isset($this->data[$name])) {
+                unset($this->data[$name]);
+            }
         } elseif (!$name) {
             unset($this->data);
         }
 
         return $this;
+    }
+
+    /**
+     * Remove all items
+     *
+     * @return void
+     * @since 1.1.0
+     */
+    public function flush(): void
+    {
+        $this->data = [];
+    }
+
+    /**
+     * Dump data
+     *
+     * @return void
+     * @since 1.1.0
+     */
+    public function dump(): void
+    {
+        Tools::dump($this->data);
     }
 
     /**

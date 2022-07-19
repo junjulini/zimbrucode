@@ -365,6 +365,13 @@ export default class Menu extends Kernel {
         });
     }
 
+    /**
+     * Get item ID
+     * 
+     * @param {object} menuItemID
+     * @returns {mix}
+     * @since 1.0.0
+     */
     getItemID(menuItemID) {
         if (menuItemID) {
             if (menuItemID.indexOf('/') != -1) {

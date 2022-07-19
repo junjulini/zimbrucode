@@ -53,6 +53,23 @@ class FastCache
     }
 
     /**
+     * Get item data
+     *
+     * @param  string  $key       Item key
+     * @param  mix     $default   Default value
+     * @return mix                Item data
+     * @since 1.0.0
+     */
+    public function get(string $key, $default = false)
+    {
+        if (!$key) {
+            throw new RuntimeException('ZE0039');
+        }
+
+        return $this->data[$key] ?? $default;
+    }
+
+    /**
      * Add item
      *
      * @param  string $key     Item key
@@ -71,20 +88,15 @@ class FastCache
     }
 
     /**
-     * Get item data
+     * Check if item exists
      *
-     * @param  string  $key       Item key
-     * @param  mix     $default   Default value
-     * @return mix                Item data
-     * @since 1.0.0
+     * @param string $key   Item key
+     * @return boolean      Action result
+     * @since 1.1.0
      */
-    public function get(string $key, $default = false)
+    public function has(string $key): bool
     {
-        if (!$key) {
-            throw new RuntimeException('ZE0039');
-        }
-
-        return $this->data[$key] ?? $default;
+        return ($this->get($key));
     }
 
     /**
@@ -96,16 +108,10 @@ class FastCache
      */
     public function remove(string $key): void
     {
-        if (!$key) {
-            throw new RuntimeException('ZE0040');
+        if (isset($this->data[$key])) {
+            unset($this->data[$key]);
+            $this->cache->save($this->cacheID, $this->data);
         }
-
-        if (!isset($this->data[$key])) {
-            throw new RuntimeException("ZE0041 - This item '{$key}' does not exist in the cache data");
-        }
-
-        unset($this->data[$key]);
-        $this->cache->save($this->cacheID, $this->data);
     }
 
     /**

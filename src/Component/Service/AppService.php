@@ -267,6 +267,7 @@ class AppService
      * Remove var directory
      *
      * @return void
+     * @since 1.0.0
      */
     public function removeVarDir(): void
     {
@@ -301,6 +302,7 @@ class AppService
      * Remove cache directory
      *
      * @return void
+     * @since 1.0.0
      */
     public function removeCacheDir(): void
     {
@@ -335,6 +337,7 @@ class AppService
      * Remove temp directory
      *
      * @return void
+     * @since 1.0.0
      */
     public function removeTempDir(): void
     {
@@ -369,6 +372,7 @@ class AppService
      * Remove log directory
      *
      * @return void
+     * @since 1.0.0
      */
     public function removeLogDir(): void
     {

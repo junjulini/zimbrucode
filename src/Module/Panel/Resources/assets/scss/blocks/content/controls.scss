@@ -113,11 +113,6 @@
             display: none;
         }
 
-        &_hide-border-line {
-            border-bottom: none !important;
-            padding-bottom: 0 !important;
-        }
-
         &_accent-border {
             border-bottom-width: 3px;
         }
@@ -129,7 +124,8 @@
             animation: zc-panel-control-visual-alert 2s;
         }
 
-        &:last-child:not(.zc-panel-controls__item_show-border-line-last), &_hide-border-line-last {
+        &:last-child:not(.zc-panel-controls__item_show-border-line),
+        &_hide-border-line {
             border-bottom: none !important;
             padding-bottom: 0 !important;
         }

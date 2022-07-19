@@ -17,7 +17,7 @@ use Twig\Token;
 use Twig\TokenParser\AbstractTokenParser;
 
 /**
- * Class : Module/ThemeAdaptor/Library/TwigExtension/HavePostsExtension :  Have posts - Token parser
+ * Class : Module/ThemeAdaptor/Library/TwigExtension/HavePostsExtension : Have posts - Token parser
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode

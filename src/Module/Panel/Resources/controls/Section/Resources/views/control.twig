@@ -25,10 +25,8 @@
 
 {% if control.borderLine == 'hide' %}
     {% set class = class ~ 'zc-panel-controls__item_hide-border-line ' %}
-{% elseif control.borderLine == 'hide-last' %}
-    {% set class = class ~ 'zc-panel-controls__item_hide-border-line-last ' %}
-{% elseif control.borderLine == 'show-last' %}
-    {% set class = class ~ 'zc-panel-controls__item_show-border-line-last ' %}
+{% elseif control.borderLine == 'show' %}
+    {% set class = class ~ 'zc-panel-controls__item_show-border-line ' %}
 {% elseif control.borderLine == 'accent' %}
     {% set class = class ~ 'zc-panel-controls__item_accent-border ' %}
 {% endif %}

@@ -59,6 +59,7 @@ abstract class ModuleKernel extends Kernel
      * Module parent object
      *
      * @return ModuleKernel
+     * @since 1.0.0
      */
     final public function moduleParent(): ModuleKernel
     {

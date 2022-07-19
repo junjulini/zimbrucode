@@ -51,6 +51,7 @@ class TwigTemplateBridge
      * Constructor
      *
      * @param boolean $loadDefaultShells   Load default shells if value true
+     * @since 1.0.0
      */
     public function __construct(bool $loadDefaultShells = true)
     {

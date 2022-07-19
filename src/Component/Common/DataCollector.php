@@ -25,6 +25,19 @@ class DataCollector
     protected $data = [];
 
     /**
+     * Get data
+     *
+     * @param  string  $path      Array path
+     * @param  mix     $default   Default value
+     * @return mix                Item data
+     * @since 1.0.0
+     */
+    public function get(string $path, $default = false)
+    {
+        return Tools::getNode($this->data, $path, $default);
+    }
+
+    /**
      * Add data
      *
      * @param  string $path    Array path
@@ -39,16 +52,15 @@ class DataCollector
     }
 
     /**
-     * Get data
+     * Check if element exists
      *
-     * @param  string  $path      Array path
-     * @param  mix     $default   Default value
-     * @return mix                Item data
-     * @since 1.0.0
+     * @param string $path   Array path
+     * @return boolean       Action result
+     * @since 1.1.0
      */
-    public function get(string $path, $default = false)
+    public function has(string $path): bool
     {
-        return Tools::getNode($this->data, $path, $default);
+        return ($this->get($path));
     }
 
     /**
@@ -61,6 +73,18 @@ class DataCollector
     public function remove(string $path): bool
     {
         return Tools::unsetNode($this->data, $path);
+    }
+
+    /**
+     * Remove all items
+     *
+     * @return self
+     * @since 1.1.0
+     */
+    public function flush(): self
+    {
+        $this->data = [];
+        return $this;
     }
 
     /**

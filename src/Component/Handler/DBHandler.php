@@ -164,6 +164,45 @@ class DBHandler
     }
 
     /**
+     * Get the data of an item in a database table
+     *
+     * @param  string  $path      Array path
+     * @param  mix     $default   Default value
+     * @return mix                Database item value
+     * @since 1.0.0
+     */
+    public function get(string $path = '', $default = false)
+    {
+        if ($path) {
+            if (strpos($path, '/') !== false) {
+                $first = strstr($path, '/', true);
+
+                if (isset($this->data[$first])) {
+                    return Tools::getNode($this->data, $path, $default);
+                } else {
+                    if ($this->cacheSpecificData($first)) {
+                        return Tools::getNode($this->data, $path, $default);
+                    } else {
+                        return $default;
+                    }
+                }
+            } else {
+                if (isset($this->data[$path])) {
+                    return Tools::getNode($this->data, $path, $default);
+                } else {
+                    if ($this->cacheSpecificData($path)) {
+                        return Tools::getNode($this->data, $path, $default);
+                    } else {
+                        return $default;
+                    }
+                }
+            }
+        } else {
+            return $this->data;
+        }
+    }
+
+    /**
      * Add data for an item in a database table
      *
      * @param string  $path         Array path
@@ -220,42 +259,15 @@ class DBHandler
     }
 
     /**
-     * Get the data of an item in a database table
+     * Check if exist
      *
-     * @param  string  $path      Array path
-     * @param  mix     $default   Default value
-     * @return mix                Database item value
-     * @since 1.0.0
+     * @param string $path   Array path
+     * @return boolean       Result of action
+     * @since 1.1.0
      */
-    public function get(string $path = '', $default = false)
+    public function has(string $path = ''): bool
     {
-        if ($path) {
-            if (strpos($path, '/') !== false) {
-                $first = strstr($path, '/', true);
-
-                if (isset($this->data[$first])) {
-                    return Tools::getNode($this->data, $path, $default);
-                } else {
-                    if ($this->cacheSpecificData($first)) {
-                        return Tools::getNode($this->data, $path, $default);
-                    } else {
-                        return $default;
-                    }
-                }
-            } else {
-                if (isset($this->data[$path])) {
-                    return Tools::getNode($this->data, $path, $default);
-                } else {
-                    if ($this->cacheSpecificData($path)) {
-                        return Tools::getNode($this->data, $path, $default);
-                    } else {
-                        return $default;
-                    }
-                }
-            }
-        } else {
-            return $this->data;
-        }
+        return ($this->get($path));
     }
 
     /**

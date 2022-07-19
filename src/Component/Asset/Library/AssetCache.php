@@ -37,7 +37,7 @@ class AssetCache
 
     /**
      * Constructor
-     * 
+     *
      * @since 1.0.0
      */
     public function __construct()
@@ -292,25 +292,6 @@ class AssetCache
     }
 
     /**
-     * Check if cache file or APC key exists
-     *
-     * @return boolean   Result of checking
-     * @since 1.0.0
-     */
-    public function has(): bool
-    {
-        if (!$this->cacheID) {
-            throw new RuntimeException('ZE0012');
-        }
-
-        if (!is_string($this->cacheID)) {
-            throw new RuntimeException('ZE0013');
-        }
-
-        return $this->object['cache']->contains($this->cacheID);
-    }
-
-    /**
      * Add cache data
      *
      * @param array $data   Cache data
@@ -331,6 +312,25 @@ class AssetCache
     }
 
     /**
+     * Check if cache file or APC key exists
+     *
+     * @return boolean   Result of checking
+     * @since 1.0.0
+     */
+    public function has(): bool
+    {
+        if (!$this->cacheID) {
+            throw new RuntimeException('ZE0012');
+        }
+
+        if (!is_string($this->cacheID)) {
+            throw new RuntimeException('ZE0013');
+        }
+
+        return $this->object['cache']->contains($this->cacheID);
+    }
+
+    /**
      * Remove cache
      *
      * @return void
@@ -347,6 +347,17 @@ class AssetCache
         }
 
         $this->object['cache']->delete($this->cacheID);
+    }
+
+    /**
+     * Flush
+     *
+     * @return void
+     * @since 1.1.0
+     */
+    public function flush(): void
+    {
+        $this->object['cache']->flushAll();
     }
 
     /**
