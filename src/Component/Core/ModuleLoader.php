@@ -23,7 +23,7 @@ use ZimbruCode\Component\Core\Kernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 class ModuleLoader
 {
@@ -187,6 +187,8 @@ class ModuleLoader
     public function addConfig($config): self
     {
         if ($config) {
+            $config = apply_filters('zc/component/core/module_loader/before_load_config', $config);
+
             if (is_string($config)) {
                 $this->useModule($config)
                      ->addAsService(false)
@@ -448,19 +450,18 @@ class ModuleLoader
      *
      * @param ModuleKernel $module   Module object
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     protected function doAction(ModuleKernel $module): void
     {
-        $slug = Kernel::getGlobal('core/slug');
         $name = ltrim(strtolower(preg_replace('/[A-Z]([A-Z](?![a-z]))*/', '_$0', $module->getModuleName())), '_');
 
         if (strpos($module->getModuleNamespace(), Kernel::getGlobal('core/name')) !== false) {
-            do_action("{$slug}/module/{$name}/before_setup", $module);
+            do_action("zc/module/{$name}/before_setup", $module);
         } elseif (strpos($module->getModuleNamespace(), Kernel::getGlobal('app/name')) !== false) {
-            do_action("{$slug}/app/module/{$name}/before_setup", $module);
+            do_action("zc/app/module/{$name}/before_setup", $module);
         } else {
-            do_action("{$slug}/{$name}/before_setup", $module);
+            do_action("zc/{$name}/before_setup", $module);
         }
     }
 }

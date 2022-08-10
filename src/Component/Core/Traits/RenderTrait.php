@@ -62,7 +62,7 @@ trait RenderTrait
                 $locationPath = '';
 
                 if (method_exists($this, 'getModulePath')) {
-                    $locationPath = $this->getModulePath() . self::getGlobal('core/component/core/module/resource-dir') . '/views';
+                    $locationPath = $this->getModulePath() . self::getGlobal('core/component/core/module/resource-dir') . 'views';
                 }
 
                 if (file_exists("{$locationPath}/{$template}")) {

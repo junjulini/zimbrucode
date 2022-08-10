@@ -14,6 +14,7 @@ namespace ZimbruCode;
 use Composer\Autoload\ClassLoader;
 use RuntimeException;
 use ZimbruCode\Component\Common\FastCache;
+use ZimbruCode\Component\Common\Tools;
 use ZimbruCode\Component\Core\GlobalConfig;
 use ZimbruCode\Component\Core\GlobalLibrary;
 use ZimbruCode\Component\Core\Kernel;
@@ -26,11 +27,13 @@ use ZimbruCode\Component\Service\AppService;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.1
+ * @since   1.1.0
  */
 abstract class AppKernel extends Kernel
 {
     use AssetTrait;
+
+    private $__CHILD_APP = false;
 
     /**
      * Initializing a new application
@@ -67,6 +70,8 @@ abstract class AppKernel extends Kernel
         // Service initialization [mode : before]
         $this->__initServices('before', $composer, $rootPath, $slug);
 
+        $this->__initChildApplicationIfExist();
+
         // Application configs
         $this->__appConfig($mode);
 
@@ -76,8 +81,22 @@ abstract class AppKernel extends Kernel
         // Set module namespace
         self::module()->addNamespace($this->getNamespace() . '\\' . self::getGlobal('app/module-namespace-dir'));
 
-        // Run setup
+        // Child theme : Call "beforeParentSetup" method
+        if ($this->__CHILD_APP instanceof Kernel) {
+            if (method_exists($this->__CHILD_APP, 'beforeParentSetup')) {
+                $this->__CHILD_APP->beforeParentSetup();
+            }
+        }
+
+        // Call "setup" method
         $this->setup();
+
+        // Child theme : Call "setup" method
+        if ($this->__CHILD_APP instanceof Kernel) {
+            if (method_exists($this->__CHILD_APP, 'setup')) {
+                $this->__CHILD_APP->setup();
+            }
+        }
 
         // Load modules from config file
         $this->__loadModules();
@@ -112,6 +131,39 @@ abstract class AppKernel extends Kernel
             self::addGlobalVarSlug($slug);
         } else {
             throw new RuntimeException("ZE0001 - This application is duplicated : {$appClass}");
+        }
+    }
+
+    /**
+     * Initialization of child application ( If exist )
+     *
+     * @return void
+     * @since 1.1.0
+     */
+    private function __initChildApplicationIfExist(): void
+    {
+        if (Tools::isChildTheme()) {
+            $childAppDir = self::service('app')->getChildPath();
+
+            if (file_exists($childAppDir)) {
+                $childAppNamespace = self::service('app')->getChildNamespace();
+
+                $namespaces = [
+                    [
+                        'path'      => $childAppDir,
+                        'namespace' => $childAppNamespace . '\\',
+                    ]
+                ];
+
+                Tools::addPsr4($namespaces);
+
+                $class = $childAppNamespace . '\\' . self::getGlobal('app/child-application-name');
+                if (class_exists($class)) {
+                    $this->__CHILD_APP = new $class;
+                }
+
+                self::module()->addNamespace($childAppNamespace . '\\' . self::getGlobal('app/module-namespace-dir'));
+            }
         }
     }
 
@@ -247,9 +299,34 @@ abstract class AppKernel extends Kernel
             }
         }
 
+        // Child theme
+        if (Tools::isChildTheme()) {
+
+            // Load custom 'App' config file
+            if (file_exists($file = self::service('app')->getChildConfigPath('app.php'))) {
+                if (is_array($config = require $file)) {
+                    self::addGlobal('app', array_replace_recursive(self::getGlobal('app'), $config));
+                }
+            }
+
+            // Load custom 'Core' config file
+            if (file_exists($file = self::service('app')->getChildConfigPath('core.php'))) {
+                if (is_array($config = require $file)) {
+                    self::addGlobal('core', array_replace_recursive(self::getGlobal('core'), $config));
+                }
+            }
+        }
+
         // Call "config" method
         if (method_exists($this, 'config')) {
             $this->config();
+        }
+
+        // Child theme : Call "config" method
+        if ($this->__CHILD_APP instanceof Kernel) {
+            if (method_exists($this->__CHILD_APP, 'config')) {
+                $this->__CHILD_APP->config();
+            }
         }
     }
 
@@ -303,7 +380,17 @@ abstract class AppKernel extends Kernel
         $file = self::service('app')->getConfigPath('modules.php');
 
         if (file_exists($file)) {
-            if ($modules = require $file) {
+            if (is_array($modules = require $file)) {
+
+                // Child theme
+                if (Tools::isChildTheme()) {
+                    if (file_exists($childFile = self::service('app')->getChildConfigPath('modules.php'))) {
+                        if (is_array($childModules = require $childFile)) {
+                            $modules = Tools::arrayMerge($modules, $childModules, 'wk');
+                        }
+                    }
+                }
+
                 self::module($modules);
             }
         }
@@ -332,6 +419,13 @@ abstract class AppKernel extends Kernel
     {
         if (method_exists($this, 'afterLoadAllModules')) {
             $this->afterLoadAllModules();
+        }
+
+        // Child theme : Call "afterLoadAllModules" method
+        if ($this->__CHILD_APP instanceof Kernel) {
+            if (method_exists($this->__CHILD_APP, 'afterLoadAllModules')) {
+                $this->__CHILD_APP->afterLoadAllModules();
+            }
         }
 
         do_action('zc/after_load_modules');

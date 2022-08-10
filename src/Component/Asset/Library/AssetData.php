@@ -440,7 +440,7 @@ class AssetData
         } else {
             $rootURL = Kernel::service('app')->getRootURL();
 
-            if (0 === strpos($fileURL, $rootURL)) {
+            if (0 === strpos($fileURL, $rootURL) && 0 !== strpos($fileURL, Kernel::service('app')->getChildURL())) {
                 $fwSP = Kernel::getGlobal('core/component/asset/fw-search-point');
                 $fwSP = str_replace('/', '\/', $fwSP);
 

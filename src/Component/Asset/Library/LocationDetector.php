@@ -22,7 +22,7 @@ use ZimbruCode\Component\Core\Kernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 class LocationDetector
 {
@@ -34,7 +34,7 @@ class LocationDetector
      * Constructor
      *
      * @param string $location   Location of assets
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function __construct(string $location)
     {
@@ -45,13 +45,11 @@ class LocationDetector
         $this->root            = Kernel::service('app')->getResourcePath();
         $this->defaultLocation = Kernel::getGlobal('core/component/asset/default-location');
 
-        $path = wp_normalize_path($location);
-
-        while (!file_exists($path . $this->defaultLocation['resources'])) {
-            $path = wp_normalize_path(realpath($path . '/..'));
+        while (!file_exists($location . $this->defaultLocation['resources'])) {
+            $location = realpath($location . '/..');
         }
 
-        $this->location = $path . $this->defaultLocation['resources'];
+        $this->location = wp_normalize_path($location . $this->defaultLocation['resources']);
     }
 
     /**

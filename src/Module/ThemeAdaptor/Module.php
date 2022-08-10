@@ -58,7 +58,7 @@ class Module extends ModuleKernel
         }
 
         if (Tools::isChildTheme()) {
-            if (file_exists($dir = wp_normalize_path(get_stylesheet_directory()) . '/views')) {
+            if (file_exists($dir = self::service('app')->getChildViewPath())) {
                 $this->searchCustomTemplates($dir);
             }
         }

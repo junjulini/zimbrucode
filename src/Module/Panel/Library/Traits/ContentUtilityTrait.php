@@ -47,10 +47,10 @@ trait ContentUtilityTrait
     public function getBuildSettings(): array
     {
         if ($this->getModuleData('build-settings')) {
-            return $this->getModuleData('build-settings', []);
+            return apply_filters('zc/module/panel/build_settings', $this->getModuleData('build-settings', []), $this);
         } else {
             if (file_exists($this->getModuleData('build-settings-file'))) {
-                return require $this->getModuleData('build-settings-file');
+                return apply_filters('zc/module/panel/build_settings', require $this->getModuleData('build-settings-file'), $this);
             } else {
                 return [];
             }

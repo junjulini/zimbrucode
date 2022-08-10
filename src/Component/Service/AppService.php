@@ -54,8 +54,8 @@ class AppService
         // Root
         $rootPath = wp_normalize_path($rootPath);
         $this->app->addGlobal('app/root-file', $rootPath);
-        $this->app->addGlobal('app/root-path', dirname($rootPath));
-        $this->app->addGlobal('app/root-url', Tools::getURL(dirname($rootPath)));
+        $this->app->addGlobal('app/root-path', dirname($rootPath) . '/');
+        $this->app->addGlobal('app/root-url', Tools::getURL(dirname($rootPath)) . '/');
 
         // Resource
         $resource = $this->app->getGlobal('app/resource-dir');
@@ -91,7 +91,7 @@ class AppService
 
                 if (isset($uploadDir['error']) && $uploadDir['error'] === false && $uploadDir['basedir'] && $uploadDir['baseurl']) {
                     $varsDirPath = wp_normalize_path("{$uploadDir['basedir']}/{$slug}");
-                    $varsDirURL  = esc_url("{$uploadDir['baseurl']}/{$slug}");
+                    $varsDirURL  = esc_url(wp_normalize_path("{$uploadDir['baseurl']}/{$slug}"));
 
                     $var = $this->app->getGlobal('app/var-dir');
                     $this->app->addGlobal('app/var-path', "{$varsDirPath}/{$mid}");
@@ -159,6 +159,17 @@ class AppService
     }
 
     /**
+     * Get child application namespace
+     *
+     * @return string   Application namespace
+     * @since 1.0.0
+     */
+    public function getChildNamespace(): string
+    {
+        return $this->getNamespace() . $this->app->getGlobal('app/child-namespace-suffix');
+    }
+
+    /**
      * Get application path
      *
      * @return string   Application path
@@ -170,6 +181,23 @@ class AppService
     }
 
     /**
+     * Get child application path
+     *
+     * @return string   Application path
+     * @since 1.0.0
+     */
+    public function getChildPath(string $path = ''): string
+    {
+        if (Tools::isChildTheme()) {
+            $appDir = str_replace($this->getRootPath(), '', $this->getPath());
+
+            return $this->getChildRootPath("{$appDir}/{$path}");
+        }
+
+        return '';
+    }
+
+    /**
      * Get application URL
      *
      * @return string   Application URL
@@ -178,6 +206,23 @@ class AppService
     public function getURL(string $url = ''): string
     {
         return esc_url($this->app->getGlobal('app/url') . $url);
+    }
+
+    /**
+     * Get child application URL
+     *
+     * @return string   Application URL
+     * @since 1.0.0
+     */
+    public function getChildURL(string $url = ''): string
+    {
+        if (Tools::isChildTheme()) {
+            $appDir = str_replace($this->getRootURL(), '', $this->getURL());
+
+            return $this->getChildRootURL("{$appDir}/{$url}");
+        }
+
+        return '';
     }
 
     /**
@@ -204,7 +249,23 @@ class AppService
     }
 
     /**
-     * Get the url of the root directory
+     * Get the path to the "child app" root directory
+     *
+     * @param  string $path   Additional part of the path
+     * @return string         Root directory path
+     * @since 1.0.0
+     */
+    public function getChildRootPath(string $path = ''): string
+    {
+        if (Tools::isChildTheme()) {
+            return wp_normalize_path(get_stylesheet_directory() . "/{$path}");
+        }
+
+        return '';
+    }
+
+    /**
+     * Get the URL of the root directory
      *
      * @param  string $url   Additional part of the URL
      * @return string        Root directory URL
@@ -212,7 +273,23 @@ class AppService
      */
     public function getRootURL(string $url = ''): string
     {
-        return esc_url($this->app->getGlobal('app/root-url') . $url);
+        return esc_url(wp_normalize_path($this->app->getGlobal('app/root-url') . $url));
+    }
+
+    /**
+     * Get the URL of the "child app" root directory
+     *
+     * @param  string $url   Additional part of the URL
+     * @return string        Root directory URL
+     * @since 1.0.0
+     */
+    public function getChildRootURL(string $url = ''): string
+    {
+        if (Tools::isChildTheme()) {
+            return esc_url(wp_normalize_path(get_stylesheet_directory_uri() . "/{$url}"));
+        }
+
+        return '';
     }
 
     /**
@@ -228,7 +305,19 @@ class AppService
     }
 
     /**
-     * Get the url of the resource directory
+     * Get the path to the "child app" resource directory
+     *
+     * @param  string $path   Additional part of the path
+     * @return string         Resource directory path
+     * @since 1.0.0
+     */
+    public function getChildResourcePath(string $path = ''): string
+    {
+        return $this->getChildPath($this->app->getGlobal('app/resource-dir') . $path);
+    }
+
+    /**
+     * Get the URL of the resource directory
      *
      * @param  string $url   Additional part of the URL
      * @return string        Resource directory URL
@@ -236,7 +325,19 @@ class AppService
      */
     public function getResourceURL(string $url = ''): string
     {
-        return esc_url($this->app->getGlobal('app/resource-url') . $url);
+        return esc_url(wp_normalize_path($this->app->getGlobal('app/resource-url') . $url));
+    }
+
+    /**
+     * Get the URL of the "child app" resource directory
+     *
+     * @param  string $url   Additional part of the URL
+     * @return string        Resource directory URL
+     * @since 1.0.0
+     */
+    public function getChildResourceURL(string $url = ''): string
+    {
+        return $this->getChildURL($this->app->getGlobal('app/resource-dir') . $url);
     }
 
     /**
@@ -252,7 +353,7 @@ class AppService
     }
 
     /**
-     * Get the url of the var directory
+     * Get the URL of the var directory
      *
      * @param  string $url   Additional part of the URL
      * @return string        Var directory URL
@@ -260,7 +361,7 @@ class AppService
      */
     public function getVarURL(string $url = ''): string
     {
-        return esc_url($this->app->getGlobal('app/var-url') . $url);
+        return esc_url(wp_normalize_path($this->app->getGlobal('app/var-url') . $url));
     }
 
     /**
@@ -287,7 +388,7 @@ class AppService
     }
 
     /**
-     * Get the url of the cache directory
+     * Get the URL of the cache directory
      *
      * @param  string $url   Additional part of the URL
      * @return string        Cache directory URL
@@ -295,7 +396,7 @@ class AppService
      */
     public function getCacheURL(string $url = ''): string
     {
-        return esc_url($this->app->getGlobal('app/cache-url') . $url);
+        return esc_url(wp_normalize_path($this->app->getGlobal('app/cache-url') . $url));
     }
 
     /**
@@ -310,7 +411,7 @@ class AppService
     }
 
     /**
-     * Get path to temp directory
+     * Get the path of the temp directory
      *
      * @param  string $path   Additional part of the path
      * @return string         Temp directory path
@@ -322,7 +423,7 @@ class AppService
     }
 
     /**
-     * Get temp directory url
+     * Get the URL of the temp directory
      *
      * @param  string $url   Additional part of the URL
      * @return string        Temp directory URL
@@ -330,7 +431,7 @@ class AppService
      */
     public function getTempURL(string $url = ''): string
     {
-        return esc_url($this->app->getGlobal('app/temp-url') . $url);
+        return esc_url(wp_normalize_path($this->app->getGlobal('app/temp-url') . $url));
     }
 
     /**
@@ -357,7 +458,7 @@ class AppService
     }
 
     /**
-     * Get the url of the logs directory
+     * Get the URL of the logs directory
      *
      * @param  string $url   Additional part of the URL
      * @return string        Log directory URL
@@ -365,7 +466,7 @@ class AppService
      */
     public function getLogURL(string $url = ''): string
     {
-        return esc_url($this->app->getGlobal('app/log-url') . $url);
+        return esc_url(wp_normalize_path($this->app->getGlobal('app/log-url') . $url));
     }
 
     /**
@@ -380,7 +481,7 @@ class AppService
     }
 
     /**
-     * Get the path to the resource directory
+     * Get the path to the asset directory
      *
      * @param  string $path   Additional part of the path
      * @return string         Asset directory path
@@ -392,7 +493,19 @@ class AppService
     }
 
     /**
-     * Get the URL of the resource directory
+     * Get the path to the "child app" asset directory
+     *
+     * @param  string $path   Additional part of the path
+     * @return string         Asset directory path
+     * @since 1.0.0
+     */
+    public function getChildAssetPath(string $path = ''): string
+    {
+        return $this->getChildPath($this->app->getGlobal('app/asset-dir') . $path);
+    }
+
+    /**
+     * Get the URL of the asset directory
      *
      * @param  string $url   Additional part of the URL
      * @return string        Asset directory URL
@@ -400,7 +513,19 @@ class AppService
      */
     public function getAssetURL(string $url = ''): string
     {
-        return esc_url($this->app->getGlobal('app/asset-url') . $url);
+        return esc_url(wp_normalize_path($this->app->getGlobal('app/asset-url') . $url));
+    }
+
+    /**
+     * Get the URL of the "child app" asset directory
+     *
+     * @param  string $url   Additional part of the URL
+     * @return string        Asset directory URL
+     * @since 1.0.0
+     */
+    public function getChildAssetURL(string $url = ''): string
+    {
+        return $this->getChildURL($this->app->getGlobal('app/asset-dir') . $url);
     }
 
     /**
@@ -416,6 +541,18 @@ class AppService
     }
 
     /**
+     * Get the path to the "child app" config directory
+     *
+     * @param  string $path   Additional part of the path
+     * @return string         Config directory path
+     * @since 1.0.0
+     */
+    public function getChildConfigPath(string $path = ''): string
+    {
+        return $this->getChildPath($this->app->getGlobal('app/config-dir') . $path);
+    }
+
+    /**
      * Get the URL of the config directory
      *
      * @param  string $url   Additional part of the URL
@@ -424,7 +561,19 @@ class AppService
      */
     public function getConfigURL(string $url = ''): string
     {
-        return esc_url($this->app->getGlobal('app/config-url') . $url);
+        return esc_url(wp_normalize_path($this->app->getGlobal('app/config-url') . $url));
+    }
+
+    /**
+     * Get the URL of the "child app" config directory
+     *
+     * @param  string $url   Additional part of the URL
+     * @return string        Config directory URL
+     * @since 1.0.0
+     */
+    public function getChildConfigURL(string $url = ''): string
+    {
+        return $this->getChildURL($this->app->getGlobal('app/config-dir') . $url);
     }
 
     /**
@@ -440,7 +589,19 @@ class AppService
     }
 
     /**
-     * Get model directory URL
+     * Get the path to the "child app" model directory
+     *
+     * @param  string $path   Additional part of the path
+     * @return string         Model directory path
+     * @since 1.0.0
+     */
+    public function getChildModelPath(string $path = ''): string
+    {
+        return $this->getChildPath($this->app->getGlobal('app/model-dir') . $path);
+    }
+
+    /**
+     * Get the URL to the model directory
      *
      * @param  string $url   Additional part of the URL
      * @return string        Model directory URL
@@ -448,7 +609,19 @@ class AppService
      */
     public function getModelURL(string $url = ''): string
     {
-        return esc_url($this->app->getGlobal('app/model-url') . $url);
+        return esc_url(wp_normalize_path($this->app->getGlobal('app/model-url') . $url));
+    }
+
+    /**
+     * Get the URL to the "child app"  model directory
+     *
+     * @param  string $url   Additional part of the URL
+     * @return string        Model directory URL
+     * @since 1.0.0
+     */
+    public function getChildModelURL(string $url = ''): string
+    {
+        return $this->getChildURL($this->app->getGlobal('app/model-dir') . $url);
     }
 
     /**
@@ -464,6 +637,18 @@ class AppService
     }
 
     /**
+     * Get the path to the "child app" view directory
+     *
+     * @param  string $path   Additional part of the path
+     * @return string         View directory path
+     * @since 1.0.0
+     */
+    public function getChildViewPath(string $path = ''): string
+    {
+        return $this->getChildPath($this->app->getGlobal('app/view-dir') . $path);
+    }
+
+    /**
      * Get the URL of the view directory
      *
      * @param  string $url   Additional part of the URL
@@ -472,6 +657,18 @@ class AppService
      */
     public function getViewURL(string $url = ''): string
     {
-        return esc_url($this->app->getGlobal('app/view-url') . $url);
+        return esc_url(wp_normalize_path($this->app->getGlobal('app/view-url') . $url));
+    }
+
+    /**
+     * Get the URL of the "child app" view directory
+     *
+     * @param  string $url   Additional part of the URL
+     * @return string        View directory URL
+     * @since 1.0.0
+     */
+    public function getChildViewURL(string $url = ''): string
+    {
+        return $this->getChildURL($this->app->getGlobal('app/view-dir') . $url);
     }
 }

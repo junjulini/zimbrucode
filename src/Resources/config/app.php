@@ -16,6 +16,9 @@ return [
     // Allowed modes
     'modes'                  => ['theme', 'plugin'],
 
+    'child-namespace-suffix' => '_Child',
+    'child-application-name' => 'Application',
+
     'module-namespace-dir'   => 'Module',
 
     'domain'                 => false,

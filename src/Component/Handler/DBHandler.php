@@ -20,7 +20,7 @@ use ZimbruCode\Component\Core\Kernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 class DBHandler
 {
@@ -31,11 +31,11 @@ class DBHandler
      * Constructor
      *
      * @param string $tableName   DB table name
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function __construct(string $tableName = '')
     {
-        if (!$slug = esc_sql(Kernel::getGlobal('app/slug'))) {
+        if (!$slug = Kernel::getGlobal('app/slug')) {
             throw new RuntimeException('ZE0076');
         }
 
@@ -44,6 +44,8 @@ class DBHandler
         } else {
             $this->tableName = Kernel::service('wpdb')->prefix . $slug;
         }
+
+        $this->tableName = esc_sql($this->tableName);
 
         $check = strcasecmp(Kernel::service('wpdb')->get_var("SHOW TABLES LIKE '{$this->tableName}'"), $this->tableName);
         $this->checkError();

@@ -63,7 +63,7 @@ class MVC
         if (Tools::isChildTheme()) {
 
             // Set child views path
-            if (file_exists($dir = wp_normalize_path(get_stylesheet_directory()) . '/views')) {
+            if (file_exists($dir = self::service('app')->getChildViewPath())) {
                 $this->__render->addLocationPath($dir);
             }
 
@@ -75,7 +75,7 @@ class MVC
             $this->__render->addLocationPath($this->service('app')->getViewPath());
 
             // Load model if exist
-            if (file_exists($model = wp_normalize_path(get_stylesheet_directory()) . '/models/' . str_replace('.twig', '.php', $template))) {
+            if (file_exists($model = self::service('app')->getChildModelPath(str_replace('.twig', '.php', $template)))) {
                 require $model;
             } elseif (file_exists($model = $this->service('app')->getModelPath(str_replace('.twig', '.php', $template)))) {
                 require $model;
