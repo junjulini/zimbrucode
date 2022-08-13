@@ -20,7 +20,7 @@ use ZimbruCode\Component\Core\Kernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 class AjaxHandler
 {
@@ -278,5 +278,20 @@ class AjaxHandler
             $action = Kernel::getGlobal('core/slug') . '_' . $action . '_nonce';
             return check_ajax_referer($action, false, $die);
         }
+    }
+
+    /**
+     * Get AJAX URL
+     *
+     * @param string   $action   Ajax action
+     * @param array    $args     Additional URL arguments
+     * @return string            Ajax URL
+     * @since 1.1.0
+     */
+    public static function getAjaxURL(string $action, array $args = []): string
+    {
+        $args['action'] = $action;
+
+        return add_query_arg($args, admin_url('admin-ajax.php'));
     }
 }

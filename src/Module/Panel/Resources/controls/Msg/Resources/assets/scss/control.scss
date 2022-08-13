@@ -18,17 +18,17 @@
 
 .zc-panel-control-msg {
     display: flex;
-    padding: 10px 0;
     width: 100%;
-    background: #FFE3E3;
-    color: #FFFFFF;
+    padding: 10px 0;
     border-radius: 3px;
-    border: 1px solid #E4AEAE;
     box-sizing: border-box;
+    color: #FFFFFF;
+    background-color: #FFE3E3;
+    border: 1px solid #E4AEAE;
 
     &_mode_error {
-        background: #FFE3E3;
-        border: 1px solid #E4AEAE;
+        background-color: #FFE3E3;
+        border-color: #E4AEAE;
     }
 
     &_mode_error &__icon {
@@ -40,8 +40,8 @@
     }
 
     &_mode_info {
-        background: #DDF1FF;
-        border: 1px solid #98C8E8;
+        background-color: #DDF1FF;
+        border-color: #98C8E8;
     }
 
     &_mode_info &__icon {
@@ -53,8 +53,8 @@
     }
 
     &_mode_success {
-        background: #CFF3D7;
-        border: 1px solid #93DCA2;
+        background-color: #CFF3D7;
+        border-color: #93DCA2;
     }
 
     &_mode_success &__icon {
@@ -66,8 +66,8 @@
     }
 
     &_mode_warning {
-        background: #FFF0C3;
-        border: 1px solid #FFD966;
+        background-color: #FFF0C3;
+        border-color: #FFD966;
     }
 
     &_mode_warning &__icon {
