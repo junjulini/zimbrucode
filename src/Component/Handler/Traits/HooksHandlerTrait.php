@@ -126,9 +126,9 @@ trait HooksHandlerTrait
         }
 
         if (is_callable($method)) {
-            add_action($tag, $method, $priority, $acceptedArgs);
+            add_filter($tag, $method, $priority, $acceptedArgs);
         } elseif (is_string($method)) {
-            add_action($tag, [$this, $method], $priority, $acceptedArgs);
+            add_filter($tag, [$this, $method], $priority, $acceptedArgs);
         } else {
             throw new InvalidArgumentException('ZE0091');
         }

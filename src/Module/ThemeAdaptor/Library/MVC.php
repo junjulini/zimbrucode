@@ -99,7 +99,7 @@ class MVC
     }
 
     /**
-     * Get variable
+     * Get TWIG variable
      *
      * @param  string $name   Variable name
      * @return mix            Variable value
@@ -107,11 +107,11 @@ class MVC
      */
     public function __get(string $name)
     {
-        return $this->getVar($name);
+        return $this->getTwigVar($name);
     }
 
     /**
-     * Add variable (setter)
+     * Add TWIG variable (setter)
      *
      * @param string $name    Variable name
      * @param mix    $value   Variable value
@@ -119,79 +119,79 @@ class MVC
      */
     public function __set(string $name, $value)
     {
-        $this->addVar($name, $value);
+        $this->addTwigVar($name, $value);
     }
 
     /**
-     * Get variable
+     * Get TWIG variable
      *
      * @param string $name    Variable name
      * @return mix            Variable value
      * @since 1.0.0
      */
-    public function getVar(string $name)
+    public function getTwigVar(string $name)
     {
         return $this->__render->getVar($name);
     }
 
     /**
-     * Add variable
+     * Add TWIG variable
      *
      * @param string $name    Variable name
      * @param mix    $value   Variable value
      * @since 1.0.0
      */
-    public function addVar(...$args): void
+    public function addTwigVar(...$args): void
     {
         $this->__render->addVar(...$args);
     }
 
     /**
-     * Add variables
+     * Add TWIG variables
      *
      * @param array $vars   List of variables
      * @since 1.0.0
      */
-    public function addVars(array $vars): void
+    public function addTwigVars(array $vars): void
     {
         $this->__render->addVars($vars);
     }
 
     /**
-     * Add function
+     * Add TWIG function
      *
      * @param  string   $name     Function name
      * @param  callable $method   Callback
      * @return void
      * @since 1.0.0
      */
-    public function addFunction(...$args): void
+    public function addTwigFunction(...$args): void
     {
         $this->__render->addFunction(...$args);
     }
 
     /**
-     * Add escaper
+     * Add TWIG escaper
      *
      * @param  string   $name     Escaper name
      * @param  callable $method   Callback
      * @return void
      * @since 1.0.0
      */
-    public function addEscaper(...$args): void
+    public function addTwigEscaper(...$args): void
     {
         $this->__render->addEscaper(...$args);
     }
 
     /**
-     * Add filter
+     * Add TWIG filter
      *
      * @param  string   $name     Filter name
      * @param  callable $method   Callback
      * @return void
      * @since 1.0.0
      */
-    public function addFilter(...$args): void
+    public function addTwigFilter(...$args): void
     {
         $this->__render->addFilter(...$args);
     }
