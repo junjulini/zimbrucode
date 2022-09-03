@@ -24,9 +24,10 @@ use ZimbruCode\Component\Core\Kernel;
  */
 class AjaxHandler
 {
-    protected $inputJsonType = true;
-    protected $inputJsonData = [];
-    protected $data          = [];
+    protected $requestType     = '';
+    protected $inputJsonType   = true;
+    protected $inputJsonData   = [];
+    protected $data            = [];
 
     /**
      * Constructor
@@ -34,9 +35,10 @@ class AjaxHandler
      * @param string  $action           Ajax action
      * @param string  $userCapability   User capability
      * @param boolean $inputJsonType    Return result in JSON format
+     * @param boolean $requestType      Request type : post/get
      * @since 1.0.0
      */
-    public function __construct(string $action = '', string $userCapability = '', bool $inputJsonType = true)
+    public function __construct(string $action = '', string $userCapability = '', bool $inputJsonType = true, string $requestType = 'post')
     {
         if ($action) {
             self::checkAjaxReferer($action);
@@ -49,6 +51,7 @@ class AjaxHandler
         }
 
         $this->inputJsonType = $inputJsonType;
+        $this->requestType   = $requestType;
 
         if ($this->inputJsonType === true) {
             if (($_SERVER['CONTENT_TYPE'] ?? '') == 'application/json') {
@@ -97,21 +100,25 @@ class AjaxHandler
     /**
      * Get request data
      *
-     * @param  string $param     Param name
-     * @param  mix    $default   Default value
-     * @param  string $type      Request type
-     * @return mix               Request data
+     * @param  string $param        Param name
+     * @param  mix    $default      Default value
+     * @param  string $requestType  Request type
+     * @return mix                  Request data
      * @since 1.0.0
      */
-    public function get(string $param, $default = '', string $type = 'get')
+    public function get(string $param, $default = '', string $requestType = '')
     {
         if ($this->inputJsonType === true) {
             return $this->inputJsonData[$param] ?? $default;
         } else {
-            if ($type === 'get') {
-                return Kernel::rGet($param, $default);
-            } elseif ($type === 'post') {
+            if (!$requestType) {
+                $requestType = $this->requestType;
+            }
+
+            if ($requestType === 'post') {
                 return Kernel::rPost($param, $default);
+            } elseif ($requestType === 'get') {
+                return Kernel::rGet($param, $default);
             } else {
                 return Kernel::rGet($param, $default);
             }
