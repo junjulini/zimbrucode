@@ -53,12 +53,12 @@ class DBHandler
         if (0 !== $check) {
             $charsetCollate = Kernel::service('wpdb')->get_charset_collate();
 
-            $sql = "CREATE TABLE {$this->tableName} (
-                        id bigint(20) unsigned NOT NULL auto_increment,
-                        name varchar(191) NOT NULL default '',
-                        value longtext NOT NULL,
-                        autoload varchar(20) NOT NULL default 'yes',
-                        PRIMARY KEY  (id),
+            $sql = "CREATE TABLE `{$this->tableName}` (
+                        `id` bigint(20) unsigned NOT NULL auto_increment,
+                        `name` varchar(191) NOT NULL default '',
+                        `value` longtext NOT NULL,
+                        `autoload` varchar(20) NOT NULL default 'yes',
+                        PRIMARY KEY (id),
                         UNIQUE KEY name (name)
                     ) {$charsetCollate};";
 
@@ -117,12 +117,12 @@ class DBHandler
     protected function cacheData(): void
     {
         $suppress = Kernel::service('wpdb')->suppress_errors();
-        $data     = Kernel::service('wpdb')->get_results("SELECT name, value FROM {$this->tableName} WHERE autoload = 'yes'");
+        $result   = Kernel::service('wpdb')->get_results("SELECT `name`, `value` FROM `{$this->tableName}` WHERE `autoload` = 'yes'");
 
         $this->checkError();
 
-        if ($data) {
-            foreach ((array) $data as $item) {
+        if ($result) {
+            foreach ((array) $result as $item) {
                 if (is_serialized($item->value)) {
                     $this->addData($item->name, unserialize($item->value));
                 } else {
@@ -144,17 +144,17 @@ class DBHandler
     protected function cacheSpecificData(string $key): bool
     {
         if ($key) {
-            $data = Kernel::service('wpdb')->prepare("SELECT value FROM {$this->tableName} WHERE name = %s LIMIT 1", $key);
-            $row  = Kernel::service('wpdb')->get_row($data);
+            $query  = Kernel::service('wpdb')->prepare("SELECT `value` FROM `{$this->tableName}` WHERE `name` = %s LIMIT 1", $key);
+            $result = Kernel::service('wpdb')->get_row($query);
 
             $this->checkError();
 
-            if (is_object($row)) {
-                if (is_serialized($row->value)) {
-                    $this->addData($key, unserialize($row->value));
+            if (is_object($result)) {
+                if (is_serialized($result->value)) {
+                    $this->addData($key, unserialize($result->value));
                     return true;
                 } else {
-                    $this->addData($key, $row->value);
+                    $this->addData($key, $result->value);
                     return true;
                 }
             } else {
@@ -210,7 +210,7 @@ class DBHandler
      * @param string  $path         Array path
      * @param string  $value        Value
      * @param boolean $autoUpdate   Auto-update of data in the database
-     * @param boolean $autoload     Autoloading data from the database
+     * @param boolean $autoload     Autoload data from the database
      * @since 1.0.0
      */
     public function add(string $path = '', $value = '', bool $autoUpdate = false, bool $autoload = true): bool
@@ -242,14 +242,18 @@ class DBHandler
 
                 $autoload = ($autoload === true) ? 'yes' : 'no';
 
-                $check = Kernel::service('wpdb')->get_row(Kernel::service('wpdb')->prepare("SELECT autoload FROM {$this->tableName} WHERE name = %s", $path));
+                $query = Kernel::service('wpdb')->prepare("SELECT `autoload` FROM `{$this->tableName}` WHERE `name` = %s", $path);
+                $check = Kernel::service('wpdb')->get_row($query);
+
                 $this->checkError();
 
                 if ($check) {
                     $result = Kernel::service('wpdb')->update($this->tableName, ['value' => $data, 'autoload' => $autoload], ['name' => $path]);
                     $this->checkError();
                 } else {
-                    $result = Kernel::service('wpdb')->query(Kernel::service('wpdb')->prepare("INSERT INTO `{$this->tableName}` (`name`, `value`, `autoload`) VALUES (%s, %s, %s) ON DUPLICATE KEY UPDATE `name` = VALUES(`name`), `value` = VALUES(`value`), `autoload` = VALUES(`autoload`)", $path, $data, $autoload));
+                    $query  = Kernel::service('wpdb')->prepare("INSERT INTO `{$this->tableName}` (`name`, `value`, `autoload`) VALUES (%s, %s, %s) ON DUPLICATE KEY UPDATE `name` = VALUES(`name`), `value` = VALUES(`value`), `autoload` = VALUES(`autoload`)", $path, $data, $autoload);
+                    $result = Kernel::service('wpdb')->query($query);
+
                     $this->checkError();
                 }
 
@@ -315,11 +319,17 @@ class DBHandler
                     $path = strstr($path, '/', true);
 
                     if ($data = $this->getData($path)) {
-                        $check = Kernel::service('wpdb')->get_row(Kernel::service('wpdb')->prepare("SELECT autoload FROM {$this->tableName} WHERE name = %s", $path));
+                        $query = Kernel::service('wpdb')->prepare("SELECT `autoload` FROM `{$this->tableName}` WHERE `name` = %s", $path);
+                        $check = Kernel::service('wpdb')->get_row($query);
+
                         $this->checkError();
 
-                        $result = Kernel::service('wpdb')->update($this->tableName, ['value' => serialize($data), 'autoload' => $check->autoload], ['name' => $path]);
-                        $this->checkError();
+                        if ($check) {
+                            $result = Kernel::service('wpdb')->update($this->tableName, ['value' => serialize($data), 'autoload' => $check->autoload], ['name' => $path]);
+                            $this->checkError();
+                        } else {
+                            return $check;
+                        }
                     } else {
                         $result = Kernel::service('wpdb')->delete($this->tableName, ['name' => $path]);
                         $this->checkError();
@@ -367,7 +377,7 @@ class DBHandler
     {
         $output   = false;
         $suppress = Kernel::service('wpdb')->suppress_errors();
-        $data     = Kernel::service('wpdb')->get_results("SELECT name, value, autoload FROM {$this->tableName}");
+        $data     = Kernel::service('wpdb')->get_results("SELECT `name`, `value`, `autoload` FROM `{$this->tableName}`");
 
         $this->checkError();
 
