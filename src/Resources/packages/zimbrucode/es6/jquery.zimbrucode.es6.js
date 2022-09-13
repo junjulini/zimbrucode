@@ -1013,7 +1013,7 @@ class ZimbruCode {
         const interval = 1000;
         const iterations = 4;
 
-        settings = $.extend({}, defaults, customSettings);
+        const settings = $.extend({}, defaults, customSettings);
 
         const processedSettings = this.clone(settings);
 
