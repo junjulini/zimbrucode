@@ -180,20 +180,20 @@ class DBHandler
                 $first = strstr($path, '/', true);
 
                 if (isset($this->data[$first])) {
-                    return Tools::getNode($this->data, $path, $default);
+                    return $this->getData($path, $default);
                 } else {
                     if ($this->cacheSpecificData($first)) {
-                        return Tools::getNode($this->data, $path, $default);
+                        return $this->getData($path, $default);
                     } else {
                         return $default;
                     }
                 }
             } else {
                 if (isset($this->data[$path])) {
-                    return Tools::getNode($this->data, $path, $default);
+                    return $this->getData($path, $default);
                 } else {
                     if ($this->cacheSpecificData($path)) {
-                        return Tools::getNode($this->data, $path, $default);
+                        return $this->getData($path, $default);
                     } else {
                         return $default;
                     }
