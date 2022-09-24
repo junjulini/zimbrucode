@@ -87,8 +87,8 @@ trait OptionHandlerTrait
     /**
      * Get meta value
      *
-     * @param  string  $meta      Meta name
-     * @param  string  $default   Default value
+     * @param  string  $meta      Meta option name
+     * @param  mix     $default   Default value
      * @param  integer $id        Post ID
      * @return mix                Action result
      * @since 1.0.0

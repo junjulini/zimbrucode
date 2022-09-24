@@ -50,13 +50,13 @@ class MVC
 
         // Variables
         if (!empty($additionalData['vars']) && is_array($additionalData['vars'])) {
-            $this->addVars($additionalData['vars']);
+            $this->addTwigVars($additionalData['vars']);
         }
 
         // Functions
         if (!empty($additionalData['functions']) && is_array($additionalData['functions'])) {
             foreach ($additionalData['functions'] as $name => $method) {
-                $this->addFunction($name, $method);
+                $this->addTwigFunction($name, $method);
             }
         }
 

@@ -146,14 +146,15 @@ class PostShell extends ShellKernel
     /**
      * Get meta value
      *
-     * @param string  $meta   Meta name
-     * @param integer $id     Post ID
-     * @return mix            Action result
+     * @param string  $meta      Meta option name
+     * @param mix     $default   Default value
+     * @param integer $id        Post ID
+     * @return mix               Action result
      * @since 1.0.0
      */
-    public function meta(string $meta, $id = null)
+    public function meta(string $meta, $default = '', int $id = null)
     {
-        return OptionHandler::getMeta($meta, '', $id);
+        return OptionHandler::getMeta($meta, $default, $id);
     }
 
     /**
