@@ -34,13 +34,13 @@
 
 .zc-panel-template {
     position: relative;
-    padding: 10px;
     padding-top: 0;
 
     body.block-editor-page & {
         border: 1px solid #E2E4E7;
         border-bottom: none;
         border-top: none;
+        padding: 10px;
     }
 
     &__panel-loading {
