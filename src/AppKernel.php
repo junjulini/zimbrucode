@@ -152,7 +152,7 @@ abstract class AppKernel extends Kernel
                     [
                         'path'      => $childAppDir,
                         'namespace' => $childAppNamespace . '\\',
-                    ]
+                    ],
                 ];
 
                 Tools::addPsr4($namespaces);
@@ -508,6 +508,21 @@ abstract class AppKernel extends Kernel
     final public function getRootFilePath(): string
     {
         return self::service('app')->getRootFilePath();
+    }
+
+    /**
+     * Get child application object
+     *
+     * @return Kernel   Child application
+     * @since 1.1.0
+     */
+    final public function child(): Kernel
+    {
+        if ($this->__CHILD_APP instanceof Kernel) {
+            return $this->__CHILD_APP;
+        } else {
+            throw new RuntimeException('ZE0147 - You are not using a child theme');
+        }
     }
 
     /**
