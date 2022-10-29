@@ -87,10 +87,12 @@ export default class MetaModeBodySize extends Kernel {
     checkPanelHeight() {
         if (this.isDesktopMode()) {
             $('.zc-panel.zc-panel_mode_meta').height('auto');
+            $('.zc-panel.zc-panel_mode_meta').css('min-height', $('.zc-panel.zc-panel_mode_meta .zc-panel-menu__list').outerHeight(true) + 60);
             $('.zc-panel.zc-panel_mode_meta .zc-panel-controls').height('auto');
             $('.zc-panel.zc-panel_mode_meta .zc-panel-submenu__scrollbar-container').height('auto');
         } else {
             $('.zc-panel.zc-panel_mode_meta').height('100%');
+            $('.zc-panel.zc-panel_mode_meta').css('min-height', 'inherit');
             $('.zc-panel.zc-panel_mode_meta .zc-panel-controls').height('100%');
             $('.zc-panel.zc-panel_mode_meta .zc-panel-submenu__scrollbar-container').height('100%');
         }

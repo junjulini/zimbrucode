@@ -90,10 +90,23 @@
     }
 }
 
+// Tipsy
 .tipsy-inner {
-    background-color: $alt-color__bg-1;
+    background-color: $alt-color__bg-1 !important;
 }
 
-.tipsy-arrow {
-    border-color: $alt-color__bg-1;
+.tipsy-arrow-n {
+    border-bottom-color: $alt-color__bg-1 !important;
+}
+
+.tipsy-arrow-s {
+    border-top-color: $alt-color__bg-1 !important;
+}
+
+.tipsy-arrow-e {
+    border-left-color: $alt-color__bg-1 !important;
+}
+
+.tipsy-arrow-w {
+    border-right-color: $alt-color__bg-1 !important;
 }
