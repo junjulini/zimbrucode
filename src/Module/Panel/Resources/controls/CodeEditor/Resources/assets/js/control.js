@@ -13,7 +13,7 @@
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 
 'use strict';
@@ -25,11 +25,19 @@ zc.module.panel.addControl(($, panel) => {
     // ACE Editor
     $(window).on('zc/panel/menu/item-change-ICP', (event, section) => {
         section.find('.ace-editor').each((index, el) => {
+            ace.require("ace/ext/language_tools");
+
             const editor = $(el).data('editor'),
                   aceEditor = ace.edit(editor);
 
             aceEditor.setTheme('ace/theme/' + $(el).data('theme'));
             aceEditor.getSession().setMode('ace/mode/' + $(el).data('mode'));
+
+            aceEditor.setOptions({
+                enableBasicAutocompletion: true,
+                enableSnippets: true,
+                enableLiveAutocompletion: true
+            });
 
             if ($(el).data('readonly') == 'yes') {
                 aceEditor.setReadOnly(true);
