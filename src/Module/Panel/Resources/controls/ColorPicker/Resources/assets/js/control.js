@@ -77,8 +77,12 @@ zc.module.panel.addControl(($, panel) => {
             }
         };
 
-        pickr.on('show', (color) => {
+        pickr.on('show', (color, instance) => {
             const root = pickr.getRoot();
+
+            setTimeout(() => {
+                $(root.app).find('.pcr-result').focus().select();
+            }, 200);
 
             priv.preInit(root.button, priv.prepColor(color));
         });
