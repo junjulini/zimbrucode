@@ -24,7 +24,7 @@ return [
         'url'     => '',
         'deps'    => [],
         'version' => '',
-        'media'   => false,
+        'media'   => 'all',
         'footer'  => false,
     ],
 
@@ -44,9 +44,10 @@ return [
                 'minify'      => false,
             ],
             'css' => [
-                'output-name' => 'app/combine-file',
-                'minify'      => false,
-                'convert'     => true,
+                'output-name'                => 'app/combine-file',
+                'minify'                     => false,
+                'convert'                    => true,
+                'convert-mode-relative-path' => false,
             ],
         ],
         'namespace' => [

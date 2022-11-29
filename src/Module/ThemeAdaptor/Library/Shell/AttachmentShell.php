@@ -18,20 +18,20 @@ use ZimbruCode\Component\TemplateBridges\Helper\ShellKernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 class AttachmentShell extends ShellKernel
 {
     /**
      * Determines whether the query is for an existing attachment page
      *
-     * @param int|string|int[]|string[] $attachment   Attachment ID, title, slug, or array of such to check against
-     * @return boolean                                Whether the query is for an existing attachment page
+     * @param int|string|int[]|string[] $attachmentID   Attachment ID, title, slug, or array of such to check against
+     * @return boolean                                  Whether the query is for an existing attachment page
      * @since 1.0.0
      */
-    public function is($attachment = ''): bool
+    public function is($attachmentID = null): bool
     {
-        return is_attachment($attachment);
+        return is_attachment($attachmentID);
     }
 
     /**
@@ -44,7 +44,7 @@ class AttachmentShell extends ShellKernel
      * @return void
      * @since 1.0.0
      */
-    public function image(int $attachmentID, $size = 'thumbnail', bool $icon = false, $attr = ''): void
+    public function image(?int $attachmentID = null, $size = 'thumbnail', bool $icon = false, $attr = ''): void
     {
         echo wp_get_attachment_image($attachmentID, $size, $icon, $attr);
     }
@@ -56,8 +56,59 @@ class AttachmentShell extends ShellKernel
      * @return string|boolean        Attachment caption on success, false on failure
      * @since 1.0.0
      */
-    public function caption(int $postID = null)
+    public function caption(?int $attachmentID = null)
     {
         return wp_get_attachment_caption($postID);
+    }
+
+    /**
+     * Retrieves the URL for an attachment
+     *
+     * @param integer $attachmentID   Attachment post ID. Defaults to global $post
+     * @return string|false           Attachment URL, otherwise false
+     * @since 1.1.0
+     */
+    public function url(?int $attachmentID = null)
+    {
+        $url = wp_get_attachment_url($attachmentID);
+
+        return ($url && !is_bool($url)) ? esc_url($url) : $url;
+    }
+
+    /**
+     * Retrieves attached file path based on attachment ID
+     *
+     * @param integer $attachmentID   Attachment ID
+     * @param boolean $unfiltered     Whether to apply filters
+     * @return string|false           The file path to where the attached file should be, false otherwise
+     * @since 1.1.0
+     */
+    public function file(?int $attachmentID = null, bool $unfiltered = false)
+    {
+        return get_attached_file($attachmentID, $unfiltered);
+    }
+
+    /**
+     * Retrieves an image to represent an attachment
+     *
+     * @param integer $attachmentID   Image attachment ID
+     * @param string  $size           Image size. Accepts any registered image size name, or an array of width and height values in pixels (in that order)
+     * @param boolean $icon           Whether the image should fall back to a mime type icon
+     * @return array|false            Array of image data, or boolean false if no image is available
+     * @since 1.1.0
+     */
+    public function data(?int $attachmentID = null, $size = 'thumbnail', bool $icon = false)
+    {
+        $data = wp_get_attachment_image_src($attachmentID, $size, $icon);
+
+        if (!empty($data)) {
+            return [
+                'url'    => $data[0],
+                'width'  => $data[1],
+                'height' => $data[2],
+            ];
+        }
+
+        return false;
     }
 }

@@ -13,27 +13,28 @@
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  #}
  
 {% extends '@blocks/content/control.twig' %}
 {% import "@macros/control.twig" as html %}
 
-{% set value = control.option %}
-
 {% block content %}
     <div class="zc-panel-control-upload">
         {{ html.button(control.ID, __('Upload', 'zc'), 'button', 'zc-panel-control-upload__button') }}
 
-        <input type="hidden" name="{{ control.ID }}" value="{{ value|e('_url') }}" {{ control.ignore }} data-option autocomplete="off">
+        <input type="hidden" name="{{ control.ID }}" value="{{ control.option|e('_url') }}" {{ control.ignore }} data-option autocomplete="off">
         <input type="hidden" name="{{ control.ID }}--large_image" value="{{ control.option(control.ID ~ '--large_image') }}" {{ control.ignore }} data-option autocomplete="off">
         <input type="hidden" name="{{ control.ID }}--id" value="{{ control.option(control.ID ~ '--id') }}" {{ control.ignore }} data-option autocomplete="off">
 
+        {% set imgURL = glob.wp_get_attachment_url(control.option(control.ID ~ '--id')) %}
+        {% set imgURL = imgURL ?: control.option %}
+
         {# Display image #}
-        {% if value %}
+        {% if imgURL %}
             <div class="zc-panel-control-upload__image-container">
                 <i title="{{ __('Remove', 'zc') }}" class="zc-panel-control-upload__icon-close zc-icon-clear"></i>
-                <img src="{{ value|e('_url') }}" class="zc-panel-control-upload__image zc-panel-control-upload__image_direct" />
+                <img src="{{ imgURL|e('_url') }}" class="zc-panel-control-upload__image zc-panel-control-upload__image_direct" />
             </div>
         {% endif %}
     </div>

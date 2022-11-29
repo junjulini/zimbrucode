@@ -15,10 +15,6 @@ return [
         'meta-lite' => 'ZimbruCode\Module\MetaboxPanel\Mode\MetaLiteMode',
     ],
 
-    'control-settings'    => [
-        'namespace' => 'ZimbruCode\Module\MetaboxPanel\Controls\\',
-    ],
-
     'meta-container-slug' => "{$slug}_meta_panel_container",
 
     'settings'            => [

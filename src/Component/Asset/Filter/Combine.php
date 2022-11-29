@@ -86,9 +86,10 @@ class Combine extends Filter
      */
     protected function prepCSSAssets(): void
     {
-        $output  = "{$this->varPath}/{$this->data['settings']['css']['output-name']}.css";
-        $minify  = $this->data['settings']['css']['minify'];
-        $convert = $this->data['settings']['css']['convert'];
+        $output      = "{$this->varPath}/{$this->data['settings']['css']['output-name']}.css";
+        $minify      = $this->data['settings']['css']['minify'];
+        $convert     = $this->data['settings']['css']['convert'];
+        $convertMode = $this->data['settings']['css']['convert-mode-relative-path'];
 
         $this->cache     = new AssetCache;
         $executeLocation = $this->cache->addExecuteLocation(__CLASS__);
@@ -144,7 +145,7 @@ class Combine extends Filter
                     $convertor->addOutput($output);
                     $convertor->add($content);
 
-                    $content = $convertor->convertPathToRelative();
+                    $content = $convertor->convertPathToRelativeOrURL($convertMode);
                 }
 
                 $data = [

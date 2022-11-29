@@ -52,8 +52,7 @@ class Module extends ModuleKernel
               ->addModuleSetting('build-settings-file', $this->getModuleSetting('build-settings-file'))
               ->addModuleSetting('meta-module-resource', $this->getModuleResourcePath())
               ->addCustomMode('meta', self::getGlobal('core/module/metabox-panel/mode/meta'))
-              ->addCustomMode('meta-lite', self::getGlobal('core/module/metabox-panel/mode/meta-lite'))
-              ->addCustomControlsNamespace($this->getModuleResourcePath('controls'), self::getGlobal('core/module/metabox-panel/control-settings/namespace'));
+              ->addCustomMode('meta-lite', self::getGlobal('core/module/metabox-panel/mode/meta-lite'));
 
         // Metabox Panel hook
         do_action('zc/module/metabox_panel/setup', $panel);

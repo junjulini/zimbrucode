@@ -219,7 +219,7 @@ class AssetManager
 
         foreach ($this->collector->get() as $asset) {
             if ($asset->type() == 'css') {
-                wp_enqueue_style($asset->name(), $asset->url(), $asset->deps(), $asset->version(), $asset->media(), $asset->footer());
+                wp_enqueue_style($asset->name(), $asset->url(), $asset->deps(), $asset->version(), $asset->media());
             } elseif ($asset->type() == 'js') {
                 wp_enqueue_script($asset->name(), $asset->url(), $asset->deps(), $asset->version(), $asset->footer());
             } elseif ($asset->type() == 'registered') {

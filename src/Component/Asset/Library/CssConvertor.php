@@ -22,7 +22,7 @@ use ZimbruCode\Component\Core\Kernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 class CssConvertor
 {
@@ -98,12 +98,13 @@ class CssConvertor
     }
 
     /**
-     * Converting paths to relative paths
+     * Converting paths to relative paths or URL
      *
-     * @return string   New content
-     * @since 1.0.0
+     * @param boolean $relativeMode   Relative mode
+     * @return string                 Content
+     * @since 1.1.0
      */
-    public function convertPathToRelative(): string
+    public function convertPathToRelativeOrURL(bool $relativeMode = true): string
     {
         $content = $this->get();
 
@@ -118,17 +119,21 @@ class CssConvertor
             foreach ($matches[1] as $item) {
                 $clean = str_replace(['"', "'"], '', $item);
 
-                if (Tools::isLocalURL($clean) || Tools::isLocalPath($clean)) {
-                    $path = Tools::getPath($clean);
-
-                    $data['search'][]  = $clean;
-                    $data['replace'][] = Tools::getRelativePath($this->output, $path);
+                if (Tools::isLocalURL($clean)) {
+                    continue;
+                } elseif (Tools::isLocalPath($clean)) {
+                    continue;
                 } elseif (strpos($clean, 'data:') === false && !Tools::isURL($clean)) {
                     $path = realpath(dirname($this->asset) . '/' . $clean);
 
                     if ($path) {
-                        $data['search'][]  = $clean;
-                        $data['replace'][] = Tools::getRelativePath($this->output, $path);
+                        $data['search'][] = $clean;
+
+                        if ($relativeMode === true) {
+                            $data['replace'][] = Tools::getRelativePath($this->output, $path);
+                        } else {
+                            $data['replace'][] = Tools::getURL($path);
+                        }
                     }
                 }
             }
