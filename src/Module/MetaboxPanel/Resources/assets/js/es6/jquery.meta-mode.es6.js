@@ -32,6 +32,7 @@ zc.module.panel.addMode(($, panel) => {
     panel.scrollbar();           // Initialization of scroll bar
     panel.noMetaScaleIfMobile(); // Disable meta scale if mobile device
     panel.condition();           // Initialization of panel condition checker
+    panel.ifChanged();           // Check if some changes was made
     panel.tooltip();             // Initialization of tooltip
     panel.menu();                // Panel menu
 

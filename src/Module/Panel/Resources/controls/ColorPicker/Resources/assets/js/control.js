@@ -29,6 +29,7 @@ zc.module.panel.addControl(($, panel) => {
             theme: 'monolith',
             useAsButton: true,
             default: el.val() || '#FFFFFF',
+            container: '.zc-panel',
             components: {
                 preview: false,
                 opacity: true,

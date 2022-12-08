@@ -24,6 +24,7 @@ zc.module.panel.addMode(($, panel) => {
     panel.controlInit(); // Initialization of controls
     panel.controlHelp(); // Control help window
     panel.condition();   // Initialization of panel condition checker
+    panel.ifChanged();   // Check if some changes was made
     panel.tooltip();     // Initialization of tooltip
 
     // Panel body size

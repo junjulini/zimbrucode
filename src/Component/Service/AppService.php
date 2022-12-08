@@ -26,7 +26,7 @@ use ZimbruCode\Component\Common\Tools;
 class AppService
 {
     protected $app;
-    protected $fs;
+    public $fs;
 
     /**
      * Constructor
@@ -42,7 +42,7 @@ class AppService
         $this->fs  = new Filesystem;
 
         $mid = ($id = Tools::getMultiSiteID()) ? "{$id}/" : '';
-        $env = $this->app->getEnvironment() . '/';
+        $env = "{$this->app->getEnvironment()}/";
 
         $reflected = new ReflectionObject($app);
         $path      = dirname(wp_normalize_path($reflected->getFileName())) . '/';
@@ -104,8 +104,8 @@ class AppService
 
                     // Temp
                     $temp = $this->app->getGlobal('app/temp-dir');
-                    $this->app->addGlobal('app/temp-path', "{$varsDirPath}/{$mid}{$temp}{$env}");
-                    $this->app->addGlobal('app/temp-url', "{$varsDirURL}/{$mid}{$temp}{$env}");
+                    $this->app->addGlobal('app/temp-path', "{$varsDirPath}/{$mid}{$temp}");
+                    $this->app->addGlobal('app/temp-url', "{$varsDirURL}/{$mid}{$temp}");
 
                     // Log
                     $log = $this->app->getGlobal('app/log-dir');
@@ -125,8 +125,8 @@ class AppService
 
             // Temp
             $temp = $this->app->getGlobal('app/temp-dir');
-            $this->app->addGlobal('app/temp-path', $this->getPath("{$var}{$mid}{$temp}{$env}"));
-            $this->app->addGlobal('app/temp-url', $this->getURL("{$var}{$mid}{$temp}{$env}"));
+            $this->app->addGlobal('app/temp-path', $this->getPath("{$var}{$mid}{$temp}"));
+            $this->app->addGlobal('app/temp-url', $this->getURL("{$var}{$mid}{$temp}"));
 
             // Log
             $log = $this->app->getGlobal('app/log-dir');
@@ -402,12 +402,17 @@ class AppService
     /**
      * Remove cache directory
      *
+     * @param boolean $full   Delete all directories and files in the cache directory
      * @return void
      * @since 1.0.0
      */
-    public function removeCacheDir(): void
+    public function removeCacheDir(bool $full = false): void
     {
-        $this->fs->remove($this->getCachePath());
+        if ($full === true) {
+            $this->fs->remove(str_replace("{$this->app->getEnvironment()}/", '', $this->getCachePath()));
+        } else {
+            $this->fs->remove($this->getCachePath());
+        }
     }
 
     /**
