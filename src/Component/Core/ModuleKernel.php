@@ -24,7 +24,7 @@ use ZimbruCode\Component\Core\Traits\RenderTrait;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 abstract class ModuleKernel extends Kernel
 {
@@ -265,7 +265,7 @@ abstract class ModuleKernel extends Kernel
      * @param string $service   Load as local service with name ...
      * @param mix    $data      Additional data
      * @return ModuleKernel     Instance of module part
-     * @since 1.0.0
+     * @since 1.1.0
      */
     final public function loadModulePart(string $part, string $service = '', $data = null): ModuleKernel
     {
@@ -277,12 +277,12 @@ abstract class ModuleKernel extends Kernel
             throw new RuntimeException('ZE0066 - this module part not compatible : ' . get_class($part));
         }
 
-        if (method_exists($part, 'setup')) {
-            $part->setup($data);
-        }
-
         if ($service && !$this->__DC->get("module-services/{$service}")) {
             $this->__DC->add("module-services/{$service}", $part);
+        }
+
+        if (method_exists($part, 'setup')) {
+            $part->setup($data);
         }
 
         return $part;
