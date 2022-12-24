@@ -582,9 +582,9 @@ class Tools
      *
      * @param  string $input   Input string
      * @return string          Cleared string
-     * @since 1.0.0
+     * @since 1.1.0
      */
-    public static function removeSlashes(string $input): string
+    public static function remSlashes(string $input): string
     {
         if (!$input) {
             throw new InvalidArgumentException('ZE0047');
@@ -1039,9 +1039,9 @@ class Tools
      * @param mix          $method     Class method
      * @param integer|null $priority   The exact priority used when adding the original action callback
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
-    public static function removeClassAction(string $hookName, string $class = '', $method = null, int $priority = null)
+    public static function remClassAction(string $hookName, string $class = '', $method = null, int $priority = null)
     {
         global $wp_filter;
 

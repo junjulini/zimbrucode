@@ -21,7 +21,7 @@ use ZimbruCode\Component\Common\Tools;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 class AppService
 {
@@ -34,7 +34,7 @@ class AppService
      * @param AppKernel $app        Application object
      * @param string    $rootPath   Path to the root directory of the application
      * @param string    $slug       Application slug
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function __construct(AppKernel $app, string $rootPath, string $slug)
     {
@@ -109,8 +109,8 @@ class AppService
 
                     // Log
                     $log = $this->app->getGlobal('app/log-dir');
-                    $this->app->addGlobal('app/log-path', "{$varsDirPath}/{$mid}{$log}");
-                    $this->app->addGlobal('app/log-url', "{$varsDirURL}/{$mid}{$log}");
+                    $this->app->addGlobal('app/log-path', "{$varsDirPath}/{$log}");
+                    $this->app->addGlobal('app/log-url', "{$varsDirURL}/{$log}");
                 }
             }
         } else {
@@ -130,8 +130,8 @@ class AppService
 
             // Log
             $log = $this->app->getGlobal('app/log-dir');
-            $this->app->addGlobal('app/log-path', $this->getPath("{$var}{$mid}{$log}"));
-            $this->app->addGlobal('app/log-url', $this->getURL("{$var}{$mid}{$log}"));
+            $this->app->addGlobal('app/log-path', $this->getPath("{$var}{$log}"));
+            $this->app->addGlobal('app/log-url', $this->getURL("{$var}{$log}"));
         }
     }
 
@@ -368,9 +368,9 @@ class AppService
      * Remove var directory
      *
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
-    public function removeVarDir(): void
+    public function remVarDir(): void
     {
         $this->fs->remove($this->getVarPath());
     }
@@ -404,9 +404,9 @@ class AppService
      *
      * @param boolean $full   Delete all directories and files in the cache directory
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
-    public function removeCacheDir(bool $full = false): void
+    public function remCacheDir(bool $full = false): void
     {
         if ($full === true) {
             $this->fs->remove(str_replace("{$this->app->getEnvironment()}/", '', $this->getCachePath()));
@@ -443,9 +443,9 @@ class AppService
      * Remove temp directory
      *
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
-    public function removeTempDir(): void
+    public function remTempDir(): void
     {
         $this->fs->remove($this->getTempPath());
     }
@@ -478,9 +478,9 @@ class AppService
      * Remove log directory
      *
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
-    public function removeLogDir(): void
+    public function remLogDir(): void
     {
         $this->fs->remove($this->getLogPath());
     }

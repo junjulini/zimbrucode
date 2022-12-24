@@ -18,7 +18,7 @@ use ZimbruCode\Component\Common\Tools;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 class Cookie
 {
@@ -111,9 +111,9 @@ class Cookie
      *
      * @param  string $name   Cookie name
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
-    public function removeOnlyData(string $name): void
+    public function remOnlyData(string $name): void
     {
         $this->add($name, '');
     }

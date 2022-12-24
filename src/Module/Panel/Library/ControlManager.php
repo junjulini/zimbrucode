@@ -23,7 +23,7 @@ use ZimbruCode\Module\Panel\Library\Twig\ControlsRenderTwigExtension;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 class ControlManager extends ModuleKernel
 {
@@ -106,9 +106,9 @@ class ControlManager extends ModuleKernel
      *
      * @param  string $name   Control name
      * @return boolean        Action result
-     * @since 1.0.0
+     * @since 1.1.0
      */
-    public function removeControl(string $name): bool
+    public function remControl(string $name): bool
     {
         if ($name) {
             if (!empty($this->controls[$name])) {

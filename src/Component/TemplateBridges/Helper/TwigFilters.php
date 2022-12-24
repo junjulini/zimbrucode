@@ -19,7 +19,7 @@ use ZimbruCode\Component\TemplateBridges\TwigTemplateBridge;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 class TwigFilters
 {
@@ -41,7 +41,7 @@ class TwigFilters
      *
      * @param  string $string   String from template
      * @return string           Modificated string
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function __callback_stripslashes(?string $string): ?string
     {
@@ -49,7 +49,7 @@ class TwigFilters
             return $string;
         }
 
-        return Tools::removeSlashes($string);
+        return Tools::remSlashes($string);
     }
 
     /**
