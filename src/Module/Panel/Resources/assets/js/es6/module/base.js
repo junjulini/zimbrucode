@@ -180,6 +180,10 @@ export default class Base extends Kernel {
      * @since 1.0.0
      */
     ifChanged() {
+        $(document).on('click', '#publishing-action #publish', () => {
+            this.addCache('changed', false);
+        });
+
         $(window).on('beforeunload.zc-panel', () => {
             if (this.getCache('changed')) {
                 return this.getVar('if-changed');
