@@ -97,7 +97,8 @@ class SCSS extends Filter
             }
 
             // Global vars
-            $vars = Kernel::getGlobalCache('asset/scss/vars');
+            $vars = apply_filters('zc/component/core/asset/filter/scss/vars', Kernel::getGlobalCache('asset/scss/vars'));
+
             if (!empty($vars)) {
                 foreach ($vars as $item) {
                     if (!empty($item['vars'])) {

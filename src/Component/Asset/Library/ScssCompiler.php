@@ -44,7 +44,6 @@ class ScssCompiler
         'custom-dirs'      => [],
         'namespaces'       => [],
         'additional-files' => [],
-        'functions'        => [],
     ];
 
     /**
@@ -105,21 +104,6 @@ class ScssCompiler
     {
         if ($slug) {
             $this->vars[$slug] = $value;
-        }
-    }
-
-    /**
-     * Add function
-     *
-     * @param  string   $name     Name of function
-     * @param  callable $method   Function
-     * @return void
-     * @since 1.0.0
-     */
-    public function addFunction(string $name, callable $method): void
-    {
-        if ($name) {
-            $this->data['functions'][$name] = $method;
         }
     }
 
@@ -278,30 +262,6 @@ class ScssCompiler
             if (!empty($this->data['custom-dirs'])) {
                 foreach ($this->data['custom-dirs'] as $path) {
                     $compiler->setImportPaths($path);
-                }
-            }
-
-            // Register custom functions
-            $defaultFunctions = (new ScssDefaultFunctions)->get();
-
-            if ($defaultFunctions && is_array($defaultFunctions)) {
-                foreach ($defaultFunctions as $name => $method) {
-                    $compiler->registerFunction($name, $method, '');
-                }
-            }
-
-            // Register global functions
-            $globalFunctions = Kernel::getGlobalCache('asset/scss/functions');
-
-            if ($globalFunctions && is_array($globalFunctions)) {
-                foreach ($globalFunctions as $name => $method) {
-                    $compiler->registerFunction($name, $method, '');
-                }
-            }
-
-            if (!empty($this->data['functions'])) {
-                foreach ($this->data['functions'] as $name => $method) {
-                    $compiler->registerFunction($name, $method, '');
                 }
             }
 

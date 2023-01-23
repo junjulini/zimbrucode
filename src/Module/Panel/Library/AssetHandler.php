@@ -29,10 +29,9 @@ class AssetHandler
     protected $assets     = [];
     protected $lastAssets = [];
     protected $scssData   = [
-        'files'     => [],
-        'dirs'      => [],
-        'vars'      => [],
-        'functions' => [],
+        'files' => [],
+        'dirs'  => [],
+        'vars'  => [],
     ];
 
     protected $module;
@@ -125,26 +124,6 @@ class AssetHandler
     }
 
     /**
-     * Add scss function
-     *
-     * @param  string   $name     Function name
-     * @param  callable $method   Callback
-     * @return self
-     * @since 1.0.0
-     */
-    public function addScssFunction(string $name, callable $method): self
-    {
-        if ($name) {
-            $this->scssData['functions'][] = [
-                'name'   => $name,
-                'method' => $method,
-            ];
-        }
-
-        return $this;
-    }
-
-    /**
      * Add scss variable
      *
      * @param  string $name    Variable name
@@ -203,12 +182,6 @@ class AssetHandler
                     if (!empty($this->scssData['dirs'])) {
                         foreach ($this->scssData['dirs'] as $dir) {
                             $scss->addDir($dir);
-                        }
-                    }
-
-                    if (!empty($this->scssData['functions'])) {
-                        foreach ($this->scssData['functions'] as $functionData) {
-                            $scss->addFunction($functionData['name'], $functionData['method']);
                         }
                     }
 
