@@ -25,7 +25,7 @@ use ZimbruCode\Component\Core\Kernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 class ScssCompiler
 {
@@ -111,7 +111,7 @@ class ScssCompiler
      * Compile
      *
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function compile(): void
     {
@@ -219,21 +219,23 @@ class ScssCompiler
                     ];
                 };
 
-                $templateDir = wp_normalize_path(ABSPATH);
+                if (defined('ABSPATH')) {
+                    $templateDir = wp_normalize_path(ABSPATH);
 
-                if (0 === strpos($outputPath, $templateDir)) {
-                    $folder = str_replace($templateDir, '', $outputPath);
+                    if (0 === strpos($outputPath, $templateDir)) {
+                        $folder = str_replace($templateDir, '', $outputPath);
 
-                    if ('.' != $folder) {
-                        $outputURL = trim(get_site_url(null, $folder), '/');
+                        if ('.' != $folder) {
+                            $outputURL = trim(get_site_url(null, $folder), '/');
 
-                        $compiler->setSourceMap(Compiler::SOURCE_MAP_INLINE);
-                        $compiler->setSourceMapOptions([
-                            'sourceMapRootpath' => content_url('/'),
-                            'sourceMapBasepath' => WP_CONTENT_DIR,
-                            'sourceMapWriteTo'  => $fileInfo($outputPath)['file-path'],
-                            'sourceMapURL'      => $fileInfo($outputURL)['file-path'],
-                        ]);
+                            $compiler->setSourceMap(Compiler::SOURCE_MAP_INLINE);
+                            $compiler->setSourceMapOptions([
+                                'sourceMapRootpath' => content_url('/'),
+                                'sourceMapBasepath' => (defined('WP_CONTENT_DIR') ? WP_CONTENT_DIR : ''),
+                                'sourceMapWriteTo'  => $fileInfo($outputPath)['file-path'],
+                                'sourceMapURL'      => $fileInfo($outputURL)['file-path'],
+                            ]);
+                        }
                     }
                 }
             }

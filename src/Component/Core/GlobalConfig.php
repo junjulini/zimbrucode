@@ -16,21 +16,21 @@ namespace ZimbruCode\Component\Core;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 final class GlobalConfig
 {
     /**
      * Global configs
      *
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function __construct()
     {
         // Core configs
-        Kernel::addGlobal('core', require __DIR__ . '/../../Resources/config/core.php');
+        Kernel::addGlobal('core', require_once wp_normalize_path(realpath(__DIR__ . '/../../Resources/config/core.php')));
 
         // Application configs
-        Kernel::addGlobal('app', require __DIR__ . '/../../Resources/config/app.php');
+        Kernel::addGlobal('app', require_once wp_normalize_path(realpath(__DIR__ . '/../../Resources/config/app.php')));
     }
 }

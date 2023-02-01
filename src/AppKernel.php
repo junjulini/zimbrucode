@@ -172,11 +172,13 @@ abstract class AppKernel extends Kernel
      *
      * @param boolean $session   Session status
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     private function __initSession(bool $session): void
     {
-        if (session_status() == PHP_SESSION_NONE && $session === true) {
+        $phpSession = (defined('PHP_SESSION_NONE')) ? PHP_SESSION_NONE : '';
+
+        if (session_status() == $phpSession && $session === true) {
             session_start();
         }
     }

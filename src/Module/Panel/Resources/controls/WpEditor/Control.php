@@ -19,7 +19,7 @@ use ZimbruCode\Module\Panel\Library\ControlKernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 class Control extends ControlKernel
 {
@@ -27,16 +27,21 @@ class Control extends ControlKernel
      * Control setup
      *
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function setup(): void
     {
         if (!class_exists('_WP_Editors', false)) {
-            require ABSPATH . WPINC . '/class-wp-editor.php';
+            if (defined('ABSPATH') && defined('WPINC')) {
+                require_once wp_normalize_path(ABSPATH . WPINC . '/class-wp-editor.php');
+            } else {
+                throw new RuntimeException('ZE0149 - ' . '"ABSPATH" constant not defined');
+            }
         }
 
-        $id  = 'zc_module_panel_control_wp_editor_init_' . Tools::getRandomString();
+        $id  = 'zc_module_panel_control_wp_editor_init_' . sha1(time());
         $set = \_WP_Editors::parse_settings($id, []);
+
         \_WP_Editors::editor_settings($id, $set);
 
         $this->addAction('admin_enqueue_scripts', function (): void {

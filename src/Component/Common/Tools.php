@@ -361,7 +361,7 @@ class Tools
                     } else {
                         $newImg = $imageSrc[0];
                     }
-    
+
                     // Resized output
                     return [
                         'url'    => $newImg,
@@ -425,44 +425,6 @@ class Tools
         $output .= sprintf("<![endif]-->\n");
 
         echo $output;
-    }
-
-    /**
-     * Get random string
-     *
-     * @param  integer $length   Length of string
-     * @return string            Random string
-     * @since 1.0.0
-     */
-    public static function getRandomString(int $length = 10): string
-    {
-        $characters   = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $randomString = '';
-
-        for ($i = 0; $i < $length; $i++) {
-            $randomString .= $characters[rand(0, strlen($characters) - 1)];
-        }
-
-        return $randomString;
-    }
-
-    /**
-     * Get random number
-     *
-     * @param  integer $length   Length of number
-     * @return string            Random number
-     * @since 1.0.0
-     */
-    public static function getRandomNumber(int $length = 10): string
-    {
-        $characters   = '0123456789';
-        $randomString = '';
-
-        for ($i = 0; $i < $length; $i++) {
-            $randomString .= $characters[rand(0, strlen($characters) - 1)];
-        }
-
-        return $randomString;
     }
 
     /**
@@ -658,22 +620,24 @@ class Tools
      *
      * @param  string $path   Path value
      * @return string         Action result
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public static function getURL(string $path): string
     {
         $output = '';
 
-        if ($path && ABSPATH) {
-            $path        = $path ?: ((!empty(debug_backtrace()[0]['file'])) ? debug_backtrace()[0]['file'] : __FILE__);
-            $path        = wp_normalize_path(realpath($path));
-            $templateDir = wp_normalize_path(ABSPATH);
+        if (defined('ABSPATH')) {
+            if ($path && ABSPATH) {
+                $path        = $path ?: ((!empty(debug_backtrace()[0]['file'])) ? debug_backtrace()[0]['file'] : __FILE__);
+                $path        = wp_normalize_path(realpath($path));
+                $templateDir = wp_normalize_path(ABSPATH);
 
-            if (0 === strpos($path, $templateDir)) {
-                $folder = str_replace($templateDir, '', $path);
+                if (0 === strpos($path, $templateDir)) {
+                    $folder = str_replace($templateDir, '', $path);
 
-                if ('.' != $folder) {
-                    $output = trim(get_site_url(null, $folder), '/');
+                    if ('.' != $folder) {
+                        $output = trim(get_site_url(null, $folder), '/');
+                    }
                 }
             }
         }
@@ -848,7 +812,7 @@ class Tools
      * @param  string  $filter      Format : simple '', serialize, json
      * @param  boolean $condition   Condition : If file exist
      * @return boolean              Action result
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public static function fWrite(string $file, string $content = '', string $filter = '', bool $condition = false): bool
     {
@@ -887,7 +851,11 @@ class Tools
             throw new RuntimeException("ZE0051 - Unable to create the file : {$file}");
         }
 
-        @chmod($file, fileperms(ABSPATH . 'index.php') & 0777 | 0644);
+        if (defined('ABSPATH')) {
+            @chmod($file, fileperms(ABSPATH . 'index.php') & 0777 | 0644);
+        } else {
+            throw new RuntimeException('ZE0148 - ' . '"ABSPATH" constant not defined');
+        }
 
         return true;
     }
