@@ -11,7 +11,7 @@
 
 namespace ZimbruCode\Module\Panel\Controls\WpEditor;
 
-use ZimbruCode\Component\Common\Tools;
+use RuntimeException;
 use ZimbruCode\Module\Panel\Library\ControlKernel;
 
 /**

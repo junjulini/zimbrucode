@@ -25,7 +25,7 @@ use ZimbruCode\Component\Handler\Traits\SessionHandlerTrait;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 abstract class Kernel extends GlobalDataOperator
 {
@@ -35,11 +35,11 @@ abstract class Kernel extends GlobalDataOperator
      * Get environment
      *
      * @return string   Environment
-     * @since 1.0.0
+     * @since 1.1.0
      */
     final public static function getEnvironment(): string
     {
-        return self::getGlobal('core/dev-config/environment', 'prod');
+        return (string) self::getGlobal('core/dev-config/environment', 'prod');
     }
 
     /**
@@ -59,9 +59,9 @@ abstract class Kernel extends GlobalDataOperator
     /**
      * Development or production data
      *
-     * @param  mix $value1   First value
-     * @param  mix $value2   Last value
-     * @return mix           Action result
+     * @param mixed $value1   First value
+     * @param mixed $value2   Last value
+     * @return mixed          Action result
      * @since 1.0.0
      */
     final public static function dop($value1, $value2)
@@ -98,8 +98,9 @@ abstract class Kernel extends GlobalDataOperator
      *
      * @param  string      $service   Service name
      * @param  object|null $handler   Service object
+     * @throws RuntimeException
      * @return object|null            Service object or null
-     * @since 1.0.0
+     * @since 1.1.0
      */
     final public static function service(string $service, object $handler = null): ?object
     {
@@ -114,15 +115,12 @@ abstract class Kernel extends GlobalDataOperator
         } else {
 
             // WP Services
-            switch ($service) {
-                case 'wpdb':
-                    if (isset($GLOBALS['wpdb'])) {
-                        return $GLOBALS['wpdb'];
-                    } else {
-                        throw new RuntimeException('ZE0062');
-                    }
-
-                    break;
+            if ($service == 'wpdb') {
+                if (isset($GLOBALS['wpdb'])) {
+                    return $GLOBALS['wpdb'];
+                } else {
+                    throw new RuntimeException('ZE0062');
+                }
             }
 
             // Local services
@@ -137,11 +135,18 @@ abstract class Kernel extends GlobalDataOperator
     /**
      * Application instance
      *
+     * @throws RuntimeException
      * @return AppKernel
-     * @since 1.0.0
+     * @since 1.1.0
      */
     final public function app(): AppKernel
     {
-        return self::getGlobalCache('app-instance');
+        $appInstance = self::getGlobalCache('app-instance');
+
+        if ($appInstance instanceof AppKernel) {
+            return $appInstance;
+        } else {
+            throw new RuntimeException('ZE0150');
+        }
     }
 }

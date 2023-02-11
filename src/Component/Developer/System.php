@@ -20,7 +20,7 @@ use ZimbruCode\Component\Core\Kernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 class System
 {
@@ -84,14 +84,14 @@ class System
     /**
      * Get server CPU load
      *
-     * @return float   CPU load data
-     * @since 1.0.0
+     * @return float|null   CPU load data
+     * @since 1.1.0
      */
-    public function getServerLoad(): float
+    public function getServerLoad(): ?float
     {
         if (stristr(PHP_OS, 'win')) {
             if (!class_exists('COM')) {
-                return 'Not compatible';
+                return null;
             }
 
             $wmi    = new COM('Winmgmts://');
@@ -115,10 +115,10 @@ class System
     /**
      * Get server memory usage
      *
-     * @return integer|null   Memory usage
-     * @since 1.0.0
+     * @return string|null   Memory usage
+     * @since 1.1.0
      */
-    public function getServerMemoryUsage(): ?int
+    public function getServerMemoryUsage(): ?string
     {
         if ($shell = shell_exec('free')) {
             $free     = $shell;

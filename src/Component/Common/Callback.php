@@ -48,8 +48,9 @@ class Callback
      * Run callback
      *
      * @param  string $name   Callback name
-     * @param  mix    ...$args
-     * @return array          Callbacks results
+     * @param  mixed  ...$args
+     * @throws RuntimeException
+     * @return array|bool     Callbacks results
      * @since 1.0.0
      */
     public function run(string $name, ...$args)
@@ -74,7 +75,7 @@ class Callback
     /**
      * Remove callback
      *
-     * @param  string $name   Callback name
+     * @param string $name   Callback name
      * @return void
      * @since 1.0.0
      */

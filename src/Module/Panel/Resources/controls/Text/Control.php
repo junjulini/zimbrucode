@@ -12,7 +12,6 @@
 namespace ZimbruCode\Module\Panel\Controls\Text;
 
 use ZimbruCode\Module\Panel\Library\ControlKernel;
-use ZimbruCode\Module\Panel\Library\Twig\ContextController;
 
 /**
  * Panel control : Text

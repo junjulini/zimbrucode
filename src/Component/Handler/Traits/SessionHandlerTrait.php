@@ -25,9 +25,9 @@ trait SessionHandlerTrait
     /**
      * Get data from session
      *
-     * @param  string  $path      Array path
-     * @param  mix     $default   Default value
-     * @return mix                Session data
+     * @param string $path      Array path
+     * @param mixed  $default   Default value
+     * @return mixed            Session data
      * @since 1.0.0
      */
     public static function getSession(string $path, $default = false)
@@ -40,8 +40,8 @@ trait SessionHandlerTrait
     /**
      * Add data to session
      *
-     * @param  string  $path    Array path
-     * @param  mix     $value   Value
+     * @param string $path    Array path
+     * @param mixed  $value   Value
      * @return void
      * @since 1.0.0
      */
@@ -55,8 +55,8 @@ trait SessionHandlerTrait
     /**
      * Remove item from session
      *
-     * @param  string $path   Array path
-     * @return boolean        Action result
+     * @param string $path   Array path
+     * @return bool          Action result
      * @since 1.0.0
      */
     public static function remSession(string $path): bool

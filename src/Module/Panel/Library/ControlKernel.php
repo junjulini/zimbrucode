@@ -33,8 +33,8 @@ abstract class ControlKernel extends ModuleKernel
     /**
      * Get control path
      *
-     * @param  string $path   Additional part of the path
-     * @return string         Control path
+     * @param string $path   Additional part of the path
+     * @return string        Control path
      * @since 1.0.0
      */
     public function getControlPath(string $path = ''): string
@@ -45,8 +45,8 @@ abstract class ControlKernel extends ModuleKernel
     /**
      * Get control url
      *
-     * @param  string $url   Additional part of the url
-     * @return string        Control URL
+     * @param string $url   Additional part of the url
+     * @return string       Control URL
      * @since 1.0.0
      */
     public function getControlURL(string $url = ''): string
@@ -80,7 +80,7 @@ abstract class ControlKernel extends ModuleKernel
      * Add template variable
      *
      * @param string $name    Variable name
-     * @param mix    $value   Variable value
+     * @param mixed  $value   Variable value
      * @return void
      * @since 1.0.0
      */
@@ -96,6 +96,7 @@ abstract class ControlKernel extends ModuleKernel
     /**
      * Add scss variable
      *
+     * @param mixed $args
      * @return void
      * @since 1.0.0
      */
@@ -108,6 +109,7 @@ abstract class ControlKernel extends ModuleKernel
      * Add control asset
      *
      * @param string $path   Asset path or package name
+     * @throws InvalidArgumentException
      * @return void
      * @since 1.0.0
      */
@@ -123,7 +125,7 @@ abstract class ControlKernel extends ModuleKernel
     /**
      * Localizes a registered script with data for a JavaScript variable
      *
-     * @param  array $data   The data itself
+     * @param array $data   The data itself
      * @return void
      * @since 1.0.0
      */

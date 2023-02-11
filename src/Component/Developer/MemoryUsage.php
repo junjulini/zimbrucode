@@ -29,8 +29,8 @@ class MemoryUsage
     /**
      * Start checking memory usage
      *
-     * @param string  $marker      Marker value
-     * @param boolean $realUsage   Set this to true to get total memory allocated from system, including unused pages. If not set or false only the used memory is reported.
+     * @param string $marker      Marker value
+     * @param bool   $realUsage   Set this to true to get total memory allocated from system, including unused pages. If not set or false only the used memory is reported.
      * @return void
      * @since 1.0.0
      */

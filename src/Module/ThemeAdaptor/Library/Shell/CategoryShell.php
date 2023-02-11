@@ -25,9 +25,9 @@ class CategoryShell extends ShellKernel
     /**
      * Display or retrieve page title for category archive
      *
-     * @param string  $prefix    What to display before the title
-     * @param boolean $display   Whether to display or retrieve title
-     * @return string|void       Title when retrieving
+     * @param string $prefix    What to display before the title
+     * @param bool   $display   Whether to display or retrieve title
+     * @return mixed            Title when retrieving
      * @since 1.0.0
      */
     public function singleTitle(string $prefix = '', bool $display = true)
@@ -38,8 +38,8 @@ class CategoryShell extends ShellKernel
     /**
      * Retrieves category description
      *
-     * @param integer|null $category   Defaults to the current category ID
-     * @return string                  Category description, if available
+     * @param int|null $category   Defaults to the current category ID
+     * @return string              Category description, if available
      * @since 1.0.0
      */
     public function description(int $category = null): string
@@ -50,8 +50,8 @@ class CategoryShell extends ShellKernel
     /**
      * Retrieves tag description
      *
-     * @param integer|null $tag   Tag ID. Defaults to the current tag ID
-     * @return string             Tag description, if available
+     * @param int|null $tag   Tag ID. Defaults to the current tag ID
+     * @return string         Tag description, if available
      * @since 1.0.0
      */
     public function tagDescription(int $tag = null): string
@@ -62,10 +62,10 @@ class CategoryShell extends ShellKernel
     /**
      * Retrieves the terms associated with the given object(s), in the supplied taxonomies
      *
-     * @param int|int[]       $objectIDs    The ID(s) of the object(s) to retrieve
-     * @param string|string[] $taxonomies   The taxonomy names to retrieve terms from
-     * @param array           $args         See WP_Term_Query::__construct() for supported arguments
-     * @return WP_Term[]|WP_Error           Array of terms or empty array if no terms found. WP_Error if any of the taxonomies don't exist
+     * @param mixed $objectIDs    The ID(s) of the object(s) to retrieve
+     * @param mixed $taxonomies   The taxonomy names to retrieve terms from
+     * @param mixed $args         See WP_Term_Query::__construct() for supported arguments
+     * @return mixed              Array of terms or empty array if no terms found. WP_Error if any of the taxonomies don't exist
      * @since 1.0.0
      */
     public function objectTerms($objectIDs = null, $taxonomies = null, $args = [])

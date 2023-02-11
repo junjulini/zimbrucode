@@ -47,8 +47,8 @@ class Control extends ControlKernel
     /**
      * Callback : Get attachment image path
      *
-     * @param  string $value   Value from BD
-     * @return string          Image path
+     * @param string $value   Value from BD
+     * @return string         Image path
      * @since 1.0.0
      */
     public function __callback_get_attachment_image_src(string $value = ''): string

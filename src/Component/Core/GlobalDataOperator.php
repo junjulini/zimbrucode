@@ -20,23 +20,23 @@ use ZimbruCode\Component\Common\Tools;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 abstract class GlobalDataOperator
 {
     /**
-     * GVS ( Global nodes slug )
+     * GNS ( Global nodes slug )
      *
      * @var string
-     * @since 1.0.0
+     * @since 1.1.0
      */
     private static $__GNS;
 
     /**
-     * GV ( Global nodes )
+     * GN ( Global nodes )
      *
      * @var array
-     * @since 1.0.0
+     * @since 1.1.0
      */
     private static $__GN = [
         // Root nodes
@@ -44,10 +44,10 @@ abstract class GlobalDataOperator
     ];
 
     /**
-     * SGV ( Standard global nodes )
+     * SGN ( Standard global nodes )
      *
      * @var array
-     * @since 1.0.0
+     * @since 1.1.0
      */
     private static $__SGN = [
         'core'  => [],
@@ -64,10 +64,10 @@ abstract class GlobalDataOperator
     private static $__RN = '@';
 
     /**
-     * CGV ( Condition global nodes )
+     * CGN ( Condition global nodes )
      *
      * @var array
-     * @since 1.0.0
+     * @since 1.1.0
      */
     private static $__CGN = ['@', 'core', 'app', 'cache'];
 
@@ -92,8 +92,8 @@ abstract class GlobalDataOperator
     /**
      * Get OEM ( Operator exception message )
      *
-     * @param  string $path   Array path
-     * @return string         Exception message
+     * @param string $path   Array path
+     * @return string        Exception message
      * @since 1.0.0
      */
     private static function __getOEM(string $path): string
@@ -104,9 +104,9 @@ abstract class GlobalDataOperator
     /**
      * Is on condition
      *
-     * @param  string  $path        Array path
-     * @param  string  $delimiter   Path delimiter
-     * @return boolean              Result of checking
+     * @param string $path        Array path
+     * @param string $delimiter   Path delimiter
+     * @return bool               Result of checking
      * @since 1.0.0
      */
     private static function __isOnCondition(string $path, string $delimiter = '/'): bool
@@ -122,9 +122,9 @@ abstract class GlobalDataOperator
     /**
      * Is root node
      *
-     * @param  string  $path        Array path
-     * @param  string  $delimiter   Path delimiter
-     * @return boolean              Result of checking
+     * @param string $path        Array path
+     * @param string $delimiter   Path delimiter
+     * @return bool               Result of checking
      * @since 1.0.0
      */
     private static function __isRootNode(string $path, string $delimiter = '/'): bool
@@ -140,20 +140,22 @@ abstract class GlobalDataOperator
     /**
      * Remove node from cache
      *
-     * @param  string $path   Array path
+     * @param string $path   Array path
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     private static function __removeFromNodesCache(string $path = ''): void
     {
         if (self::__isRootNode($path)) {
-            foreach (self::$__NODES_CACHE['@'] as $key => $value) {
-                if (strpos($key, $path) !== false) {
-                    unset(self::$__NODES_CACHE['@'][$key]);
+            if (!empty(self::$__NODES_CACHE['@']) && is_array(self::$__NODES_CACHE['@'])) {
+                foreach (self::$__NODES_CACHE['@'] as $key => $value) {
+                    if (strpos($key, $path) !== false) {
+                        unset(self::$__NODES_CACHE['@'][$key]);
+                    }
                 }
             }
         } else {
-            if (isset(self::$__NODES_CACHE[self::$__GNS])) {
+            if (!empty(self::$__NODES_CACHE[self::$__GNS]) && is_array(self::$__NODES_CACHE[self::$__GNS])) {
                 foreach (self::$__NODES_CACHE[self::$__GNS] as $key => $value) {
                     if (strpos($key, $path) !== false) {
                         unset(self::$__NODES_CACHE[self::$__GNS][$key]);
@@ -167,6 +169,8 @@ abstract class GlobalDataOperator
      * Add global slug variable
      *
      * @param  string $slug   Slug name
+     * @throws InvalidArgumentException
+     * @throws RuntimeException
      * @return void
      * @since 1.0.0
      */
@@ -198,34 +202,32 @@ abstract class GlobalDataOperator
     /**
      * Get global data
      *
-     * @param  string $path      Array path
-     * @param  mix    $default   Default value
-     * @return mix               Global data
-     * @since 1.0.0
+     * @param string $path      Array path
+     * @param mixed  $default   Default value
+     * @return mixed            Global data
+     * @since 1.1.0
      */
     final public static function getGlobal(string $path, $default = false)
     {
         if ($path) {
-            if (isset(self::$__NODES_CACHE[self::$__GNS][$path])) {
+            if (self::__isOnCondition($path)) {
                 if (self::__isRootNode($path)) {
-                    return self::$__NODES_CACHE['@'][$path];
+                    if (isset(self::$__NODES_CACHE['@']) && isset(self::$__NODES_CACHE['@'][$path])) {
+                        return self::$__NODES_CACHE['@'][$path];
+                    } else {
+                        $path                            = str_replace('@/', '', $path);
+                        self::$__NODES_CACHE['@'][$path] = Tools::getNode(self::$__GN[self::$__RN], $path, $default);
+
+                        return self::$__NODES_CACHE['@'][$path];
+                    }
                 } else {
-                    return self::$__NODES_CACHE[self::$__GNS][$path];
-                }
-            } else {
-                if (!self::__isOnCondition($path)) {
-                    return $default;
-                }
+                    if (isset(self::$__NODES_CACHE[self::$__GNS]) && isset(self::$__NODES_CACHE[self::$__GNS][$path])) {
+                        return self::$__NODES_CACHE[self::$__GNS][$path];
+                    } else {
+                        self::$__NODES_CACHE[self::$__GNS][$path] = Tools::getNode(self::$__GN[self::$__GNS], $path, $default);
 
-                if (self::__isRootNode($path)) {
-                    $path                            = str_replace('@/', '', $path);
-                    self::$__NODES_CACHE['@'][$path] = Tools::getNode(self::$__GN[self::$__RN], $path, $default);
-
-                    return self::$__NODES_CACHE['@'][$path];
-                } else {
-                    self::$__NODES_CACHE[self::$__GNS][$path] = Tools::getNode(self::$__GN[self::$__GNS], $path, $default);
-
-                    return self::$__NODES_CACHE[self::$__GNS][$path];
+                        return self::$__NODES_CACHE[self::$__GNS][$path];
+                    }
                 }
             }
         }
@@ -236,10 +238,10 @@ abstract class GlobalDataOperator
     /**
      * ifG : If global exist, return value1, if not, return value2
      *
-     * @param  string  $path     Array path
-     * @param  mix     $value1   Value 1
-     * @param  mix     $value2   Value 2
-     * @return mix               Action result
+     * @param string $path     Array path
+     * @param mixed  $value1   Value 1
+     * @param mixed  $value2   Value 2
+     * @return mixed           Action result
      * @since 1.0.0
      */
     final public static function ifG(string $path, $value1, $value2)
@@ -252,8 +254,9 @@ abstract class GlobalDataOperator
     /**
      * Add global data
      *
-     * @param  string  $path    Array path
-     * @param  mix     $value   Value
+     * @param  string $path    Array path
+     * @param  mixed  $value   Value
+     * @throws InvalidArgumentException
      * @return void
      * @since 1.0.0
      */
@@ -279,7 +282,8 @@ abstract class GlobalDataOperator
      * Remove global item
      *
      * @param  string $path   Array path
-     * @return boolean        Action result
+     * @throws InvalidArgumentException
+     * @return bool           Action result
      * @since 1.0.0
      */
     final public static function remGlobal(string $path): bool
@@ -306,6 +310,7 @@ abstract class GlobalDataOperator
      * Dump global data
      *
      * @param  string $path   Array path
+     * @throws InvalidArgumentException
      * @return void
      * @since 1.0.0
      */

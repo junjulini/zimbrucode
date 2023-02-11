@@ -18,14 +18,14 @@ use ZimbruCode\Component\TemplateBridges\Helper\ShellKernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 class AuthorShell extends ShellKernel
 {
     /**
      * Retrieve the author of the current post
      *
-     * @return string|null   The author's display name
+     * @return mixed   The author's display name
      * @since 1.0.0
      */
     public function name()
@@ -62,12 +62,12 @@ class AuthorShell extends ShellKernel
     /**
      * Retrieves the requested data of the author of the current post
      *
-     * @param string      $field    The user field to retrieve
-     * @param int|boolean $userID   User ID
-     * @return mix                  The author's field from the current author's DB object, otherwise an empty string
-     * @since 1.0.0
+     * @param string   $field    The user field to retrieve
+     * @param int|bool $userID   User ID
+     * @return string             The author's field from the current author's DB object, otherwise an empty string
+     * @since 1.1.0
      */
-    public function meta(string $field = '', $userID = false)
+    public function meta(string $field = '', $userID = false): string
     {
         return get_the_author_meta($field, $userID);
     }
@@ -75,8 +75,8 @@ class AuthorShell extends ShellKernel
     /**
      * Retrieve the avatar <img> tag for a user, email address, MD5 hash, comment, or post
      *
-     * @param integer $size   Height and width of the avatar image file in pixels
-     * @param string  $alt    Alternative text to use in img tag
+     * @param int    $size   Height and width of the avatar image file in pixels
+     * @param string $alt    Alternative text to use in img tag
      * @return void
      * @since 1.0.0
      */

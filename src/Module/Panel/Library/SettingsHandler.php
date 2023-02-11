@@ -48,7 +48,7 @@ class SettingsHandler
     /**
      * Set status of "ignore" setting
      *
-     * @param boolean $status   Status
+     * @param bool $status   Status
      * @return void
      * @since 1.0.0
      */
@@ -61,8 +61,8 @@ class SettingsHandler
      * Get control settings
      *
      * @param string $path      Array path
-     * @param mix    $default   Default value
-     * @return mix              Setting value
+     * @param mixed  $default   Default value
+     * @return mixed            Setting value
      * @since 1.0.0
      */
     public function get(string $path, $default = '')
@@ -134,7 +134,7 @@ class SettingsHandler
      * Add temporary data
      *
      * @param string $key     Item key
-     * @param mix    $value   Item value
+     * @param mixed  $value   Item value
      * @return void
      * @since 1.0.0
      */
@@ -171,7 +171,7 @@ class SettingsHandler
     /**
      * Finding default settings from controls
      *
-     * @param  array $settings   List of settings
+     * @param array $settings   List of settings
      * @return void
      * @since 1.0.0
      */

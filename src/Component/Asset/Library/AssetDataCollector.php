@@ -60,9 +60,9 @@ class AssetDataCollector
     /**
      * Filter
      *
-     * @param  Filter        $filter      Filter object
-     * @param  string        $assetName   Run the filter only for a specific asset. Asset name
-     * @param  callable|null $callback    Additional callback
+     * @param Filter        $filter      Filter object
+     * @param string|null   $assetName   Run the filter only for a specific asset. Asset name
+     * @param callable|null $callback    Additional callback
      * @return void
      * @since 1.0.0
      */
@@ -74,10 +74,11 @@ class AssetDataCollector
     /**
      * Add asset
      *
-     * @param  string|array   $asset        Asset name / Assets
-     * @param  boolean        $autoFilter   Preparing assets through filters
-     * @param  callable       $callback     Callback for additional asset manipulation
-     * @return self
+     * @param  mixed         $asset        Asset name / Assets
+     * @param  bool          $autoFilter   Preparing assets through filters
+     * @param  callable|null $callback     Callback for additional asset manipulation
+     * @throws InvalidArgumentException
+     * @return AssetDataCollector
      * @since 1.0.0
      */
     public function add($asset, bool $autoFilter = false, callable $callback = null): self
@@ -107,7 +108,7 @@ class AssetDataCollector
      *
      * @param string    $assetName   Asset name
      * @param AssetData $assetData   Asset data
-     * @return self
+     * @return AssetDataCollector
      * @since 1.0.0
      */
     public function addRaw(string $assetName, AssetData $assetData): self
@@ -122,8 +123,9 @@ class AssetDataCollector
     /**
      * Get asset
      *
-     * @param  string $asset     Asset name
-     * @return array|AssetData   Asset data / Assets
+     * @param  string|null $asset           Asset name
+     * @throws InvalidArgumentException
+     * @return AssetData|array<AssetData>   Asset data / Assets
      * @since 1.0.0
      */
     public function get(string $asset = null)
@@ -143,7 +145,7 @@ class AssetDataCollector
      * Checks if asset exit
      *
      * @param string $asset   Asset name
-     * @return boolean        Result of checking
+     * @return bool           Result of checking
      * @since 1.0.0
      */
     public function has(string $asset): bool
@@ -159,7 +161,8 @@ class AssetDataCollector
      * Remove asset
      *
      * @param  string $asset   Asset name
-     * @return boolean         Removal result
+     * @throws InvalidArgumentException
+     * @return bool            Removal result
      * @since 1.0.0
      */
     public function remove(string $asset): bool
@@ -175,7 +178,7 @@ class AssetDataCollector
     /**
      * Remove all assets
      *
-     * @return self
+     * @return AssetDataCollector
      * @since 1.0.0
      */
     public function flush(): self
@@ -187,9 +190,9 @@ class AssetDataCollector
     /**
      * Add global data
      *
-     * @param  string $path    Array path
-     * @param  mix    $value   Global value
-     * @return self
+     * @param string $path    Array path
+     * @param mixed  $value   Global value
+     * @return AssetDataCollector
      * @since 1.0.0
      */
     public function addGlobal(string $path, $value = ''): self
@@ -204,9 +207,9 @@ class AssetDataCollector
     /**
      * Get global data
      *
-     * @param  string $path      Array path
-     * @param  mix    $default   Default value
-     * @return mix               Global value
+     * @param string $path      Array path
+     * @param mixed  $default   Default value
+     * @return mixed            Global value
      * @since 1.0.0
      */
     public function getGlobal(string $path, $default = false)

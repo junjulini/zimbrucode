@@ -20,7 +20,7 @@ use ZimbruCode\Component\Core\Kernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 class NamespaceHandler
 {
@@ -60,7 +60,7 @@ class NamespaceHandler
     /**
      * Check if namespace is a word
      *
-     * @return boolean   Result of checking
+     * @return bool   Result of checking
      * @since 1.0.0
      */
     public function is(): bool
@@ -71,7 +71,7 @@ class NamespaceHandler
     /**
      * Check if namespace is registered
      *
-     * @return boolean   Result of checking
+     * @return bool   Result of checking
      * @since 1.0.0
      */
     public function has(): bool
@@ -82,10 +82,11 @@ class NamespaceHandler
     /**
      * Add namespace
      *
-     * @param  string             $namespace   Namespace value
-     * @param  AssetDataCollector $collector   Assets data collector object
-     * @return self
-     * @since 1.0.0
+     * @param  string                  $namespace   Namespace value
+     * @param  AssetDataCollector|null $collector   Assets data collector object
+     * @throws InvalidArgumentException
+     * @return NamespaceHandler
+     * @since 1.1.0
      */
     public function add(string $namespace = '', AssetDataCollector $collector = null): self
     {
@@ -97,7 +98,7 @@ class NamespaceHandler
             }
         }
 
-        $data   = Kernel::getGlobalCache("asset/namespace/{$namespace}", []);
+        $data   = (array) Kernel::getGlobalCache("asset/namespace/{$namespace}", []);
         $data[] = $collector;
 
         Kernel::addGlobalCache("asset/namespace/{$namespace}", $data);
@@ -109,10 +110,10 @@ class NamespaceHandler
      * Get assets by current namespace
      *
      * @return array   Assets data
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function collector(): array
     {
-        return Kernel::getGlobalCache("asset/namespace/{$this->name()}");
+        return (array) Kernel::getGlobalCache("asset/namespace/{$this->name()}", []);
     }
 }

@@ -11,9 +11,9 @@
 
 namespace ZimbruCode\Component\Asset\Library;
 
-use SplFileInfo;
 use InvalidArgumentException;
 use RuntimeException;
+use SplFileInfo;
 use ZimbruCode\Component\Common\Tools;
 use ZimbruCode\Component\Core\Kernel;
 
@@ -34,6 +34,8 @@ class CssConvertor
      * Add asset
      *
      * @param string $asset   Asset path
+     * @throws InvalidArgumentException
+     * @throws RuntimeException
      * @return void
      * @since 1.0.0
      */
@@ -54,6 +56,7 @@ class CssConvertor
      * Add output file path
      *
      * @param string $output   Output file path
+     * @throws InvalidArgumentException
      * @return void
      * @since 1.0.0
      */
@@ -70,6 +73,7 @@ class CssConvertor
      * Add asset content
      *
      * @param string $content   Content of asset
+     * @throws InvalidArgumentException
      * @return void
      * @since 1.0.0
      */
@@ -85,6 +89,7 @@ class CssConvertor
     /**
      * Get asset content
      *
+     * @throws RuntimeException
      * @return string   Asset content
      * @since 1.0.0
      */
@@ -100,8 +105,8 @@ class CssConvertor
     /**
      * Converting paths to relative paths or URL
      *
-     * @param boolean $relativeMode   Relative mode
-     * @return string                 Content
+     * @param bool $relativeMode   Relative mode
+     * @return string              Content
      * @since 1.1.0
      */
     public function convertPathToRelativeOrURL(bool $relativeMode = true): string
@@ -148,7 +153,7 @@ class CssConvertor
      * Converting paths to base64 encoded data
      *
      * @return array   New content
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function convertPathToData(): array
     {
@@ -157,7 +162,7 @@ class CssConvertor
 
         preg_match_all("/url\((.*?)\)/is", $content, $matches);
 
-        if (!empty($matches[1])) {
+        if (!empty($matches[1]) && is_array($config)) {
             $data = [
                 'search'  => [],
                 'replace' => [],

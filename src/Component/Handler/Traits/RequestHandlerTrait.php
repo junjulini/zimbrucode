@@ -16,7 +16,7 @@ namespace ZimbruCode\Component\Handler\Traits;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 trait RequestHandlerTrait
 {
@@ -25,10 +25,10 @@ trait RequestHandlerTrait
      *
      * @param string $param     Param name
      * @param string $default   Default value
-     * @return mix              Request data
-     * @since 1.0.0
+     * @return string           Request data
+     * @since 1.1.0
      */
-    public static function rPost(string $param, $default = '')
+    public static function rPost(string $param, string $default = ''): string
     {
         return !empty($_POST[$param]) ? $_POST[$param] : $default;
     }
@@ -38,10 +38,10 @@ trait RequestHandlerTrait
      *
      * @param string $param     Param name
      * @param string $default   Default value
-     * @return mix              Request data
-     * @since 1.0.0
+     * @return string           Request data
+     * @since 1.1.0
      */
-    public static function rGet(string $param, $default = '')
+    public static function rGet(string $param, string $default = ''): string
     {
         return !empty($_GET[$param]) ? $_GET[$param] : $default;
     }

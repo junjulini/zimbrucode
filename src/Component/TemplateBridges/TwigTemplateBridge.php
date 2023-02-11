@@ -50,7 +50,7 @@ class TwigTemplateBridge
     /**
      * Constructor
      *
-     * @param boolean $loadDefaultShells   Load default shells if value true
+     * @param bool $loadDefaultShells   Load default shells if value true
      * @since 1.0.0
      */
     public function __construct(bool $loadDefaultShells = true)
@@ -77,6 +77,7 @@ class TwigTemplateBridge
     /**
      * Get TWIG Environment
      *
+     * @throws RuntimeException
      * @return Environment   TWIG Environment
      * @since 1.0.0
      */
@@ -92,6 +93,7 @@ class TwigTemplateBridge
     /**
      * Get TWIG filesystem loader
      *
+     * @throws RuntimeException
      * @return FilesystemLoader   TWIG filesystem loader
      * @since 1.0.0
      */
@@ -107,7 +109,9 @@ class TwigTemplateBridge
     /**
      * Get var
      *
-     * @param string $name   Var name
+     * @param  string $name   Var name
+     * @throws RuntimeException
+     * @return mixed
      * @since 1.0.0
      */
     public function __get(string $name)
@@ -122,8 +126,10 @@ class TwigTemplateBridge
     /**
      * Add var (setter)
      *
-     * @param string $name    Var name
-     * @param mix    $value   Var value
+     * @param  string $name    Var name
+     * @param  mixed  $value   Var value
+     * @throws RuntimeException
+     * @return void
      * @since 1.0.0
      */
     public function __set(string $name, $value)
@@ -138,7 +144,9 @@ class TwigTemplateBridge
     /**
      * Get var
      *
-     * @param string $name   Var name
+     * @param  string $name   Var name
+     * @throws RuntimeException
+     * @return mixed
      * @since 1.0.0
      */
     public function getVar(string $name)
@@ -167,7 +175,7 @@ class TwigTemplateBridge
      * Add var
      *
      * @param string $name    Var name
-     * @param mix    $value   Var value
+     * @param mixed  $value   Var value
      * @return void
      * @since 1.0.0
      */
@@ -192,8 +200,9 @@ class TwigTemplateBridge
     /**
      * Add path to templates directory
      *
-     * @param string  $path        Templates directory path
-     * @param string  $namespace   Templates namespace
+     * @param string      $path        Templates directory path
+     * @param string|null $namespace   Templates namespace
+     * @throws RuntimeException
      * @return void
      * @since 1.0.0
      */
@@ -214,6 +223,7 @@ class TwigTemplateBridge
      * Add cache path
      *
      * @param string $cache   Cache path
+     * @throws RuntimeException
      * @return void
      * @since 1.0.0
      */
@@ -235,6 +245,7 @@ class TwigTemplateBridge
      *
      * @param  string   $name     Function name
      * @param  callable $method   Callback
+     * @throws InvalidArgumentException
      * @return void
      * @since 1.0.0
      */
@@ -252,6 +263,7 @@ class TwigTemplateBridge
      *
      * @param  string   $name     Escaper name
      * @param  callable $method   Callback
+     * @throws InvalidArgumentException
      * @return void
      * @since 1.0.0
      */
@@ -269,6 +281,7 @@ class TwigTemplateBridge
      *
      * @param  string   $name     Filter name
      * @param  callable $method   Callback
+     * @throws InvalidArgumentException
      * @return void
      * @since 1.0.0
      */
@@ -284,7 +297,7 @@ class TwigTemplateBridge
     /**
      * Add extension
      *
-     * @param  AbstractExtension $extension   Extension object
+     * @param AbstractExtension $extension   Extension object
      * @return void
      * @since 1.0.0
      */
@@ -296,6 +309,7 @@ class TwigTemplateBridge
     /**
      * Add loader
      *
+     * @throws RuntimeException
      * @return void
      * @since 1.0.0
      */
@@ -377,8 +391,8 @@ class TwigTemplateBridge
     /**
      * Render template
      *
-     * @param  string $template   Template name
-     * @return string             Html content
+     * @param string $template   Template name
+     * @return string            Html content
      * @since 1.0.0
      */
     public function renderTemplate(string $template): string
@@ -393,8 +407,8 @@ class TwigTemplateBridge
     /**
      * Render
      *
-     * @param  string $template   Template name
-     * @return string             Html content
+     * @param string $template   Template name
+     * @return string            Html content
      * @since 1.0.0
      */
     public function render(string $template = ''): string

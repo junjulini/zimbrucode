@@ -21,7 +21,7 @@ use ZimbruCode\Component\Handler\CacheHandler;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 class FastCache
 {
@@ -55,9 +55,10 @@ class FastCache
     /**
      * Get item data
      *
-     * @param  string  $key       Item key
-     * @param  mix     $default   Default value
-     * @return mix                Item data
+     * @param  string $key       Item key
+     * @param  mixed  $default   Default value
+     * @throws RuntimeException
+     * @return mixed             Item data
      * @since 1.0.0
      */
     public function get(string $key, $default = false)
@@ -73,7 +74,8 @@ class FastCache
      * Add item
      *
      * @param  string $key     Item key
-     * @param  mix    $value   Item value
+     * @param  mixed  $value   Item value
+     * @throws RuntimeException
      * @return void
      * @since 1.0.0
      */
@@ -91,18 +93,18 @@ class FastCache
      * Check if item exists
      *
      * @param string $key   Item key
-     * @return boolean      Action result
+     * @return bool         Action result
      * @since 1.1.0
      */
     public function has(string $key): bool
     {
-        return ($this->get($key));
+        return (!empty($this->get($key)));
     }
 
     /**
      * Remove item
      *
-     * @param  string $key   Item key
+     * @param string $key   Item key
      * @return void
      * @since 1.0.0
      */

@@ -12,7 +12,6 @@
 namespace ZimbruCode\Module\ThemeAdaptor\Library\TwigExtension\HavePostsExtension;
 
 use Twig\Error\SyntaxError;
-use Twig\Node\Node;
 use Twig\Token;
 use Twig\TokenParser\AbstractTokenParser;
 
@@ -21,21 +20,21 @@ use Twig\TokenParser\AbstractTokenParser;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 class HavePostsTokenParser extends AbstractTokenParser
 {
     /**
      * Parse
      *
-     * @param Token $token   Token object
+     * @param  Token $token   Token object
+     * @throws SyntaxError
      * @return HavePostsNode
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function parse(Token $token): HavePostsNode
     {
         $stream = $this->parser->getStream();
-        $lineno = $token->getLine();
 
         $values = null;
         $else   = null;
@@ -61,20 +60,20 @@ class HavePostsTokenParser extends AbstractTokenParser
                     break;
 
                 default:
-                    throw new SyntaxError('ZE0144 - ' . sprintf('Unexpected end of template. Twig was looking for the following tags "else" or "endhaveposts" to close the "haveposts" block started at line %d).', $lineno), $stream->getCurrent()->getLine(), $stream->getFilename());
+                    throw new SyntaxError('ZE0144 - ' . sprintf('Unexpected end of template. Twig was looking for the following tags "else" or "endhaveposts" to close the "haveposts" block started at line %d).', $token->getLine()), $stream->getCurrent()->getLine(), $stream->getSourceContext());
             }
         }
 
         $stream->expect(Token::BLOCK_END_TYPE);
 
-        return new HavePostsNode($body, $values, $else, $lineno, $this->getTag());
+        return new HavePostsNode($body, $values, $else, $token->getLine(), $this->getTag());
     }
 
     /**
      * Test : Decide have posts fork
      *
      * @param Token $token   Token object
-     * @return boolean       Result of checking
+     * @return bool          Result of checking
      * @since 1.0.0
      */
     public function decideHavePostsFork(Token $token): bool
@@ -86,7 +85,7 @@ class HavePostsTokenParser extends AbstractTokenParser
      * Test : Decide have posts end
      *
      * @param Token $token   Token object
-     * @return boolean       Result of checking
+     * @return bool       Result of checking
      * @since 1.0.0
      */
     public function decideHavePostsEnd(Token $token): bool

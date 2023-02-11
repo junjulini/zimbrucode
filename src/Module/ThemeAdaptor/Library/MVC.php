@@ -17,10 +17,10 @@ use ZimbruCode\Component\Common\Tools;
 use ZimbruCode\Component\Core\Kernel;
 use ZimbruCode\Component\Developer\DeveloperMode;
 use ZimbruCode\Component\Handler\Traits\GlobalCacheHandlerTrait;
+use ZimbruCode\Component\Handler\Traits\HooksHandlerTrait;
 use ZimbruCode\Component\Handler\Traits\OptionHandlerTrait;
 use ZimbruCode\Component\Handler\Traits\RequestHandlerTrait;
 use ZimbruCode\Component\Handler\Traits\SessionHandlerTrait;
-use ZimbruCode\Component\Handler\Traits\HooksHandlerTrait;
 
 /**
  * Class : Module/ThemeAdaptor/Library : MVC - The controller that handles the model and view layers to work together
@@ -102,7 +102,7 @@ class MVC
      * Get TWIG variable
      *
      * @param  string $name   Variable name
-     * @return mix            Variable value
+     * @return mixed            Variable value
      * @since 1.0.0
      */
     public function __get(string $name)
@@ -114,7 +114,8 @@ class MVC
      * Add TWIG variable (setter)
      *
      * @param string $name    Variable name
-     * @param mix    $value   Variable value
+     * @param mixed  $value   Variable value
+     * @return void
      * @since 1.0.0
      */
     public function __set(string $name, $value)
@@ -126,7 +127,7 @@ class MVC
      * Get TWIG variable
      *
      * @param string $name    Variable name
-     * @return mix            Variable value
+     * @return mixed          Variable value
      * @since 1.0.0
      */
     public function getTwigVar(string $name)
@@ -138,7 +139,8 @@ class MVC
      * Add TWIG variable
      *
      * @param string $name    Variable name
-     * @param mix    $value   Variable value
+     * @param mixed  $value   Variable value
+     * @return void
      * @since 1.0.0
      */
     public function addTwigVar(...$args): void
@@ -150,6 +152,7 @@ class MVC
      * Add TWIG variables
      *
      * @param array $vars   List of variables
+     * @return void
      * @since 1.0.0
      */
     public function addTwigVars(array $vars): void
@@ -160,8 +163,8 @@ class MVC
     /**
      * Add TWIG function
      *
-     * @param  string   $name     Function name
-     * @param  callable $method   Callback
+     * @param string   $name     Function name
+     * @param callable $method   Callback
      * @return void
      * @since 1.0.0
      */
@@ -173,8 +176,8 @@ class MVC
     /**
      * Add TWIG escaper
      *
-     * @param  string   $name     Escaper name
-     * @param  callable $method   Callback
+     * @param string   $name     Escaper name
+     * @param callable $method   Callback
      * @return void
      * @since 1.0.0
      */
@@ -186,8 +189,8 @@ class MVC
     /**
      * Add TWIG filter
      *
-     * @param  string   $name     Filter name
-     * @param  callable $method   Callback
+     * @param string   $name     Filter name
+     * @param callable $method   Callback
      * @return void
      * @since 1.0.0
      */
@@ -236,7 +239,7 @@ class MVC
      * Module loader
      *
      * @param array $config   Module config
-     * @return ModuleLoader
+     * @return object
      * @since 1.0.0
      */
     public function module(array $config = []): object
@@ -247,9 +250,9 @@ class MVC
     /**
      * Get a service or register a new service
      *
-     * @param  string      $service   Service name
-     * @param  object|null $handler   Service object
-     * @return object|null            Service object or null
+     * @param string      $service   Service name
+     * @param object|null $handler   Service object
+     * @return object|null           Service object or null
      * @since 1.0.0
      */
     public function service(...$args)
@@ -260,9 +263,9 @@ class MVC
     /**
      * Development or production data
      *
-     * @param  mix $value1   First value
-     * @param  mix $value2   Last value
-     * @return mix           Action result
+     * @param mixed $value1   First value
+     * @param mixed $value2   Last value
+     * @return mixed          Action result
      * @since 1.0.0
      */
     public function dop(...$args)
@@ -273,9 +276,9 @@ class MVC
     /**
      * Get global data
      *
-     * @param  string $path      Array path
-     * @param  mix    $default   Default value
-     * @return mix               Global data
+     * @param string $path      Array path
+     * @param mixed  $default   Default value
+     * @return mixed            Global data
      * @since 1.0.0
      */
     public function getGlobal(...$args)
@@ -286,10 +289,10 @@ class MVC
     /**
      * ifG : If global exist, return value1, if not, return value2
      *
-     * @param  string  $path     Array path
-     * @param  mix     $value1   Value 1
-     * @param  mix     $value2   Value 2
-     * @return mix               Action result
+     * @param string  $path     Array path
+     * @param mixed   $value1   Value 1
+     * @param mixed   $value2   Value 2
+     * @return mixed            Action result
      * @since 1.0.0
      */
     public function ifG(...$args)

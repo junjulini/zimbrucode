@@ -27,8 +27,10 @@ abstract class ShellKernel
     /**
      * Add shell method
      *
-     * @param string   $name     Method name
-     * @param callable $method   Callback
+     * @param  string   $name     Method name
+     * @param  callable $method   Callback
+     * @throws RuntimeException
+     * @return void
      * @since 1.0.0
      */
     public function __set(string $name, callable $method)
@@ -45,7 +47,7 @@ abstract class ShellKernel
      *
      * @param string $method   Method name
      * @param array  $args     Method args
-     * @return void            Action result
+     * @return mixed           Action result
      * @since 1.0.0
      */
     public function __call(string $method, array $args)

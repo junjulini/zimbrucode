@@ -29,8 +29,8 @@ class Tools
     /**
      * Copying an array value to a key
      *
-     * @param  array $array   Array for work
-     * @return array          Return a new modified array
+     * @param array $array   Array for work
+     * @return array         Return a new modified array
      * @since 1.0.0
      */
     public static function arrayValueToKey(array $array): array
@@ -47,8 +47,8 @@ class Tools
     /**
      * Copying an array key to a value
      *
-     * @param  array  $array   Array for work
-     * @return array           Return a new modificated array
+     * @param array $array   Array for work
+     * @return array         Return a new modificated array
      * @since 1.0.0
      */
     public static function arrayKeyToValue(array $array): array
@@ -65,8 +65,8 @@ class Tools
     /**
      * Check if the array is associative
      *
-     * @param  array   $array   Array for work
-     * @return boolean          Result of checking
+     * @param array $array   Array for work
+     * @return bool          Result of checking
      * @since 1.0.0
      */
     public static function arrayIsAssoc(array $array): bool
@@ -77,10 +77,10 @@ class Tools
     /**
      * Merge two arrays
      *
-     * @param  array   $array1   First array
-     * @param  array   $array2   Last array
-     * @param  string  $mode     Mode : d (Default), wk (Without key), s (Strict)
-     * @return array             Return a new modificated array
+     * @param array  $array1   First array
+     * @param array  $array2   Last array
+     * @param string $mode     Mode : d (Default), wk (Without key), s (Strict)
+     * @return array           Return a new modificated array
      * @since 1.0.0
      */
     public static function arrayMerge(array $array1, array $array2, string $mode = 'd'): array
@@ -119,9 +119,9 @@ class Tools
     /**
      * Check if two arrays are different
      *
-     * @param  mix $array1   First array
-     * @param  mix $array2   Last array
-     * @return boolean       Result of checking
+     * @param mixed $array1   First array
+     * @param mixed $array2   Last array
+     * @return bool           Result of checking
      * @since 1.0.0
      */
     public static function arrayDiff($array1, $array2): bool
@@ -141,8 +141,9 @@ class Tools
      *
      * @param  array  $array       Array for work
      * @param  string $path        Array path
-     * @param  mix    $value       New value
+     * @param  mixed  $value       New value
      * @param  string $delimiter   Path separator
+     * @throws InvalidArgumentException
      * @return void
      * @since 1.0.0
      */
@@ -170,8 +171,10 @@ class Tools
      *
      * @param  array  $array     Array for work
      * @param  string $path      Array path
-     * @param  mix    $default   Default value
-     * @return mix               Action result
+     * @param  mixed  $default   Default value
+     * @param  string $delimiter
+     * @throws InvalidArgumentException
+     * @return mixed             Action result
      * @since 1.0.0
      */
     public static function getNode(array $array, string $path, $default = null, string $delimiter = '/')
@@ -203,7 +206,9 @@ class Tools
      *
      * @param  array  $array   Array for work
      * @param  string $path    Array path
-     * @return boolean         Action result
+     * @param  string $delimiter
+     * @throws InvalidArgumentException
+     * @return bool            Action result
      * @since 1.0.0
      */
     public static function unsetNode(array &$array, string $path, string $delimiter = '/'): bool
@@ -239,15 +244,16 @@ class Tools
 
     /**
      * Inserts a new key / value after some position in the array
-     *
-     * @param  $array     Array for work
-     * @param  $node      The node to be inserted after
-     * @param  $newNode   Node after which a new node needs to be installed.
-     * @param  $value     Value to insert
-     * @return array      Return a new modificated array
-     * @since 1.0.0
+     * 
+     * @param array  $array     Array for work
+     * @param string $node      The node to be inserted after
+     * @param string $newNode   Node after which a new node needs to be installed
+     * @param mixed  $value     Value to insert
+     * @param bool   $after
+     * @return array|null       Return a new modificated array
+     * @since 1.1.0
      */
-    public static function appendNode(array $array, string $node, string $newNode, $value, bool $after = true)
+    public static function appendNode(array $array, string $node, string $newNode, $value, bool $after = true): ?array
     {
         if (array_key_exists($node, $array)) {
             $output = [];
@@ -272,17 +278,19 @@ class Tools
 
             return $output;
         }
+
+        return null;
     }
 
     /**
      * Image resize
-     *
-     * @param integer|string $image    Image ID or URL
-     * @param boolean        $isURL    Use image as URL
-     * @param integer        $width    Image width
-     * @param integer        $height   Image height
-     * @param boolean        $crop     Crop image
-     * @return array                   Image data
+     * 
+     * @param mixed $image    Image ID or URL
+     * @param bool  $isURL    Use image as URL
+     * @param int   $width    Image width
+     * @param int   $height   Image height
+     * @param bool  $crop     Crop image
+     * @return array          Image data
      * @since 1.0.0
      */
     public static function resizeImg($image, bool $isURL = false, int $width = 9999, int $height = 9999, bool $crop = false): array
@@ -384,14 +392,15 @@ class Tools
 
     /**
      * Cut string / text
-     *
-     * @param  string  $input    String / text
-     * @param  integer $n        Number of symbols
-     * @param  boolean $return   Return or Echo
-     * @return string            Return modificated string / text
-     * @since 1.0.0
+     * 
+     * @param string $input    String / text
+     * @param int    $n        Number of symbols
+     * @param bool   $return   Return or Echo
+     * @throws InvalidArgumentException
+     * @return string|null     Return modificated string / text
+     * @since 1.1.0
      */
-    public static function cut(string $input, int $n = 20, bool $return = false)
+    public static function cut(string $input, int $n = 20, bool $return = false): ?string
     {
         if (!$input) {
             throw new InvalidArgumentException('ZE0045');
@@ -403,14 +412,15 @@ class Tools
             return $output;
         } else {
             echo $output;
+            return null;
         }
     }
 
     /**
      * Script condition
      *
-     * @param  array  $scripts     List of scripts
-     * @param  string $condition   Condition when displaying scripts
+     * @param array  $scripts     List of scripts
+     * @param string $condition   Condition when displaying scripts
      * @return void
      * @since 1.0.0
      */
@@ -445,7 +455,7 @@ class Tools
     /**
      * Check if the current theme is a child theme
      *
-     * @return boolean   Result of checking
+     * @return bool   Result of checking
      * @since 1.0.0
      */
     public static function isChildTheme(): bool
@@ -460,8 +470,8 @@ class Tools
     /**
      * Get posts in array format, where only ID and Title
      *
-     * @param  string $args   Arguments to retrieve posts
-     * @return array          Lists of posts
+     * @param string $args   Arguments to retrieve posts
+     * @return array         Lists of posts
      * @since 1.0.0
      */
     public static function getPWIT(array $args = []): array
@@ -481,8 +491,8 @@ class Tools
     /**
      * Get htmlentities -> wp_json_encode | with ENT_QUOTES parameter
      *
-     * @param  array  $array   Data
-     * @return string          Array data in string format
+     * @param array $array   Data
+     * @return string        Array data in string format
      * @since 1.0.0
      */
     public static function getHJWEP(array $array): string
@@ -494,7 +504,8 @@ class Tools
      * Check that the file format is image
      *
      * @param  string $image   File
-     * @return boolean         Result of checking
+     * @throws InvalidArgumentException
+     * @return bool            Result of checking
      * @since 1.0.0
      */
     public static function checkImage(string $image): bool
@@ -528,7 +539,7 @@ class Tools
     /**
      * PRE
      *
-     * @param  array $data   Array data
+     * @param array $data   Array data
      * @return void
      * @since 1.0.0
      */
@@ -543,6 +554,7 @@ class Tools
      * Remove the slashes in the string
      *
      * @param  string $input   Input string
+     * @throws InvalidArgumentException
      * @return string          Cleared string
      * @since 1.1.0
      */
@@ -562,6 +574,7 @@ class Tools
      *
      * @param  string $input     Input string
      * @param  string $replace   The replacement value that replaces found spaces
+     * @throws InvalidArgumentException
      * @return string            Action result
      * @since 1.0.0
      */
@@ -578,7 +591,7 @@ class Tools
      * Get multisite ID
      *
      * @param  string $delimiter   Delimiter for ID
-     * @param  mix    $default     Default value
+     * @param  mixed  $default     Default value
      * @return string              Multi site ID
      * @since 1.0.0
      */
@@ -591,9 +604,9 @@ class Tools
     /**
      * Cut the server part from the path
      *
-     * @param  string  $path   Path value
-     * @param  boolean $nm     Mode : normal or not
-     * @return boolean         Action result
+     * @param  string $path   Path value
+     * @param  bool   $nm     Mode : normal or not
+     * @return string         Action result
      * @since 1.0.0
      */
     public static function cutServerPartFromPath(string $path, bool $nm = false): string
@@ -618,26 +631,24 @@ class Tools
     /**
      * Convert local path to URL
      *
-     * @param  string $path   Path value
-     * @return string         Action result
+     * @param string $path   Path value
+     * @return string        Action result
      * @since 1.1.0
      */
     public static function getURL(string $path): string
     {
         $output = '';
 
-        if (defined('ABSPATH')) {
-            if ($path && ABSPATH) {
-                $path        = $path ?: ((!empty(debug_backtrace()[0]['file'])) ? debug_backtrace()[0]['file'] : __FILE__);
-                $path        = wp_normalize_path(realpath($path));
-                $templateDir = wp_normalize_path(ABSPATH);
+        if ($path && defined('ABSPATH')) {
+            $path        = $path ?: ((!empty(debug_backtrace()[0]['file'])) ? debug_backtrace()[0]['file'] : __FILE__);
+            $path        = wp_normalize_path(realpath($path));
+            $templateDir = wp_normalize_path(ABSPATH);
 
-                if (0 === strpos($path, $templateDir)) {
-                    $folder = str_replace($templateDir, '', $path);
+            if (0 === strpos($path, $templateDir)) {
+                $folder = str_replace($templateDir, '', $path);
 
-                    if ('.' != $folder) {
-                        $output = trim(get_site_url(null, $folder), '/');
-                    }
+                if ('.' != $folder) {
+                    $output = trim(get_site_url(null, $folder), '/');
                 }
             }
         }
@@ -648,8 +659,8 @@ class Tools
     /**
      * Convert local URL to path
      *
-     * @param  string $url   URL value
-     * @return path          Action result
+     * @param string $url   URL value
+     * @return string       Action result
      * @since 1.0.0
      */
     public static function getPath(string $url): string
@@ -668,8 +679,8 @@ class Tools
     /**
      * Check if string is path
      *
-     * @param  string  $str   String data
-     * @return boolean        Result of checking
+     * @param string $str   String data
+     * @return bool         Result of checking
      * @since 1.0.0
      */
     public static function isPath(string $str): bool
@@ -684,8 +695,8 @@ class Tools
     /**
      * Check if string is URL
      *
-     * @param  string  $str   String data
-     * @return boolean        Result of checking
+     * @param string $str   String data
+     * @return bool         Result of checking
      * @since 1.0.0
      */
     public static function isURL(string $str): bool
@@ -700,8 +711,8 @@ class Tools
     /**
      * Check if the path from the current server
      *
-     * @param  string  $path   Path value
-     * @return boolean         Result of checking
+     * @param string $path   Path value
+     * @return bool          Result of checking
      * @since 1.0.0
      */
     public static function isLocalPath(string $path): bool
@@ -724,8 +735,8 @@ class Tools
     /**
      * Check if the URL from the current server
      *
-     * @param  string  $url   URL value
-     * @return boolean        Result of checking
+     * @param string $url   URL value
+     * @return bool         Result of checking
      * @since 1.0.0
      */
     public static function isLocalURL(string $url): bool
@@ -738,80 +749,14 @@ class Tools
     }
 
     /**
-     * Parse info format
-     *
-     * @param  string $data   Content
-     * @return array          Parsed data
-     * @since 1.0.0
-     */
-    public static function parseInfoFormat(string $data): array
-    {
-        $info = [];
-
-        if (preg_match_all('
-            @^\s*                           # Start at the beginning of a line, ignoring leading whitespace
-            ((?:
-                [^=;\[\]]|                    # Key names cannot contain equal signs, semi-colons or square brackets,
-                \[[^\[\]]*\]                  # unless they are balanced and not nested
-            )+?)
-            \s*=\s*                         # Key/value pairs are separated by equal signs (ignoring white-space)
-            (?:
-                ("(?:[^"]|(?<=\\\\)")*")|     # Double-quoted string, which may contain slash-escaped quotes/slashes
-                (\'(?:[^\']|(?<=\\\\)\')*\')| # Single-quoted string, which may contain slash-escaped quotes/slashes
-                ([^\r\n]*?)                   # Non-quoted string
-            )\s*$                           # Stop at the next end of a line, ignoring trailing whitespace
-            @msx', $data, $matches, PREG_SET_ORDER)) {
-
-            foreach ($matches as $match) {
-                // Fetch the key and value string
-                $i = 0;
-                foreach (['key', 'value1', 'value2', 'value3'] as $var) {
-                    $$var = $match[$i] ?: '';
-                }
-
-                $value = stripslashes(substr($value1, 1, -1)) . stripslashes(substr($value2, 1, -1)) . $value3;
-
-                // Parse array syntax
-                $keys   = preg_split('/\]?\[/', rtrim($key, ']'));
-                $last   = array_pop($keys);
-                $parent = &$info;
-
-                // Create nested arrays
-                foreach ($keys as $key) {
-                    if ($key == '') {
-                        $key = count($parent);
-                    }
-                    if (!isset($parent[$key]) || !is_array($parent[$key])) {
-                        $parent[$key] = [];
-                    }
-                    $parent = &$parent[$key];
-                }
-
-                // Handle PHP constants
-                if (preg_match('/^\w+$/i', $value) && defined($value)) {
-                    $value = constant($value);
-                }
-
-                // Insert actual value
-                if ($last == '') {
-                    $last = count($parent);
-                }
-
-                $parent[$last] = $value;
-            }
-        }
-
-        return $info;
-    }
-
-    /**
      * Add content to file
      *
-     * @param  string  $file        File path
-     * @param  string  $content     The string that is to be written
-     * @param  string  $filter      Format : simple '', serialize, json
-     * @param  boolean $condition   Condition : If file exist
-     * @return boolean              Action result
+     * @param  string $file        File path
+     * @param  string $content     The string that is to be written
+     * @param  string $filter      Format : simple '', serialize, json
+     * @param  bool   $condition   Condition : If file exist
+     * @throws RuntimeException
+     * @return bool                Action result
      * @since 1.1.0
      */
     public static function fWrite(string $file, string $content = '', string $filter = '', bool $condition = false): bool
@@ -864,6 +809,7 @@ class Tools
      * Get number of lines from file
      *
      * @param  string $file   File path
+     * @throws InvalidArgumentException
      * @return int            Number of lines
      * @since 1.0.0
      */
@@ -880,8 +826,9 @@ class Tools
      * Get absolute path
      *
      * @param  string $path   File path
+     * @throws InvalidArgumentException
      * @return string         Absolute path
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public static function getAbsolutePath(string $path): string
     {
@@ -889,7 +836,7 @@ class Tools
             throw new InvalidArgumentException('ZE0053');
         }
 
-        $separator = self::getGlobal('core/component/path/directory-separator');
+        $separator = Kernel::getGlobal('core/component/path/directory-separator');
         $path      = str_replace(['/', '\\'], $separator, $path);
         $parts     = array_filter(explode($separator, $path), 'strlen');
         $absolutes = [];
@@ -914,6 +861,7 @@ class Tools
      *
      * @param  string $from   File path
      * @param  string $to     Destination path
+     * @throws InvalidArgumentException
      * @return string         Relative path
      * @since 1.0.0
      */
@@ -965,7 +913,7 @@ class Tools
     /**
      * Dump
      *
-     * @param mix $data   Data for dumping
+     * @param mixed $data   Data for dumping
      * @return void
      * @since 1.0.0
      */
@@ -1002,11 +950,11 @@ class Tools
     /**
      * Remove class action
      *
-     * @param string       $hookName   The action hook to which the function to be removed is hooked
-     * @param string       $class      Class name
-     * @param mix          $method     Class method
-     * @param integer|null $priority   The exact priority used when adding the original action callback
-     * @return void
+     * @param string   $hookName   The action hook to which the function to be removed is hooked
+     * @param string   $class      Class name
+     * @param mixed    $method     Class method
+     * @param int|null $priority   The exact priority used when adding the original action callback
+     * @return mixed
      * @since 1.1.0
      */
     public static function remClassAction(string $hookName, string $class = '', $method = null, int $priority = null)
@@ -1067,9 +1015,10 @@ class Tools
     /**
      * Decodes a JSON string
      *
-     * @param string $json           The json string being decoded
-     * @param string $errorMsgPart   Part of error message
-     * @return array                 Decoded array data
+     * @param  string $json           The json string being decoded
+     * @param  string $errorMsgPart   Part of error message
+     * @throws RuntimeException
+     * @return array                  Decoded array data
      * @since 1.0.0
      */
     public static function jsonDecode(string $json, string $errorMsgPart = ''): array

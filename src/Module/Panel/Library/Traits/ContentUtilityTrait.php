@@ -25,10 +25,10 @@ trait ContentUtilityTrait
     /**
      * Get option if exist
      *
-     * @param  array  $options   All options
-     * @param  string $option    Option name
-     * @param  mix    $default   Default value
-     * @return mix               Action result
+     * @param array  $options   All options
+     * @param string $option    Option name
+     * @param mixed  $default   Default value
+     * @return mixed            Action result
      * @since 1.0.0
      */
     public function getOIE(array $options = [], string $option = '', $default = '')
@@ -72,6 +72,7 @@ trait ContentUtilityTrait
      * Add options
      *
      * @param array $options   Options list
+     * @return mixed
      * @since 1.0.0
      */
     public function addOptions(array $options)
@@ -83,8 +84,8 @@ trait ContentUtilityTrait
     /**
      * Check if the options are different from the options in the DB
      *
-     * @param  array $options   Options list
-     * @return boolean          Result of checking
+     * @param array $options   Options list
+     * @return bool            Result of checking
      * @since 1.0.0
      */
     public function isOptionsDifferent(array $options): bool
@@ -95,7 +96,7 @@ trait ContentUtilityTrait
     /**
      * Remove all options
      *
-     * @return boolean   Result of checking
+     * @return bool   Result of checking
      * @since 1.0.0
      */
     public function remOptions(): bool
@@ -107,8 +108,8 @@ trait ContentUtilityTrait
     /**
      * Get options
      *
-     * @param  mix $default   Default value
-     * @return array          Options list
+     * @param mixed $default   Default value
+     * @return array           Options list
      * @since 1.0.0
      */
     public function getOptions($default = ''): array
@@ -120,9 +121,9 @@ trait ContentUtilityTrait
     /**
      * Get option
      *
-     * @param  string $option    Name of option
-     * @param  mix    $default   Default value
-     * @return mix               Option value
+     * @param string $option    Name of option
+     * @param mixed  $default   Default value
+     * @return mixed            Option value
      * @since 1.0.0
      */
     public function getOption(string $option, $default = '')

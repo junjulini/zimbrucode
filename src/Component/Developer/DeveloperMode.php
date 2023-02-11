@@ -36,7 +36,7 @@ class DeveloperMode
      *
      * @param string $type    Message type
      * @param string $title   The headline of the message
-     * @param mix    $msg     Message data
+     * @param mixed  $msg     Message data
      * @since 1.0.0
      */
     public function __construct(string $type, string $title, $msg)
@@ -104,8 +104,8 @@ class DeveloperMode
     /**
      * Set dump message on screen
      *
-     * @param string $title   The headline of the message
-     * @param array  $data    Message data
+     * @param string     $title   The headline of the message
+     * @param array|null $data    Message data
      * @return void
      * @since 1.0.0
      */
@@ -126,7 +126,7 @@ class DeveloperMode
      * Add a log message to the developer bar
      *
      * @param string $title   The headline of the message
-     * @param string $msg     Message data
+     * @param mixed  $msg     Message data
      * @return void
      * @since 1.0.0
      */
@@ -149,7 +149,7 @@ class DeveloperMode
      * Add a warning message to the developer bar
      *
      * @param string $title   The headline of the message
-     * @param string $msg     Message data
+     * @param mixed  $msg     Message data
      * @return void
      * @since 1.0.0
      */
@@ -172,7 +172,7 @@ class DeveloperMode
      * Add a error message to the developer bar
      *
      * @param string $title   The headline of the message
-     * @param string $msg     Message data
+     * @param mixed  $msg     Message data
      * @return void
      * @since 1.0.0
      */
@@ -195,7 +195,7 @@ class DeveloperMode
      * Add a info message to the developer bar
      *
      * @param string $title   The headline of the message
-     * @param string $msg     Message data
+     * @param mixed  $msg     Message data
      * @return void
      * @since 1.0.0
      */

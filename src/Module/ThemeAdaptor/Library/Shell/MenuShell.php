@@ -43,7 +43,7 @@ class MenuShell extends ShellKernel
      * Determines whether a registered nav menu location has a menu assigned to it
      *
      * @param string $location   Menu location identifier
-     * @return boolean           Whether location has a menu
+     * @return bool              Whether location has a menu
      * @since 1.0.0
      */
     public function has(string $location): bool

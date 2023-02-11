@@ -14,17 +14,17 @@ namespace ZimbruCode\Module\ThemeAdaptor\Library;
 use InvalidArgumentException;
 use ZimbruCode\Component\Core\Kernel;
 use ZimbruCode\Component\TemplateBridges\TwigTemplateBridge;
+use ZimbruCode\Module\ThemeAdaptor\Library\Shell\AttachmentShell;
+use ZimbruCode\Module\ThemeAdaptor\Library\Shell\AuthorShell;
+use ZimbruCode\Module\ThemeAdaptor\Library\Shell\BodyShell;
+use ZimbruCode\Module\ThemeAdaptor\Library\Shell\CategoryShell;
+use ZimbruCode\Module\ThemeAdaptor\Library\Shell\CommentsShell;
 use ZimbruCode\Module\ThemeAdaptor\Library\Shell\GeneralShell;
 use ZimbruCode\Module\ThemeAdaptor\Library\Shell\MenuShell;
 use ZimbruCode\Module\ThemeAdaptor\Library\Shell\PostShell;
 use ZimbruCode\Module\ThemeAdaptor\Library\Shell\QueryShell;
-use ZimbruCode\Module\ThemeAdaptor\Library\Shell\SidebarShell;
-use ZimbruCode\Module\ThemeAdaptor\Library\Shell\CommentsShell;
-use ZimbruCode\Module\ThemeAdaptor\Library\Shell\CategoryShell;
-use ZimbruCode\Module\ThemeAdaptor\Library\Shell\AttachmentShell;
 use ZimbruCode\Module\ThemeAdaptor\Library\Shell\SearchShell;
-use ZimbruCode\Module\ThemeAdaptor\Library\Shell\AuthorShell;
-use ZimbruCode\Module\ThemeAdaptor\Library\Shell\BodyShell;
+use ZimbruCode\Module\ThemeAdaptor\Library\Shell\SidebarShell;
 use ZimbruCode\Module\ThemeAdaptor\Library\TwigExtension\InitTwigExtensions;
 use ZimbruCode\Module\ThemeAdaptor\Library\TwigFunctions;
 
@@ -50,9 +50,10 @@ class Render
     /**
      * Constructor
      *
-     * @param string  $template       Template path
-     * @param string  $locationPath   Templates directory path
-     * @param boolean $flush          "Flush" status
+     * @param  string $template       Template path
+     * @param  string $locationPath   Templates directory path
+     * @param  bool   $flush          "Flush" status
+     * @throws InvalidArgumentException
      * @since 1.0.0
      */
     public function __construct(string $template, string $locationPath = '', bool $flush = true)
@@ -133,8 +134,8 @@ class Render
     /**
      * Get variable
      *
-     * @param  string $name   Variable name
-     * @return string         Variable value
+     * @param string $name   Variable name
+     * @return mixed         Variable value
      * @since 1.0.0
      */
     public function __get($name)
@@ -146,7 +147,8 @@ class Render
      * Add variable (setter)
      *
      * @param string $name    Variable name
-     * @param mix    $value   Variable value
+     * @param mixed  $value   Variable value
+     * @return void
      * @since 1.0.0
      */
     public function __set($name, $value)
@@ -157,8 +159,8 @@ class Render
     /**
      * Get variable
      *
-     * @param  string $name   Variable name
-     * @return string         Variable value
+     * @param string $name   Variable name
+     * @return mixed         Variable value
      * @since 1.0.0
      */
     public function getVar(string $name)
@@ -170,7 +172,8 @@ class Render
      * Add variable
      *
      * @param string $name    Variable name
-     * @param mix    $value   Variable value
+     * @param mixed  $value   Variable value
+     * @return void
      * @since 1.0.0
      */
     public function addVar(...$args): void
@@ -182,6 +185,7 @@ class Render
      * Add variables
      *
      * @param array $vars   List of variables
+     * @return void
      * @since 1.0.0
      */
     public function addVars(array $vars): void
@@ -194,6 +198,7 @@ class Render
      *
      * @param  string   $name     Function name
      * @param  callable $method   Callback
+     * @throws InvalidArgumentException
      * @return void
      * @since 1.0.0
      */
@@ -211,6 +216,7 @@ class Render
      *
      * @param  string   $name     Escaper name
      * @param  callable $method   Callback
+     * @throws InvalidArgumentException
      * @return void
      * @since 1.0.0
      */
@@ -228,6 +234,7 @@ class Render
      *
      * @param  string   $name     Filter name
      * @param  callable $method   Callback
+     * @throws InvalidArgumentException
      * @return void
      * @since 1.0.0
      */

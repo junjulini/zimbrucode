@@ -24,18 +24,19 @@ use ZimbruCode\Component\Core\Kernel;
  */
 class AjaxHandler
 {
-    protected $requestType     = '';
-    protected $inputJsonType   = true;
-    protected $inputJsonData   = [];
-    protected $data            = [];
+    protected $requestType   = '';
+    protected $inputJsonType = true;
+    protected $inputJsonData = [];
+    protected $data          = [];
 
     /**
      * Constructor
      *
-     * @param string  $action           Ajax action
-     * @param string  $userCapability   User capability
-     * @param boolean $inputJsonType    Return result in JSON format
-     * @param boolean $requestType      Request type : post/get
+     * @param  string $action           Ajax action
+     * @param  string $userCapability   User capability
+     * @param  bool   $inputJsonType    Return result in JSON format
+     * @param  string $requestType      Request type : post/get
+     * @throws RuntimeException
      * @since 1.0.0
      */
     public function __construct(string $action = '', string $userCapability = '', bool $inputJsonType = true, string $requestType = 'post')
@@ -87,9 +88,9 @@ class AjaxHandler
     /**
      * Whether current user has a specific capability
      *
-     * @param  string $capability   Role or capability
-     * @param  mix    $args         (Optional) further parameters, typically starting with an object ID
-     * @return boolean              Current user has capability
+     * @param string $capability  Role or capability
+     * @param mixed  $args        (Optional) further parameters, typically starting with an object ID
+     * @return bool               Current user has capability
      * @since 1.0.0
      */
     public function checkUser(string $capability, $args = null): bool
@@ -100,10 +101,10 @@ class AjaxHandler
     /**
      * Get request data
      *
-     * @param  string $param        Param name
-     * @param  mix    $default      Default value
-     * @param  string $requestType  Request type
-     * @return mix                  Request data
+     * @param string $param         Param name
+     * @param mixed  $default       Default value
+     * @param string $requestType   Request type
+     * @return mixed                Request data
      * @since 1.0.0
      */
     public function get(string $param, $default = '', string $requestType = '')
@@ -128,8 +129,9 @@ class AjaxHandler
     /**
      * Add item
      *
-     * @param string|array $name   Item name
-     * @param mix $value           Item value
+     * @param string|array $name    Item name
+     * @param mixed        $value   Item value
+     * @return AjaxHandler
      * @since 1.0.0
      */
     public function add($name, $value = ''): AjaxHandler
@@ -147,18 +149,19 @@ class AjaxHandler
      * Check if element exists
      *
      * @param string $name   Item name
-     * @return boolean       Action result
+     * @return bool          Action result
      * @since 1.1.0
      */
     public function has(string $name): bool
     {
-        return ($this->get($name));
+        return (!empty($this->get($name)));
     }
 
     /**
      * Remove item
      *
      * @param string $name   Item name
+     * @return AjaxHandler
      * @since 1.0.0
      */
     public function remove(string $name = ''): AjaxHandler
@@ -200,8 +203,9 @@ class AjaxHandler
      * Send response
      *
      * @param string|array $data    Response data
-     * @param mix          $value   Single response data
+     * @param mixed        $value   Single response data
      * @return void
+     * @since 1.0.0
      */
     public function send($data = '', $value = false): void
     {
@@ -226,6 +230,7 @@ class AjaxHandler
      * @param string $message   Error message or a complete WP_Error object
      * @param string $title     Error title, If you use a WP_Error object, the title will be by default the one you added in $data['title'] (ignored when DOING_AJAX is true)
      * @param array  $args      Optional arguments to control behavior (ignored when DOING_AJAX is true)
+     * @param bool   $force
      * @return void             This function does not return a value
      * @since 1.0.0
      */
@@ -241,8 +246,8 @@ class AjaxHandler
     /**
      * Generates and returns a nonce.
      *
-     * @param  string $action   The nonce is generated based on the current time, the $action argument, and the current user ID
-     * @return string|null      Return nonce
+     * @param string $action   The nonce is generated based on the current time, the $action argument, and the current user ID
+     * @return string|null     Return nonce
      * @since 1.0.0
      */
     public static function getNonce(string $action): ?string
@@ -258,41 +263,45 @@ class AjaxHandler
     /**
      * Verify that a nonce is correct and unexpired with the respect to a specified action
      *
-     * @param string $nonce      Nonce to verify
-     * @param string $action     Action name. Should give the context to what is taking place and be the same when the nonce was created
-     * @return boolean/integer   Boolean false if the nonce is invalid. Otherwise, returns an integer with the value : 1 /2
-     * @since 1.0.0
+     * @param string $nonce    Nonce to verify
+     * @param string $action   Action name. Should give the context to what is taking place and be the same when the nonce was created
+     * @return bool            Boolean false if the nonce is invalid. Otherwise, returns an integer with the value : 1 /2
+     * @since 1.1.0
      */
-    public static function checkNonce(string $nonce, string $action)
+    public static function checkNonce(string $nonce, string $action): bool
     {
         if ($nonce && $action) {
             $action = Kernel::getGlobal('core/slug') . '_' . $action . '_nonce';
-            return wp_verify_nonce($nonce, $action);
+            return (bool) wp_verify_nonce($nonce, $action);
         }
+
+        return false;
     }
 
     /**
      * The standard function verifies the AJAX request, to prevent any processing of requests which are passed in by third-party sites or systems.
      *
-     * @param  string  $action   Action nonce
-     * @param  boolean $die      (optional) whether to die if the nonce is invalid
-     * @return boolean           If parameter $die is set to false, this function will return a boolean of true if the check passes or false if the check fails
-     * @since 1.0.0
+     * @param string $action   Action nonce
+     * @param bool   $die      (optional) whether to die if the nonce is invalid
+     * @return bool            If parameter $die is set to false, this function will return a boolean of true if the check passes or false if the check fails
+     * @since 1.1.0
      */
-    public static function checkAjaxReferer(string $action, bool $die = true)
+    public static function checkAjaxReferer(string $action, bool $die = true): bool
     {
         if ($action && is_string($action)) {
             $action = Kernel::getGlobal('core/slug') . '_' . $action . '_nonce';
-            return check_ajax_referer($action, false, $die);
+            return (bool) check_ajax_referer($action, false, $die);
         }
+
+        return false;
     }
 
     /**
      * Get AJAX URL
      *
-     * @param string   $action   Ajax action
-     * @param array    $args     Additional URL arguments
-     * @return string            Ajax URL
+     * @param string $action   Ajax action
+     * @param array  $args     Additional URL arguments
+     * @return string          Ajax URL
      * @since 1.1.0
      */
     public static function getAjaxURL(string $action, array $args = []): string

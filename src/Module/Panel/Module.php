@@ -30,6 +30,7 @@ class Module extends ModuleKernel
     /**
      * Module setup
      *
+     * @throws InvalidArgumentException
      * @return void
      * @since 1.0.0
      */
@@ -87,6 +88,7 @@ class Module extends ModuleKernel
     /**
      * Check the panel mode type
      *
+     * @throws InvalidArgumentException
      * @return void
      * @since 1.0.0
      */
@@ -152,6 +154,7 @@ class Module extends ModuleKernel
      *
      * @param string $mode    Mode name
      * @param string $class   Mode class name
+     * @throws InvalidArgumentException
      * @return ModuleKernel
      * @since 1.0.0
      */
@@ -175,6 +178,7 @@ class Module extends ModuleKernel
      *
      * @param string $path        Controls namespace path
      * @param string $namespace   Controls namespace
+     * @throws InvalidArgumentException
      * @return ModuleKernel
      * @since 1.0.0
      */

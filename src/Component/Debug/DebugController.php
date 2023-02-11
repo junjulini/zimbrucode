@@ -28,7 +28,7 @@ class DebugController
     /**
      * Initialization of debugger : Tracy
      *
-     * @param  array $args   Debugger arguments
+     * @param array $args   Debugger arguments
      * @return void
      * @since 1.0.0
      */
@@ -87,13 +87,12 @@ class DebugController
     }
 
     /**
-     * Dumps dev log in Tracy Debug Bar
-     *
-     * @param  mix      Variable to dump
-     * @param  string   Optional title
-     * @param  string   Optional title color
-     * @param  array    Dumper options
-     * @return mix      Variable itself
+     * Summary of addBarLogMessage
+     * @param mixed  $var          Variable to dump
+     * @param string $title        Optional title
+     * @param string $titleColor   Optional title color
+     * @param array  $options      Dumper options
+     * @return mixed               Variable itself
      * @since 1.0.0
      */
     public static function addBarLogMessage($var, string $title, string $titleColor = '#3484d2', array $options = [])

@@ -25,14 +25,14 @@ trait OptionHandlerTrait
     /**
      * Preparing option
      *
-     * @param  string $option   Option name
+     * @param string $option   Option name
      * @return string           Prepared option
      * @since 1.0.0
      */
     private static function __prepOption(string $option): string
     {
         if (strrpos($option, '/') === false) {
-            $slug   = Kernel::getGlobal('core/module/panel/db-name') .'.'. Kernel::getGlobal('core/module/admin-panel/settings/slug') . '/';
+            $slug   = Kernel::getGlobal('core/module/panel/db-name') . '.' . Kernel::getGlobal('core/module/admin-panel/settings/slug') . '/';
             $option = $slug . $option;
         }
 
@@ -42,10 +42,10 @@ trait OptionHandlerTrait
     /**
      * Get option value
      *
-     * @param  string  $option    Option name
-     * @param  mix     $default   Default value
-     * @param  boolean $ao        Alternative option
-     * @return mix                Action result
+     * @param string $option    Option name
+     * @param mixed  $default   Default value
+     * @param bool   $ao        Alternative option
+     * @return mixed            Action result
      * @since 1.0.0
      */
     public static function getOption(string $option, $default = '', bool $ao = false)
@@ -61,10 +61,10 @@ trait OptionHandlerTrait
     /**
      * Check if option exists
      *
-     * @param  string  $option   Option name
-     * @param  mix     $type     Type of action
-     * @param  boolean $ao       Alternative option
-     * @return boolean           Result of checking
+     * @param  string $option   Option name
+     * @param  mixed  $type     Type of action
+     * @param  bool   $ao       Alternative option
+     * @return bool             Result of checking
      * @since 1.0.0
      */
     public static function hasOption(string $option, $type = false, bool $ao = false): bool
@@ -87,10 +87,10 @@ trait OptionHandlerTrait
     /**
      * Get meta value
      *
-     * @param  string  $meta      Meta option name
-     * @param  mix     $default   Default value
-     * @param  integer $id        Post ID
-     * @return mix                Action result
+     * @param string   $meta      Meta option name
+     * @param mixed    $default   Default value
+     * @param int|null $id        Post ID
+     * @return mixed              Action result
      * @since 1.0.0
      */
     public static function getMeta(string $meta = null, $default = '', int $id = null)
@@ -100,7 +100,7 @@ trait OptionHandlerTrait
 
         if ($data === false) {
             $metaContainerSlug = Kernel::getGlobal('core/module/metabox-panel/meta-container-slug');
-            $data = get_post_meta($id, "_{$metaContainerSlug}", true);
+            $data              = get_post_meta($id, "_{$metaContainerSlug}", true);
 
             if ($data && is_array($data)) {
                 Kernel::addGlobalCache("meta-data/{$id}", $data);

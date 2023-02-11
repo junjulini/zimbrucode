@@ -25,9 +25,9 @@ class GeneralShell extends ShellKernel
     /**
      * Get home URL
      *
-     * @param string      $path     Path relative to the home URL
-     * @param string|null $scheme   Scheme to give the home URL context. Accepts 'http', 'https', 'relative', 'rest', or null
-     * @return string               Home URL link with optional path appended
+     * @param string $path     Path relative to the home URL
+     * @param mixed  $scheme   Scheme to give the home URL context. Accepts 'http', 'https', 'relative', 'rest', or null
+     * @return string          Home URL link with optional path appended
      * @since 1.0.0
      */
     public function getHomeURL(string $path = '/', $scheme = null): string
@@ -38,7 +38,7 @@ class GeneralShell extends ShellKernel
     /**
      * Check if the current page is "home page" or "home page"
      *
-     * @return boolean   Result of checking
+     * @return bool   Result of checking
      * @since 1.0.0
      */
     public function isFrontPageOrHome(): bool
@@ -49,12 +49,12 @@ class GeneralShell extends ShellKernel
     /**
      * Retrieves a post’s terms as a list with specified format
      *
-     * @param integer $postID            Post ID
-     * @param string  $taxonomy          Taxonomy name
-     * @param string  $before            String to use before the terms
-     * @param string  $sep               String to use between the terms
-     * @param string  $after             String to use after the terms
-     * @return string|boolean|WP_Error   A list of terms on success, false if there are no terms, WP_Error on failure
+     * @param int|null    $postID            Post ID
+     * @param string|null $taxonomy          Taxonomy name
+     * @param string      $before            String to use before the terms
+     * @param string      $sep               String to use between the terms
+     * @param string      $after             String to use after the terms
+     * @return mixed                         A list of terms on success, false if there are no terms, WP_Error on failure
      * @since 1.0.0
      */
     public function getTermList(int $postID = null, string $taxonomy = null, string $before = '', string $sep = '', string $after = '')
@@ -78,10 +78,10 @@ class GeneralShell extends ShellKernel
     /**
      * Retrieves the URL for a given site where the front end is accessible
      *
-     * @param integer $blogID   Site ID. Default null (current site)
-     * @param string  $path     Path relative to the home URL
-     * @param string  $scheme   Scheme to give the home URL context. Accepts 'http', 'https', 'relative', 'rest', or null
-     * @return string           Home URL link with optional path appended
+     * @param int|null    $blogID   Site ID. Default null (current site)
+     * @param string      $path     Path relative to the home URL
+     * @param string|null $scheme   Scheme to give the home URL context. Accepts 'http', 'https', 'relative', 'rest', or null
+     * @return string               Home URL link with optional path appended
      * @since 1.0.0
      */
     public function homeURL(int $blogID = null, string $path = '', string $scheme = null): string

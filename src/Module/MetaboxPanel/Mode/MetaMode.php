@@ -22,7 +22,7 @@ use ZimbruCode\Module\Panel\Library\Traits\ControlTrait;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 class MetaMode extends Mode
 {
@@ -53,7 +53,7 @@ class MetaMode extends Mode
      *
      * @param string $path   Template path
      * @param array  $data   Additional data for rendering
-     * @return void          Html content
+     * @return string        Html content
      * @since 1.0.0
      */
     public function altRender(string $path, array $data = []): string
@@ -113,9 +113,9 @@ class MetaMode extends Mode
      * Action : Enqueue styles and scripts for panel
      *
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
-    public function __action_enqueue($hook): void
+    public function __action_enqueue(): void
     {
         do_action('zc/module/metabox_panel/mode/meta/enqueue--before');
         do_action("zc/module/metabox_panel/{$this->getModuleSetting('slug')}/mode/meta/enqueue--before");
@@ -172,8 +172,8 @@ class MetaMode extends Mode
     /**
      * Action : Save options
      *
-     * @param  int $postID   Post ID
-     * @return null|mix
+     * @param int $postID   Post ID
+     * @return int|null
      * @since 1.0.0
      */
     public function __action_save_options(int $postID)

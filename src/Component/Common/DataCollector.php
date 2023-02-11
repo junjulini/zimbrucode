@@ -18,7 +18,7 @@ use ZimbruCode\Component\Common\Tools;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 class DataCollector
 {
@@ -27,9 +27,9 @@ class DataCollector
     /**
      * Get data
      *
-     * @param  string  $path      Array path
-     * @param  mix     $default   Default value
-     * @return mix                Item data
+     * @param string  $path      Array path
+     * @param mixed   $default   Default value
+     * @return mixed             Item data
      * @since 1.0.0
      */
     public function get(string $path, $default = false)
@@ -40,9 +40,9 @@ class DataCollector
     /**
      * Add data
      *
-     * @param  string $path    Array path
-     * @param  mix    $value   Value
-     * @return self
+     * @param string $path    Array path
+     * @param mixed  $value   Value
+     * @return DataCollector
      * @since 1.0.0
      */
     public function add(string $path, $value = ''): self
@@ -55,19 +55,19 @@ class DataCollector
      * Check if element exists
      *
      * @param string $path   Array path
-     * @return boolean       Action result
+     * @return bool          Action result
      * @since 1.1.0
      */
     public function has(string $path): bool
     {
-        return ($this->get($path));
+        return (!empty($this->get($path)));
     }
 
     /**
      * Remove item
      *
      * @param  string $path   Array path
-     * @return boolean        Action result
+     * @return bool           Action result
      * @since 1.0.0
      */
     public function remove(string $path): bool
@@ -78,7 +78,7 @@ class DataCollector
     /**
      * Remove all items
      *
-     * @return self
+     * @return DataCollector
      * @since 1.1.0
      */
     public function flush(): self

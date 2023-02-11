@@ -28,6 +28,7 @@ class Timing
     /**
      * Start time
      *
+     * @param string $marker
      * @return void
      * @since 1.0.0
      */

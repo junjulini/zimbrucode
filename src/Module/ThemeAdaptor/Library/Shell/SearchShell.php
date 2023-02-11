@@ -37,8 +37,8 @@ class SearchShell extends ShellKernel
     /**
      * Retrieves the contents of the search WordPress query variable
      *
-     * @param boolean $escaped   Whether the result is escaped. Only use when you are later escaping it. Do not use unescaped
-     * @return string            Action result
+     * @param bool $escaped   Whether the result is escaped. Only use when you are later escaping it. Do not use unescaped
+     * @return string         Action result
      * @since 1.0.0
      */
     public function query(bool $escaped = true): string

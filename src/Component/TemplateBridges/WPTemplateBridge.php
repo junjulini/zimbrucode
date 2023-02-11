@@ -77,8 +77,8 @@ class WPTemplateBridge
      * Filter : Adds our template to the pages cache in order to trick WordPress
      * into thinking the template file exists where it doesn't really exist.
      *
-     * @param mix $atts
-     * @return mix
+     * @param mixed $atts
+     * @return mixed
      * @since 1.0.0
      */
     public function __filter_register_templates($atts)
@@ -111,8 +111,8 @@ class WPTemplateBridge
     /**
      * Filter : Checks if the template is assigned to the page
      *
-     * @param  string $template   Template file
-     * @return string             New template file
+     * @param string $template   Template file
+     * @return string            New template file
      * @since 1.0.0
      */
     public function __filter_view_template(string $template): string

@@ -177,6 +177,7 @@ class PageMode extends Mode
     /**
      * Action : Admin bar
      *
+     * @param WP_Admin_Bar $wpAdminBar
      * @return void
      * @since 1.0.0
      */

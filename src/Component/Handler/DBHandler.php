@@ -30,7 +30,8 @@ class DBHandler
     /**
      * Constructor
      *
-     * @param string $tableName   DB table name
+     * @param  string $tableName   DB table name
+     * @throws RuntimeException
      * @since 1.1.0
      */
     public function __construct(string $tableName = '')
@@ -72,6 +73,7 @@ class DBHandler
     /**
      * Check for errors in WPDB
      *
+     * @throws RuntimeException
      * @return void
      * @since 1.0.0
      */
@@ -85,9 +87,9 @@ class DBHandler
     /**
      * Get item data
      *
-     * @param  string  $path      Array path
-     * @param  mix     $default   Default value
-     * @return mix                Item value
+     * @param string $path      Array path
+     * @param mixed  $default   Default value
+     * @return mixed            Item value
      * @since 1.0.0
      */
     protected function getData(string $path, $default = false)
@@ -98,8 +100,8 @@ class DBHandler
     /**
      * Add item data
      *
-     * @param string $path   Array path
-     * @param mix    $value  Item value
+     * @param string $path    Array path
+     * @param mixed  $value   Item value
      * @return void
      * @since 1.0.0
      */
@@ -137,8 +139,8 @@ class DBHandler
     /**
      * Cache specific database table
      *
-     * @param  string $key  Name of the table element from the database
-     * @return boolean      Result of checking
+     * @param string $key   Name of the table element from the database
+     * @return bool         Result of checking
      * @since 1.0.0
      */
     protected function cacheSpecificData(string $key): bool
@@ -168,9 +170,9 @@ class DBHandler
     /**
      * Get the data of an item in a database table
      *
-     * @param  string  $path      Array path
-     * @param  mix     $default   Default value
-     * @return mix                Database item value
+     * @param string $path      Array path
+     * @param mixed  $default   Default value
+     * @return mixed            Database item value
      * @since 1.0.0
      */
     public function get(string $path = '', $default = false)
@@ -207,11 +209,12 @@ class DBHandler
     /**
      * Add data for an item in a database table
      *
-     * @param string  $path         Array path
-     * @param string  $value        Value
-     * @param boolean $autoUpdate   Auto-update of data in the database
-     * @param boolean $autoload     Autoload data from the database
-     * @since 1.0.0
+     * @param string $path         Array path
+     * @param mixed  $value        Value
+     * @param bool   $autoUpdate   Auto-update of data in the database
+     * @param bool   $autoload     Autoload data from the database
+     * @return bool                Action result
+     * @since 1.1.0
      */
     public function add(string $path = '', $value = '', bool $autoUpdate = false, bool $autoload = true): bool
     {
@@ -257,7 +260,7 @@ class DBHandler
                     $this->checkError();
                 }
 
-                return $result;
+                return (bool) $result;
             }
         }
 
@@ -268,23 +271,23 @@ class DBHandler
      * Check if exist
      *
      * @param string $path   Array path
-     * @return boolean       Result of action
+     * @return bool          Result of action
      * @since 1.1.0
      */
     public function has(string $path = ''): bool
     {
-        return ($this->get($path));
+        return (!empty($this->get($path)));
     }
 
     /**
      * Remove database table item
      *
-     * @param  string  $path         Array path
-     * @param  boolean $autoUpdate   Auto-update of data in the database
-     * @return boolean               Action result
-     * @since 1.0.0
+     * @param string $path         Array path
+     * @param bool   $autoUpdate   Auto-update of data in the database
+     * @return bool                Action result
+     * @since 1.1.0
      */
-    public function remove(string $path = '', $autoUpdate = false)
+    public function remove(string $path = '', bool $autoUpdate = false): bool
     {
         if ($path) {
             if (strpos($path, '/') !== false) {
@@ -328,7 +331,7 @@ class DBHandler
                             $result = Kernel::service('wpdb')->update($this->tableName, ['value' => serialize($data), 'autoload' => $check->autoload], ['name' => $path]);
                             $this->checkError();
                         } else {
-                            return $check;
+                            return (bool) $check;
                         }
                     } else {
                         $result = Kernel::service('wpdb')->delete($this->tableName, ['name' => $path]);
@@ -336,15 +339,17 @@ class DBHandler
                     }
                 }
 
-                return $result;
+                return (bool) $result;
             }
         }
+
+        return false;
     }
 
     /**
      * Remove all items from the database table
      *
-     * @return boolean   Result of removing
+     * @return bool   Result of removing
      * @since 1.0.0
      */
     public function flush(): bool
@@ -370,12 +375,12 @@ class DBHandler
     /**
      * Get database table data
      *
-     * @return mix   Action result
-     * @since 1.0.0
+     * @return array   Action result
+     * @since 1.1.0
      */
-    public function getAllData()
+    public function getAllData(): array
     {
-        $output   = false;
+        $output   = [];
         $suppress = Kernel::service('wpdb')->suppress_errors();
         $data     = Kernel::service('wpdb')->get_results("SELECT `name`, `value`, `autoload` FROM `{$this->tableName}`");
 

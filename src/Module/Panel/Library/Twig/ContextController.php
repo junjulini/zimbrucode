@@ -39,7 +39,7 @@ class ContextController
      * Add context data
      *
      * @param string $key     Item key
-     * @param string $value   Item value
+     * @param mixed  $value   Item value
      * @return void
      * @since 1.0.0
      */
@@ -53,8 +53,9 @@ class ContextController
     /**
      * Get context data
      *
-     * @param string  $key   Item key
-     * @return mix           Item data
+     * @param  string  $key   Item key
+     * @throws InvalidArgumentException
+     * @return mixed          Item data
      * @since 1.0.0
      */
     public function get(string $key = '')

@@ -68,8 +68,8 @@ class ControlManager extends ModuleKernel
     /**
      * Get control
      *
-     * @param  string $name    Control name
-     * @return ControlKernel   Control object
+     * @param string $name          Control name
+     * @return ControlKernel|null   Control object
      * @since 1.0.0
      */
     public function getControl(string $name): ?ControlKernel
@@ -88,7 +88,7 @@ class ControlManager extends ModuleKernel
      *
      * @param string        $name      Control name
      * @param ControlKernel $control   Control object
-     * @return boolean                 Action result
+     * @return bool                    Action result
      * @since 1.0.0
      */
     public function addControl(string $name, ControlKernel $control): bool
@@ -104,8 +104,8 @@ class ControlManager extends ModuleKernel
     /**
      * Remove control
      *
-     * @param  string $name   Control name
-     * @return boolean        Action result
+     * @param string $name   Control name
+     * @return bool          Action result
      * @since 1.1.0
      */
     public function remControl(string $name): bool
@@ -158,8 +158,8 @@ class ControlManager extends ModuleKernel
     /**
      * Load control
      *
-     * @param  string $control   Control class
-     * @param  string $type      Control type
+     * @param string $control   Control class
+     * @param string $type      Control type
      * @return void
      * @since 1.0.0
      */

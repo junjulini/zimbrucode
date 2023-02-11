@@ -25,7 +25,7 @@ trait AssetTrait
     /**
      * Asset
      *
-     * @param mix ...$assets
+     * @param mixed ...$assets
      * @return AssetManager
      * @since 1.0.0
      */

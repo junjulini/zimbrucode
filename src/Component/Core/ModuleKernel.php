@@ -33,6 +33,8 @@ abstract class ModuleKernel extends Kernel
     private $__DC;
     private $__MP;
 
+    protected $__multiUse = false;
+
     /**
      * Constructor
      *
@@ -58,6 +60,7 @@ abstract class ModuleKernel extends Kernel
     /**
      * Module parent object
      *
+     * @throws RuntimeException
      * @return ModuleKernel
      * @since 1.0.0
      */
@@ -74,8 +77,8 @@ abstract class ModuleKernel extends Kernel
      * Add module data
      *
      * @param string $path    Array path
-     * @param mix    $value   Value
-     * @return self
+     * @param mixed  $value   Value
+     * @return ModuleKernel
      * @since 1.0.0
      */
     final public function addModuleData(string $path, $value): self
@@ -90,9 +93,9 @@ abstract class ModuleKernel extends Kernel
     /**
      * Get module data
      *
-     * @param  string $path      Array value
-     * @param  mix    $default   Default value
-     * @return mix               Item data
+     * @param string $path      Array value
+     * @param mixed  $default   Default value
+     * @return mixed            Item data
      * @since 1.0.0
      */
     final public function getModuleData(string $path = '', $default = false)
@@ -107,8 +110,8 @@ abstract class ModuleKernel extends Kernel
     /**
      * Remove module data item
      *
-     * @param  string $path   Array path
-     * @return boolean        Action result
+     * @param string $path   Array path
+     * @return bool          Action result
      * @since 1.0.0
      */
     final public function remModuleData(string $path): bool
@@ -123,9 +126,9 @@ abstract class ModuleKernel extends Kernel
     /**
      * Get module setting
      *
-     * @param  string $path      Array path
-     * @param  string $default   Default value
-     * @return mix               Setting value
+     * @param string $path      Array path
+     * @param mixed  $default   Default value
+     * @return mixed            Setting value
      * @since 1.0.0
      */
     final public function getModuleSetting(string $path = '', $default = '')
@@ -141,8 +144,8 @@ abstract class ModuleKernel extends Kernel
      * Add module setting
      *
      * @param string $path    Array path
-     * @param mix    $value   Value
-     * @return self
+     * @param mixed  $value   Value
+     * @return ModuleKernel
      * @since 1.0.0
      */
     final public function addModuleSetting(string $path, $value): self
@@ -158,7 +161,7 @@ abstract class ModuleKernel extends Kernel
      * Add module settings
      *
      * @param array $settings   Settings array
-     * @return self
+     * @return ModuleKernel
      * @since 1.0.0
      */
     final public function addModuleSettings(array $settings): self
@@ -198,18 +201,18 @@ abstract class ModuleKernel extends Kernel
      * Get module namespace
      *
      * @return string   Module namespace
-     * @since 1.0.0
+     * @since 1.1.0
      */
     final public function getModuleNamespace(): string
     {
-        return $this->__DC->get('module-namespace');
+        return (string) $this->__DC->get('module-namespace');
     }
 
     /**
      * Get the path to the module directory
      *
-     * @param  string $path   Additional part of the path
-     * @return string         Module path
+     * @param string $path   Additional part of the path
+     * @return string        Module path
      * @since 1.0.0
      */
     final public function getModulePath(string $path = ''): string
@@ -220,8 +223,8 @@ abstract class ModuleKernel extends Kernel
     /**
      * Get module URL
      *
-     * @param  string $url   Additional part of the URL
-     * @return string        Module URL
+     * @param string $url   Additional part of the URL
+     * @return string       Module URL
      * @since 1.0.0
      */
     final public function getModuleURL(string $url = ''): string
@@ -237,8 +240,8 @@ abstract class ModuleKernel extends Kernel
     /**
      * Get resource path
      *
-     * @param  string $path   Additional part of the path
-     * @return string         Resource path
+     * @param string $path   Additional part of the path
+     * @return string        Resource path
      * @since 1.0.0
      */
     public function getModuleResourcePath(string $path = ''): string
@@ -249,8 +252,8 @@ abstract class ModuleKernel extends Kernel
     /**
      * Get resource URL
      *
-     * @param  string $url   Additional part of the URL
-     * @return string        Resource URL
+     * @param string $url   Additional part of the URL
+     * @return string       Resource URL
      * @since 1.0.0
      */
     public function getModuleResourceURL(string $url = ''): string
@@ -261,10 +264,12 @@ abstract class ModuleKernel extends Kernel
     /**
      * Load the synchronized part of the module
      *
-     * @param string $part      Module part name
-     * @param string $service   Load as local service with name ...
-     * @param mix    $data      Additional data
-     * @return ModuleKernel     Instance of module part
+     * @param  string $part      Module part name
+     * @param  string $service   Load as local service with name ...
+     * @param  mixed  $data      Additional data
+     * @throws InvalidArgumentException
+     * @throws RuntimeException
+     * @return ModuleKernel      Instance of module part
      * @since 1.1.0
      */
     final public function loadModulePart(string $part, string $service = '', $data = null): ModuleKernel
@@ -292,12 +297,15 @@ abstract class ModuleKernel extends Kernel
      * Get module service
      *
      * @param string $service   Name of module service
+     * @throws InvalidArgumentException
      * @return ModuleKernel     Instance of a part of a module as a local service
-     * @since 1.0.0
+     * @since 1.1.0
      */
     final public function moduleService(string $service): ModuleKernel
     {
-        if ($service && $moduleService = $this->__DC->get("module-services/{$service}")) {
+        $moduleService = $this->__DC->get("module-services/{$service}");
+
+        if ($service && $moduleService instanceof ModuleKernel) {
             return $moduleService;
         } else {
             throw new InvalidArgumentException('ZE0067');

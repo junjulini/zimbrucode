@@ -19,7 +19,7 @@ use ZimbruCode\Component\TemplateBridges\Helper\ShellKernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 class CommentsShell extends ShellKernel
 {
@@ -27,7 +27,7 @@ class CommentsShell extends ShellKernel
      * Determines whether the current post is open for comments
      *
      * @param WP_Post|null $postID   Post ID
-     * @return boolean               True if the comments are open
+     * @return bool                  True if the comments are open
      * @since 1.0.0
      */
     public function isOpen(WP_Post $postID = null): bool
@@ -38,10 +38,10 @@ class CommentsShell extends ShellKernel
     /**
      * Displays the language string for the number of comments the current post has
      *
-     * @param string|boolean $zero     Text for no comments
-     * @param string|boolean $one      Text for one comment
-     * @param string|boolean $more     Text for more than one comment
-     * @param int|WP_Post    $postID   Post ID or WP_Post object. Default is the global $post
+     * @param mixed $zero     Text for no comments
+     * @param mixed $one      Text for one comment
+     * @param mixed $more     Text for more than one comment
+     * @param mixed $postID   Post ID or WP_Post object. Default is the global $post
      * @return void
      * @since 1.0.0
      */
@@ -53,8 +53,8 @@ class CommentsShell extends ShellKernel
     /**
      * Get number
      *
-     * @param int|WP_Post $postID   Post ID or WP_Post object. Default is the global $post
-     * @return void
+     * @param mixed $postID   Post ID or WP_Post object. Default is the global $post
+     * @return mixed
      * @since 1.0.0
      */
     public function getNumber($postID = null)
@@ -68,9 +68,9 @@ class CommentsShell extends ShellKernel
      * @param array $args            Default arguments and form fields to override
      * @param WP_Post|null $postID   Post ID
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
-    public function form(array $args = [], WP_Post $postID = null)
+    public function form(array $args = [], WP_Post $postID = null): void
     {
         comment_form($args, $postID);
     }
@@ -78,7 +78,7 @@ class CommentsShell extends ShellKernel
     /**
      * Determines whether current WordPress query has comments to loop over
      *
-     * @return boolean   True if comments are available, false if no more comments
+     * @return bool   True if comments are available, false if no more comments
      * @since 1.0.0
      */
     public function check(): bool
@@ -89,9 +89,9 @@ class CommentsShell extends ShellKernel
     /**
      * Displays a list of comments
      *
-     * @param string|array $args       Formatting options
-     * @param WP_Comment[] $comments   Array of WP_Comment objects
-     * @return void|string             Void if 'echo' argument is true, or no comments to list. Otherwise, HTML list of comments
+     * @param mixed $args       Formatting options
+     * @param mixed $comments   Array of WP_Comment objects
+     * @return mixed            Void if 'echo' argument is true, or no comments to list. Otherwise, HTML list of comments
      * @since 1.0.0
      */
     function list($args = [], $comments = null) {
@@ -101,8 +101,8 @@ class CommentsShell extends ShellKernel
     /**
      * Displays or retrieves pagination links for the comments on the current post
      *
-     * @param array|string $args   Default arguments
-     * @return void|string|array   Action result
+     * @param mixed $args   Default arguments
+     * @return mixed        Action result
      * @since 1.0.0
      */
     public function pagination($args = [])

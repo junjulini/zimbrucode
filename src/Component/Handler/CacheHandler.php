@@ -26,7 +26,7 @@ use ZimbruCode\Component\Core\Kernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 class CacheHandler
 {
@@ -50,7 +50,7 @@ class CacheHandler
      * Get cache drive
      *
      * @return object   Cache drive
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function getCacheDriver(): object
     {
@@ -76,7 +76,6 @@ class CacheHandler
                     } else {
                         return $this->filesystem();
                     }
-                    break;
 
                 case 'memcache':
                     if (class_exists('Memcache')) {
@@ -84,7 +83,6 @@ class CacheHandler
                     } else {
                         return $this->filesystem();
                     }
-                    break;
 
                 case 'memcached':
                     if (class_exists('Memcached')) {
@@ -92,7 +90,6 @@ class CacheHandler
                     } else {
                         return $this->filesystem();
                     }
-                    break;
 
                 case 'redis':
                     if (class_exists('Redis')) {
@@ -100,11 +97,9 @@ class CacheHandler
                     } else {
                         return $this->filesystem();
                     }
-                    break;
 
                 default:
                     return $this->filesystem();
-                    break;
             }
         }
     }

@@ -21,7 +21,7 @@ use ZimbruCode\Module\Panel\Library\Shell\BaseShell;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 trait UtilityTrait
 {
@@ -48,12 +48,12 @@ trait UtilityTrait
     /**
      * Render
      *
-     * @param  string   $template         Template path
-     * @param  array    $vars             Additional vars
-     * @param  boolean  $return           Return content or echo
-     * @param  callable $renderCallback   Render additional callback
-     * @return string|null                HTML output
-     * @since 1.0.0
+     * @param string        $template         Template path
+     * @param array         $vars             Additional vars
+     * @param bool          $return           Return content or echo
+     * @param callable|null $renderCallback   Render additional callback
+     * @return string|null                    HTML output
+     * @since 1.1.0
      */
     protected function render(string $template = '', array $vars = [], bool $return = false, callable $renderCallback = null): ?string
     {
@@ -96,11 +96,14 @@ trait UtilityTrait
                 return null;
             }
         }
+
+        return null;
     }
 
     /**
      * Asset
      *
+     * @param mixed $assets
      * @return AssetHandler
      * @since 1.0.0
      */

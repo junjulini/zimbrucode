@@ -42,9 +42,9 @@ class Control extends ControlKernel
     /**
      * Callback : Grid mark
      *
-     * @param float  $value   Position
-     * @param string $step    Current step
-     * @return mix            Grid mark
+     * @param float  $value       Position
+     * @param string $step        Current step
+     * @return float|int|string   Grid mark
      * @since 1.0.0
      */
     public function __callback_grid_mark(float $value, string $step)
@@ -61,9 +61,9 @@ class Control extends ControlKernel
      * Callback : Track percent
      *
      * @param string $value   Position
-     * @param mix    $min     Minimum range
-     * @param mix    $max     Maximum range
-     * @return mix            Track percent
+     * @param mixed  $min     Minimum range
+     * @param mixed  $max     Maximum range
+     * @return int            Track percent
      * @since 1.0.0
      */
     public function __callback_track_percent(string $value, $min, $max)

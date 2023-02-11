@@ -44,8 +44,8 @@ class ModuleLoader
     /**
      * Get a module by name
      *
-     * @param  string $name   Short name of module
-     * @return object         Module object
+     * @param  string $name        Short name of module
+     * @return ModuleKernel|null   Module object
      * @since 1.0.0
      */
     public function __get($name)
@@ -56,10 +56,10 @@ class ModuleLoader
     /**
      * Get the path to the module directory
      *
-     * @param string  $module    Module name
-     * @param string  $path      Additional part of the path
-     * @param mix     $default   Default value
-     * @return mix               Module path
+     * @param string $module    Module name
+     * @param string $path      Additional part of the path
+     * @param mixed  $default   Default value
+     * @return string|mixed     Module path
      * @since 1.0.0
      */
     public function getModulePath(string $module, string $path = '', $default = false)
@@ -74,10 +74,10 @@ class ModuleLoader
     /**
      * Get module URL
      *
-     * @param string  $module   Module name
-     * @param string  $url      Additional part of the URL
-     * @param mix     $default  Return value if not exist module
-     * @return mix              Module URL
+     * @param string $module    Module name
+     * @param string $url       Additional part of the URL
+     * @param mixed  $default   Return value if not exist module
+     * @return string|mixed     Module URL
      * @since 1.0.0
      */
     public function getModuleURL(string $module, string $url = '', $default = false)
@@ -91,13 +91,13 @@ class ModuleLoader
      *
      * @param string $module   Module name
      * @param string $path     Additional part of the path
-     * @return mix             Module resource path
-     * @since 1.0.0
+     * @return string          Module resource path
+     * @since 1.1.0
      */
-    public function getModuleResourcePath(string $module, string $path = '')
+    public function getModuleResourcePath(string $module, string $path = ''): string
     {
         $dirPath = $this->getModulePath($module);
-        return ($dirPath) ? $dirPath . Kernel::getGlobal('core/component/core/module/resource-dir') . $path : false;
+        return ($dirPath) ? $dirPath . Kernel::getGlobal('core/component/core/module/resource-dir') . $path : '';
     }
 
     /**
@@ -105,20 +105,21 @@ class ModuleLoader
      *
      * @param string $module   Module name
      * @param string $url      Additional part of the URL
-     * @return mix             Module resource URL
-     * @since 1.0.0
+     * @return string          Module resource URL
+     * @since 1.1.0
      */
     public function getModuleResourceURL(string $module, string $url = '')
     {
         $urlPath = $this->getModuleURL($module);
-        return ($urlPath) ? $urlPath . Kernel::getGlobal('core/component/core/module/resource-dir') . $url : false;
+        return ($urlPath) ? $urlPath . Kernel::getGlobal('core/component/core/module/resource-dir') . $url : '';
     }
 
     /**
      * Add namespace for search
      *
-     * @param string $namespace   Namespace value
-     * @return self
+     * @param  string $namespace   Namespace value
+     * @throws InvalidArgumentException
+     * @return ModuleLoader
      * @since 1.0.0
      */
     public function addNamespace(string $namespace): self
@@ -136,7 +137,7 @@ class ModuleLoader
      * Add settings
      *
      * @param array $setting   Module settings
-     * @return self
+     * @return ModuleLoader
      * @since 1.0.0
      */
     public function addSettings(array $settings): self
@@ -149,7 +150,7 @@ class ModuleLoader
      * Add module as service
      *
      * @param string $name   Name of service
-     * @return self
+     * @return ModuleLoader
      * @since 1.0.0
      */
     public function addAsService(string $name): self
@@ -165,7 +166,7 @@ class ModuleLoader
      * Add module mode
      *
      * @param string $mode   Module mode
-     * @return self
+     * @return ModuleLoader
      * @since 1.0.0
      */
     public function addMode(string $mode): self
@@ -181,7 +182,8 @@ class ModuleLoader
      * Add module config
      *
      * @param array|string $config   Module config
-     * @return self
+     * @throws RuntimeException
+     * @return ModuleLoader
      * @since 1.0.0
      */
     public function addConfig($config): self
@@ -253,7 +255,7 @@ class ModuleLoader
     /**
      * Clear module loader configs
      *
-     * @return self
+     * @return ModuleLoader
      * @since 1.0.0
      */
     public function flush(): self
@@ -271,8 +273,8 @@ class ModuleLoader
     /**
      * Use module
      *
-     * @param  string $module   Module name
-     * @return self
+     * @param string $module   Module name
+     * @return ModuleLoader
      * @since 1.0.0
      */
     protected function useModule(string $module): self
@@ -287,8 +289,9 @@ class ModuleLoader
     /**
      * Build the module and run it
      *
+     * @throws RuntimeException
      * @return ModuleKernel|null
-     * @since 1.0.0
+     * @since 1.1.0
      */
     protected function build(): ?ModuleKernel
     {
@@ -313,7 +316,6 @@ class ModuleLoader
 
                 default:
                     return $this->prepModuleData();
-                    break;
             }
         } else {
             return $this->prepModuleData();
@@ -327,6 +329,7 @@ class ModuleLoader
     /**
      * Preparing module data
      *
+     * @throws RuntimeException
      * @return ModuleKernel
      * @since 1.0.0
      */
@@ -384,13 +387,13 @@ class ModuleLoader
     /**
      * Get module class
      *
-     * @param  string $module   Module name
-     * @return string/null      Module class
-     * @since 1.0.0
+     * @param string $module   Module name
+     * @return string|null     Module class
+     * @since 1.1.0
      */
     protected function getModuleClass(string $module): ?string
     {
-        $moduleName = Kernel::getGlobal('core/component/core/module/module-name');
+        $moduleName = (string) Kernel::getGlobal('core/component/core/module/module-name');
 
         foreach (Kernel::getGlobal('core/component/core/module/namespace') as $namespace) {
             $class = "{$namespace}\\{$module}\\{$moduleName}";
@@ -414,9 +417,9 @@ class ModuleLoader
     /**
      * Preparing group modules
      *
-     * @param string       $task     Task value
-     * @param ModuleKernel $module   Module object
-     * @return boolean               Action result
+     * @param string            $task     Task value
+     * @param ModuleKernel|null $module   Module object
+     * @return bool                       Action result
      * @since 1.0.0
      */
     protected function group(string $task = '', ModuleKernel $module = null): bool

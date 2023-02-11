@@ -37,8 +37,9 @@ trait ControlTrait
     /**
      * Combine assets variables with custom variables
      *
-     * @param  array  $data   Custom variables
-     * @return array          Combine assets variables
+     * @param  array $data   Custom variables
+     * @throws RuntimeException
+     * @return array         Combine assets variables
      * @since 1.0.0
      */
     public function mergeControlsLocalizeVars(array $data): array

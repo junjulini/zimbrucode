@@ -25,9 +25,9 @@ class GlobalShell
     /**
      * Call function
      *
-     * @param  string $name   Function name
-     * @param  array  $args   Function args
-     * @return mix            Action result
+     * @param string $name   Function name
+     * @param array  $args   Function args
+     * @return mixed         Action result
      * @since 1.0.0
      */
     public function __call(string $name, array $args)
@@ -70,9 +70,9 @@ class GlobalShell
     /**
      * Get global data
      *
-     * @param  string  $path      Array path
-     * @param  mix     $default   Default value
-     * @return mix                Global data
+     * @param string $path      Array path
+     * @param mixed  $default   Default value
+     * @return mixed            Global data
      * @since 1.0.0
      */
     public function get(...$args)
@@ -83,9 +83,9 @@ class GlobalShell
     /**
      * Get cache data
      *
-     * @param  string  $key       Cache key
-     * @param  mix     $default   Default value
-     * @return mix                Cache data
+     * @param string $key       Cache key
+     * @param mixed  $default   Default value
+     * @return mixed            Cache data
      * @since 1.0.0
      */
     public function cache(string $key, $default = false)
@@ -107,9 +107,9 @@ class GlobalShell
     /**
      * Get external global var
      *
-     * @param string  $key       Global var
-     * @param boolean $default   Default value
-     * @return mix               Global data
+     * @param string $key       Global var
+     * @param mixed  $default   Default value
+     * @return mixed            Global data
      * @since 1.0.0
      */
     public function externVar(string $key, $default = false)

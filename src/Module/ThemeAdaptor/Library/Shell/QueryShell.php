@@ -18,7 +18,7 @@ use ZimbruCode\Component\TemplateBridges\Helper\ShellKernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 class QueryShell extends ShellKernel
 {
@@ -47,8 +47,8 @@ class QueryShell extends ShellKernel
     /**
      * Sets up The Loop with query parameters
      *
-     * @param array|string $query   Array or string of WP_Query arguments
-     * @return mix                  Array of post objects or post IDs
+     * @param mixed $query   Array or string of WP_Query arguments
+     * @return mixed         Array of post objects or post IDs
      * @since 1.0.0
      */
     public function posts($query)
@@ -59,10 +59,11 @@ class QueryShell extends ShellKernel
     /**
      * Retrieves the contents of the search WordPress query variable
      *
-     * @return string   Contents of the search query
-     * @since 1.0.0
+     * @param bool $escaped   Whether the result is escaped. Only use when you are later escaping it
+     * @return string         Contents of the search query
+     * @since 1.1.0
      */
-    public function search()
+    public function search(bool $escaped = true): string
     {
         return get_search_query();
     }

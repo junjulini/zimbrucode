@@ -41,7 +41,7 @@ class Mail
     /**
      * Check for errors
      *
-     * @return boolean   Result of checking
+     * @return bool   Result of checking
      * @since 1.0.0
      */
     protected function error(): bool
@@ -64,7 +64,7 @@ class Mail
     /**
      * Send mail
      *
-     * @return boolean   Action result
+     * @return bool   Action result
      * @since 1.0.0
      */
     public function send(): bool

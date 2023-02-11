@@ -27,9 +27,9 @@ class ControlShell extends PanelControlShell
     /**
      * Get control option
      *
-     * @param  string $option    Option name
-     * @param  mix    $default   Default value
-     * @return mix               Control option
+     * @param string|null $option    Option name
+     * @param mixed       $default   Default value
+     * @return mixed                 Control option
      * @since 1.0.0
      */
     public function option(string $option = null, $default = null)

@@ -64,7 +64,7 @@ class SCSS extends Filter
     /**
      * Each asset
      *
-     * @param  AssetData $asset   Asset data
+     * @param AssetData $asset   Asset data
      * @return void
      * @since 1.0.0
      */
@@ -156,8 +156,8 @@ class SCSS extends Filter
     /**
      * Get output path of converted css file
      *
-     * @param  AssetData $asset   Asset data
-     * @return string             Output path
+     * @param AssetData $asset   Asset data
+     * @return string            Output path
      * @since 1.0.0
      */
     protected function getOutput(AssetData $asset): string

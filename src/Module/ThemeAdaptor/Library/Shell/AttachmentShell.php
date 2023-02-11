@@ -25,8 +25,8 @@ class AttachmentShell extends ShellKernel
     /**
      * Determines whether the query is for an existing attachment page
      *
-     * @param int|string|int[]|string[] $attachmentID   Attachment ID, title, slug, or array of such to check against
-     * @return boolean                                  Whether the query is for an existing attachment page
+     * @param mixed $attachmentID   Attachment ID, title, slug, or array of such to check against
+     * @return bool                 Whether the query is for an existing attachment page
      * @since 1.0.0
      */
     public function is($attachmentID = null): bool
@@ -37,10 +37,10 @@ class AttachmentShell extends ShellKernel
     /**
      * Get an HTML img element representing an image attachment
      *
-     * @param integer $attachmentID   Image attachment ID
-     * @param string  $size           Image size. Accepts any registered image size name, or an array of width and height values in pixels (in that order)
-     * @param boolean $icon           Whether the image should be treated as an icon
-     * @param string  $attr           Attributes for the image markup
+     * @param int|null $attachmentID   Image attachment ID
+     * @param mixed    $size           Image size. Accepts any registered image size name, or an array of width and height values in pixels (in that order)
+     * @param bool     $icon           Whether the image should be treated as an icon
+     * @param mixed    $attr           Attributes for the image markup
      * @return void
      * @since 1.0.0
      */
@@ -52,11 +52,11 @@ class AttachmentShell extends ShellKernel
     /**
      * Retrieves the caption for an attachment
      *
-     * @param integer|null $postID   Attachment ID. Default is the ID of the global $post
-     * @return string|boolean        Attachment caption on success, false on failure
-     * @since 1.0.0
+     * @param int|null $postID   Attachment ID. Default is the ID of the global $post
+     * @return mixed             Attachment caption on success, false on failure
+     * @since 1.1.0
      */
-    public function caption(?int $attachmentID = null)
+    public function caption(?int $postID = null)
     {
         return wp_get_attachment_caption($postID);
     }
@@ -64,8 +64,8 @@ class AttachmentShell extends ShellKernel
     /**
      * Retrieves the URL for an attachment
      *
-     * @param integer $attachmentID   Attachment post ID. Defaults to global $post
-     * @return string|false           Attachment URL, otherwise false
+     * @param int|null $attachmentID   Attachment post ID. Defaults to global $post
+     * @return mixed                   Attachment URL, otherwise false
      * @since 1.1.0
      */
     public function url(?int $attachmentID = null)
@@ -78,9 +78,9 @@ class AttachmentShell extends ShellKernel
     /**
      * Retrieves attached file path based on attachment ID
      *
-     * @param integer $attachmentID   Attachment ID
-     * @param boolean $unfiltered     Whether to apply filters
-     * @return string|false           The file path to where the attached file should be, false otherwise
+     * @param int|null $attachmentID   Attachment ID
+     * @param bool     $unfiltered     Whether to apply filters
+     * @return mixed                   The file path to where the attached file should be, false otherwise
      * @since 1.1.0
      */
     public function file(?int $attachmentID = null, bool $unfiltered = false)
@@ -91,10 +91,10 @@ class AttachmentShell extends ShellKernel
     /**
      * Retrieves an image to represent an attachment
      *
-     * @param integer $attachmentID   Image attachment ID
-     * @param string  $size           Image size. Accepts any registered image size name, or an array of width and height values in pixels (in that order)
-     * @param boolean $icon           Whether the image should fall back to a mime type icon
-     * @return array|false            Array of image data, or boolean false if no image is available
+     * @param int|null $attachmentID   Image attachment ID
+     * @param mixed    $size           Image size. Accepts any registered image size name, or an array of width and height values in pixels (in that order)
+     * @param bool     $icon           Whether the image should fall back to a mime type icon
+     * @return mixed                   Array of image data, or boolean false if no image is available
      * @since 1.1.0
      */
     public function data(?int $attachmentID = null, $size = 'thumbnail', bool $icon = false)

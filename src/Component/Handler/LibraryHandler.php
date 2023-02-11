@@ -59,8 +59,8 @@ class LibraryHandler
     /**
      * Get package
      *
-     * @param  string $packageName   Package name
-     * @return array|boolean         Package data
+     * @param string $packageName   Package name
+     * @return array|bool           Package data
      * @since 1.0.0
      */
     public static function getPackage(string $packageName)
@@ -86,7 +86,7 @@ class LibraryHandler
     /**
      * Remove package
      *
-     * @param  string $packageName   Package name
+     * @param string $packageName   Package name
      * @return void
      * @since 1.0.0
      */
@@ -126,8 +126,8 @@ class LibraryHandler
     /**
      * Get element
      *
-     * @param string $name     Element name
-     * @return array|boolean   Source of element
+     * @param string $name  Element name
+     * @return array|bool   Source of element
      */
     public static function getElement(string $name)
     {
@@ -141,7 +141,7 @@ class LibraryHandler
     /**
      * Remove element
      *
-     * @param  string $name   Element name
+     * @param string $name   Element name
      * @return void
      * @since 1.0.0
      */

@@ -26,7 +26,7 @@ class PostShell extends ShellKernel
     /**
      * Get the ID of the current item in the WordPress Loop
      *
-     * @return integer|boolean   The ID of the current item in the WordPress Loop. False if $post is not set
+     * @return mixed   The ID of the current item in the WordPress Loop. False if $post is not set
      * @since 1.0.0
      */
     public function ID()
@@ -37,9 +37,9 @@ class PostShell extends ShellKernel
     /**
      * Get post title
      *
-     * @param boolean $return   Echo/Return
-     * @param integer $postID   Post ID
-     * @return void
+     * @param bool $return   Echo/Return
+     * @param int  $postID   Post ID
+     * @return mixed
      * @since 1.0.0
      */
     public function title(bool $return = false, int $postID = 0)
@@ -56,8 +56,8 @@ class PostShell extends ShellKernel
     /**
      * Echo post content
      *
-     * @param string  $moreLinkText   Content for when there is more text
-     * @param boolean $stripTeaser    Strip teaser content before the more text
+     * @param string|null $moreLinkText   Content for when there is more text
+     * @param bool        $stripTeaser    Strip teaser content before the more text
      * @return void
      * @since 1.0.0
      */
@@ -69,10 +69,10 @@ class PostShell extends ShellKernel
     /**
      * Get post content
      *
-     * @param string|null        $moreLinkText   Content for when there is more text
-     * @param boolean            $stripTeaser    Strip teaser content before the more text
-     * @param WP_Post|object|int $post           WP_Post instance or Post ID/object
-     * @return string                            Action result
+     * @param string|null $moreLinkText   Content for when there is more text
+     * @param bool        $stripTeaser    Strip teaser content before the more text
+     * @param mixed       $post           WP_Post instance or Post ID/object
+     * @return string                     Action result
      * @since 1.0.0
      */
     public function getContent(string $moreLinkText = null, bool $stripTeaser = false, $post = null): string
@@ -83,8 +83,8 @@ class PostShell extends ShellKernel
     /**
      * Get the permalink for the current post
      *
-     * @param integer $postID   Post ID
-     * @return string|false     The permalink URL or false if post does not exist
+     * @param int $postID   Post ID
+     * @return mixed       The permalink URL or false if post does not exist
      * @since 1.0.0
      */
     public function link(int $postID = 0)
@@ -95,9 +95,9 @@ class PostShell extends ShellKernel
     /**
      * Get the class names for the post container element
      *
-     * @param string  $class    A string of class names, separated by spaces, to add to the list of classes.
-     * @param integer $postID   Post ID
-     * @return string           Class names
+     * @param string $class    A string of class names, separated by spaces, to add to the list of classes.
+     * @param mixed  $postID   Post ID
+     * @return string          Class names
      * @since 1.0.0
      */
     public function classes(string $class = '', $postID = null): string
@@ -108,9 +108,9 @@ class PostShell extends ShellKernel
     /**
      * Retrieve the time at which the post was written
      *
-     * @param string      $format   Format to use for retrieving the time the post was written. Accepts 'G', 'U', or PHP date format
-     * @param int|WP_Post $post     WP_Post object or ID. Default is global $post object
-     * @return string|int|false     Formatted date string or Unix timestamp if $format is 'U' or 'G'. False on failure
+     * @param string $format   Format to use for retrieving the time the post was written. Accepts 'G', 'U', or PHP date format
+     * @param mixed  $post     WP_Post object or ID. Default is global $post object
+     * @return mixed           Formatted date string or Unix timestamp if $format is 'U' or 'G'. False on failure
      * @since 1.0.0
      */
     public function time(string $format = '', $post = null)
@@ -121,9 +121,9 @@ class PostShell extends ShellKernel
     /**
      * Retrieve the date on which the post was written
      *
-     * @param string      $format   PHP date format. Defaults to the 'date_format' option
-     * @param int|WP_Post $post     Post ID or WP_Post object. Default current post
-     * @return string|false         Date the current post was written. False on failure
+     * @param string $format   PHP date format. Defaults to the 'date_format' option
+     * @param mixed  $post     Post ID or WP_Post object. Default current post
+     * @return mixed           Date the current post was written. False on failure
      * @since 1.0.0
      */
     public function date(string $format = '', $post = null)
@@ -134,8 +134,8 @@ class PostShell extends ShellKernel
     /**
      * Whether post requires password and correct password has been provided
      *
-     * @param int|WP_Post|null $post   An optional post. Global $post used if not provided
-     * @return boolean                 False if a password is not required or the correct password cookie is present, true otherwise
+     * @param mixed $post   An optional post. Global $post used if not provided
+     * @return bool         False if a password is not required or the correct password cookie is present, true otherwise
      * @since 1.0.0
      */
     public function passwordRequired($post = null): bool
@@ -146,10 +146,10 @@ class PostShell extends ShellKernel
     /**
      * Get meta value
      *
-     * @param string  $meta      Meta option name
-     * @param mix     $default   Default value
-     * @param integer $id        Post ID
-     * @return mix               Action result
+     * @param string   $meta      Meta option name
+     * @param mixed    $default   Default value
+     * @param int|null $id        Post ID
+     * @return mixed              Action result
      * @since 1.0.0
      */
     public function meta(string $meta, $default = '', int $id = null)
@@ -160,8 +160,8 @@ class PostShell extends ShellKernel
     /**
      * Display the post thumbnail
      *
-     * @param string|int[] $size   Image size. Accepts any registered image size name, or an array of width and height values in pixels (in that order)
-     * @param string|array $attr   Query string or array of attributes
+     * @param mixed $size   Image size. Accepts any registered image size name, or an array of width and height values in pixels (in that order)
+     * @param mixed $attr   Query string or array of attributes
      * @return void
      * @since 1.0.0
      */
@@ -173,8 +173,8 @@ class PostShell extends ShellKernel
     /**
      * Determines whether a post has an image attached
      *
-     * @param int|WP_Post $post   Post ID or WP_Post object. Default is global $post
-     * @return boolean            Whether the post has an image attached
+     * @param mixed$post   Post ID or WP_Post object. Default is global $post
+     * @return bool        Whether the post has an image attached
      * @since 1.0.0
      */
     public function hasImage($post = null): bool
@@ -185,9 +185,9 @@ class PostShell extends ShellKernel
     /**
      * Return the post thumbnail URL
      *
-     * @param int|WP_Post  $post   Post ID or WP_Post object. Default is global $post
-     * @param string|int[] $size   Registered image size to retrieve the source for or a flat array of height and width dimensions
-     * @return string|false        Post thumbnail URL or false if no image is available. If $size does not match any registered image size, the original image URL will be returned
+     * @param mixed $post   Post ID or WP_Post object. Default is global $post
+     * @param mixed $size   Registered image size to retrieve the source for or a flat array of height and width dimensions
+     * @return mixed        Post thumbnail URL or false if no image is available. If $size does not match any registered image size, the original image URL will be returned
      * @since 1.0.0
      */
     public function imageURL($post = null, $size = 'post-thumbnail')
@@ -198,8 +198,8 @@ class PostShell extends ShellKernel
     /**
      * Returns the post thumbnail caption
      *
-     * @param int|WP_Post $post   Post ID or WP_Post object. Default is global $post
-     * @return string             Post thumbnail caption
+     * @param mixed $post   Post ID or WP_Post object. Default is global $post
+     * @return string       Post thumbnail caption
      * @since 1.0.0
      */
     public function imageCaption($post = null): string
@@ -222,10 +222,10 @@ class PostShell extends ShellKernel
     /**
      * Undocumented function
      *
-     * @param string       $before     String to use before the tags
-     * @param string       $sep        String to use between the tags
-     * @param string       $after      String to use after the tags
-     * @param integer|null $postID     Post ID. Defaults to the current post ID
+     * @param string   $before     String to use before the tags
+     * @param string   $sep        String to use between the tags
+     * @param string   $after      String to use after the tags
+     * @param int|null $postID     Post ID. Defaults to the current post ID
      * @return void
      * @since 1.0.0
      */
@@ -237,12 +237,12 @@ class PostShell extends ShellKernel
     /**
      * Retrieves the previous post link that is adjacent to the current post
      *
-     * @param string       $format          Link anchor format. Default '« %link'
-     * @param string       $link            Link permalink format
-     * @param boolean      $inSameTerm      Whether link should be in a same taxonomy term
-     * @param int[]|string $excludedTerms   Array or comma-separated list of excluded term IDs
-     * @param string       $taxonomy        Taxonomy, if $in_same_term is true
-     * @return string                       The link URL of the previous post in relation to the current post
+     * @param string $format          Link anchor format. Default '« %link'
+     * @param string $link            Link permalink format
+     * @param bool   $inSameTerm      Whether link should be in a same taxonomy term
+     * @param mixed  $excludedTerms   Array or comma-separated list of excluded term IDs
+     * @param string $taxonomy        Taxonomy, if $in_same_term is true
+     * @return string                 The link URL of the previous post in relation to the current post
      * @since 1.0.0
      */
     public function previousPageLink(string $format = '&laquo; %link', string $link = '%title', bool $inSameTerm = false, $excludedTerms = '', string $taxonomy = 'category'): string
@@ -253,12 +253,12 @@ class PostShell extends ShellKernel
     /**
      * Retrieves the next post link that is adjacent to the current post
      *
-     * @param string       $format          Link anchor format. Default '« %link'
-     * @param string       $link            Link permalink format
-     * @param boolean      $inSameTerm      Whether link should be in a same taxonomy term
-     * @param int[]|string $excludedTerms   Array or comma-separated list of excluded term IDs
-     * @param string       $taxonomy        Taxonomy, if $in_same_term is true
-     * @return string                       The link URL of the previous post in relation to the current post
+     * @param string $format          Link anchor format. Default '« %link'
+     * @param string $link            Link permalink format
+     * @param bool   $inSameTerm      Whether link should be in a same taxonomy term
+     * @param mixed  $excludedTerms   Array or comma-separated list of excluded term IDs
+     * @param string $taxonomy        Taxonomy, if $in_same_term is true
+     * @return string                 The link URL of the previous post in relation to the current post
      * @since 1.0.0
      */
     public function nextPageLink(string $format = '%link &raquo;', string $link = '%title', bool $inSameTerm = false, $excludedTerms = '', string $taxonomy = 'category'): string

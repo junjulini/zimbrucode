@@ -28,9 +28,9 @@ abstract class Filter
     /**
      * Initialization of filter
      *
-     * @param  AssetDataCollector $collector   Asset data collector object
-     * @param  string             $assetName   Asset name
-     * @param  callable|null      $callback    Callback function
+     * @param AssetDataCollector $collector   Asset data collector object
+     * @param string|null        $assetName   Asset name
+     * @param callable|null      $callback    Callback function
      * @return void
      * @since 1.0.0
      */
@@ -70,8 +70,8 @@ abstract class Filter
     /**
      * Run callback
      *
-     * @param  mix ...$args
-     * @return mix
+     * @param mixed ...$args
+     * @return mixed
      * @since 1.0.0
      */
     final protected function callback(...$args)

@@ -38,13 +38,12 @@ abstract class AppKernel extends Kernel
     /**
      * Initializing a new application
      *
-     * @param  string      $slug       Global variable slug name
-     * @param  string      $mode       Application mode ( theme / plugin )
-     * @param  boolean     $dev        Development environment
-     * @param  string      $rootPath   Plugin file path ( Plugin mode only )
-     * @param  boolean     $session    Status of "session_start()"
-     * @param  ClassLoader $composer   Instance of ClassLoader ( Composer )
-     * @return void
+     * @param string           $slug       Global variable slug name
+     * @param string           $mode       Application mode ( theme / plugin )
+     * @param bool             $dev        Development environment
+     * @param string           $rootPath   Plugin file path ( Plugin mode only )
+     * @param bool             $session    Status of "session_start()"
+     * @param ClassLoader|null $composer   Instance of ClassLoader ( Composer )
      * @since 1.0.0
      */
     final public function __construct(string $slug, string $mode = 'theme', bool $dev = false, string $rootPath = '', bool $session = false, ClassLoader $composer = null)
@@ -117,6 +116,7 @@ abstract class AppKernel extends Kernel
      * Check if the application is duplicated
      *
      * @param string $slug   Slug (GVS)
+     * @throws RuntimeException
      * @return void
      * @since 1.0.0
      */
@@ -170,7 +170,7 @@ abstract class AppKernel extends Kernel
     /**
      * Session initialization
      *
-     * @param boolean $session   Session status
+     * @param bool $session   Session status
      * @return void
      * @since 1.1.0
      */
@@ -198,7 +198,7 @@ abstract class AppKernel extends Kernel
     /**
      * Set up development environment
      *
-     * @param boolean $dev   The status of the development environment
+     * @param bool $dev   The status of the development environment
      * @return void
      * @since 1.0.0
      */
@@ -213,9 +213,10 @@ abstract class AppKernel extends Kernel
     /**
      * Initialization of services
      *
-     * @param string      $mode       Service loading mode
-     * @param ClassLoader $composer   Instance of ClassLoader (Composer)
-     * @param string      $rootPath   The path to the file where the application class was initialized
+     * @param string           $mode       Service loading mode
+     * @param ClassLoader|null $composer   Instance of ClassLoader (Composer)
+     * @param string|null      $rootPath   The path to the file where the application class was initialized
+     * @param string           $slug       Application slug
      * @return void
      * @since 1.0.0
      */
@@ -240,8 +241,9 @@ abstract class AppKernel extends Kernel
     /**
      * Set up application mode
      *
-     * @param string  $mode    Application mode
-     * @param boolean $check   Check if mode is different
+     * @param string $mode    Application mode
+     * @param bool   $check   Check if mode is different
+     * @throws RuntimeException
      * @return void
      * @since 1.0.0
      */
@@ -267,7 +269,7 @@ abstract class AppKernel extends Kernel
     /**
      * Init app configs
      *
-     * @param string $mode   App mode
+     * @param string $mode   Application mode
      * @return void
      * @since 1.0.0
      */
@@ -458,7 +460,8 @@ abstract class AppKernel extends Kernel
     /**
      * Get application path
      *
-     * @return string   Application path
+     * @param string $path   Additional part of the path
+     * @return string        Application path
      * @since 1.0.0
      */
     final public function getPath(string $path = ''): string
@@ -469,7 +472,8 @@ abstract class AppKernel extends Kernel
     /**
      * Gets the url of the application
      *
-     * @return string   Application URL
+     * @param string $url   Additional part of the URL
+     * @return string       Application URL
      * @since 1.0.0
      */
     final public function getURL(string $url = ''): string
@@ -480,8 +484,8 @@ abstract class AppKernel extends Kernel
     /**
      * Get resource path
      *
-     * @param  string $path   Additional part of the path
-     * @return string         Resource path
+     * @param string $path   Additional part of the path
+     * @return string        Resource path
      * @since 1.0.0
      */
     final public function getResourcePath(string $path = ''): string
@@ -492,8 +496,8 @@ abstract class AppKernel extends Kernel
     /**
      * Get resource URL
      *
-     * @param  string $url   Additional part of the URL
-     * @return string        Resource URL
+     * @param string $url   Additional part of the URL
+     * @return string       Resource URL
      * @since 1.0.0
      */
     final public function getResourceURL(string $url = ''): string

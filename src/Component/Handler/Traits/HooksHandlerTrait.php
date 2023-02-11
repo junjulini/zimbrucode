@@ -25,10 +25,11 @@ trait HooksHandlerTrait
     /**
      * Add action
      *
-     * @param string  $hook           The name of the action to which $method is hooked
-     * @param mix     $method         The name of the function you wish to be hooked
-     * @param integer $priority       Used to specify the order in which the functions associated with a particular action are executed
-     * @param integer $acceptedArgs   The number of arguments the hooked function accepts
+     * @param  string $hook           The name of the action to which $method is hooked
+     * @param  mixed  $method         The name of the function you wish to be hooked
+     * @param  int    $priority       Used to specify the order in which the functions associated with a particular action are executed
+     * @param  int    $acceptedArgs   The number of arguments the hooked function accepts
+     * @throws InvalidArgumentException
      * @return void
      * @since 1.0.0
      */
@@ -54,9 +55,10 @@ trait HooksHandlerTrait
     /**
      * Remove action : This function removes a function attached to a specified action hook
      *
-     * @param string  $hook       The name of the action to which $method is hooked
-     * @param mix     $method     The name of the function which should be removed
-     * @param integer $priority   Used to specify the order in which the functions associated with a particular action are executed
+     * @param  string $hook       The name of the action to which $method is hooked
+     * @param  mixed  $method     The name of the function which should be removed
+     * @param  int    $priority   Used to specify the order in which the functions associated with a particular action are executed
+     * @throws InvalidArgumentException
      * @return void
      * @since 1.0.0
      */
@@ -82,9 +84,10 @@ trait HooksHandlerTrait
     /**
      * Add AJAX
      *
-     * @param string  $hook     The name of the action to which $method is hooked
-     * @param mix     $method   The name of the function you wish to be hooked
-     * @param boolean $nopriv   For non unauthenticated users
+     * @param  string $hook     The name of the action to which $method is hooked
+     * @param  mixed  $method   The name of the function you wish to be hooked
+     * @param  bool   $nopriv   For non unauthenticated users
+     * @throws InvalidArgumentException
      * @return void
      * @since 1.0.0
      */
@@ -108,10 +111,11 @@ trait HooksHandlerTrait
     /**
      * Add filter
      *
-     * @param string  $tag            The name of the existing Filter to Hook the $method argument to
-     * @param mix     $method         The name of the function to be called when the custom Filter is applied
-     * @param integer $priority       Used to specify the order in which the functions associated with a particular action are executed
-     * @param integer $acceptedArgs   The number of arguments the function(s) accept(s)
+     * @param  string $tag            The name of the existing Filter to Hook the $method argument to
+     * @param  mixed  $method         The name of the function to be called when the custom Filter is applied
+     * @param  int    $priority       Used to specify the order in which the functions associated with a particular action are executed
+     * @param  int    $acceptedArgs   The number of arguments the function(s) accept(s)
+     * @throws InvalidArgumentException
      * @return void
      * @since 1.0.0
      */
@@ -137,9 +141,10 @@ trait HooksHandlerTrait
     /**
      * Add filter
      *
-     * @param string  $tag        The action hook to which the function to be removed is hooked
-     * @param mix     $method     The callback for the function which should be removed
-     * @param integer $priority   The priority of the function (as defined when the function was originally hooked)
+     * @param  string $tag        The action hook to which the function to be removed is hooked
+     * @param  mixed  $method     The callback for the function which should be removed
+     * @param  int    $priority   The priority of the function (as defined when the function was originally hooked)
+     * @throws InvalidArgumentException
      * @return void
      * @since 1.0.0
      */
@@ -165,8 +170,9 @@ trait HooksHandlerTrait
     /**
      * Add shortcode
      *
-     * @param string $tag      Shortcode tag
-     * @param mix    $method   Callback
+     * @param  string $tag      ShortCode tag
+     * @param  mixed  $method   Callback
+     * @throws InvalidArgumentException
      * @return void
      * @since 1.0.0
      */
@@ -192,8 +198,10 @@ trait HooksHandlerTrait
     /**
      * Do shortcode
      *
-     * @param string  $tag      Shortcode tag
-     * @param boolean $return   Return or echo
+     * @param  string $tag      Shortcode tag
+     * @param  bool   $return   Return or echo
+     * @throws InvalidArgumentException
+     * @return mixed
      * @since 1.0.0
      */
     protected function doShortCode(string $tag, bool $return = false)
@@ -213,6 +221,7 @@ trait HooksHandlerTrait
      * Remove shortcode
      *
      * @param  string $tag   Shortcode tag
+     * @throws InvalidArgumentException
      * @return void
      * @since 1.0.0
      */

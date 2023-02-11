@@ -23,7 +23,7 @@ use ZimbruCode\Component\Core\Kernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 class AssetData
 {
@@ -34,7 +34,7 @@ class AssetData
 
     /**
      * Constructor
-     * 
+     *
      * @since 1.0.0
      */
     public function __construct($asset, LocationDetector $location)
@@ -86,9 +86,9 @@ class AssetData
     /**
      * Asset type
      *
-     * @param string  $type    Asset type
-     * @param boolean $check   Check if the value exists before setting the asset type
-     * @return string|AssetData
+     * @param string $type    Asset type
+     * @param bool   $check   Check if the value exists before setting the asset type
+     * @return mixed
      * @since 1.0.0
      */
     public function type(string $type = '', bool $check = false)
@@ -112,9 +112,9 @@ class AssetData
     /**
      * Asset name
      *
-     * @param  string  $name    Asset name
-     * @param  boolean $check   Check if the value exists before setting the asset name
-     * @return string|AssetData
+     * @param string $name    Asset name
+     * @param bool   $check   Check if the value exists before setting the asset name
+     * @return mixed
      * @since 1.0.0
      */
     public function name(string $name = '', bool $check = false)
@@ -138,9 +138,9 @@ class AssetData
     /**
      * Asset URL
      *
-     * @param  string  $url     Asset URL
-     * @param  boolean $check   Check if the value exists before setting the asset name
-     * @return string|AssetData
+     * @param string $url     Asset URL
+     * @param bool   $check   Check if the value exists before setting the asset name
+     * @return mixed
      * @since 1.0.0
      */
     public function url(string $url = '', bool $check = false)
@@ -164,9 +164,9 @@ class AssetData
     /**
      * Asset deps
      *
-     * @param  array   $deps    Asset deps
-     * @param  boolean $check   Check if the value exists before setting the asset deps
-     * @return array|AssetData
+     * @param array $deps    Asset deps
+     * @param bool  $check   Check if the value exists before setting the asset deps
+     * @return mixed
      * @since 1.0.0
      */
     public function deps(array $deps = [], bool $check = false)
@@ -190,9 +190,9 @@ class AssetData
     /**
      * Asset version
      *
-     * @param  string  $version   Asset version
-     * @param  boolean $check     Check if the value exists before setting the asset version
-     * @return string|AssetData
+     * @param string  $version   Asset version
+     * @param bool    $check     Check if the value exists before setting the asset version
+     * @return mixed
      * @since 1.0.0
      */
     public function version(string $version = '', bool $check = false)
@@ -217,11 +217,11 @@ class AssetData
      * Asset dynamic version
      *
      * @return string   Dynamic version
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function dynamicVersion(): string
     {
-        $version = Kernel::getGlobal('app/version');
+        $version = (string) Kernel::getGlobal('app/version');
         $hash    = hash_file('adler32', $this->getPath());
 
         if ($hash) {
@@ -234,9 +234,9 @@ class AssetData
     /**
      * Asset media status
      *
-     * @param  boolean $media   Asset media status
-     * @param  boolean $check   Check if the value exists before setting the asset media
-     * @return boolean|AssetData
+     * @param bool|null $media   Asset media status
+     * @param bool      $check   Check if the value exists before setting the asset media
+     * @return mixed
      * @since 1.0.0
      */
     public function media(bool $media = null, bool $check = false)
@@ -260,9 +260,9 @@ class AssetData
     /**
      * Asset footer status ( If script set for footer )
      *
-     * @param  boolean $footer   Asset footer status
-     * @param  boolean $check    Check if the value exists before setting the asset footer
-     * @return boolean|AssetData
+     * @param bool|null $footer   Asset footer status
+     * @param bool      $check    Check if the value exists before setting the asset footer
+     * @return mixed
      * @since 1.0.0
      */
     public function footer(bool $footer = null, bool $check = false)
@@ -286,7 +286,7 @@ class AssetData
     /**
      * Clear all asset data
      *
-     * @return self
+     * @return AssetData
      * @since 1.0.0
      */
     public function flush(): self
@@ -320,7 +320,7 @@ class AssetData
     /**
      * Check if the asset is a file
      *
-     * @return boolean   Result of checking
+     * @return bool   Result of checking
      * @since 1.0.0
      */
     public function isFile(): bool
@@ -331,7 +331,7 @@ class AssetData
     /**
      * Asset file type
      *
-     * @return string|AssetData
+     * @return mixed
      * @since 1.0.0
      */
     public function fileType()
@@ -342,6 +342,7 @@ class AssetData
     /**
      * Get the path of the asset
      *
+     * @throws RuntimeException
      * @return string   Asset path
      * @since 1.0.0
      */
@@ -368,8 +369,8 @@ class AssetData
     /**
      * Add asset data
      *
-     * @param  array $data   Asset data
-     * @return self
+     * @param array $data   Asset data
+     * @return AssetData
      * @since 1.0.0
      */
     public function addData(array $data): self
@@ -392,9 +393,9 @@ class AssetData
     /**
      * Add additional asset data
      *
-     * @param  string $id     Identifier
-     * @param  array  $data   Additional data
-     * @return self
+     * @param string $id     Identifier
+     * @param array  $data   Additional data
+     * @return AssetData
      * @since 1.0.0
      */
     public function addAdditionalData(string $id, array $data): self
@@ -409,8 +410,8 @@ class AssetData
     /**
      * Get additional asset data
      *
-     * @param  string $id   Identifier
-     * @return array        Additional asset data
+     * @param string $id   Identifier
+     * @return array       Additional asset data
      * @since 1.0.0
      */
     public function getAdditionalData(string $id): array
@@ -421,8 +422,8 @@ class AssetData
     /**
      * Generate asset name
      *
-     * @param  boolean $withCoreSlug   With next prefix : zc
-     * @return string                  Name of the generated asset
+     * @param bool $withCoreSlug   With next prefix : zc
+     * @return string              Name of the generated asset
      * @since 1.0.0
      */
     public function generateName(bool $withCoreSlug = true): string

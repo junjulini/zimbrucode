@@ -27,7 +27,7 @@ class Registered extends Filter
     /**
      * Each asset
      *
-     * @param  AssetData $asset   Asset data
+     * @param AssetData $asset   Asset data
      * @return void
      * @since 1.0.0
      */

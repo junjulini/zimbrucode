@@ -70,7 +70,7 @@ class Module extends ModuleKernel
     }
 
     /**
-     * Search for custom templates 
+     * Search for custom templates
      *
      * @param string $dir   Location of custom templates
      * @return void
@@ -106,7 +106,7 @@ class Module extends ModuleKernel
     /**
      * Advanced render
      *
-     * @param mix ...$args   Render arguments
+     * @param mixed ...$args   Render arguments
      * @return Render
      * @since 1.0.0
      */
@@ -177,8 +177,8 @@ class Module extends ModuleKernel
     /**
      * Filter : Template include
      *
-     * @param  string $wpTemplate WordPress template
-     * @return string             WordPress template
+     * @param string $wpTemplate WordPress template
+     * @return string            WordPress template
      * @since 1.0.0
      */
     public function __filter_template_include(string $wpTemplate): string

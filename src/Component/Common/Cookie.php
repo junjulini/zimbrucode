@@ -25,11 +25,11 @@ class Cookie
     /**
      * Get cookie
      *
-     * @param  string $name      Cookie name
-     * @param  mix    $default   Default value
-     * @param  string $filter    Format : simple '', serialize, json
-     * @return mix
-     * @since 1.0.0
+     * @param string $name      Cookie name
+     * @param mixed  $default   Default value
+     * @param string $filter    Format : simple '', serialize, json
+     * @return mixed
+     * @since 1.1.0
      */
     public function get(string $name, $default = false, string $filter = 'serialize')
     {
@@ -41,16 +41,13 @@ class Cookie
             case 'serialize':
                 $raw = unserialize($_COOKIE[$name]);
                 return $raw ?: $default;
-                break;
 
             case 'json':
                 $raw = Tools::jsonDecode(stripslashes($_COOKIE[$name]), 'ZE0145');
                 return $raw ?: $default;
-                break;
 
             default:
                 return $_COOKIE[$name];
-                break;
         }
     }
 
@@ -58,15 +55,15 @@ class Cookie
      * Add cookie
      *
      * @param string $name     Cookie name
-     * @param mix    $data     Cookie data
+     * @param mixed  $data     Cookie data
      * @param int    $time     Cookie time
      * @param string $filter   Format : simple '', serialize, json
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function add(string $name, $data, int $time = 0, string $filter = 'serialize'): void
     {
-        if ($name) {
+        if ($name && defined('COOKIEPATH') && defined('SITECOOKIEPATH') && defined('COOKIE_DOMAIN')) {
             switch ($filter) {
                 case 'serialize':
                     $data = serialize($data);
@@ -88,9 +85,9 @@ class Cookie
     /**
      * Remove cookie
      *
-     * @param  string $name   Cookie name
+     * @param string $name   Cookie name
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function remove(string $name): void
     {
@@ -98,18 +95,20 @@ class Cookie
             return;
         }
 
-        unset($_COOKIE[$name]);
-        setcookie($name, null, -1, COOKIEPATH, COOKIE_DOMAIN);
+        if (defined('COOKIEPATH') && defined('SITECOOKIEPATH') && defined('COOKIE_DOMAIN')) {
+            unset($_COOKIE[$name]);
+            setcookie($name, null, -1, COOKIEPATH, COOKIE_DOMAIN);
 
-        if (SITECOOKIEPATH != COOKIEPATH) {
-            setcookie($name, null, -1, SITECOOKIEPATH, COOKIE_DOMAIN);
+            if (SITECOOKIEPATH != COOKIEPATH) {
+                setcookie($name, null, -1, SITECOOKIEPATH, COOKIE_DOMAIN);
+            }
         }
     }
 
     /**
      * Remove data in cookie
      *
-     * @param  string $name   Cookie name
+     * @param string $name   Cookie name
      * @return void
      * @since 1.1.0
      */

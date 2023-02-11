@@ -24,7 +24,7 @@ use Symfony\Component\Finder\Finder;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 class ScriptHandler
 {
@@ -33,7 +33,7 @@ class ScriptHandler
     /**
      * Install theme script
      *
-     * @param  Event $event   Event object
+     * @param Event $event   Event object
      * @return void
      * @since 1.0.0
      */
@@ -117,7 +117,7 @@ class ScriptHandler
     /**
      * Install plugin script
      *
-     * @param  Event $event   Event object
+     * @param Event $event   Event object
      * @return void
      * @since 1.0.0
      */
@@ -195,7 +195,7 @@ class ScriptHandler
     /**
      * Clear cache script
      *
-     * @param  Event $event   Event object
+     * @param Event $event   Event object
      * @return void
      * @since 1.0.0
      */
@@ -237,7 +237,7 @@ class ScriptHandler
     /**
      * Clear var script
      *
-     * @param  Event $event   Event object
+     * @param Event $event   Event object
      * @return void
      * @since 1.0.0
      */
@@ -279,7 +279,7 @@ class ScriptHandler
     /**
      * New module script
      *
-     * @param  Event $event   Event object
+     * @param Event $event   Event object
      * @return void
      * @since 1.0.0
      */
@@ -357,12 +357,12 @@ class ScriptHandler
     /**
      * Check if module exist
      *
-     * @param  Event  $event       Event object
-     * @param  string $moduleDir   Module directory
-     * @return string              Module name
-     * @since 1.0.0
+     * @param Event  $event       Event object
+     * @param string $moduleDir   Module directory
+     * @return string|null        Module name
+     * @since 1.1.0
      */
-    protected static function getModuleName(Event $event, $moduleDir): ?string
+    protected static function getModuleName(Event $event, string $moduleDir): ?string
     {
         $args = $event->getArguments();
         $name = (!empty($args[0])) ? $args[0] : false;
@@ -382,7 +382,7 @@ class ScriptHandler
     /**
      * New control script
      *
-     * @param  Event $event   Event object
+     * @param Event $event   Event object
      * @return void
      * @since 1.0.0
      */
@@ -468,9 +468,9 @@ class ScriptHandler
     /**
      * Check control data
      *
-     * @param  Event  $event       Event object
-     * @param  string $moduleDir   Module directory
-     * @return array               Control data ( name, module location )
+     * @param Event  $event       Event object
+     * @param string $moduleDir   Module directory
+     * @return array|null         Control data ( name, module location )
      * @since 1.0.0
      */
     protected static function checkControlData(Event $event, string $moduleDir): ?array
@@ -501,7 +501,7 @@ class ScriptHandler
     /**
      * Minify script
      *
-     * @param  Event $event   Event object
+     * @param Event $event   Event object
      * @return void
      * @since 1.0.0
      */

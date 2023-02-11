@@ -24,7 +24,7 @@ use ZimbruCode\Component\Handler\CacheHandler;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 class AssetCache
 {
@@ -59,6 +59,7 @@ class AssetCache
      *
      * @param string $setting   Setting key
      * @param string $value     Setting value
+     * @throws RuntimeException
      * @return void
      * @since 1.0.0
      */
@@ -74,8 +75,8 @@ class AssetCache
     /**
      * Get setting
      *
-     * @param string $setting   Setting key
-     * @return mix
+     * @param string $setting      Setting key
+     * @return bool|mixed|string   Setting value
      * @since 1.0.0
      */
     public function getSetting(string $setting)
@@ -85,9 +86,10 @@ class AssetCache
 
     /**
      * Add execution location ( For DEV )
-     *
-     * @param string $class   Class name
-     * @return string         Location
+     * 
+     * @param string $class               Class name
+     * @throws InvalidArgumentException
+     * @return string                     Location
      * @since 1.0.0
      */
     public function addExecuteLocation(string $class): string
@@ -129,6 +131,7 @@ class AssetCache
      * Add the cache path
      *
      * @param string $path   Cache file path
+     * @throws InvalidArgumentException
      * @return void
      * @since 1.0.0
      */
@@ -196,7 +199,7 @@ class AssetCache
     /**
      * Check if a rebuild is needed
      *
-     * @return boolean   Result of checking
+     * @return bool   Result of checking
      * @since 1.0.0
      */
     public function check(): bool
@@ -275,7 +278,7 @@ class AssetCache
     /**
      * Get the contents of the cache
      *
-     * @return array   Cache content (array format)
+     * @throws RuntimeException
      * @since 1.0.0
      */
     public function get(): array
@@ -295,6 +298,7 @@ class AssetCache
      * Add cache data
      *
      * @param array $data   Cache data
+     * @throws RuntimeException
      * @return void
      * @since 1.0.0
      */
@@ -314,7 +318,8 @@ class AssetCache
     /**
      * Check if cache file or APC key exists
      *
-     * @return boolean   Result of checking
+     * @throws RuntimeException
+     * @return bool   Result of checking
      * @since 1.0.0
      */
     public function has(): bool
@@ -333,6 +338,7 @@ class AssetCache
     /**
      * Remove cache
      *
+     * @throws RuntimeException
      * @return void
      * @since 1.0.0
      */
@@ -363,10 +369,10 @@ class AssetCache
     /**
      * Call additional functions
      *
-     * @param  array  $cacheData   Cache data
-     * @param  string $type        Type of checking
-     * @return boolean             Result of checking
-     * @since 1.0.0
+     * @param array  $cacheData   Cache data
+     * @param string $type        Type of checking
+     * @return bool               Result of checking
+     * @since 1.1.0
      */
     protected function callAdditionalFunctions(array $cacheData, string $type = 'additional'): bool
     {
@@ -384,7 +390,6 @@ class AssetCache
         }
 
         $output = $this->object['callback']->run($type, $cacheData);
-        $result = '';
 
         if (!$output) {
             return false;

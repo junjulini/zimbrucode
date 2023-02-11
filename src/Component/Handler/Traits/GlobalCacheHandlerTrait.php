@@ -27,7 +27,8 @@ trait GlobalCacheHandlerTrait
      * Add global cache
      *
      * @param string $key     Cache key
-     * @param mix    $value   Cache value
+     * @param mixed  $value   Cache value
+     * @throws InvalidArgumentException
      * @since 1.0.0
      */
     public static function addGlobalCache(string $key, $value = '')
@@ -41,8 +42,11 @@ trait GlobalCacheHandlerTrait
 
     /**
      * Get global cache
-     *
-     * @param string $key   Cache key
+     * 
+     * @param string $key       Cache key
+     * @param mixed  $default   Default value if key does not exist
+     * @throws InvalidArgumentException
+     * @return mixed
      * @since 1.0.0
      */
     public static function getGlobalCache(string $key, $default = false)
@@ -58,6 +62,7 @@ trait GlobalCacheHandlerTrait
      * Remove global cache item
      *
      * @param string $key   Cache key
+     * @throws InvalidArgumentException
      * @since 1.0.0
      */
     public static function remGlobalCache(string $key): bool

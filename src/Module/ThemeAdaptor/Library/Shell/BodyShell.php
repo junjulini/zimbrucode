@@ -83,12 +83,12 @@ class BodyShell extends ShellKernel
      * Display or retrieve page title for all areas of blog
      *
      * @param string $sep           How to separate the various items within the page title. Default '»'
-     * @param string $seplocation   Location of the separator ('left' or 'right')
-     * @return mix                  Action result
+     * @param string $sepLocation   Location of the separator ('left' or 'right')
+     * @return mixed                Action result
      * @since 1.0.0
      */
-    public function title(string $sep = '&raquo;', string $seplocation = '')
+    public function title(string $sep = '&raquo;', string $sepLocation = '')
     {
-        return wp_title($sep, true, $seplocation);
+        return wp_title($sep, true, $sepLocation);
     }
 }

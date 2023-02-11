@@ -39,8 +39,8 @@ class TwigFilters
     /**
      * Callback : Remove Slashes
      *
-     * @param  string $string   String from template
-     * @return string           Modificated string
+     * @param string|null $string   String from template
+     * @return string|null          Modificated string
      * @since 1.1.0
      */
     public function __callback_stripslashes(?string $string): ?string
@@ -56,7 +56,7 @@ class TwigFilters
      * Callback : Call function
      *
      * @param callable $function   Callback
-     * @return mix                 Action result
+     * @return mixed               Action result
      * @since 1.0.0
      */
     public function __callback_fn(callable $function)
@@ -67,7 +67,7 @@ class TwigFilters
     /**
      * Json decode
      *
-     * @param  json  $array   Json data
+     * @param string $array   Json data
      * @return array          Decoded data
      * @since 1.0.0
      */

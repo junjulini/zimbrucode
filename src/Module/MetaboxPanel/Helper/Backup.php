@@ -95,8 +95,9 @@ class Backup extends Kernel
     /**
      * Save backup
      *
-     * @param AjaxHandler $ajax       AjaxHandler object
-     * @param string      $pageType   Page type [post, page, portfolio ...]
+     * @param  AjaxHandler $ajax       AjaxHandler object
+     * @param  string      $pageType   Page type [post, page, portfolio ...]
+     * @throws RuntimeException
      * @return void
      * @since 1.0.0
      */
@@ -176,8 +177,9 @@ class Backup extends Kernel
     /**
      * Delete all backups
      *
-     * @param AjaxHandler $ajax       AjaxHandler object
-     * @param string      $pageType   Page type [post, page, portfolio ...]
+     * @param  AjaxHandler $ajax       AjaxHandler object
+     * @param  string      $pageType   Page type [post, page, portfolio ...]
+     * @throws RuntimeException
      * @return void
      * @since 1.0.0
      */
@@ -208,8 +210,9 @@ class Backup extends Kernel
     /**
      * Delete backup item
      *
-     * @param AjaxHandler $ajax       AjaxHandler object
-     * @param string      $pageType   Page type [post, page, portfolio ...]
+     * @param  AjaxHandler $ajax       AjaxHandler object
+     * @param  string      $pageType   Page type [post, page, portfolio ...]
+     * @throws RuntimeException
      * @return void
      * @since 1.0.0
      */
@@ -243,8 +246,9 @@ class Backup extends Kernel
     /**
      * Restore backup
      *
-     * @param AjaxHandler $ajax       AjaxHandler object
-     * @param string      $pageType   Page type [post, page, portfolio ...]
+     * @param  AjaxHandler $ajax       AjaxHandler object
+     * @param  string      $pageType   Page type [post, page, portfolio ...]
+     * @throws RuntimeException
      * @return void
      * @since 1.0.0
      */

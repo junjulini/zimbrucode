@@ -34,6 +34,7 @@ class LocationDetector
      * Constructor
      *
      * @param string $location   Location of assets
+     * @throws InvalidArgumentException
      * @since 1.1.0
      */
     public function __construct(string $location)
@@ -56,6 +57,7 @@ class LocationDetector
      * Get the path to the asset
      *
      * @param  string $path   Part of path
+     * @throws InvalidArgumentException
      * @return string         Asset path
      * @since 1.0.0
      */
@@ -78,6 +80,7 @@ class LocationDetector
      * Path : Defined as a string
      *
      * @param  string $path   Path of asset
+     * @throws RuntimeException
      * @return string         Elaborated path
      * @since 1.0.0
      */
@@ -116,6 +119,7 @@ class LocationDetector
      * Path : Defined as a path
      *
      * @param  string $path   Path of asset
+     * @throws RuntimeException
      * @return string         Elaborated path
      * @since 1.0.0
      */
@@ -132,6 +136,7 @@ class LocationDetector
      * Path : Defined as a URL
      *
      * @param  string $path   Path of asset
+     * @throws RuntimeException
      * @return string         Elaborated path
      * @since 1.0.0
      */

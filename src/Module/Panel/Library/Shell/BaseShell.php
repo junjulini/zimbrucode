@@ -11,8 +11,6 @@
 
 namespace ZimbruCode\Module\Panel\Library\Shell;
 
-use ZimbruCode\Component\Common\Tools;
-use ZimbruCode\Component\Core\Kernel;
 use ZimbruCode\Component\Core\ModuleKernel;
 use ZimbruCode\Component\TemplateBridges\Helper\ShellKernel;
 
@@ -86,9 +84,9 @@ class BaseShell extends ShellKernel
     /**
      * Get module setting
      *
-     * @param  string $setting   Setting name
-     * @param  mix    $default   Default value
-     * @return string/array      Action result
+     * @param string $setting   Setting name
+     * @param mixed  $default   Default value
+     * @return mixed            Action result
      * @since 1.0.0
      */
     public function getModuleSetting(...$args)
@@ -121,8 +119,8 @@ class BaseShell extends ShellKernel
     /**
      * Get resource path
      *
-     * @param  string $path   Additional part of the path
-     * @return string         Resource path
+     * @param string $path   Additional part of the path
+     * @return string        Resource path
      * @since 1.0.0
      */
     public function getModuleResourcePath(string $path = ''): string
@@ -133,8 +131,8 @@ class BaseShell extends ShellKernel
     /**
      * Get resource URL
      *
-     * @param  string $url   Additional part of the URL
-     * @return string        Resource URL
+     * @param string $url   Additional part of the URL
+     * @return string       Resource URL
      * @since 1.0.0
      */
     public function getModuleResourceURL(string $url = ''): string

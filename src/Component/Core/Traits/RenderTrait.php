@@ -26,10 +26,11 @@ trait RenderTrait
     /**
      * Render TWIG template
      *
-     * @param  string  $template                Path of TWIG template
-     * @param  array   $vars                    Additional vars
-     * @param  boolean $return                  Return content or echo
-     * @return string|null|TwigTemplateBridge   HTML output
+     * @param string        $template           Path of TWIG template
+     * @param array         $vars               Additional vars
+     * @param bool          $return             Return content or echo
+     * @param callable|null $renderCallback
+     * @return mixed                            HTML output
      * @since 1.0.2
      */
     protected function render(string $template = '', array $vars = [], bool $return = false, callable $renderCallback = null)

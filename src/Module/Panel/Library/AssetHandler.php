@@ -22,7 +22,7 @@ use ZimbruCode\Component\Core\ModuleKernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 class AssetHandler
 {
@@ -41,7 +41,7 @@ class AssetHandler
      * Constructor
      *
      * @param ModuleKernel $module   Module object
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function __construct(ModuleKernel $module)
     {
@@ -50,16 +50,15 @@ class AssetHandler
 
         $resourceDir = Kernel::getGlobal('core/component/core/module/resource-dir');
         $path        = "{$this->module->getModulePath()}{$resourceDir}/assets/scss";
-        $url         = "{$this->module->getModuleURL()}{$resourceDir}/assets/scss";
 
-        $this->addScssDir($path, $url);
+        $this->addScssDir($path);
     }
 
     /**
      * Add assets
      *
-     * @param array/string $assets   List of assets
-     * @return self
+     * @param mixed $assets   List of assets
+     * @return AssetHandler
      * @since 1.0.0
      */
     public function add($assets): self
@@ -78,8 +77,8 @@ class AssetHandler
     /**
      * Add asset : last queue
      *
-     * @param  string $path   Asset path
-     * @return self
+     * @param string $path   Asset path
+     * @return AssetHandler
      * @since 1.0.0
      */
     public function addLast(string $path = ''): self
@@ -94,8 +93,8 @@ class AssetHandler
     /**
      * Add scss file
      *
-     * @param  string $file   Path to the Scss file
-     * @return self
+     * @param string $file   Path to the Scss file
+     * @return AssetHandler
      * @since 1.0.0
      */
     public function addScssFile(string $file): self
@@ -110,8 +109,8 @@ class AssetHandler
     /**
      * Add scss directory
      *
-     * @param  string $dir   Directory path
-     * @return self
+     * @param string $dir   Directory path
+     * @return AssetHandler
      * @since 1.0.0
      */
     public function addScssDir(string $dir): self
@@ -126,9 +125,9 @@ class AssetHandler
     /**
      * Add scss variable
      *
-     * @param  string $name    Variable name
-     * @param  mix    $value   Variable value
-     * @return self
+     * @param string $name    Variable name
+     * @param mixed  $value   Variable value
+     * @return AssetHandler
      * @since 1.0.0
      */
     public function addScssVar(string $name, $value = ''): self
@@ -144,7 +143,7 @@ class AssetHandler
      * Add scss variables
      *
      * @param array $vars   Variable list
-     * @return self
+     * @return AssetHandler
      * @since 1.0.0
      */
     public function addScssVars(array $vars): self
@@ -159,8 +158,8 @@ class AssetHandler
     /**
      * Enroll assets
      *
-     * @return self
-     * @since 1.0.0
+     * @return AssetHandler
+     * @since 1.1.0
      */
     public function enroll(): self
     {
@@ -210,8 +209,7 @@ class AssetHandler
             }
         }
 
-        $this->assetManager->addAssets($this->assets)
-                           ->enroll('Panel - ' . ucfirst($this->module->getModuleSetting('slug')));
+        $this->assetManager->addAssets($this->assets)->enroll('Panel - ' . ucfirst($this->module->getModuleSetting('slug')));
 
         return $this;
     }
@@ -219,7 +217,7 @@ class AssetHandler
     /**
      * Dump of assets
      *
-     * @return self
+     * @return AssetHandler
      * @since 1.0.0
      */
     public function dump(): self
@@ -231,10 +229,10 @@ class AssetHandler
     /**
      * Localizes a registered script with data for a JavaScript variable
      *
-     * @param  string $handle   The registered script handle you are attaching the data for
-     * @param  string $name     The name of the variable which will contain the data
-     * @param  array  $data     The data itself
-     * @return self
+     * @param string $handle   The registered script handle you are attaching the data for
+     * @param string $name     The name of the variable which will contain the data
+     * @param array  $data     The data itself
+     * @return AssetHandler
      * @since 1.0.0
      */
     public function localize(string $handle, string $name, array $data = []): self

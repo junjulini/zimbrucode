@@ -28,7 +28,7 @@ class PostsNode extends Node
      *
      * @param Node        $body     "Body" node
      * @param Node|null   $values   "Values" node
-     * @param integer     $lineno
+     * @param int         $lineno
      * @param string|null $tag
      * @since 1.0.0
      */

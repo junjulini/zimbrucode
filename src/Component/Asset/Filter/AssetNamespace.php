@@ -28,7 +28,7 @@ class AssetNamespace extends Filter
     /**
      * Each asset
      *
-     * @param  AssetData $asset   Asset data
+     * @param AssetData $asset   Asset data
      * @return void
      * @since 1.0.0
      */
@@ -55,7 +55,7 @@ class AssetNamespace extends Filter
     /**
      * Preparing assets namespaces
      *
-     * @param  AssetDataCollector $collector   Asset data collector
+     * @param AssetDataCollector $collector   Asset data collector
      * @return void
      * @since 1.0.0
      */

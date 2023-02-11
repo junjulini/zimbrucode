@@ -51,7 +51,7 @@ class PostsTokenParser extends AbstractTokenParser
      * Test : Decide posts end
      *
      * @param Token $token   Token object
-     * @return boolean       Result of checking
+     * @return bool          Result of checking
      * @since 1.0.0
      */
     public function decidePostsEnd(Token $token): bool

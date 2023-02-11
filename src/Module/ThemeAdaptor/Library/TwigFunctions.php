@@ -37,10 +37,10 @@ class TwigFunctions
     /**
      * Callback : Get option value
      *
-     * @param  string  $option    Option name
-     * @param  mix     $default   Default value
-     * @param  boolean $ao        Alternative option
-     * @return mix                Action result
+     * @param  string $option    Option name
+     * @param  mixed  $default   Default value
+     * @param  bool   $ao        Alternative option
+     * @return mixed             Action result
      * @since 1.0.0
      */
     public function __callback_option(...$args)

@@ -21,7 +21,7 @@ use ZimbruCode\Module\Panel\Library\Traits\ControlTrait;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 class MetaLiteMode extends Mode
 {
@@ -91,9 +91,9 @@ class MetaLiteMode extends Mode
      * Action : Enqueue styles and scripts for panel
      *
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
-    public function __action_enqueue($hook): void
+    public function __action_enqueue(): void
     {
         do_action('zc/module/metabox_panel/mode/lite/enqueue--before');
         do_action("zc/module/metabox_panel/{$this->getModuleSetting('slug')}/mode/lite/enqueue--before");
@@ -153,7 +153,7 @@ class MetaLiteMode extends Mode
      * Action : Panel options save
      *
      * @param int $postID   Post ID
-     * @return null|mix
+     * @return int|null
      * @since 1.0.0
      */
     public function __action_save_options(int $postID)

@@ -15,7 +15,6 @@ use InvalidArgumentException;
 use ZimbruCode\Component\Asset\Filter\Combine;
 use ZimbruCode\Component\Asset\Library\AssetData;
 use ZimbruCode\Component\Asset\Library\AssetDataCollector;
-use ZimbruCode\Component\Asset\Library\Filter;
 use ZimbruCode\Component\Asset\Library\LocationDetector;
 use ZimbruCode\Component\Asset\Library\NamespaceHandler;
 use ZimbruCode\Component\Common\Tools;
@@ -26,7 +25,7 @@ use ZimbruCode\Component\Core\Kernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 class AssetManager
 {
@@ -37,7 +36,9 @@ class AssetManager
 
     /**
      * Constructor
-     *
+     * 
+     * @param bool   $autoFilter       Auto filter status
+     * @param string $customLocation   Custom location
      * @since 1.0.0
      */
     public function __construct(bool $autoFilter = true, string $customLocation = '')
@@ -55,8 +56,8 @@ class AssetManager
     /**
      * Disable or enable automatic filter
      *
-     * @param  boolean $autoFilter   Auto filter status : true/false
-     * @return boolean               Auto filter status
+     * @param bool|null $autoFilter   Auto filter status : true/false
+     * @return bool                   Auto filter status
      * @since 1.0.0
      */
     public function autoFilter(bool $autoFilter = null): bool
@@ -82,8 +83,10 @@ class AssetManager
 
     /**
      * Registers an asset
-     *
-     * @return self
+     * 
+     * @param mixed         $asset      Asset
+     * @param callable|null $callback   Callback function
+     * @return AssetManager
      * @since 1.0.0
      */
     public function add($asset, callable $callback = null): self
@@ -99,7 +102,7 @@ class AssetManager
      * Add assets
      *
      * @param array $assets   Assets array
-     * @return self
+     * @return AssetManager
      * @since 1.0.0
      */
     public function addAssets(array $assets): self
@@ -123,7 +126,7 @@ class AssetManager
      * Check if an asset exists
      *
      * @param string $asset   Asset name
-     * @return boolean        Result of checking
+     * @return bool           Result of checking
      * @since 1.0.0
      */
     public function has(string $asset): bool
@@ -135,7 +138,7 @@ class AssetManager
      * Remove asset
      *
      * @param string $asset   Asset name
-     * @return self
+     * @return AssetManager
      * @since 1.0.0
      */
     public function remove(string $asset): self
@@ -147,7 +150,7 @@ class AssetManager
     /**
      * Remove all assets
      *
-     * @return self
+     * @return AssetManager
      * @since 1.0.0
      */
     public function flush(): self
@@ -159,8 +162,8 @@ class AssetManager
     /**
      * Run filter
      *
-     * @param mix ...$args
-     * @return self
+     * @param mixed ...$args
+     * @return AssetManager
      * @since 1.0.0
      */
     public function filter(...$args): self
@@ -173,7 +176,7 @@ class AssetManager
      * Combine all assets into one file
      *
      * @param string $name   Output file name
-     * @return self
+     * @return AssetManager
      * @since 1.0.0
      */
     public function combine(string $name): self
@@ -195,7 +198,7 @@ class AssetManager
     /**
      * Dump assets data
      *
-     * @return self
+     * @return AssetManager
      * @since 1.0.0
      */
     public function dump(): self
@@ -207,8 +210,8 @@ class AssetManager
     /**
      * Enroll assets
      *
-     * @param  string $logTitle   Log title
-     * @return self
+     * @param string $logTitle   Log title
+     * @return AssetManager
      * @since 1.0.0
      */
     public function enroll(string $logTitle = ''): self
@@ -233,7 +236,8 @@ class AssetManager
     /**
      * Enroll assets as namespace
      *
-     * @return self
+     * @param string $namespace   Namespace
+     * @return AssetManager
      * @since 1.0.0
      */
     public function enrollAsNamespace(string $namespace = ''): self
@@ -245,11 +249,12 @@ class AssetManager
     /**
      * Localizes a registered script with data for a JavaScript variable.
      *
-     * @param  string $handle   The registered script handle you are attaching the data for
-     * @param  string $name     The name of the variable which will contain the data
-     * @param  array  $data     The data itself
-     * @return self
-     * @since 1.0.0
+     * @param string $handle   The registered script handle you are attaching the data for
+     * @param string $name     The name of the variable which will contain the data
+     * @param array  $data     The data itself
+     * @throws InvalidArgumentException
+     * @return AssetManager
+     * @since 1.1.0
      */
     public function localize(string $handle, string $name, array $data = []): self
     {
@@ -263,6 +268,8 @@ class AssetManager
 
             throw new InvalidArgumentException("ZE0004 - Handle not found : {$handle}");
         }
+
+        return $this;
     }
 
     /**
@@ -271,8 +278,9 @@ class AssetManager
      * @param string $handle     Name of the script to add the inline script to
      * @param string $data       String containing the JavaScript to be added
      * @param string $position   Whether to add the inline script before the handle or after
-     * @return self
-     * @since 1.0.0
+     * @throws InvalidArgumentException
+     * @return AssetManager
+     * @since 1.1.0
      */
     public function addInlineScript(string $handle, string $data, string $position = 'after'): self
     {
@@ -286,6 +294,8 @@ class AssetManager
 
             throw new InvalidArgumentException("ZE0005 - Handle not found : {$handle}");
         }
+
+        return $this;
     }
 
     /**
@@ -293,8 +303,9 @@ class AssetManager
      *
      * @param string $handle   Name of the stylesheet to add the extra styles to
      * @param string $data     String containing the CSS styles to be added
-     * @return self
-     * @since 1.0.0
+     * @throws InvalidArgumentException
+     * @return AssetManager
+     * @since 1.1.0
      */
     public function addInlineStyle(string $handle, string $data): self
     {
@@ -308,6 +319,8 @@ class AssetManager
 
             throw new InvalidArgumentException("ZE0006 - Handle not found : {$handle}");
         }
+
+        return $this;
     }
 
     /**
@@ -315,7 +328,7 @@ class AssetManager
      *
      * @param string   $asset      Asset ID
      * @param callable $callback   Callback function
-     * @return self
+     * @return AssetManager
      * @since 1.0.0
      */
     public function addCallback(string $asset, callable $callback): self
@@ -332,7 +345,7 @@ class AssetManager
      *
      * @param string $assetName   SCSS file name
      * @param array  $vars        Vars for SCSS Render
-     * @return self
+     * @return AssetManager
      * @since 1.0.0
      */
     public function addScssVars(string $assetName, array $vars): self
@@ -352,13 +365,13 @@ class AssetManager
      * @param array  $vars          Vars for SCSS Render
      * @param string $assetName     SCSS file name
      * @param string $restriction   Restriction : app or admin mode
-     * @return self
-     * @since 1.0.0
+     * @return AssetManager
+     * @since 1.1.0
      */
     public function addGlobalScssVars(array $vars, string $assetName = '', string $restriction = 'app'): self
     {
         if ($vars) {
-            $globalVars   = Kernel::getGlobalCache('asset/scss/vars', []);
+            $globalVars   = (array) Kernel::getGlobalCache('asset/scss/vars', []);
             $globalVars[] = [
                 'vars'        => $vars,
                 'asset-name'  => $assetName,
@@ -376,7 +389,7 @@ class AssetManager
      *
      * @param string $namespace   Namespace value
      * @param string $location    Path
-     * @return self
+     * @return AssetManager
      * @since 1.0.0
      */
     public function addScssNamespace(string $namespace, string $location): self

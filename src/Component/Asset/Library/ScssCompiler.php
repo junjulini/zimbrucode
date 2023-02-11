@@ -49,7 +49,7 @@ class ScssCompiler
     /**
      * Add directory for parsing
      *
-     * @param  string $path   Directory path
+     * @param string $path   Directory path
      * @return void
      * @since 1.0.0
      */
@@ -78,7 +78,7 @@ class ScssCompiler
     /**
      * Add file for parsing
      *
-     * @param  string $path   File path
+     * @param string $path   File path
      * @return void
      * @since 1.0.0
      */
@@ -95,8 +95,8 @@ class ScssCompiler
     /**
      * Add var
      *
-     * @param  string  $slug    Var slug
-     * @param  mix     $value   Var value
+     * @param string $slug    Var slug
+     * @param mixed  $value   Var value
      * @return void
      * @since 1.0.0
      */
@@ -110,6 +110,7 @@ class ScssCompiler
     /**
      * Compile
      *
+     * @throws RuntimeException
      * @return void
      * @since 1.1.0
      */
@@ -327,7 +328,7 @@ class ScssCompiler
 
         // Remove cache
         if ($removeCache === true) {
-            $assetCache->remove($cachePath);
+            $assetCache->remove();
         }
     }
 }

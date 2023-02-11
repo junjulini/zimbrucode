@@ -51,7 +51,8 @@ abstract class ChildAppKernel extends Kernel
     /**
      * Get application path
      *
-     * @return string   Application path
+     * @param string $path   Additional part of the path
+     * @return string        Application path
      * @since 1.1.0
      */
     final public function getPath(string $path = ''): string
@@ -62,7 +63,8 @@ abstract class ChildAppKernel extends Kernel
     /**
      * Gets the url of the application
      *
-     * @return string   Application URL
+     * @param string $url   Additional part of the URL
+     * @return string       Application URL
      * @since 1.1.0
      */
     final public function getURL(string $url = ''): string
@@ -73,8 +75,8 @@ abstract class ChildAppKernel extends Kernel
     /**
      * Get resource path
      *
-     * @param  string $path   Additional part of the path
-     * @return string         Resource path
+     * @param string $path   Additional part of the path
+     * @return string        Resource path
      * @since 1.1.0
      */
     final public function getResourcePath(string $path = ''): string
@@ -85,8 +87,8 @@ abstract class ChildAppKernel extends Kernel
     /**
      * Get resource URL
      *
-     * @param  string $url   Additional part of the URL
-     * @return string        Resource URL
+     * @param string $url   Additional part of the URL
+     * @return string       Resource URL
      * @since 1.1.0
      */
     final public function getResourceURL(string $url = ''): string

@@ -12,8 +12,8 @@
 namespace ZimbruCode\Module\Panel\Library\Shell;
 
 use ZimbruCode\Component\Core\Kernel;
-use ZimbruCode\Module\Panel\Library\ControlManager;
 use ZimbruCode\Component\TemplateBridges\Helper\ShellKernel;
+use ZimbruCode\Module\Panel\Library\ControlManager;
 
 /**
  * Class : Module/Panel/Library/Shell : Control shell
@@ -45,8 +45,8 @@ class ControlShell extends ShellKernel
      * Get control data
      *
      * @param string $setting   Setting name
-     * @param mix    $default   Default value
-     * @return mix              Control data
+     * @param mixed  $default   Default value
+     * @return mixed            Control data
      * @since 1.0.0
      */
     protected function getControlData(string $setting, $default = null)
@@ -57,9 +57,9 @@ class ControlShell extends ShellKernel
     /**
      * Get control option
      *
-     * @param string $option    Option name
-     * @param mix    $default   Default value
-     * @return mix              Option value
+     * @param string|null $option    Option name
+     * @param mixed       $default   Default value
+     * @return mixed                 Option value
      * @since 1.0.0
      */
     public function option(string $option = null, $default = null)
@@ -99,8 +99,8 @@ class ControlShell extends ShellKernel
     /**
      * Control : Type
      *
-     * @param mix $default   Default value
-     * @return mix           Type
+     * @param mixed $default   Default value
+     * @return mixed           Type
      * @since 1.0.0
      */
     public function type($default = null)
@@ -111,8 +111,8 @@ class ControlShell extends ShellKernel
     /**
      * Control : ID
      *
-     * @param mix $default   Default value
-     * @return mix           ID
+     * @param mixed $default   Default value
+     * @return string|mixed    ID
      * @since 1.0.0
      */
     public function ID($default = '')
@@ -124,8 +124,8 @@ class ControlShell extends ShellKernel
     /**
      * Control : Title
      *
-     * @param mix $default   Default value
-     * @return mix           Title
+     * @param mixed $default   Default value
+     * @return mixed           Title
      * @since 1.0.0
      */
     public function title($default = null)
@@ -136,8 +136,8 @@ class ControlShell extends ShellKernel
     /**
      * Control : Description
      *
-     * @param mix $default   Default value
-     * @return mix           Description
+     * @param mixed $default   Default value
+     * @return mixed           Description
      * @since 1.0.0
      */
     public function desc($default = null)
@@ -148,8 +148,8 @@ class ControlShell extends ShellKernel
     /**
      * Control : Styles
      *
-     * @param mix $default   Default value
-     * @return mix           Styles
+     * @param mixed $default   Default value
+     * @return mixed           Styles
      * @since 1.0.0
      */
     public function style($default = null)
@@ -160,8 +160,8 @@ class ControlShell extends ShellKernel
     /**
      * Control : Classes
      *
-     * @param mix $default   Default value
-     * @return mix           Classes
+     * @param mixed $default   Default value
+     * @return mixed           Classes
      * @since 1.0.0
      */
     public function classes($default = null)
@@ -172,8 +172,8 @@ class ControlShell extends ShellKernel
     /**
      * Control : Full width
      *
-     * @param mix $default   Default value
-     * @return mix           Full width status
+     * @param mixed $default   Default value
+     * @return mixed           Full width status
      * @since 1.0.0
      */
     public function fullWidth($default = false)
@@ -184,8 +184,8 @@ class ControlShell extends ShellKernel
     /**
      * Control : Border line
      *
-     * @param mix $default   Default value
-     * @return mix           Border line
+     * @param mixed $default   Default value
+     * @return mixed           Border line
      * @since 1.0.0
      */
     public function borderLine($default = false)
@@ -196,8 +196,8 @@ class ControlShell extends ShellKernel
     /**
      * Control : Ratio ( desc/content )
      *
-     * @param mix $default   Default value
-     * @return mix           Ratio
+     * @param mixed $default   Default value
+     * @return mixed           Ratio
      * @since 1.0.0
      */
     public function ratio($default = null)
@@ -208,8 +208,8 @@ class ControlShell extends ShellKernel
     /**
      * Control : Help
      *
-     * @param mix $default   Default value
-     * @return mix           Help content
+     * @param mixed $default   Default value
+     * @return mixed           Help content
      * @since 1.0.0
      */
     public function help($default = null)
@@ -220,9 +220,9 @@ class ControlShell extends ShellKernel
     /**
      * Control : Ignore
      *
-     * @param mix     $default   Default value
-     * @param boolean $return    Return or echo
-     * @return mix               Ignore status
+     * @param mixed $default   Default value
+     * @param bool  $return    Return or echo
+     * @return string|null     Ignore status
      * @since 1.0.0
      */
     public function ignore($default = null, bool $return = false)
@@ -239,8 +239,8 @@ class ControlShell extends ShellKernel
     /**
      * Control : Default value
      *
-     * @param mix $default   Default value
-     * @return mix           Control default value
+     * @param mixed $default   Default value
+     * @return mixed           Control default value
      * @since 1.0.0
      */
     public function defaultValue($default = null)
@@ -251,8 +251,8 @@ class ControlShell extends ShellKernel
     /**
      * Control : Condition
      *
-     * @param mix $default   Default value
-     * @return mix           Condition
+     * @param mixed $default   Default value
+     * @return mixed           Condition
      * @since 1.0.0
      */
     public function condition($default = null)
@@ -263,8 +263,8 @@ class ControlShell extends ShellKernel
     /**
      * Control : Operator
      *
-     * @param mix $default   Default value
-     * @return mix           Operator
+     * @param mixed $default   Default value
+     * @return mixed           Operator
      * @since 1.0.0
      */
     public function operator($default = null)
@@ -275,8 +275,8 @@ class ControlShell extends ShellKernel
     /**
      * Control : Internal content ( controls )
      *
-     * @param mix $default   Default value
-     * @return mix           Internal content
+     * @param mixed $default   Default value
+     * @return mixed           Internal content
      * @since 1.0.0
      */
     public function content($default = null)
@@ -287,8 +287,8 @@ class ControlShell extends ShellKernel
     /**
      * Control : Additional settings
      *
-     * @param mix $default   Default value
-     * @return mix           Additional settings
+     * @param mixed $default   Default value
+     * @return mixed           Additional settings
      * @since 1.0.0
      */
     public function settings($default = null)

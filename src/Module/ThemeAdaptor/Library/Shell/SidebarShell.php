@@ -18,14 +18,14 @@ use ZimbruCode\Component\TemplateBridges\Helper\ShellKernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 class SidebarShell extends ShellKernel
 {
     /**
      * Display dynamic sidebar
      *
-     * @param int|string $index   Index, name or ID of dynamic sidebar
+     * @param mixed $index   Index, name or ID of dynamic sidebar
      * @return void
      * @since 1.0.0
      */
@@ -37,11 +37,11 @@ class SidebarShell extends ShellKernel
     /**
      * Determines whether a sidebar contains widgets
      *
-     * @param string|int $index   Sidebar name, id or number to check
-     * @return boolean            True if the sidebar has widgets, false otherwise
-     * @since 1.0.0
+     * @param mixed $index   Sidebar name, id or number to check
+     * @return bool          True if the sidebar has widgets, false otherwise
+     * @since 1.1.0
      */
-    public function has($index)
+    public function has($index): bool
     {
         return is_active_sidebar($index);
     }
