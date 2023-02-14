@@ -18,7 +18,7 @@ use ZimbruCode\Component\TemplateBridges\Helper\ShellKernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 class SearchShell extends ShellKernel
 {
@@ -27,7 +27,7 @@ class SearchShell extends ShellKernel
      *
      * @param array $args   Array of display arguments
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function form(array $args = []): void
     {
@@ -39,7 +39,7 @@ class SearchShell extends ShellKernel
      *
      * @param bool $escaped   Whether the result is escaped. Only use when you are later escaping it. Do not use unescaped
      * @return string         Action result
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function query(bool $escaped = true): string
     {

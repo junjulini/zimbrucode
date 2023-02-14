@@ -19,7 +19,7 @@ use ZimbruCode\Component\Core\Kernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 trait GlobalCacheHandlerTrait
 {
@@ -29,7 +29,7 @@ trait GlobalCacheHandlerTrait
      * @param string $key     Cache key
      * @param mixed  $value   Cache value
      * @throws InvalidArgumentException
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public static function addGlobalCache(string $key, $value = '')
     {
@@ -47,7 +47,7 @@ trait GlobalCacheHandlerTrait
      * @param mixed  $default   Default value if key does not exist
      * @throws InvalidArgumentException
      * @return mixed
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public static function getGlobalCache(string $key, $default = false)
     {
@@ -63,7 +63,7 @@ trait GlobalCacheHandlerTrait
      *
      * @param string $key   Cache key
      * @throws InvalidArgumentException
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public static function remGlobalCache(string $key): bool
     {

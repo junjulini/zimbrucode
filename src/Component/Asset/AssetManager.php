@@ -39,7 +39,7 @@ class AssetManager
      * 
      * @param bool   $autoFilter       Auto filter status
      * @param string $customLocation   Custom location
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function __construct(bool $autoFilter = true, string $customLocation = '')
     {
@@ -212,7 +212,7 @@ class AssetManager
      *
      * @param string $logTitle   Log title
      * @return AssetManager
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function enroll(string $logTitle = ''): self
     {

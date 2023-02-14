@@ -18,7 +18,7 @@ use ZimbruCode\Component\Core\Kernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 trait OptionHandlerTrait
 {
@@ -27,7 +27,7 @@ trait OptionHandlerTrait
      *
      * @param string $option   Option name
      * @return string           Prepared option
-     * @since 1.0.0
+     * @since 1.1.0
      */
     private static function __prepOption(string $option): string
     {

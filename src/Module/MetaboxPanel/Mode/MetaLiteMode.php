@@ -169,7 +169,7 @@ class MetaLiteMode extends Mode
         }
 
         // Check permissions
-        if (in_array(self::rPost('post_type'), $this->getModuleSetting('screen'))) {
+        if (in_array(sanitize_text_field(self::rPost('post_type')), $this->getModuleSetting('screen'))) {
             if (!current_user_can('edit_page', $postID)) {
                 return $postID;
             }

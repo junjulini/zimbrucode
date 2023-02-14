@@ -59,7 +59,7 @@ class LocationDetector
      * @param  string $path   Part of path
      * @throws InvalidArgumentException
      * @return string         Asset path
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function get(string $path): string
     {
@@ -82,7 +82,7 @@ class LocationDetector
      * @param  string $path   Path of asset
      * @throws RuntimeException
      * @return string         Elaborated path
-     * @since 1.0.0
+     * @since 1.1.0
      */
     protected function definedAsString(string $path): string
     {
@@ -121,7 +121,7 @@ class LocationDetector
      * @param  string $path   Path of asset
      * @throws RuntimeException
      * @return string         Elaborated path
-     * @since 1.0.0
+     * @since 1.1.0
      */
     protected function definedAsPath(string $path): string
     {
@@ -138,7 +138,7 @@ class LocationDetector
      * @param  string $path   Path of asset
      * @throws RuntimeException
      * @return string         Elaborated path
-     * @since 1.0.0
+     * @since 1.1.0
      */
     protected function definedAsURL(string $path): string
     {

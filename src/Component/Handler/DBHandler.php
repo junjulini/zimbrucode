@@ -75,7 +75,7 @@ class DBHandler
      *
      * @throws RuntimeException
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     protected function checkError(): void
     {
@@ -114,7 +114,7 @@ class DBHandler
      * Cache database table
      *
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     protected function cacheData(): void
     {
@@ -141,7 +141,7 @@ class DBHandler
      *
      * @param string $key   Name of the table element from the database
      * @return bool         Result of checking
-     * @since 1.0.0
+     * @since 1.1.0
      */
     protected function cacheSpecificData(string $key): bool
     {
@@ -173,7 +173,7 @@ class DBHandler
      * @param string $path      Array path
      * @param mixed  $default   Default value
      * @return mixed            Database item value
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function get(string $path = '', $default = false)
     {

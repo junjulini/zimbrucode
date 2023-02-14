@@ -19,7 +19,7 @@ use ZimbruCode\Component\Common\Tools;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 trait ControlTrait
 {
@@ -27,7 +27,7 @@ trait ControlTrait
      * Initialization of controls
      *
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function initControls(): void
     {
@@ -40,7 +40,7 @@ trait ControlTrait
      * @param  array $data   Custom variables
      * @throws RuntimeException
      * @return array         Combine assets variables
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function mergeControlsLocalizeVars(array $data): array
     {

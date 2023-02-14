@@ -13,7 +13,7 @@
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 
 'use strict';
@@ -177,7 +177,7 @@ export default class Base extends Kernel {
      * Check if any changes have been made
      * 
      * @return {string}   Message
-     * @since 1.0.0
+     * @since 1.1.0
      */
     ifChanged() {
         $(document).on('click', '#publishing-action #publish', () => {

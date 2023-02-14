@@ -31,7 +31,7 @@ use ZimbruCode\Component\TemplateBridges\Helper\TwigFunctions;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 class TwigTemplateBridge
 {
@@ -79,7 +79,7 @@ class TwigTemplateBridge
      *
      * @throws RuntimeException
      * @return Environment   TWIG Environment
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function getTWIG(): Environment
     {
@@ -95,7 +95,7 @@ class TwigTemplateBridge
      *
      * @throws RuntimeException
      * @return FilesystemLoader   TWIG filesystem loader
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function getLoader(): FilesystemLoader
     {
@@ -112,7 +112,7 @@ class TwigTemplateBridge
      * @param  string $name   Var name
      * @throws RuntimeException
      * @return mixed
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function __get(string $name)
     {
@@ -130,7 +130,7 @@ class TwigTemplateBridge
      * @param  mixed  $value   Var value
      * @throws RuntimeException
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function __set(string $name, $value)
     {
@@ -147,7 +147,7 @@ class TwigTemplateBridge
      * @param  string $name   Var name
      * @throws RuntimeException
      * @return mixed
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function getVar(string $name)
     {
@@ -204,7 +204,7 @@ class TwigTemplateBridge
      * @param string|null $namespace   Templates namespace
      * @throws RuntimeException
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function addLocationPath(string $path, string $namespace = null): void
     {
@@ -225,7 +225,7 @@ class TwigTemplateBridge
      * @param string $cache   Cache path
      * @throws RuntimeException
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function addCachePath(string $path): void
     {
@@ -247,7 +247,7 @@ class TwigTemplateBridge
      * @param  callable $method   Callback
      * @throws InvalidArgumentException
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function addFunction(string $name, callable $method): void
     {
@@ -265,7 +265,7 @@ class TwigTemplateBridge
      * @param  callable $method   Callback
      * @throws InvalidArgumentException
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function addEscaper(string $name, callable $method): void
     {
@@ -283,7 +283,7 @@ class TwigTemplateBridge
      * @param  callable $method   Callback
      * @throws InvalidArgumentException
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function addFilter(string $name, callable $method): void
     {
@@ -311,7 +311,7 @@ class TwigTemplateBridge
      *
      * @throws RuntimeException
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function addLoader(): void
     {

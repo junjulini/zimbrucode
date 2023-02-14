@@ -13,7 +13,7 @@
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 
 'use strict';
@@ -51,7 +51,7 @@ export default class DirectNotification extends Kernel {
      * @param  {integer}  duration Time of removing
      * @param  {Function} callback Callback function after removing
      * @return {null}              None
-     * @since 1.0.0
+     * @since 1.1.0
      */
     add(type, title, content, duration, callback) {
         type     = type || this.type;

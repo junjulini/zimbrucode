@@ -13,7 +13,7 @@
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 
 'use strict';
@@ -54,7 +54,7 @@ export default class Callback {
      * Run callback
      * 
      * @return {null}   None
-     * @since 1.0.0
+     * @since 1.1.0
      */
     run(name) {
         if (name !== undefined && name !== '') {

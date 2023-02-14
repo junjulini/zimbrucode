@@ -503,7 +503,7 @@ class ScriptHandler
      *
      * @param Event $event   Event object
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public static function minify(Event $event): void
     {

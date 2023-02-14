@@ -38,7 +38,7 @@ class AssetCache
     /**
      * Constructor
      *
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function __construct()
     {
@@ -61,7 +61,7 @@ class AssetCache
      * @param string $value     Setting value
      * @throws RuntimeException
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function addSetting(string $setting, string $value = ''): void
     {
@@ -90,7 +90,7 @@ class AssetCache
      * @param string $class               Class name
      * @throws InvalidArgumentException
      * @return string                     Location
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function addExecuteLocation(string $class): string
     {
@@ -133,7 +133,7 @@ class AssetCache
      * @param string $path   Cache file path
      * @throws InvalidArgumentException
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function addPath(string $path = 'file.cache'): void
     {
@@ -279,7 +279,8 @@ class AssetCache
      * Get the contents of the cache
      *
      * @throws RuntimeException
-     * @since 1.0.0
+     * @return array
+     * @since 1.1.0
      */
     public function get(): array
     {
@@ -300,7 +301,7 @@ class AssetCache
      * @param array $data   Cache data
      * @throws RuntimeException
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function add(array $data): void
     {
@@ -320,7 +321,7 @@ class AssetCache
      *
      * @throws RuntimeException
      * @return bool   Result of checking
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function has(): bool
     {
@@ -340,7 +341,7 @@ class AssetCache
      *
      * @throws RuntimeException
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function remove(): void
     {

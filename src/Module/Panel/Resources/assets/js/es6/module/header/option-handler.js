@@ -13,7 +13,7 @@
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 
 'use strict';
@@ -45,7 +45,7 @@ export default class OptionHandler extends Kernel {
     /**
      * Show loading
      * 
-     * @since 1.0.0
+     * @since 1.1.0
      */
     showLoading() {
         $('.zc-panel-save-starter-button').hide();
@@ -56,7 +56,7 @@ export default class OptionHandler extends Kernel {
     /**
      * Hide loading
      * 
-     * @since 1.0.0
+     * @since 1.1.0
      */
     hideLoading() {
         $('.zc-panel-save-starter-button').css('display', 'flex');
@@ -67,7 +67,7 @@ export default class OptionHandler extends Kernel {
     /**
      * Save options
      * 
-     * @since 1.0.0
+     * @since 1.1.0
      */
     save() {
         this.click('.zc-panel-save-starter-button', ($this) => {
@@ -133,7 +133,7 @@ export default class OptionHandler extends Kernel {
     /**
      * Reset options
      * 
-     * @since 1.0.0
+     * @since 1.1.0
      */
     reset() {
         this.click('.zc-panel-reset-starter-button', () => {

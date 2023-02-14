@@ -189,7 +189,7 @@ class MetaMode extends Mode
         }
 
         // Check permissions
-        if (in_array(self::rPost('post_type'), $this->getModuleSetting('screen'))) {
+        if (in_array(sanitize_text_field(self::rPost('post_type')), $this->getModuleSetting('screen'))) {
             if (!current_user_can('edit_page', $postID)) {
                 return $postID;
             }
@@ -223,7 +223,7 @@ class MetaMode extends Mode
      * Ajax : Reset options
      *
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function __ajax_options_reset(): void
     {

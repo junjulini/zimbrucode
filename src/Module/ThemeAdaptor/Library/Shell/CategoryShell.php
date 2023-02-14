@@ -18,7 +18,7 @@ use ZimbruCode\Component\TemplateBridges\Helper\ShellKernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 class CategoryShell extends ShellKernel
 {
@@ -28,7 +28,7 @@ class CategoryShell extends ShellKernel
      * @param string $prefix    What to display before the title
      * @param bool   $display   Whether to display or retrieve title
      * @return mixed            Title when retrieving
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function singleTitle(string $prefix = '', bool $display = true)
     {
@@ -40,7 +40,7 @@ class CategoryShell extends ShellKernel
      *
      * @param int|null $category   Defaults to the current category ID
      * @return string              Category description, if available
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function description(int $category = null): string
     {
@@ -52,7 +52,7 @@ class CategoryShell extends ShellKernel
      *
      * @param int|null $tag   Tag ID. Defaults to the current tag ID
      * @return string         Tag description, if available
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function tagDescription(int $tag = null): string
     {
@@ -66,7 +66,7 @@ class CategoryShell extends ShellKernel
      * @param mixed $taxonomies   The taxonomy names to retrieve terms from
      * @param mixed $args         See WP_Term_Query::__construct() for supported arguments
      * @return mixed              Array of terms or empty array if no terms found. WP_Error if any of the taxonomies don't exist
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function objectTerms($objectIDs = null, $taxonomies = null, $args = [])
     {

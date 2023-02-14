@@ -30,7 +30,7 @@ class DataCollector
      * @param string  $path      Array path
      * @param mixed   $default   Default value
      * @return mixed             Item data
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function get(string $path, $default = false)
     {

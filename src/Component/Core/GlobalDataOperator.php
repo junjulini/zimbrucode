@@ -172,7 +172,7 @@ abstract class GlobalDataOperator
      * @throws InvalidArgumentException
      * @throws RuntimeException
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     final protected static function addGlobalVarSlug(string $slug): void
     {
@@ -258,7 +258,7 @@ abstract class GlobalDataOperator
      * @param  mixed  $value   Value
      * @throws InvalidArgumentException
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     final public static function addGlobal(string $path, $value): void
     {
@@ -284,7 +284,7 @@ abstract class GlobalDataOperator
      * @param  string $path   Array path
      * @throws InvalidArgumentException
      * @return bool           Action result
-     * @since 1.0.0
+     * @since 1.1.0
      */
     final public static function remGlobal(string $path): bool
     {
@@ -312,7 +312,7 @@ abstract class GlobalDataOperator
      * @param  string $path   Array path
      * @throws InvalidArgumentException
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     final public static function dumpGlobal(string $path = ''): void
     {

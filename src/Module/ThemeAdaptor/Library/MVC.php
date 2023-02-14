@@ -27,7 +27,7 @@ use ZimbruCode\Component\Handler\Traits\SessionHandlerTrait;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.3
+ * @since   1.1.0
  */
 class MVC
 {
@@ -41,7 +41,7 @@ class MVC
      * @param string $template         Template path
      * @param string $TDP              Templates directory path
      * @param array  $additionalData   Additional data for rendering
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function __construct(string $template, string $TDP, array $additionalData = [])
     {
@@ -103,7 +103,7 @@ class MVC
      *
      * @param  string $name   Variable name
      * @return mixed            Variable value
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function __get(string $name)
     {
@@ -116,7 +116,7 @@ class MVC
      * @param string $name    Variable name
      * @param mixed  $value   Variable value
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function __set(string $name, $value)
     {
@@ -128,7 +128,7 @@ class MVC
      *
      * @param string $name    Variable name
      * @return mixed          Variable value
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function getTwigVar(string $name)
     {
@@ -141,7 +141,7 @@ class MVC
      * @param string $name    Variable name
      * @param mixed  $value   Variable value
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function addTwigVar(...$args): void
     {
@@ -153,7 +153,7 @@ class MVC
      *
      * @param array $vars   List of variables
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function addTwigVars(array $vars): void
     {
@@ -166,7 +166,7 @@ class MVC
      * @param string   $name     Function name
      * @param callable $method   Callback
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function addTwigFunction(...$args): void
     {
@@ -179,7 +179,7 @@ class MVC
      * @param string   $name     Escaper name
      * @param callable $method   Callback
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function addTwigEscaper(...$args): void
     {
@@ -192,7 +192,7 @@ class MVC
      * @param string   $name     Filter name
      * @param callable $method   Callback
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function addTwigFilter(...$args): void
     {

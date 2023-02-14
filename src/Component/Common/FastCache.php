@@ -32,7 +32,7 @@ class FastCache
     /**
      * Constructor
      *
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function __construct()
     {
@@ -59,7 +59,7 @@ class FastCache
      * @param  mixed  $default   Default value
      * @throws RuntimeException
      * @return mixed             Item data
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function get(string $key, $default = false)
     {
@@ -77,7 +77,7 @@ class FastCache
      * @param  mixed  $value   Item value
      * @throws RuntimeException
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function add(string $key, $value = ''): void
     {

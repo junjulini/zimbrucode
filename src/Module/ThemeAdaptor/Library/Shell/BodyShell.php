@@ -18,7 +18,7 @@ use ZimbruCode\Component\TemplateBridges\Helper\ShellKernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 class BodyShell extends ShellKernel
 {
@@ -26,7 +26,7 @@ class BodyShell extends ShellKernel
      * Fire the wp_head action
      *
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function head(): void
     {
@@ -37,7 +37,7 @@ class BodyShell extends ShellKernel
      * Fire the wp_footer action
      *
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function footer(): void
     {
@@ -49,7 +49,7 @@ class BodyShell extends ShellKernel
      *
      * @param string $doctype   The type of HTML document. Accepts 'xhtml' or 'html'
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function languageAttributes(string $doctype = 'html'): void
     {
@@ -61,7 +61,7 @@ class BodyShell extends ShellKernel
      *
      * @param string $class   Space-separated string or array of class names to add to the class list
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function classes(string $class = ''): void
     {
@@ -72,7 +72,7 @@ class BodyShell extends ShellKernel
      * Fire the wp_body_open action
      *
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function firstAction(): void
     {
@@ -85,7 +85,7 @@ class BodyShell extends ShellKernel
      * @param string $sep           How to separate the various items within the page title. Default '»'
      * @param string $sepLocation   Location of the separator ('left' or 'right')
      * @return mixed                Action result
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function title(string $sep = '&raquo;', string $sepLocation = '')
     {

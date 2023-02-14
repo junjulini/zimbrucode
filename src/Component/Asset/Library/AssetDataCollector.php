@@ -27,7 +27,7 @@ use ZimbruCode\Component\Common\Tools;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 class AssetDataCollector
 {
@@ -79,7 +79,7 @@ class AssetDataCollector
      * @param  callable|null $callback     Callback for additional asset manipulation
      * @throws InvalidArgumentException
      * @return AssetDataCollector
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function add($asset, bool $autoFilter = false, callable $callback = null): self
     {
@@ -126,7 +126,7 @@ class AssetDataCollector
      * @param  string|null $asset           Asset name
      * @throws InvalidArgumentException
      * @return AssetData|array<AssetData>   Asset data / Assets
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function get(string $asset = null)
     {
@@ -163,7 +163,7 @@ class AssetDataCollector
      * @param  string $asset   Asset name
      * @throws InvalidArgumentException
      * @return bool            Removal result
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function remove(string $asset): bool
     {

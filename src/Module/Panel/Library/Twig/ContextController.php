@@ -56,7 +56,7 @@ class ContextController
      * @param  string  $key   Item key
      * @throws InvalidArgumentException
      * @return mixed          Item data
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function get(string $key = '')
     {

@@ -18,7 +18,7 @@ use ZimbruCode\Component\TemplateBridges\Helper\ShellKernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 class GeneralShell extends ShellKernel
 {
@@ -55,7 +55,7 @@ class GeneralShell extends ShellKernel
      * @param string      $sep               String to use between the terms
      * @param string      $after             String to use after the terms
      * @return mixed                         A list of terms on success, false if there are no terms, WP_Error on failure
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function getTermList(int $postID = null, string $taxonomy = null, string $before = '', string $sep = '', string $after = '')
     {
@@ -68,7 +68,7 @@ class GeneralShell extends ShellKernel
      * @param string $show     Site info to retrieve. Default empty (site name)
      * @param string $filter   How to filter what is retrieved
      * @return string          Mostly string values, might be empty
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function blogInfo(string $show = '', string $filter = 'raw'): string
     {
@@ -82,7 +82,7 @@ class GeneralShell extends ShellKernel
      * @param string      $path     Path relative to the home URL
      * @param string|null $scheme   Scheme to give the home URL context. Accepts 'http', 'https', 'relative', 'rest', or null
      * @return string               Home URL link with optional path appended
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function homeURL(int $blogID = null, string $path = '', string $scheme = null): string
     {

@@ -33,7 +33,7 @@ use ZimbruCode\Module\ThemeAdaptor\Library\TwigFunctions;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 class Render
 {
@@ -54,7 +54,7 @@ class Render
      * @param  string $locationPath   Templates directory path
      * @param  bool   $flush          "Flush" status
      * @throws InvalidArgumentException
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function __construct(string $template, string $locationPath = '', bool $flush = true)
     {
@@ -77,7 +77,7 @@ class Render
      * Setup environment
      *
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function setupEnvironment()
     {
@@ -200,7 +200,7 @@ class Render
      * @param  callable $method   Callback
      * @throws InvalidArgumentException
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function addFunction(string $name, callable $method): void
     {
@@ -218,7 +218,7 @@ class Render
      * @param  callable $method   Callback
      * @throws InvalidArgumentException
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function addEscaper(string $name, callable $method): void
     {
@@ -236,7 +236,7 @@ class Render
      * @param  callable $method   Callback
      * @throws InvalidArgumentException
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function addFilter(string $name, callable $method): void
     {

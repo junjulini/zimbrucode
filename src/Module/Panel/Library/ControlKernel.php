@@ -24,7 +24,7 @@ use ZimbruCode\Module\Panel\Library\Traits\ContentUtilityTrait;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 abstract class ControlKernel extends ModuleKernel
 {
@@ -35,7 +35,7 @@ abstract class ControlKernel extends ModuleKernel
      *
      * @param string $path   Additional part of the path
      * @return string        Control path
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function getControlPath(string $path = ''): string
     {
@@ -61,7 +61,7 @@ abstract class ControlKernel extends ModuleKernel
      * @param string $method   Callback
      * @param string $type     Part of the hook name
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     protected function addTemplateFunction(string $name, string $method, string $type = 'control_shell'): void
     {
@@ -108,10 +108,10 @@ abstract class ControlKernel extends ModuleKernel
     /**
      * Add control asset
      *
-     * @param string $path   Asset path or package name
+     * @param  string $path   Asset path or package name
      * @throws InvalidArgumentException
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     protected function addAsset(string $path): void
     {

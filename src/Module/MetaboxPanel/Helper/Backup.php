@@ -22,7 +22,7 @@ use ZimbruCode\Module\Panel\Library\Mode;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 class Backup extends Kernel
 {
@@ -33,7 +33,7 @@ class Backup extends Kernel
      * Constructor
      *
      * @param Mode $mode   Mode object
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function __construct(Mode $mode)
     {
@@ -66,7 +66,7 @@ class Backup extends Kernel
      * @param AjaxHandler $ajax       AjaxHandler object
      * @param string      $pageType   Page type [post, page, portfolio ...]
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     protected function getContent(AjaxHandler $ajax, string $pageType): void
     {
@@ -99,7 +99,7 @@ class Backup extends Kernel
      * @param  string      $pageType   Page type [post, page, portfolio ...]
      * @throws RuntimeException
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     protected function save(AjaxHandler $ajax, string $pageType): void
     {
@@ -181,7 +181,7 @@ class Backup extends Kernel
      * @param  string      $pageType   Page type [post, page, portfolio ...]
      * @throws RuntimeException
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     protected function delete(AjaxHandler $ajax, string $pageType): void
     {
@@ -214,7 +214,7 @@ class Backup extends Kernel
      * @param  string      $pageType   Page type [post, page, portfolio ...]
      * @throws RuntimeException
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     protected function deleteItem(AjaxHandler $ajax, string $pageType): void
     {
@@ -250,7 +250,7 @@ class Backup extends Kernel
      * @param  string      $pageType   Page type [post, page, portfolio ...]
      * @throws RuntimeException
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     protected function restore(AjaxHandler $ajax, string $pageType): void
     {
@@ -288,7 +288,7 @@ class Backup extends Kernel
      * Ajax : Backup action
      *
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function __ajax_backup(): void
     {

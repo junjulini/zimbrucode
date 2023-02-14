@@ -40,7 +40,7 @@ abstract class ModuleKernel extends Kernel
      *
      * @param DataCollector     $collector      Data collector object
      * @param ModuleKernel|null $moduleParent   Parent module
-     * @since 1.0.0
+     * @since 1.1.0
      */
     final public function __construct(DataCollector $collector, ModuleKernel $moduleParent = null)
     {
@@ -62,7 +62,7 @@ abstract class ModuleKernel extends Kernel
      *
      * @throws RuntimeException
      * @return ModuleKernel
-     * @since 1.0.0
+     * @since 1.1.0
      */
     final public function moduleParent(): ModuleKernel
     {

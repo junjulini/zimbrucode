@@ -13,7 +13,7 @@
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 
 'use strict';
@@ -41,7 +41,7 @@ export default class Reset extends Kernel {
      * Confirm action
      * 
      * @return {null}   None
-     * @since 1.0.0
+     * @since 1.1.0
      */
     confirm() {
         this.click('.zc-metabox-panel-reset-button', () => {

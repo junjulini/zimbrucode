@@ -37,7 +37,7 @@ class CssConvertor
      * @throws InvalidArgumentException
      * @throws RuntimeException
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function addAsset(string $asset): void
     {
@@ -58,7 +58,7 @@ class CssConvertor
      * @param string $output   Output file path
      * @throws InvalidArgumentException
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function addOutput(string $output): void
     {
@@ -75,7 +75,7 @@ class CssConvertor
      * @param string $content   Content of asset
      * @throws InvalidArgumentException
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function add(string $content): void
     {
@@ -91,7 +91,7 @@ class CssConvertor
      *
      * @throws RuntimeException
      * @return string   Asset content
-     * @since 1.0.0
+     * @since 1.1.0
      */
     protected function get(): string
     {

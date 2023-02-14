@@ -21,7 +21,7 @@ use ZimbruCode\Module\Panel\Library\Traits\ControlTrait;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 class PageMode extends Mode
 {
@@ -36,7 +36,7 @@ class PageMode extends Mode
     public function setup(): void
     {
         // Preparing controls & assets
-        if (self::rGet('page') == $this->getModuleSetting('menu-slug')) {
+        if (sanitize_text_field(self::rGet('page')) == $this->getModuleSetting('menu-slug')) {
 
             // Remove screen options
             $this->addFilter('screen_options_show_screen', '__return_false');
@@ -95,7 +95,7 @@ class PageMode extends Mode
      * Action : Enqueue styles and scripts for panel
      *
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function __action_enqueue(): void
     {
@@ -179,7 +179,7 @@ class PageMode extends Mode
      *
      * @param WP_Admin_Bar $wpAdminBar
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function __action_bar_render(WP_Admin_Bar $wpAdminBar): void
     {
@@ -266,7 +266,7 @@ class PageMode extends Mode
      * Ajax : Panel content
      *
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function __ajax_load_panel_content(): void
     {
@@ -306,7 +306,7 @@ class PageMode extends Mode
      * Ajax : Save options
      *
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function __ajax_save_options(): void
     {
@@ -341,7 +341,7 @@ class PageMode extends Mode
      * Ajax : Reset options
      *
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function __ajax_reset_options(): void
     {

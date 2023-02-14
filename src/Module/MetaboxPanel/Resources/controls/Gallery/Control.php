@@ -18,7 +18,7 @@ use ZimbruCode\Module\Panel\Library\ControlKernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 class Control extends ControlKernel
 {
@@ -26,7 +26,7 @@ class Control extends ControlKernel
      * Control setup
      *
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function setup(): void
     {
@@ -49,7 +49,7 @@ class Control extends ControlKernel
      *
      * @param string $value   Value from BD
      * @return string         Image path
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function __callback_get_attachment_image_src(string $value = ''): string
     {

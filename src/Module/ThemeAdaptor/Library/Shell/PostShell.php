@@ -19,7 +19,7 @@ use ZimbruCode\Component\TemplateBridges\Helper\ShellKernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 class PostShell extends ShellKernel
 {
@@ -27,7 +27,7 @@ class PostShell extends ShellKernel
      * Get the ID of the current item in the WordPress Loop
      *
      * @return mixed   The ID of the current item in the WordPress Loop. False if $post is not set
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function ID()
     {
@@ -40,7 +40,7 @@ class PostShell extends ShellKernel
      * @param bool $return   Echo/Return
      * @param int  $postID   Post ID
      * @return mixed
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function title(bool $return = false, int $postID = 0)
     {
@@ -73,7 +73,7 @@ class PostShell extends ShellKernel
      * @param bool        $stripTeaser    Strip teaser content before the more text
      * @param mixed       $post           WP_Post instance or Post ID/object
      * @return string                     Action result
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function getContent(string $moreLinkText = null, bool $stripTeaser = false, $post = null): string
     {
@@ -85,7 +85,7 @@ class PostShell extends ShellKernel
      *
      * @param int $postID   Post ID
      * @return mixed       The permalink URL or false if post does not exist
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function link(int $postID = 0)
     {
@@ -111,7 +111,7 @@ class PostShell extends ShellKernel
      * @param string $format   Format to use for retrieving the time the post was written. Accepts 'G', 'U', or PHP date format
      * @param mixed  $post     WP_Post object or ID. Default is global $post object
      * @return mixed           Formatted date string or Unix timestamp if $format is 'U' or 'G'. False on failure
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function time(string $format = '', $post = null)
     {
@@ -150,7 +150,7 @@ class PostShell extends ShellKernel
      * @param mixed    $default   Default value
      * @param int|null $id        Post ID
      * @return mixed              Action result
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function meta(string $meta, $default = '', int $id = null)
     {
@@ -163,7 +163,7 @@ class PostShell extends ShellKernel
      * @param mixed $size   Image size. Accepts any registered image size name, or an array of width and height values in pixels (in that order)
      * @param mixed $attr   Query string or array of attributes
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function image($size = 'post-thumbnail', $attr = ''): void
     {
@@ -175,7 +175,7 @@ class PostShell extends ShellKernel
      *
      * @param mixed$post   Post ID or WP_Post object. Default is global $post
      * @return bool        Whether the post has an image attached
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function hasImage($post = null): bool
     {
@@ -188,7 +188,7 @@ class PostShell extends ShellKernel
      * @param mixed $post   Post ID or WP_Post object. Default is global $post
      * @param mixed $size   Registered image size to retrieve the source for or a flat array of height and width dimensions
      * @return mixed        Post thumbnail URL or false if no image is available. If $size does not match any registered image size, the original image URL will be returned
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function imageURL($post = null, $size = 'post-thumbnail')
     {
@@ -200,7 +200,7 @@ class PostShell extends ShellKernel
      *
      * @param mixed $post   Post ID or WP_Post object. Default is global $post
      * @return string       Post thumbnail caption
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function imageCaption($post = null): string
     {
@@ -212,7 +212,7 @@ class PostShell extends ShellKernel
      *
      * @param array $args   Default arguments
      * @return string       Formatted output in HTML
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function linkPages(array $args = []): string
     {
@@ -227,7 +227,7 @@ class PostShell extends ShellKernel
      * @param string   $after      String to use after the tags
      * @param int|null $postID     Post ID. Defaults to the current post ID
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function tagList(string $before = '', string $sep = '', string $after = '', int $postID = null): void
     {
@@ -243,7 +243,7 @@ class PostShell extends ShellKernel
      * @param mixed  $excludedTerms   Array or comma-separated list of excluded term IDs
      * @param string $taxonomy        Taxonomy, if $in_same_term is true
      * @return string                 The link URL of the previous post in relation to the current post
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function previousPageLink(string $format = '&laquo; %link', string $link = '%title', bool $inSameTerm = false, $excludedTerms = '', string $taxonomy = 'category'): string
     {
@@ -259,7 +259,7 @@ class PostShell extends ShellKernel
      * @param mixed  $excludedTerms   Array or comma-separated list of excluded term IDs
      * @param string $taxonomy        Taxonomy, if $in_same_term is true
      * @return string                 The link URL of the previous post in relation to the current post
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function nextPageLink(string $format = '%link &raquo;', string $link = '%title', bool $inSameTerm = false, $excludedTerms = '', string $taxonomy = 'category'): string
     {

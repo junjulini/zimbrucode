@@ -145,7 +145,7 @@ class Tools
      * @param  string $delimiter   Path separator
      * @throws InvalidArgumentException
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public static function addNode(array &$array, string $path, &$value, string $delimiter = '/'): void
     {
@@ -175,7 +175,7 @@ class Tools
      * @param  string $delimiter
      * @throws InvalidArgumentException
      * @return mixed             Action result
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public static function getNode(array $array, string $path, $default = null, string $delimiter = '/')
     {
@@ -209,7 +209,7 @@ class Tools
      * @param  string $delimiter
      * @throws InvalidArgumentException
      * @return bool            Action result
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public static function unsetNode(array &$array, string $path, string $delimiter = '/'): bool
     {
@@ -291,7 +291,7 @@ class Tools
      * @param int   $height   Image height
      * @param bool  $crop     Crop image
      * @return array          Image data
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public static function resizeImg($image, bool $isURL = false, int $width = 9999, int $height = 9999, bool $crop = false): array
     {
@@ -506,7 +506,7 @@ class Tools
      * @param  string $image   File
      * @throws InvalidArgumentException
      * @return bool            Result of checking
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public static function checkImage(string $image): bool
     {
@@ -576,7 +576,7 @@ class Tools
      * @param  string $replace   The replacement value that replaces found spaces
      * @throws InvalidArgumentException
      * @return string            Action result
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public static function replaceSpaces(string $input, string $replace = '-'): string
     {
@@ -811,7 +811,7 @@ class Tools
      * @param  string $file   File path
      * @throws InvalidArgumentException
      * @return int            Number of lines
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public static function getLineCount(string $file): int
     {
@@ -863,7 +863,7 @@ class Tools
      * @param  string $to     Destination path
      * @throws InvalidArgumentException
      * @return string         Relative path
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public static function getRelativePath(string $from, string $to): string
     {
@@ -1019,7 +1019,7 @@ class Tools
      * @param  string $errorMsgPart   Part of error message
      * @throws RuntimeException
      * @return array                  Decoded array data
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public static function jsonDecode(string $json, string $errorMsgPart = ''): array
     {

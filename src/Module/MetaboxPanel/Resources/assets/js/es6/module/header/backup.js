@@ -13,7 +13,7 @@
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 
 'use strict';
@@ -56,7 +56,7 @@ export default class Backup extends Kernel {
      * Backup button
      * 
      * @return {null}   None
-     * @since 1.0.0
+     * @since 1.1.0
      */
     backupButton() {
         this.click('.zc-metabox-panel-backup-button', () => {
@@ -90,7 +90,7 @@ export default class Backup extends Kernel {
      * Save backup
      * 
      * @return {null}   None
-     * @since 1.0.0
+     * @since 1.1.0
      */
     saveBackup() {
         $('.zc-popup').on('click', '.zc-popup-backup__save-button', (event) => {
@@ -132,7 +132,7 @@ export default class Backup extends Kernel {
      * Delete all backups
      * 
      * @return {null}   None
-     * @since 1.0.0
+     * @since 1.1.0
      */
     deleteAllBackups() {
         $('.zc-popup').on('click', '.zc-popup-backup__delete-button', (event) => {
@@ -164,7 +164,7 @@ export default class Backup extends Kernel {
      * Delete backup item
      * 
      * @return {null}   None
-     * @since 1.0.0
+     * @since 1.1.0
      */
     deleteBackupItem() {
         $('.zc-popup').on('click', '.zc-popup-backup__item-button_delete', (event) => {
@@ -200,7 +200,7 @@ export default class Backup extends Kernel {
      * Restore backup
      * 
      * @return {null}   None
-     * @since 1.0.0
+     * @since 1.1.0
      */
     restoreBackup() {
         $('.zc-popup').on('click', '.zc-popup-backup__item-button_restore', (event) => {

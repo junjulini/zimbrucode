@@ -28,7 +28,7 @@ class CommentsShell extends ShellKernel
      *
      * @param WP_Post|null $postID   Post ID
      * @return bool                  True if the comments are open
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function isOpen(WP_Post $postID = null): bool
     {
@@ -43,7 +43,7 @@ class CommentsShell extends ShellKernel
      * @param mixed $more     Text for more than one comment
      * @param mixed $postID   Post ID or WP_Post object. Default is the global $post
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function number($zero = false, $one = false, $more = false, $postID = null): void
     {
@@ -55,7 +55,7 @@ class CommentsShell extends ShellKernel
      *
      * @param mixed $postID   Post ID or WP_Post object. Default is the global $post
      * @return mixed
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function getNumber($postID = null)
     {
@@ -79,7 +79,7 @@ class CommentsShell extends ShellKernel
      * Determines whether current WordPress query has comments to loop over
      *
      * @return bool   True if comments are available, false if no more comments
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function check(): bool
     {
@@ -92,7 +92,7 @@ class CommentsShell extends ShellKernel
      * @param mixed $args       Formatting options
      * @param mixed $comments   Array of WP_Comment objects
      * @return mixed            Void if 'echo' argument is true, or no comments to list. Otherwise, HTML list of comments
-     * @since 1.0.0
+     * @since 1.1.0
      */
     function list($args = [], $comments = null) {
         return wp_list_comments($args, $comments);
@@ -103,7 +103,7 @@ class CommentsShell extends ShellKernel
      *
      * @param mixed $args   Default arguments
      * @return mixed        Action result
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function pagination($args = [])
     {

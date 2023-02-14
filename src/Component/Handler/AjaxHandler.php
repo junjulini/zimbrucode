@@ -37,7 +37,7 @@ class AjaxHandler
      * @param  bool   $inputJsonType    Return result in JSON format
      * @param  string $requestType      Request type : post/get
      * @throws RuntimeException
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function __construct(string $action = '', string $userCapability = '', bool $inputJsonType = true, string $requestType = 'post')
     {
@@ -91,7 +91,7 @@ class AjaxHandler
      * @param string $capability  Role or capability
      * @param mixed  $args        (Optional) further parameters, typically starting with an object ID
      * @return bool               Current user has capability
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function checkUser(string $capability, $args = null): bool
     {
@@ -105,7 +105,7 @@ class AjaxHandler
      * @param mixed  $default       Default value
      * @param string $requestType   Request type
      * @return mixed                Request data
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function get(string $param, $default = '', string $requestType = '')
     {
@@ -205,7 +205,7 @@ class AjaxHandler
      * @param string|array $data    Response data
      * @param mixed        $value   Single response data
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function send($data = '', $value = false): void
     {
@@ -232,7 +232,7 @@ class AjaxHandler
      * @param array  $args      Optional arguments to control behavior (ignored when DOING_AJAX is true)
      * @param bool   $force
      * @return void             This function does not return a value
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function off(string $message = '', string $title = '', array $args = [], bool $force = false): void
     {

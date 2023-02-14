@@ -119,7 +119,7 @@ class CacheHandler
      * Memcache
      *
      * @return MemcacheCache
-     * @since 1.0.0
+     * @since 1.1.0
      */
     protected function memcache(): MemcacheCache
     {
@@ -140,7 +140,7 @@ class CacheHandler
      * Memcached
      *
      * @return MemcachedCache
-     * @since 1.0.0
+     * @since 1.1.0
      */
     protected function memcached(): MemcachedCache
     {
@@ -161,7 +161,7 @@ class CacheHandler
      * Redis
      *
      * @return object  Redis drive
-     * @since 1.0.0
+     * @since 1.1.0
      */
     protected function redis(): RedisCache
     {

@@ -35,7 +35,7 @@ class AssetData
     /**
      * Constructor
      *
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function __construct($asset, LocationDetector $location)
     {
@@ -344,7 +344,7 @@ class AssetData
      *
      * @throws RuntimeException
      * @return string   Asset path
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function getPath(): string
     {
@@ -424,7 +424,7 @@ class AssetData
      *
      * @param bool $withCoreSlug   With next prefix : zc
      * @return string              Name of the generated asset
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function generateName(bool $withCoreSlug = true): string
     {

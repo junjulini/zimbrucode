@@ -162,7 +162,7 @@ class AppService
      * Get child application namespace
      *
      * @return string   Application namespace
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function getChildNamespace(): string
     {
@@ -186,7 +186,7 @@ class AppService
      *
      * @param string $path   Additional part of the path
      * @return string        Application path
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function getChildPath(string $path = ''): string
     {
@@ -204,7 +204,7 @@ class AppService
      *
      * @param string $path   Additional part of the path
      * @return string        Application URL
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function getURL(string $url = ''): string
     {
@@ -216,7 +216,7 @@ class AppService
      *
      * @param string $path   Additional part of the path
      * @return string        Application URL
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function getChildURL(string $url = ''): string
     {
@@ -257,7 +257,7 @@ class AppService
      *
      * @param string $path   Additional part of the path
      * @return string        Root directory path
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function getChildRootPath(string $path = ''): string
     {
@@ -285,7 +285,7 @@ class AppService
      *
      * @param string $url   Additional part of the URL
      * @return string       Root directory URL
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function getChildRootURL(string $url = ''): string
     {
@@ -313,7 +313,7 @@ class AppService
      *
      * @param string $path   Additional part of the path
      * @return string        Resource directory path
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function getChildResourcePath(string $path = ''): string
     {
@@ -325,7 +325,7 @@ class AppService
      *
      * @param string $url   Additional part of the URL
      * @return string       Resource directory URL
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function getResourceURL(string $url = ''): string
     {
@@ -337,7 +337,7 @@ class AppService
      *
      * @param string $url   Additional part of the URL
      * @return string       Resource directory URL
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function getChildResourceURL(string $url = ''): string
     {
@@ -361,7 +361,7 @@ class AppService
      *
      * @param string $url   Additional part of the URL
      * @return string       Var directory URL
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function getVarURL(string $url = ''): string
     {
@@ -396,7 +396,7 @@ class AppService
      *
      * @param string $url   Additional part of the URL
      * @return string       Cache directory URL
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function getCacheURL(string $url = ''): string
     {
@@ -424,7 +424,7 @@ class AppService
      *
      * @param string $path   Additional part of the path
      * @return string        Temp directory path
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function getTempPath(string $path = ''): string
     {
@@ -436,7 +436,7 @@ class AppService
      *
      * @param string $url   Additional part of the URL
      * @return string       Temp directory URL
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function getTempURL(string $url = ''): string
     {
@@ -471,7 +471,7 @@ class AppService
      *
      * @param string $url   Additional part of the URL
      * @return string       Log directory URL
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function getLogURL(string $url = ''): string
     {
@@ -506,7 +506,7 @@ class AppService
      *
      * @param string $path   Additional part of the path
      * @return string        Asset directory path
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function getChildAssetPath(string $path = ''): string
     {
@@ -518,7 +518,7 @@ class AppService
      *
      * @param string $url   Additional part of the URL
      * @return string       Asset directory URL
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function getAssetURL(string $url = ''): string
     {
@@ -530,7 +530,7 @@ class AppService
      *
      * @param string $url   Additional part of the URL
      * @return string       Asset directory URL
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function getChildAssetURL(string $url = ''): string
     {
@@ -554,7 +554,7 @@ class AppService
      *
      * @param string $path   Additional part of the path
      * @return string        Config directory path
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function getChildConfigPath(string $path = ''): string
     {
@@ -566,7 +566,7 @@ class AppService
      *
      * @param string $url   Additional part of the URL
      * @return string       Config directory URL
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function getConfigURL(string $url = ''): string
     {
@@ -578,7 +578,7 @@ class AppService
      *
      * @param string $url   Additional part of the URL
      * @return string       Config directory URL
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function getChildConfigURL(string $url = ''): string
     {
@@ -602,7 +602,7 @@ class AppService
      *
      * @param string $path   Additional part of the path
      * @return string        Model directory path
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function getChildModelPath(string $path = ''): string
     {
@@ -614,7 +614,7 @@ class AppService
      *
      * @param string $url   Additional part of the URL
      * @return string       Model directory URL
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function getModelURL(string $url = ''): string
     {
@@ -626,7 +626,7 @@ class AppService
      *
      * @param string $url   Additional part of the URL
      * @return string       Model directory URL
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function getChildModelURL(string $url = ''): string
     {
@@ -650,7 +650,7 @@ class AppService
      *
      * @param string $path   Additional part of the path
      * @return string        View directory path
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function getChildViewPath(string $path = ''): string
     {
@@ -662,7 +662,7 @@ class AppService
      *
      * @param string $url   Additional part of the URL
      * @return string       View directory URL
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function getViewURL(string $url = ''): string
     {
@@ -674,7 +674,7 @@ class AppService
      *
      * @param string $url   Additional part of the URL
      * @return string       View directory URL
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function getChildViewURL(string $url = ''): string
     {

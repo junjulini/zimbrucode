@@ -22,7 +22,7 @@ use ZimbruCode\Component\Core\Kernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 class SCSS extends Filter
 {
@@ -42,7 +42,7 @@ class SCSS extends Filter
      * Setup
      *
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     protected function setup(): void
     {
@@ -66,7 +66,7 @@ class SCSS extends Filter
      *
      * @param AssetData $asset   Asset data
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     protected function each(AssetData $asset): void
     {
@@ -158,7 +158,7 @@ class SCSS extends Filter
      *
      * @param AssetData $asset   Asset data
      * @return string            Output path
-     * @since 1.0.0
+     * @since 1.1.0
      */
     protected function getOutput(AssetData $asset): string
     {

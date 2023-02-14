@@ -26,7 +26,7 @@ class AuthorShell extends ShellKernel
      * Retrieve the author of the current post
      *
      * @return mixed   The author's display name
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function name()
     {
@@ -37,7 +37,7 @@ class AuthorShell extends ShellKernel
      * Retrieve the URL to the author page for the user with the ID provided
      *
      * @return string   The URL to the author's page
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function pageURL(): string
     {
@@ -52,7 +52,7 @@ class AuthorShell extends ShellKernel
      * Displays an HTML link to the author page of the current post’s author
      *
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function pageLink(): void
     {
@@ -78,7 +78,7 @@ class AuthorShell extends ShellKernel
      * @param int    $size   Height and width of the avatar image file in pixels
      * @param string $alt    Alternative text to use in img tag
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function avatar(int $size = 96, string $alt = ''): void
     {

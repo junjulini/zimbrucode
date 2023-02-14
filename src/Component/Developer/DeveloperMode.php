@@ -20,7 +20,7 @@ use ZimbruCode\Component\Debug\DebugController;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 class DeveloperMode
 {
@@ -107,7 +107,7 @@ class DeveloperMode
      * @param string     $title   The headline of the message
      * @param array|null $data    Message data
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function dump(string $title = 'DEV-MSG', array $data = null): void
     {

@@ -13,7 +13,7 @@
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 
 'use strict';
@@ -78,7 +78,7 @@ export default class Menu extends Kernel {
      * Display section
      * 
      * @return {null}   None
-     * @since 1.0.0
+     * @since 1.1.0
      */
     displaySection(menuItemID, itemID) {
         const menuItem = $(`.zc-panel-menu li[data-menu-item-id="${menuItemID}"]`);
@@ -195,7 +195,7 @@ export default class Menu extends Kernel {
      * Processing a menu item
      * 
      * @return {null}   None
-     * @since 1.0.0
+     * @since 1.1.0
      */
     procMenuItem(menuItemID, itemID) {
         if (!this.isSubmenuItem) {
@@ -213,7 +213,7 @@ export default class Menu extends Kernel {
      * Desktop mode
      * 
      * @return {null}   None
-     * @since 1.0.0
+     * @since 1.1.0
      */
     desktop() {
         let menuItemID = '';
@@ -370,7 +370,7 @@ export default class Menu extends Kernel {
      * 
      * @param {object} menuItemID
      * @returns {mix}
-     * @since 1.0.0
+     * @since 1.1.0
      */
     getItemID(menuItemID) {
         if (menuItemID) {

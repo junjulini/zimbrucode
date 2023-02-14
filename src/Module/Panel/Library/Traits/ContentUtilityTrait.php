@@ -18,7 +18,7 @@ use ZimbruCode\Component\Common\Tools;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 trait ContentUtilityTrait
 {
@@ -42,7 +42,7 @@ trait ContentUtilityTrait
      * Get "build settings"
      *
      * @return array   Build settings
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function getBuildSettings(): array
     {
@@ -73,7 +73,7 @@ trait ContentUtilityTrait
      *
      * @param array $options   Options list
      * @return mixed
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function addOptions(array $options)
     {
@@ -86,7 +86,7 @@ trait ContentUtilityTrait
      *
      * @param array $options   Options list
      * @return bool            Result of checking
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function isOptionsDifferent(array $options): bool
     {
@@ -97,7 +97,7 @@ trait ContentUtilityTrait
      * Remove all options
      *
      * @return bool   Result of checking
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function remOptions(): bool
     {
@@ -110,7 +110,7 @@ trait ContentUtilityTrait
      *
      * @param mixed $default   Default value
      * @return array           Options list
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function getOptions($default = ''): array
     {
@@ -124,7 +124,7 @@ trait ContentUtilityTrait
      * @param string $option    Name of option
      * @param mixed  $default   Default value
      * @return mixed            Option value
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function getOption(string $option, $default = '')
     {

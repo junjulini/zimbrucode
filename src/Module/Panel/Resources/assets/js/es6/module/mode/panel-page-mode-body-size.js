@@ -13,7 +13,7 @@
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 
 'use strict';
@@ -27,7 +27,7 @@ export default class PanelPageModeBodySize extends Kernel {
     /**
      * Constructor
      * 
-     * @since 1.0.0
+     * @since 1.1.0
      */
     constructor() {
         super();
@@ -58,7 +58,7 @@ export default class PanelPageModeBodySize extends Kernel {
     /**
      * Calc panel height
      * 
-     * @since 1.0.0
+     * @since 1.1.0
      */
     calcPanelHeight() {
         if (this.isDesktopMode()) {
@@ -73,7 +73,7 @@ export default class PanelPageModeBodySize extends Kernel {
     /**
      * Calc panel width
      * 
-     * @since 1.0.0
+     * @since 1.1.0
      */
     calcPanelWidth() {
         const ro = new ResizeObserver(entries => {
@@ -89,7 +89,7 @@ export default class PanelPageModeBodySize extends Kernel {
      * Add "mode size"
      * 
      * @param {string} width   Panel width
-     * @since 1.0.0
+     * @since 1.1.0
      */
     addModeSize(width) {
         let mode = 'mode-1-';

@@ -21,7 +21,7 @@ use ZimbruCode\Module\Panel\Library\AssetHandler;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 class Module extends ModuleKernel
 {
@@ -32,7 +32,7 @@ class Module extends ModuleKernel
      *
      * @throws InvalidArgumentException
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function setup(): void
     {
@@ -74,7 +74,7 @@ class Module extends ModuleKernel
      * Processing "build settings"
      *
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     protected function procBuildSettings(): void
     {
@@ -90,7 +90,7 @@ class Module extends ModuleKernel
      *
      * @throws InvalidArgumentException
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     protected function checkMode(): void
     {
@@ -120,7 +120,7 @@ class Module extends ModuleKernel
      * Processing panel settings
      *
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     protected function procSettings(): void
     {
@@ -136,7 +136,7 @@ class Module extends ModuleKernel
      * Load panel mode
      *
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     protected function loadMode(): void
     {
@@ -152,11 +152,11 @@ class Module extends ModuleKernel
     /**
      * Add custom mode
      *
-     * @param string $mode    Mode name
-     * @param string $class   Mode class name
+     * @param  string $mode    Mode name
+     * @param  string $class   Mode class name
      * @throws InvalidArgumentException
      * @return ModuleKernel
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function addCustomMode(string $mode, string $class): ModuleKernel
     {
@@ -176,11 +176,11 @@ class Module extends ModuleKernel
     /**
      * Add custom controls namespace
      *
-     * @param string $path        Controls namespace path
-     * @param string $namespace   Controls namespace
+     * @param  string $path        Controls namespace path
+     * @param  string $namespace   Controls namespace
      * @throws InvalidArgumentException
      * @return ModuleKernel
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function addCustomControlsNamespace(string $path, string $namespace): ModuleKernel
     {

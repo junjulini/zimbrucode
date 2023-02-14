@@ -18,7 +18,7 @@ use InvalidArgumentException;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 trait HooksHandlerTrait
 {
@@ -31,7 +31,7 @@ trait HooksHandlerTrait
      * @param  int    $acceptedArgs   The number of arguments the hooked function accepts
      * @throws InvalidArgumentException
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     protected function addAction(string $hook, $method, int $priority = 10, int $acceptedArgs = 1): void
     {
@@ -60,7 +60,7 @@ trait HooksHandlerTrait
      * @param  int    $priority   Used to specify the order in which the functions associated with a particular action are executed
      * @throws InvalidArgumentException
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     protected function remAction(string $hook, $method, int $priority = 10): void
     {
@@ -89,7 +89,7 @@ trait HooksHandlerTrait
      * @param  bool   $nopriv   For non unauthenticated users
      * @throws InvalidArgumentException
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     protected function addAjax(string $hook, $method, bool $nopriv = false): void
     {
@@ -117,7 +117,7 @@ trait HooksHandlerTrait
      * @param  int    $acceptedArgs   The number of arguments the function(s) accept(s)
      * @throws InvalidArgumentException
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     protected function addFilter(string $tag, $method, int $priority = 10, int $acceptedArgs = 1): void
     {
@@ -146,7 +146,7 @@ trait HooksHandlerTrait
      * @param  int    $priority   The priority of the function (as defined when the function was originally hooked)
      * @throws InvalidArgumentException
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     protected function remFilter(string $tag, $method, int $priority = 10): void
     {
@@ -174,7 +174,7 @@ trait HooksHandlerTrait
      * @param  mixed  $method   Callback
      * @throws InvalidArgumentException
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     protected function addShortCode(string $tag, $method): void
     {
@@ -202,7 +202,7 @@ trait HooksHandlerTrait
      * @param  bool   $return   Return or echo
      * @throws InvalidArgumentException
      * @return mixed
-     * @since 1.0.0
+     * @since 1.1.0
      */
     protected function doShortCode(string $tag, bool $return = false)
     {
@@ -223,7 +223,7 @@ trait HooksHandlerTrait
      * @param  string $tag   Shortcode tag
      * @throws InvalidArgumentException
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     protected function remShortCode(string $tag): void
     {

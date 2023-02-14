@@ -44,7 +44,7 @@ abstract class AppKernel extends Kernel
      * @param string           $rootPath   Plugin file path ( Plugin mode only )
      * @param bool             $session    Status of "session_start()"
      * @param ClassLoader|null $composer   Instance of ClassLoader ( Composer )
-     * @since 1.0.0
+     * @since 1.1.0
      */
     final public function __construct(string $slug, string $mode = 'theme', bool $dev = false, string $rootPath = '', bool $session = false, ClassLoader $composer = null)
     {
@@ -118,7 +118,7 @@ abstract class AppKernel extends Kernel
      * @param string $slug   Slug (GVS)
      * @throws RuntimeException
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     private function __checkAppDuplicate(string $slug): void
     {
@@ -218,7 +218,7 @@ abstract class AppKernel extends Kernel
      * @param string|null      $rootPath   The path to the file where the application class was initialized
      * @param string           $slug       Application slug
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     private function __initServices(string $mode = 'before', ClassLoader $composer = null, string $rootPath = null, string $slug = ''): void
     {
@@ -245,7 +245,7 @@ abstract class AppKernel extends Kernel
      * @param bool   $check   Check if mode is different
      * @throws RuntimeException
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     private function __setMode(string $mode, bool $check = false): void
     {
@@ -285,7 +285,7 @@ abstract class AppKernel extends Kernel
      * Combine the custom configuration of the application with the global configuration and call the "config" method
      *
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     private function __customAppConfig(): void
     {
@@ -338,7 +338,7 @@ abstract class AppKernel extends Kernel
      * Set up default application configs
      *
      * @return void
-     * @since 1.0.1
+     * @since 1.1.0
      */
     private function __defaultAppConfig(): void
     {
@@ -377,7 +377,7 @@ abstract class AppKernel extends Kernel
      * Load modules from config file
      *
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     private function __loadModules(): void
     {
@@ -417,7 +417,7 @@ abstract class AppKernel extends Kernel
      * Callback after load all modules
      *
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     private function __callbackAfter(): void
     {
@@ -439,7 +439,7 @@ abstract class AppKernel extends Kernel
      * Returns the name of the application (short name of the class)
      *
      * @return string   Application name
-     * @since 1.0.0
+     * @since 1.1.0
      */
     final public function getName(): string
     {
@@ -450,7 +450,7 @@ abstract class AppKernel extends Kernel
      * Gets the namespace of the application
      *
      * @return string   Application namespace
-     * @since 1.0.0
+     * @since 1.1.0
      */
     final public function getNamespace(): string
     {
@@ -462,7 +462,7 @@ abstract class AppKernel extends Kernel
      *
      * @param string $path   Additional part of the path
      * @return string        Application path
-     * @since 1.0.0
+     * @since 1.1.0
      */
     final public function getPath(string $path = ''): string
     {
@@ -474,7 +474,7 @@ abstract class AppKernel extends Kernel
      *
      * @param string $url   Additional part of the URL
      * @return string       Application URL
-     * @since 1.0.0
+     * @since 1.1.0
      */
     final public function getURL(string $url = ''): string
     {
@@ -486,7 +486,7 @@ abstract class AppKernel extends Kernel
      *
      * @param string $path   Additional part of the path
      * @return string        Resource path
-     * @since 1.0.0
+     * @since 1.1.0
      */
     final public function getResourcePath(string $path = ''): string
     {
@@ -498,7 +498,7 @@ abstract class AppKernel extends Kernel
      *
      * @param string $url   Additional part of the URL
      * @return string       Resource URL
-     * @since 1.0.0
+     * @since 1.1.0
      */
     final public function getResourceURL(string $url = ''): string
     {
@@ -509,7 +509,7 @@ abstract class AppKernel extends Kernel
      * Get the path to the root file
      *
      * @return string   The path to the root file
-     * @since 1.0.0
+     * @since 1.1.0
      */
     final public function getRootFilePath(): string
     {

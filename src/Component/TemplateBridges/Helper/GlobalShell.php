@@ -18,7 +18,7 @@ use ZimbruCode\Component\Core\Kernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 class GlobalShell
 {
@@ -28,7 +28,7 @@ class GlobalShell
      * @param string $name   Function name
      * @param array  $args   Function args
      * @return mixed         Action result
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function __call(string $name, array $args)
     {

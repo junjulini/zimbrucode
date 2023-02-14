@@ -24,7 +24,7 @@ use ZimbruCode\Module\ThemeAdaptor\Library\TemplateFilesHandler;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 class Module extends ModuleKernel
 {
@@ -34,7 +34,7 @@ class Module extends ModuleKernel
      * Module setup
      *
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function setup(): void
     {
@@ -49,7 +49,7 @@ class Module extends ModuleKernel
      * Initializing search for custom templates
      *
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     protected function initCustomTemplates(): void
     {
@@ -74,7 +74,7 @@ class Module extends ModuleKernel
      *
      * @param string $dir   Location of custom templates
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     protected function searchCustomTemplates(string $dir): void
     {
@@ -179,7 +179,7 @@ class Module extends ModuleKernel
      *
      * @param string $wpTemplate WordPress template
      * @return string            WordPress template
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function __filter_template_include(string $wpTemplate): string
     {

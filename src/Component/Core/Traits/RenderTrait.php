@@ -19,7 +19,7 @@ use ZimbruCode\Component\TemplateBridges\TwigTemplateBridge;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.2
+ * @since   1.1.0
  */
 trait RenderTrait
 {
@@ -31,7 +31,7 @@ trait RenderTrait
      * @param bool          $return             Return content or echo
      * @param callable|null $renderCallback
      * @return mixed                            HTML output
-     * @since 1.0.2
+     * @since 1.1.0
      */
     protected function render(string $template = '', array $vars = [], bool $return = false, callable $renderCallback = null)
     {

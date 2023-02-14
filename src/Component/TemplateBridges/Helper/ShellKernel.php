@@ -18,7 +18,7 @@ use RuntimeException;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 abstract class ShellKernel
 {
@@ -31,7 +31,7 @@ abstract class ShellKernel
      * @param  callable $method   Callback
      * @throws RuntimeException
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function __set(string $name, callable $method)
     {

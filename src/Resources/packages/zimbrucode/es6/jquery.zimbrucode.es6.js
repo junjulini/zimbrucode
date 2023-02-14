@@ -13,7 +13,7 @@
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 
 'use strict';
@@ -113,7 +113,7 @@ class ZimbruCode {
      * @param {array}  replace   The replacement value that replaces found search values
      * @param {string} subject   The string or array being searched and replaced on, otherwise known as the haystack
      * @return {string}          String with replaced values
-     * @since 1.0.0
+     * @since 1.1.0
      */
     strReplace(search, replace, subject) {
         let regStr = '';
@@ -176,7 +176,7 @@ class ZimbruCode {
      * @param {mix}     value    Value
      * @param {boolean} remove   "True" if the item needs to be removed
      * @return {mix}             Item value
-     * @since 1.0.0
+     * @since 1.1.0
      */
     deepFindAndSetting(obj, path, value, remove = false) {
         let paths = path.split('/'), current = obj, i;
@@ -291,7 +291,7 @@ class ZimbruCode {
      * @param {callable} callbackWidth    Callback 1
      * @param {callable} callbackHeight   Callback 2
      * @return {null}                     None
-     * @since 1.0.0
+     * @since 1.1.0
      */
     resize(callbackWidth, callbackHeight) {
         let windowWidth  = window.innerWidth,
@@ -525,7 +525,7 @@ class ZimbruCode {
      * 
      * @param {object} customSettings   PopUp custom settings
      * @return {null}                   None
-     * @since 1.0.0
+     * @since 1.1.0
      */
     confirm(customSettings) {
         const popup = this.popup();
@@ -589,7 +589,7 @@ class ZimbruCode {
      * 
      * @param {object} customSettings  PopUp custom settings
      * @return {null}                  None
-     * @since 1.0.0
+     * @since 1.1.0
      */
     prompt(customSettings) {
         const popup = this.popup();
@@ -663,7 +663,7 @@ class ZimbruCode {
      * 
      * @param {object} customSettings  PopUp custom settings
      * @return {null}                  None
-     * @since 1.0.0
+     * @since 1.1.0
      */
     alert(customSettings) {
         const popup = this.popup();
@@ -715,7 +715,7 @@ class ZimbruCode {
      * 
      * @param {string} mode   Action mode
      * @param {object} data   General data
-     * @since 1.0.0
+     * @since 1.1.0
      */
     inputRange(mode, data = {}) {
         if (mode && data.el !== undefined) {
@@ -886,7 +886,7 @@ class ZimbruCode {
      * 
      * @param {string} url     WordPress rest API URL
      * @param {string} nonce   WordPress X nonce for RestAPI
-     * @since 1.0.0
+     * @since 1.1.0
      */
     restAPI(url, nonce) {
         return new RestAPI(url, nonce);
@@ -897,7 +897,7 @@ class ZimbruCode {
      * 
      * @param {string} url        URL of the source
      * @param {object} settings   Event settings
-     * @since 1.0.0
+     * @since 1.1.0
      */
     event(url, settings) {
         const urlHandler = new URL(url);
@@ -941,7 +941,7 @@ class ZimbruCode {
      * @param {string} nonce    AJAX nonce
      * @param {object} options  Options to be passed to the server
      * @return {mix}            Action result
-     * @since 1.0.0
+     * @since 1.1.0
      */
     async jsonRequest(action, nonce = '', options = {}) {
         let attempts   = 4;
@@ -994,7 +994,7 @@ class ZimbruCode {
      * 
      * @param {object} customSettings   AJAX custom settings
      * @return {object}                 AJAX instance
-     * @since 1.0.0
+     * @since 1.1.0
      */
      ajax(customSettings) {
         const defaults = {

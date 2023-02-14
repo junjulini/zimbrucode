@@ -19,7 +19,7 @@ use ZimbruCode\Component\Core\ModuleKernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 class Module extends ModuleKernel
 {
@@ -27,7 +27,7 @@ class Module extends ModuleKernel
      * Module setup
      *
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function setup(): void
     {

@@ -13,7 +13,7 @@
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 
 'use strict';
@@ -38,7 +38,7 @@ export default class PopUp {
      * 
      * @param {object} customSettings   PopUp custom settings
      * @return {null}                   None
-     * @since 1.0.0
+     * @since 1.1.0
      */
     add(customSettings) {
         const defaults = {

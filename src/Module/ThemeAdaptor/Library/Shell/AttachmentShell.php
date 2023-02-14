@@ -27,7 +27,7 @@ class AttachmentShell extends ShellKernel
      *
      * @param mixed $attachmentID   Attachment ID, title, slug, or array of such to check against
      * @return bool                 Whether the query is for an existing attachment page
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function is($attachmentID = null): bool
     {
@@ -42,7 +42,7 @@ class AttachmentShell extends ShellKernel
      * @param bool     $icon           Whether the image should be treated as an icon
      * @param mixed    $attr           Attributes for the image markup
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function image(?int $attachmentID = null, $size = 'thumbnail', bool $icon = false, $attr = ''): void
     {

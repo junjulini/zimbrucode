@@ -161,7 +161,7 @@ class ControlManager extends ModuleKernel
      * @param string $control   Control class
      * @param string $type      Control type
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     protected function load(string $control, string $type): void
     {

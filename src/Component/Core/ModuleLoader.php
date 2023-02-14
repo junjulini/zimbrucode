@@ -120,7 +120,7 @@ class ModuleLoader
      * @param  string $namespace   Namespace value
      * @throws InvalidArgumentException
      * @return ModuleLoader
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function addNamespace(string $namespace): self
     {
@@ -184,7 +184,7 @@ class ModuleLoader
      * @param array|string $config   Module config
      * @throws RuntimeException
      * @return ModuleLoader
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public function addConfig($config): self
     {
@@ -331,7 +331,7 @@ class ModuleLoader
      *
      * @throws RuntimeException
      * @return ModuleKernel
-     * @since 1.0.0
+     * @since 1.1.0
      */
     protected function prepModuleData(): ModuleKernel
     {
@@ -420,7 +420,7 @@ class ModuleLoader
      * @param string            $task     Task value
      * @param ModuleKernel|null $module   Module object
      * @return bool                       Action result
-     * @since 1.0.0
+     * @since 1.1.0
      */
     protected function group(string $task = '', ModuleKernel $module = null): bool
     {

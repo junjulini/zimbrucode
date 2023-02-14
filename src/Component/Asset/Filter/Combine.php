@@ -24,7 +24,7 @@ use ZimbruCode\Component\Core\Kernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 class Combine extends Filter
 {
@@ -44,7 +44,7 @@ class Combine extends Filter
      * Setup
      *
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     protected function setup(): void
     {
@@ -82,7 +82,7 @@ class Combine extends Filter
      * CSS asset preparation
      *
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     protected function prepCSSAssets(): void
     {
@@ -171,7 +171,7 @@ class Combine extends Filter
      * Preparing JavaScript assets
      *
      * @return void
-     * @since 1.0.0
+     * @since 1.1.0
      */
     protected function prepJavaScriptAssets(): void
     {

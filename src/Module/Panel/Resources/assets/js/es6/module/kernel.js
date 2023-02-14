@@ -13,7 +13,7 @@
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.1.0
  */
 
 'use strict';
@@ -90,7 +90,7 @@ export default class Kernel {
      * Error checking, in AJAX or elsewhere
      * 
      * @return {null}   None
-     * @since 1.0.0
+     * @since 1.1.0
      */
     errorCheck(mainMsg, errorMsg) {
         if (!$('.zc-popup').hasClass('zc-panel-error-confirm')) {
@@ -240,7 +240,7 @@ export default class Kernel {
      * @param {string}   selector         A selector string to filter the descendants of the selected elements that trigger the event
      * @param {callable} handler          A function to execute when the event is triggered
      * @param {boolean}  preventDefault   True if "preventDefault" must be used
-     * @since 1.0.0
+     * @since 1.1.0
      */
     on(events, selector, handler, preventDefault = false) {
         $('.zc-panel').on(events, selector, (event) => {
