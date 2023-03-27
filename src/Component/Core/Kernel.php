@@ -25,7 +25,7 @@ use ZimbruCode\Component\Handler\Traits\SessionHandlerTrait;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.2.0
  */
 abstract class Kernel extends GlobalDataOperator
 {
@@ -100,13 +100,13 @@ abstract class Kernel extends GlobalDataOperator
      * @param  object|null $handler   Service object
      * @throws RuntimeException
      * @return object|null            Service object or null
-     * @since 1.1.0
+     * @since 1.2.0
      */
     final public static function service(string $service, object $handler = null): ?object
     {
         if ($handler) {
-            if (!self::getGlobalCache("services/{$service}")) {
-                self::addGlobalCache("services/{$service}", $handler);
+            if (!self::hasService($service)) {
+                self::addService($service, $handler);
 
                 return null;
             } else {
@@ -130,6 +130,31 @@ abstract class Kernel extends GlobalDataOperator
                 throw new RuntimeException("ZE0063 - This service don't exist : {$service}");
             }
         }
+    }
+
+    /**
+     * Check if a service exists
+     * 
+     * @param string $service   Service name
+     * @return bool             Action result
+     * @since 1.2.0
+     */
+    final public static function hasService(string $service): bool
+    {
+        return (self::getGlobalCache("services/{$service}")) ? true : false;
+    }
+
+    /**
+     * Add service
+     * 
+     * @param string      $service   Service name
+     * @param object|null $handler   Service object
+     * @return void
+     * @since 1.2.0
+     */
+    final public static function addService(string $service, object $handler = null): void
+    {
+        self::addGlobalCache("services/{$service}", $handler);
     }
 
     /**

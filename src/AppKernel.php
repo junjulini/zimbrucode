@@ -27,7 +27,7 @@ use ZimbruCode\Component\Service\AppService;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.2.0
  */
 abstract class AppKernel extends Kernel
 {
@@ -44,7 +44,7 @@ abstract class AppKernel extends Kernel
      * @param string           $rootPath   Plugin file path ( Plugin mode only )
      * @param bool             $session    Status of "session_start()"
      * @param ClassLoader|null $composer   Instance of ClassLoader ( Composer )
-     * @since 1.1.0
+     * @since 1.2.0
      */
     final public function __construct(string $slug, string $mode = 'theme', bool $dev = false, string $rootPath = '', bool $session = false, ClassLoader $composer = null)
     {
@@ -75,7 +75,7 @@ abstract class AppKernel extends Kernel
         $this->__appConfig($mode);
 
         // Service initialization [mode : after]
-        $this->__initServices('after');
+        $this->__initServices('after', $composer, $rootPath, $slug);
 
         // Set module namespace
         self::module()->addNamespace($this->getNamespace() . '\\' . self::getGlobal('app/module-namespace-dir'));
@@ -184,18 +184,6 @@ abstract class AppKernel extends Kernel
     }
 
     /**
-     * Initialization of global configs and global library
-     *
-     * @return void
-     * @since 1.0.0
-     */
-    private function __initGlobalConfigAndLibrary(): void
-    {
-        new GlobalConfig;
-        new GlobalLibrary;
-    }
-
-    /**
      * Set up development environment
      *
      * @param bool $dev   The status of the development environment
@@ -218,7 +206,7 @@ abstract class AppKernel extends Kernel
      * @param string|null      $rootPath   The path to the file where the application class was initialized
      * @param string           $slug       Application slug
      * @return void
-     * @since 1.1.0
+     * @since 1.2.0
      */
     private function __initServices(string $mode = 'before', ClassLoader $composer = null, string $rootPath = null, string $slug = ''): void
     {
@@ -233,6 +221,7 @@ abstract class AppKernel extends Kernel
 
             self::service('theme-details', $td);
         } elseif ($mode === 'after') {
+            self::addService('app', new AppService($this, $rootPath, $slug));
             self::service('db', new DBHandler);
             self::service('fast-cache', new FastCache);
         }
