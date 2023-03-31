@@ -23,7 +23,7 @@ use ZimbruCode\Component\Core\Kernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.2.0
  */
 class ModuleLoader
 {
@@ -134,6 +134,58 @@ class ModuleLoader
     }
 
     /**
+     * Use module
+     *
+     * @param string $module   Module name
+     * @return ModuleLoader
+     * @since 1.2.0
+     */
+    public function useModule(string $module): self
+    {
+        $this->config['module'] = $module;
+        return $this;
+    }
+
+    /**
+     * Add module as service
+     *
+     * @param string $name   Name of service
+     * @return ModuleLoader
+     * @since 1.2.0
+     */
+    public function addAsService(string $name): self
+    {
+        $this->config['service'] = $name;
+        return $this;
+    }
+
+    /**
+     * Add module mode
+     *
+     * @param string $mode   Module mode
+     * @return ModuleLoader
+     * @since 1.2.0
+     */
+    public function addMode(string $mode): self
+    {
+        $this->config['mode'] = $mode;
+        return $this;
+    }
+
+    /**
+     * Add callback
+     *
+     * @param callable|null $callback   Module callback
+     * @return ModuleLoader
+     * @since 1.2.0
+     */
+    public function addCallback(callable $callback = null): self
+    {
+        $this->config['callback'] = $callback;
+        return $this;
+    }
+
+    /**
      * Add settings
      *
      * @param array $setting   Module settings
@@ -147,34 +199,15 @@ class ModuleLoader
     }
 
     /**
-     * Add module as service
+     * Add settings file
      *
-     * @param string $name   Name of service
+     * @param string $settingsFile   Module settings file
      * @return ModuleLoader
-     * @since 1.0.0
+     * @since 1.2.0
      */
-    public function addAsService(string $name): self
+    public function addSettingsFile(string $settingsFile): self
     {
-        if ($name) {
-            $this->config['service'] = $name;
-        }
-
-        return $this;
-    }
-
-    /**
-     * Add module mode
-     *
-     * @param string $mode   Module mode
-     * @return ModuleLoader
-     * @since 1.0.0
-     */
-    public function addMode(string $mode): self
-    {
-        if ($mode) {
-            $this->config['mode'] = $mode;
-        }
-
+        $this->config['settings-file'] = $settingsFile;
         return $this;
     }
 
@@ -184,7 +217,7 @@ class ModuleLoader
      * @param array|string $config   Module config
      * @throws RuntimeException
      * @return ModuleLoader
-     * @since 1.1.0
+     * @since 1.2.0
      */
     public function addConfig($config): self
     {
@@ -193,19 +226,23 @@ class ModuleLoader
 
             if (is_string($config)) {
                 $this->useModule($config)
-                     ->addAsService(false)
-                     ->addMode(false)
+                     ->addAsService('')
+                     ->addMode('')
+                     ->addCallback(null)
                      ->addSettings([])
+                     ->addSettingsFile('')
                      ->build();
             } elseif (!empty($config['module'])) {
-                $service  = (!empty($config['service']) && is_string($config['service'])) ? $config['service'] : false;
-                $mode     = (!empty($config['mode']) && is_string($config['mode'])) ? $config['mode'] : false;
-                $settings = (isset($config['settings']) && is_array($config['settings'])) ? $config['settings'] : [];
+                if (isset($config['condition']) && $config['condition'] !== true) {
+                    return $this;
+                }
 
                 $this->useModule($config['module'])
-                     ->addAsService($service)
-                     ->addMode($mode)
-                     ->addSettings($settings)
+                     ->addAsService($config['service'] ?? '')
+                     ->addMode($config['mode'] ?? '')
+                     ->addCallback($config['callback'] ?? null)
+                     ->addSettings($config['settings'] ?? [])
+                     ->addSettingsFile($config['settings-file'] ?? '')
                      ->build();
             } else {
                 $this->group('init');
@@ -213,23 +250,27 @@ class ModuleLoader
                 foreach ($config as $module) {
                     if (is_string($module)) {
                         $this->useModule($module)
-                             ->addAsService(false)
-                             ->addMode(false)
+                             ->addAsService('')
+                             ->addMode('')
+                             ->addCallback(null)
                              ->addSettings([])
+                             ->addSettingsFile('')
                              ->build();
                     } elseif (is_array($module)) {
                         if (empty($module['module'])) {
                             throw new RuntimeException('ZE0069');
                         }
 
-                        $service  = (!empty($module['service']) && is_string($module['service'])) ? $module['service'] : false;
-                        $mode     = (!empty($module['mode']) && is_string($module['mode'])) ? $module['mode'] : false;
-                        $settings = (isset($module['settings']) && is_array($module['settings'])) ? $module['settings'] : [];
+                        if (isset($module['condition']) && $module['condition'] !== true) {
+                            continue;
+                        }
 
                         $this->useModule($module['module'])
-                             ->addAsService($service)
-                             ->addMode($mode)
-                             ->addSettings($settings)
+                             ->addAsService($module['service'] ?? '')
+                             ->addMode($module['mode'] ?? '')
+                             ->addCallback($module['callback'] ?? null)
+                             ->addSettings($module['settings'] ?? [])
+                             ->addSettingsFile($module['settings-file'] ?? '')
                              ->build();
                     }
                 }
@@ -253,35 +294,62 @@ class ModuleLoader
     }
 
     /**
-     * Clear module loader configs
+     * Get module settings
      *
-     * @return ModuleLoader
-     * @since 1.0.0
+     * @return array   Module settings
+     * @since 1.2.0
      */
-    public function flush(): self
+    public function getSettings(): array
     {
-        $this->config = [
-            'module'   => '',
-            'mode'     => false,
-            'service'  => false,
-            'settings' => [],
-        ];
+        return $this->config['settings'];
+    }
+
+    /**
+     * Add setting
+     * 
+     * @param string $setting   Setting name
+     * @param mixed  $value     Setting value 
+     * @return ModuleLoader
+     * @since 1.2.0
+     */
+    public function addSetting(string $setting, $value): self
+    {
+        $this->config['settings'][$setting] = $value;
+        return $this;
+    }
+
+    /**
+     * Remove setting
+     * 
+     * @param string $setting   Setting name
+     * @return ModuleLoader
+     * @since 1.2.0
+     */
+    public function remSetting(string $setting): self
+    {
+        if (isset($this->config['settings'][$setting])) {
+            unset($this->config['settings'][$setting]);
+        }
 
         return $this;
     }
 
     /**
-     * Use module
+     * Clear module loader configs
      *
-     * @param string $module   Module name
      * @return ModuleLoader
-     * @since 1.0.0
+     * @since 1.2.0
      */
-    protected function useModule(string $module): self
+    public function flush(): self
     {
-        if ($module) {
-            $this->config['module'] = $module;
-        }
+        $this->config = [
+            'module'        => '',
+            'mode'          => '',
+            'service'       => '',
+            'callback'      => null,
+            'settings'      => [],
+            'settings-file' => '',
+        ];
 
         return $this;
     }
@@ -291,15 +359,11 @@ class ModuleLoader
      *
      * @throws RuntimeException
      * @return ModuleKernel|null
-     * @since 1.1.0
+     * @since 1.2.0
      */
     protected function build(): ?ModuleKernel
     {
-        if (empty($this->config['module']) || !is_string($this->config['module'])) {
-            throw new RuntimeException('ZE0070');
-        }
-
-        if (!empty($this->config['mode']) && is_string($this->config['mode'])) {
+        if (!empty($this->config['mode'])) {
             switch ($this->config['mode']) {
                 case 'admin':
                     if (is_admin()) {
@@ -331,10 +395,24 @@ class ModuleLoader
      *
      * @throws RuntimeException
      * @return ModuleKernel
-     * @since 1.1.0
+     * @since 1.2.0
      */
     protected function prepModuleData(): ModuleKernel
     {
+        // Settings file
+        if (!empty($this->config['settings-file']) && file_exists($this->config['settings-file'])) {
+            $settingsFile = require $this->config['settings-file'];
+
+            if ($settingsFile && is_array($settingsFile)) {
+                $this->config['settings'] = $settingsFile;
+            }
+        }
+
+        // Callback
+        if (is_callable($this->config['callback'])) {
+            $this->config['callback']($this);
+        }
+
         if (!$module = $this->getModuleClass($this->config['module'])) {
             throw new RuntimeException("ZE0071 - Module does not exist : {$this->config['module']}");
         }
