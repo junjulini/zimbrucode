@@ -24,11 +24,11 @@ use Symfony\Component\Finder\Finder;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.2.0
  */
 class ScriptHandler
 {
-    private static $__VAR_UPLOAD_MODE = false;
+    private static bool $__VAR_UPLOAD_MODE = false;
 
     /**
      * Install theme script

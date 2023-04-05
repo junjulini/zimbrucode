@@ -16,11 +16,11 @@ namespace ZimbruCode\Module\ThemeAdaptor\Library;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.2.0
  */
 class TemplateFilesHandler
 {
-    public $location = '';
+    public string $location = '';
 
     /**
      * Retrieve path to a template

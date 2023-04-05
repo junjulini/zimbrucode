@@ -24,16 +24,16 @@ use ZimbruCode\Component\Handler\CacheHandler;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.2.0
  */
 class AssetCache
 {
-    protected $assets   = [];
-    protected $object   = [];
-    protected $settings = [];
+    protected array $assets   = [];
+    protected array $object   = [];
+    protected array $settings = [];
 
-    protected $cacheID         = 'asset-cache';
-    protected $executeLocation = __CLASS__;
+    protected string $cacheID         = 'asset-cache';
+    protected string $executeLocation = __CLASS__;
 
     /**
      * Constructor

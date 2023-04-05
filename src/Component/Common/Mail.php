@@ -16,15 +16,15 @@ namespace ZimbruCode\Component\Common;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.2.0
  */
 class Mail
 {
-    public $to      = false;
-    public $subject = false;
-    public $body    = false;
-    public $from    = false;
-    public $email   = false;
+    public string $to      = '';
+    public string $subject = '';
+    public string $body    = '';
+    public string $from    = '';
+    public string $email   = '';
 
     /**
      * Constructor

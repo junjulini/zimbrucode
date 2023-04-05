@@ -24,7 +24,7 @@ use ZimbruCode\Module\Panel\Library\Traits\ContentUtilityTrait;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.2.0
  */
 abstract class ControlKernel extends ModuleKernel
 {
@@ -61,7 +61,7 @@ abstract class ControlKernel extends ModuleKernel
      * @param string $method   Callback
      * @param string $type     Part of the hook name
      * @return void
-     * @since 1.1.0
+     * @since 1.2.0
      */
     protected function addTemplateFunction(string $name, string $method, string $type = 'control_shell'): void
     {
@@ -70,9 +70,7 @@ abstract class ControlKernel extends ModuleKernel
         }
 
         $this->addAction("zc/module/panel/{$this->getModuleSetting('slug')}/{$type}", function (ShellKernel $shell) use ($name, $method): void {
-            $shell->$name = function (...$args) use ($method) {
-                return call_user_func_array($method, $args);
-            };
+            $shell->$name = fn(...$args) => call_user_func_array($method, $args);
         });
     }
 

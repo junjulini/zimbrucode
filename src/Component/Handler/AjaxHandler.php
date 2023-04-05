@@ -20,14 +20,14 @@ use ZimbruCode\Component\Core\Kernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.2.0
  */
 class AjaxHandler
 {
-    protected $requestType   = '';
-    protected $inputJsonType = true;
-    protected $inputJsonData = [];
-    protected $data          = [];
+    protected string $requestType  = '';
+    protected bool $inputJsonType  = true;
+    protected array $inputJsonData = [];
+    protected array $data          = [];
 
     /**
      * Constructor

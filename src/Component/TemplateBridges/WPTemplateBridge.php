@@ -19,14 +19,14 @@ use ZimbruCode\Component\Handler\Traits\HooksHandlerTrait;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.2.0
  */
 class WPTemplateBridge
 {
     use HooksHandlerTrait;
 
-    protected $templates = [];
-    protected $location  = '';
+    protected array $templates = [];
+    protected string $location = '';
 
     /**
      * Add location for custom templates files

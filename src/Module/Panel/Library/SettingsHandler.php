@@ -19,21 +19,21 @@ use ZimbruCode\Component\Common\Tools;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.2.0
  */
 class SettingsHandler
 {
-    protected $data     = [];
-    protected $control  = [];
-    protected $settings = [];
-    protected $callback;
+    protected array $data     = [];
+    protected array $control  = [];
+    protected array $settings = [];
+    protected Callback $callback;
 
-    protected $exclude = [
+    protected array $exclude = [
         'menuTab',
         'menuParentTab',
     ];
 
-    protected $ignore = false;
+    protected bool $ignore = false;
 
     /**
      * Constructor

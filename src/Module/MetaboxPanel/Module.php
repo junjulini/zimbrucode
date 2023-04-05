@@ -19,11 +19,11 @@ use ZimbruCode\Component\Core\ModuleKernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.2.0
  */
 class Module extends ModuleKernel
 {
-    protected $__multiUse = true;
+    protected bool $__multiUse = true;
 
     /**
      * Module setup

@@ -27,9 +27,9 @@ use ZimbruCode\Component\Core\Kernel;
  */
 class ModuleLoader
 {
-    protected $config  = [];
-    protected $group   = [];
-    protected $isGroup = false;
+    protected array $config = [];
+    protected array $group  = [];
+    protected bool $isGroup = false;
 
     /**
      * Constructor

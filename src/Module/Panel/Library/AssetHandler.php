@@ -22,13 +22,13 @@ use ZimbruCode\Component\Core\ModuleKernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.2.0
  */
 class AssetHandler
 {
-    protected $assets     = [];
-    protected $lastAssets = [];
-    protected $scssData   = [
+    protected array $assets     = [];
+    protected array $lastAssets = [];
+    protected array $scssData   = [
         'files' => [],
         'dirs'  => [],
         'vars'  => [],

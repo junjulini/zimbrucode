@@ -18,11 +18,11 @@ use RuntimeException;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.2.0
  */
 abstract class ShellKernel
 {
-    private $__CM = [];
+    private array $__CM = [];
 
     /**
      * Add shell method

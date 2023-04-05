@@ -18,12 +18,12 @@ use ZimbruCode\Component\Core\Kernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.2.0
  */
 class Timing
 {
-    protected static $start  = 0;
-    protected static $marker = '';
+    protected static float $start   = 0;
+    protected static string $marker = '';
 
     /**
      * Start time

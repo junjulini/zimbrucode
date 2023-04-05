@@ -24,11 +24,11 @@ use ZimbruCode\Component\Core\Kernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.2.0
  */
 class Combine extends Filter
 {
-    protected $data = [
+    protected array $data = [
         'assets'   => [
             'js'  => [],
             'css' => [],
@@ -36,9 +36,9 @@ class Combine extends Filter
         'settings' => [],
     ];
 
-    protected $varPath;
-    protected $cacheExt;
-    protected $cache;
+    protected string $varPath;
+    protected string $cacheExt;
+    protected AssetCache $cache;
 
     /**
      * Setup

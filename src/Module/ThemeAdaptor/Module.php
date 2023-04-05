@@ -24,11 +24,11 @@ use ZimbruCode\Module\ThemeAdaptor\Library\TemplateFilesHandler;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.2.0
  */
 class Module extends ModuleKernel
 {
-    protected $templates = [];
+    protected array $templates = [];
 
     /**
      * Module setup

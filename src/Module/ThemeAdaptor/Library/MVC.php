@@ -27,13 +27,13 @@ use ZimbruCode\Component\Handler\Traits\SessionHandlerTrait;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.2.0
  */
 class MVC
 {
     use OptionHandlerTrait, GlobalCacheHandlerTrait, RequestHandlerTrait, SessionHandlerTrait, HooksHandlerTrait;
 
-    protected $__render;
+    protected Render $__render;
 
     /**
      * Constructor

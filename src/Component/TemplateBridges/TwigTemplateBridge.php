@@ -31,15 +31,15 @@ use ZimbruCode\Component\TemplateBridges\Helper\TwigFunctions;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.2.0
  */
 class TwigTemplateBridge
 {
-    protected $locationPath = [];
-    protected $cachePath    = false;
-    protected $twig         = false;
-    protected $loader       = false;
-    protected $data         = [
+    protected array $locationPath = [];
+    protected string $cachePath;
+    protected ?Environment $twig = null;
+    protected ?FilesystemLoader $loader = null;
+    protected array $data = [
         'vars'       => [],
         'functions'  => [],
         'escapers'   => [],
@@ -413,11 +413,11 @@ class TwigTemplateBridge
      */
     public function render(string $template = ''): string
     {
-        if (!$this->loader || !($this->loader instanceof FilesystemLoader)) {
+        if (!$this->loader) {
             $this->addLoader();
         }
 
-        if (!$this->twig || !($this->twig instanceof Environment)) {
+        if (!$this->twig) {
             $this->addEnvironment();
         }
 

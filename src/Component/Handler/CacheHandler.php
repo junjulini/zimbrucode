@@ -26,12 +26,12 @@ use ZimbruCode\Component\Core\Kernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.2.0
  */
 class CacheHandler
 {
-    protected $fileCacheDir;
-    protected $fileCacheExtension;
+    protected string $fileCacheDir;
+    protected string $fileCacheExtension;
 
     /**
      * Constructor

@@ -20,13 +20,13 @@ use ZimbruCode\Component\Core\Kernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.2.0
  */
 class NamespaceHandler
 {
-    protected $namespace;
-    protected $namespaceSymbol;
-    protected $globalNamespace;
+    protected string $namespace;
+    protected string $namespaceSymbol;
+    protected string $globalNamespace;
 
     /**
      * Constructor

@@ -22,12 +22,12 @@ use ZimbruCode\Module\Panel\Library\Mode;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.2.0
  */
 class Backup extends Kernel
 {
-    protected $mode         = false;
-    protected $backupDbName = false;
+    protected Mode $mode;
+    protected string $backupDbName;
 
     /**
      * Constructor

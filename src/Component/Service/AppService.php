@@ -21,12 +21,12 @@ use ZimbruCode\Component\Common\Tools;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.2.0
  */
 class AppService
 {
-    protected $app;
-    public $fs;
+    protected AppKernel $app;
+    public Filesystem $fs;
 
     /**
      * Constructor

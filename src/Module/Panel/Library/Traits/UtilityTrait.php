@@ -21,7 +21,7 @@ use ZimbruCode\Module\Panel\Library\Shell\BaseShell;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.2.0
  */
 trait UtilityTrait
 {
@@ -34,14 +34,12 @@ trait UtilityTrait
      * @param callable $method   Callback
      * @param string   $type     Part of the hook name
      * @return void
-     * @since 1.0.0
+     * @since 1.2.0
      */
     protected function addShellFunction(string $name, callable $method, string $type = 'base_shell'): void
     {
         $this->addAction("zc/module/panel/{$this->getModuleSetting('slug')}/{$type}", function (ShellKernel $shell) use ($name, $method): void {
-            $shell->$name = function (...$args) use ($method) {
-                return call_user_func_array($method, $args);
-            };
+            $shell->$name = fn(...$args) => call_user_func_array($method, $args);
         });
     }
 

@@ -22,21 +22,21 @@ use ZimbruCode\Component\Core\Kernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.2.0
  */
 class SCSS extends Filter
 {
-    protected $compiler;
+    protected ScssCompiler $compiler;
 
-    protected $appPath;
-    protected $rootPath;
-    protected $varPath;
+    protected string $appPath;
+    protected string $rootPath;
+    protected string $varPath;
 
-    protected $searchPoint;
-    protected $externalPoint;
+    protected string $searchPoint;
+    protected string $externalPoint;
 
-    protected $fwSP;
-    protected $cacheExt;
+    protected string $fwSP;
+    protected string $cacheExt;
 
     /**
      * Setup

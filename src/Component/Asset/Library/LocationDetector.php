@@ -22,13 +22,13 @@ use ZimbruCode\Component\Core\Kernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.2.0
  */
 class LocationDetector
 {
-    protected $location;
-    protected $root;
-    protected $defaultLocation = [];
+    protected string $location;
+    protected string $root;
+    protected array $defaultLocation = [];
 
     /**
      * Constructor

@@ -18,11 +18,11 @@ use ZimbruCode\Component\Common\Tools;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.2.0
  */
 class DataCollector
 {
-    protected $data = [];
+    protected array $data = [];
 
     /**
      * Get data

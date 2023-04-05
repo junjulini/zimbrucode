@@ -20,16 +20,16 @@ use ZimbruCode\Component\Debug\DebugController;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.2.0
  */
 class DeveloperMode
 {
-    protected $isDev  = false;
-    protected $config = [];
+    protected bool $isDev   = false;
+    protected array $config = [];
 
-    protected $timing;
-    protected $memoryUsage;
-    protected $system;
+    protected Timing $timing;
+    protected MemoryUsage $memoryUsage;
+    protected System $system;
 
     /**
      * Constructor

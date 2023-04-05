@@ -25,19 +25,19 @@ use ZimbruCode\Component\Core\Kernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.2.0
  */
 class ScssCompiler
 {
     // Paths
-    public $input  = '';
-    public $output = '';
-    public $cache  = '';
+    public string $input  = '';
+    public string $output = '';
+    public string $cache  = '';
 
     // Options
-    public $vars   = [];    // SCSS vars
-    public $minify = true;  // Compress CSS status
-    public $dev    = false; // If DEV is true, cache sys. not used
+    public array $vars  = [];    // SCSS vars
+    public bool $minify = true;  // Compress CSS status
+    public bool $dev    = false; // If DEV is true, cache sys. not used
 
     // Other
     protected $data = [

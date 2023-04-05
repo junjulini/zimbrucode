@@ -21,13 +21,13 @@ use ZimbruCode\Component\Handler\CacheHandler;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.2.0
  */
 class FastCache
 {
-    protected $cache;
-    protected $cacheID;
-    protected $data = [];
+    protected object $cache;
+    protected string $cacheID;
+    protected array $data = [];
 
     /**
      * Constructor

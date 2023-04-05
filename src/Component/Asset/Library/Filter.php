@@ -18,11 +18,11 @@ use ZimbruCode\Component\Asset\Library\AssetDataCollector;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.2.0
  */
 abstract class Filter
 {
-    private $collector;
+    private AssetDataCollector $collector;
     private $callback;
 
     /**

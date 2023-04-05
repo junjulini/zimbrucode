@@ -33,7 +33,7 @@ abstract class AppKernel extends Kernel
 {
     use AssetTrait;
 
-    private $__CHILD_APP = false;
+    private ?Kernel $__CHILD_APP = null;
 
     /**
      * Initializing a new application
@@ -81,20 +81,16 @@ abstract class AppKernel extends Kernel
         self::module()->addNamespace($this->getNamespace() . '\\' . self::getGlobal('app/module-namespace-dir'));
 
         // Child theme : Call "beforeParentSetup" method
-        if ($this->__CHILD_APP instanceof Kernel) {
-            if (method_exists($this->__CHILD_APP, 'beforeParentSetup')) {
-                $this->__CHILD_APP->beforeParentSetup();
-            }
+        if ($this->__CHILD_APP && method_exists($this->__CHILD_APP, 'beforeParentSetup')) {
+            $this->__CHILD_APP->beforeParentSetup();
         }
 
         // Call "setup" method
         $this->setup();
 
         // Child theme : Call "setup" method
-        if ($this->__CHILD_APP instanceof Kernel) {
-            if (method_exists($this->__CHILD_APP, 'setup')) {
-                $this->__CHILD_APP->setup();
-            }
+        if ($this->__CHILD_APP && method_exists($this->__CHILD_APP, 'setup')) {
+            $this->__CHILD_APP->setup();
         }
 
         // Load modules from config file
@@ -274,7 +270,7 @@ abstract class AppKernel extends Kernel
      * Combine the custom configuration of the application with the global configuration and call the "config" method
      *
      * @return void
-     * @since 1.1.0
+     * @since 1.2.0
      */
     private function __customAppConfig(): void
     {
@@ -316,10 +312,8 @@ abstract class AppKernel extends Kernel
         }
 
         // Child theme : Call "config" method
-        if ($this->__CHILD_APP instanceof Kernel) {
-            if (method_exists($this->__CHILD_APP, 'config')) {
-                $this->__CHILD_APP->config();
-            }
+        if ($this->__CHILD_APP && method_exists($this->__CHILD_APP, 'config')) {
+            $this->__CHILD_APP->config();
         }
     }
 
@@ -406,7 +400,7 @@ abstract class AppKernel extends Kernel
      * Callback after load all modules
      *
      * @return void
-     * @since 1.1.0
+     * @since 1.2.0
      */
     private function __callbackAfter(): void
     {
@@ -415,10 +409,8 @@ abstract class AppKernel extends Kernel
         }
 
         // Child theme : Call "afterLoadAllModules" method
-        if ($this->__CHILD_APP instanceof Kernel) {
-            if (method_exists($this->__CHILD_APP, 'afterLoadAllModules')) {
-                $this->__CHILD_APP->afterLoadAllModules();
-            }
+        if ($this->__CHILD_APP && method_exists($this->__CHILD_APP, 'afterLoadAllModules')) {
+            $this->__CHILD_APP->afterLoadAllModules();
         }
 
         do_action('zc/after_load_modules');
@@ -509,11 +501,11 @@ abstract class AppKernel extends Kernel
      * Get child application object
      *
      * @return Kernel   Child application
-     * @since 1.1.0
+     * @since 1.2.0
      */
     final public function child(): Kernel
     {
-        if ($this->__CHILD_APP instanceof Kernel) {
+        if ($this->__CHILD_APP) {
             return $this->__CHILD_APP;
         } else {
             throw new RuntimeException('ZE0147 - You are not using a child theme');

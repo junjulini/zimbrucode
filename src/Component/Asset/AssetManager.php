@@ -25,14 +25,14 @@ use ZimbruCode\Component\Core\Kernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.2.0
  */
 class AssetManager
 {
-    protected $collector;
-    protected $autoFilter;
-    protected $callbacks = [];
-    protected $nh;
+    protected AssetDataCollector $collector;
+    protected bool $autoFilter;
+    protected array $callbacks = [];
+    protected NamespaceHandler $nh;
 
     /**
      * Constructor

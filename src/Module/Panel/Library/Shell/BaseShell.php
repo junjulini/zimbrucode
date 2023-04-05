@@ -19,12 +19,11 @@ use ZimbruCode\Component\TemplateBridges\Helper\ShellKernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.2.0
  */
 class BaseShell extends ShellKernel
 {
-    protected $panel;
-    protected $customMethod = [];
+    protected ModuleKernel $panel;
 
     /**
      * Constructor

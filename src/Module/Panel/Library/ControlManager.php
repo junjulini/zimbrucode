@@ -23,14 +23,14 @@ use ZimbruCode\Module\Panel\Library\Twig\ControlsRenderTwigExtension;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.2.0
  */
 class ControlManager extends ModuleKernel
 {
     use ContentUtilityTrait;
 
-    protected $controls   = [];
-    protected $namespaces = [];
+    protected array $controls   = [];
+    protected array $namespaces = [];
 
     /**
      * Manager setup

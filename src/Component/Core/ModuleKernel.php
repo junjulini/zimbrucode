@@ -24,16 +24,16 @@ use ZimbruCode\Component\Core\Traits\RenderTrait;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.2.0
  */
 abstract class ModuleKernel extends Kernel
 {
     use RenderTrait, AssetTrait;
 
-    private $__DC;
-    private $__MP;
+    private DataCollector $__DC;
+    private ModuleKernel $__MP;
 
-    protected $__multiUse = false;
+    protected bool $__multiUse = false;
 
     /**
      * Constructor

@@ -18,11 +18,11 @@ use Tracy\IBarPanel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.2.0
  */
 class DevLogTracyBarExtension implements IBarPanel
 {
-    public $data;
+    public array $data;
 
     /**
      * Renders HTML code for custom tab

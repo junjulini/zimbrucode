@@ -18,13 +18,13 @@ use ZimbruCode\Component\Core\Kernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.3
+ * @since   1.2.0
  */
 class MemoryUsage
 {
-    protected static $start     = 0;
-    protected static $marker    = '';
-    protected static $realUsage = true;
+    protected static int $start      = 0;
+    protected static string $marker  = '';
+    protected static bool $realUsage = true;
 
     /**
      * Start checking memory usage

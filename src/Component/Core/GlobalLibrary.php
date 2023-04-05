@@ -18,11 +18,11 @@ use ZimbruCode\Component\Handler\LibraryHandler;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.2.0
  */
 final class GlobalLibrary
 {
-    private $path;
+    private string $path;
 
     /**
      * Constructor

@@ -20,13 +20,12 @@ use ZimbruCode\Module\Panel\Library\ControlManager;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.2.0
  */
 class ControlShell extends ShellKernel
 {
-    protected $panel;
-    protected $controlData  = [];
-    protected $customMethod = [];
+    protected ControlManager $panel;
+    protected array $controlData = [];
 
     /**
      * Constructor

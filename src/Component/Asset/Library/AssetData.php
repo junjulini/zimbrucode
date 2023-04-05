@@ -23,14 +23,14 @@ use ZimbruCode\Component\Core\Kernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.2.0
  */
 class AssetData
 {
-    protected $raw;
-    protected $info;
-    protected $data;
-    protected $location;
+    protected string $raw;
+    protected SplFileInfo $info;
+    protected array $data;
+    protected LocationDetector $location;
 
     /**
      * Constructor

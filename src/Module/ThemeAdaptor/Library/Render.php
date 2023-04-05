@@ -33,14 +33,14 @@ use ZimbruCode\Module\ThemeAdaptor\Library\TwigFunctions;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.2.0
  */
 class Render
 {
-    protected $ttb;
-    protected $flush;
+    protected TwigTemplateBridge $ttb;
+    protected bool $flush;
 
-    protected $data = [
+    protected array $data = [
         'functions' => [],
         'escapers'  => [],
         'filters'   => [],

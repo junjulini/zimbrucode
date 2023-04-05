@@ -22,13 +22,13 @@ use ZimbruCode\Component\Core\Kernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.2.0
  */
 class CssConvertor
 {
-    protected $asset;
-    protected $content;
-    protected $output;
+    protected string $asset;
+    protected string $content;
+    protected string $output;
 
     /**
      * Add asset
