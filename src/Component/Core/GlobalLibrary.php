@@ -42,11 +42,10 @@ final class GlobalLibrary
      * Add packages
      *
      * @return void
-     * @since 1.1.0
+     * @since 1.2.0
      */
     private function addPackageLibrary(): void
     {
-        $path = $this->path;
         LibraryHandler::addPackages(require_once "{$this->path}/config/asset-packages.php");
     }
 
@@ -54,11 +53,10 @@ final class GlobalLibrary
      * Add font icons library
      *
      * @return void
-     * @since 1.1.0
+     * @since 1.2.0
      */
     private function addIconFontLibrary(): void
     {
-        $path = $this->path;
         LibraryHandler::addElement('icons/material-icons', "{$this->path}/icons/material-icons-list.php");
         LibraryHandler::addPackages(require_once "{$this->path}/icons/font-icons-package.php");
     }

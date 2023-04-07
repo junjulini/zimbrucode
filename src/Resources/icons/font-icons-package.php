@@ -14,7 +14,7 @@ return [
     'icons' => [
         'styles'  => [
             'material-icons' => [
-                'path' => $path . '/icons/library/material-icons/material-icons.css',
+                'path' => "{$this->path}/icons/library/material-icons/material-icons.css",
             ],
         ],
         'scripts' => [],
