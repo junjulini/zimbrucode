@@ -42,19 +42,22 @@ class Mail
      * Check for errors
      *
      * @return bool   Result of checking
-     * @since 1.0.0
+     * @since 1.2.0
      */
     protected function error(): bool
     {
+        $this->to    = filter_var($this->to, FILTER_SANITIZE_EMAIL);
+        $this->email = filter_var($this->email, FILTER_SANITIZE_EMAIL);
+
         if (empty($this->to) || empty($this->subject) || empty($this->body) || empty($this->from) || empty($this->email)) {
             return true;
         }
 
-        if (!preg_match('/^[^@]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$/', $this->email)) {
+        if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
             return true;
         }
 
-        if (!preg_match('/^[^@]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$/', $this->to)) {
+        if (!filter_var($this->to, FILTER_VALIDATE_EMAIL)) {
             return true;
         }
 
@@ -65,12 +68,12 @@ class Mail
      * Send mail
      *
      * @return bool   Action result
-     * @since 1.0.0
+     * @since 1.2.0
      */
     public function send(): bool
     {
         if (!$this->error()) {
-            $headers = "From: {$this->from} <{$this->email}>\r\n";
+            $headers  = "From: {$this->from} <{$this->email}>\r\n";
             $headers .= "Reply-To: {$this->email}\r\n";
 
             if (wp_mail($this->to, $this->subject, $this->body, $headers)) {
