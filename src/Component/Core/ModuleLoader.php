@@ -173,6 +173,19 @@ class ModuleLoader
     }
 
     /**
+     * Add module capability
+     *
+     * @param string $capability   Module capability
+     * @return ModuleLoader
+     * @since 1.2.0
+     */
+    public function addCapability(string $capability): self
+    {
+        $this->config['capability'] = $capability;
+        return $this;
+    }
+
+    /**
      * Add callback
      *
      * @param callable|null $callback   Module callback
@@ -228,6 +241,7 @@ class ModuleLoader
                 $this->useModule($config)
                      ->addAsService('')
                      ->addMode('')
+                     ->addCapability('edit_theme_options')
                      ->addCallback(null)
                      ->addSettings([])
                      ->addSettingsFile('')
@@ -240,6 +254,7 @@ class ModuleLoader
                 $this->useModule($config['module'])
                      ->addAsService($config['service'] ?? '')
                      ->addMode($config['mode'] ?? '')
+                     ->addCapability($config['capability'] ?? 'edit_theme_options')
                      ->addCallback($config['callback'] ?? null)
                      ->addSettings($config['settings'] ?? [])
                      ->addSettingsFile($config['settings-file'] ?? '')
@@ -252,6 +267,7 @@ class ModuleLoader
                         $this->useModule($module)
                              ->addAsService('')
                              ->addMode('')
+                             ->addCapability('edit_theme_options')
                              ->addCallback(null)
                              ->addSettings([])
                              ->addSettingsFile('')
@@ -268,6 +284,7 @@ class ModuleLoader
                         $this->useModule($module['module'])
                              ->addAsService($module['service'] ?? '')
                              ->addMode($module['mode'] ?? '')
+                             ->addCapability($module['capability'] ?? 'edit_theme_options')
                              ->addCallback($module['callback'] ?? null)
                              ->addSettings($module['settings'] ?? [])
                              ->addSettingsFile($module['settings-file'] ?? '')
@@ -345,6 +362,7 @@ class ModuleLoader
         $this->config = [
             'module'        => '',
             'mode'          => '',
+            'capability'    => 'edit_theme_options',
             'service'       => '',
             'callback'      => null,
             'settings'      => [],
@@ -366,7 +384,7 @@ class ModuleLoader
         if (!empty($this->config['mode'])) {
             switch ($this->config['mode']) {
                 case 'admin':
-                    if (is_admin()) {
+                    if (Tools::isAdmin($this->config['capability'])) {
                         return $this->prepModuleData();
                     }
 

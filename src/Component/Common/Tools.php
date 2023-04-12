@@ -22,7 +22,7 @@ use ZimbruCode\Component\Core\Kernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.2.0
  */
 class Tools
 {
@@ -1036,5 +1036,17 @@ class Tools
         }
 
         return $data;
+    }
+
+    /**
+     * Check if is admin area
+     * 
+     * @param string $capability   User capability
+     * @return bool                Action result
+     * @since 1.2.0
+     */
+    public static function isAdmin(string $capability = 'edit_theme_options'): bool
+    {
+        return (is_admin() && current_user_can($capability));
     }
 }
