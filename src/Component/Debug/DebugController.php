@@ -21,7 +21,7 @@ use ZimbruCode\Component\Core\Kernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.2.0
  */
 class DebugController
 {
@@ -30,7 +30,7 @@ class DebugController
      *
      * @param array $args   Debugger arguments
      * @return void
-     * @since 1.0.0
+     * @since 1.2.0
      */
     public static function runTracy(array $args = []): void
     {
@@ -39,15 +39,16 @@ class DebugController
         }
 
         $default = [
-            'strictMode'   => false,
-            'showBar'      => true,
-            'logDirectory' => null,
-            'logSeverity'  => 0,
-            'email'        => null,
-            'dev'          => false,
-            'maxDepth'     => 4,
-            'maxLength'    => 150,
-            'editor'       => false,
+            'strictMode'            => false,
+            'showBar'               => true,
+            'logDirectory'          => null,
+            'logSeverity'           => 0,
+            'logDisableEDeprecated' => false,
+            'email'                 => null,
+            'dev'                   => false,
+            'maxDepth'              => 4,
+            'maxLength'             => 150,
+            'editor'                => false,
         ];
 
         $args = Tools::arrayMerge($default, $args, 's');
@@ -65,6 +66,13 @@ class DebugController
             Debugger::$editor = $args['editor'];
         }
 
+        Debugger::$errorTemplate = wp_normalize_path(realpath(__DIR__ . '/../../Resources/phtml/error.500.phtml'));
+
+        $logger = new TracyLogger(Debugger::$logDirectory, Debugger::$email, Debugger::getBlueScreen());
+
+        $logger->disableEDeprecated = ($args['logDisableEDeprecated']) ? true : false;
+
+        Debugger::setLogger($logger);
         Debugger::enable();
     }
 
