@@ -158,7 +158,7 @@ class SCSS extends Filter
      *
      * @param AssetData $asset   Asset data
      * @return string            Output path
-     * @since 1.1.0
+     * @since 1.2.0
      */
     protected function getOutput(AssetData $asset): string
     {
@@ -175,7 +175,7 @@ class SCSS extends Filter
             $dir  = str_replace('/', '.', dirname(ltrim($output, '/')));
 
             $output = "{$this->varPath}/{$dir}/{$file}";
-        } elseif (false !== strpos($assetDir, $this->rootPath) && 0 !== strpos($assetDir, Kernel::service('app')->getChildPath())) {
+        } elseif (false !== strpos($assetDir, $this->rootPath) && 0 !== strpos($assetDir, Kernel::service('app')->getChildPath() ?: '[zc]')) {
             preg_match("/{$this->fwSP}(.*)/i", $asset->getPath(), $matches);
 
             $output = strtolower($matches[1]);
