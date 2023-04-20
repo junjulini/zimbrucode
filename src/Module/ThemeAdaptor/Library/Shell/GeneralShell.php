@@ -18,21 +18,22 @@ use ZimbruCode\Component\TemplateBridges\Helper\ShellKernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.2.0
  */
 class GeneralShell extends ShellKernel
 {
     /**
-     * Get home URL
+     * Retrieves the URL for a given site where the front end is accessible
      *
-     * @param string $path     Path relative to the home URL
-     * @param mixed  $scheme   Scheme to give the home URL context. Accepts 'http', 'https', 'relative', 'rest', or null
-     * @return string          Home URL link with optional path appended
-     * @since 1.0.0
+     * @param int|null    $blogID   Site ID. Default null (current site)
+     * @param string      $path     Path relative to the home URL
+     * @param string|null $scheme   Scheme to give the home URL context. Accepts 'http', 'https', 'relative', 'rest', or null
+     * @return string               Home URL link with optional path appended
+     * @since 1.2.0
      */
-    public function getHomeURL(string $path = '/', $scheme = null): string
+    public function homeURL(int $blogID = null, string $path = '', string $scheme = null): string
     {
-        return esc_url(home_url($path, $scheme));
+        return esc_url(get_home_url($blogID, $path, $scheme));
     }
 
     /**
@@ -73,19 +74,5 @@ class GeneralShell extends ShellKernel
     public function blogInfo(string $show = '', string $filter = 'raw'): string
     {
         return get_bloginfo($show, $filter);
-    }
-
-    /**
-     * Retrieves the URL for a given site where the front end is accessible
-     *
-     * @param int|null    $blogID   Site ID. Default null (current site)
-     * @param string      $path     Path relative to the home URL
-     * @param string|null $scheme   Scheme to give the home URL context. Accepts 'http', 'https', 'relative', 'rest', or null
-     * @return string               Home URL link with optional path appended
-     * @since 1.1.0
-     */
-    public function homeURL(int $blogID = null, string $path = '', string $scheme = null): string
-    {
-        return get_home_url($blogID, $path, $scheme);
     }
 }
