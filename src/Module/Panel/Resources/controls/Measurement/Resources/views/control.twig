@@ -28,7 +28,7 @@
         <div class="zc-panel-control-measurement__container {{ container_class }}">
             <div title="{{ __('Inherit', 'zc') }}" class="zc-panel-control-measurement__inherit-type zc-icon-flag"></div>
             <div class="zc-panel-control-measurement__inherit-container">
-                <span class="zc-panel-control-measurement__inherit-msg">{{ __('Inherit', 'zc') }}</span>
+                <span title="{{ __('Click on the flag icon to exit inherit mode.', 'zc') }}" class="zc-panel-control-measurement__inherit-msg">{{ __('Inherit', 'zc') }}</span>
             </div>
             <input type="text" value="" class="zc-panel-control-measurement__input" data-min="{{ control.settings.min|default(0) }}" data-max="{{ control.settings.max|default('infinity') }}" data-step="{{ control.settings.step|default(1) }}">
             <div class="zc-panel-control-measurement__spinners">
