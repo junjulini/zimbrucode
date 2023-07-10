@@ -114,13 +114,12 @@ class TracyLogger extends Logger
      */
     public function defaultMailer($message, string $email): void
     {
-        $host = preg_replace('#[^\w.-]+#', '', $_SERVER['SERVER_NAME'] ?? php_uname('n'));
         $mail = new Mail;
 
         $mail->from    = get_bloginfo('name');
         $mail->to      = $email;
-        $mail->subject = esc_html__('PHP: An error occurred on the server' . " : {$host}", 'zc');
-        $mail->body    = static::formatMessage($message) . "\n\nsource: " . Helpers::getSource();
+        $mail->subject = esc_html__('WordPress : There was an error on the server', 'zc');
+        $mail->body    = static::formatMessage($message) . "\n\nSource: " . Helpers::getSource();
 
         $mail->send();
     }
