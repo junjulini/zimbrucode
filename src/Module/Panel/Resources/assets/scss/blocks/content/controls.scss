@@ -114,7 +114,8 @@
         }
 
         &_accent-border {
-            border-bottom-width: 3px;
+            border-bottom-width: 2px;
+            border-bottom-color: $accent-color__2;
         }
 
         &_visual-alert {
