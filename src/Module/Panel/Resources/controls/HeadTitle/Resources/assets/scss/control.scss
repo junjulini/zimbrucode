@@ -13,7 +13,7 @@
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.2.0
  */
 
 .zc-panel-control-head-title {
@@ -30,7 +30,7 @@
         height: 0;
         top: 11px;
         z-index: 1;
-        border-bottom: 2px dashed $accent-color__2;
+        border-bottom: 2px solid $accent-color__2;
     }
 
     &__title {
