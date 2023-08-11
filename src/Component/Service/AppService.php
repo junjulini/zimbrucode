@@ -34,7 +34,7 @@ class AppService
      * @param AppKernel $app        Application object
      * @param string    $rootPath   Path to the root directory of the application
      * @param string    $slug       Application slug
-     * @since 1.1.0
+     * @since 1.2.0
      */
     public function __construct(AppKernel $app, string $rootPath, string $slug)
     {
@@ -91,7 +91,7 @@ class AppService
 
                 if (isset($uploadDir['error']) && $uploadDir['error'] === false && $uploadDir['basedir'] && $uploadDir['baseurl']) {
                     $varsDirPath = wp_normalize_path("{$uploadDir['basedir']}/{$slug}");
-                    $varsDirURL  = esc_url(wp_normalize_path("{$uploadDir['baseurl']}/{$slug}"));
+                    $varsDirURL  = esc_url(wp_normalize_path("{$uploadDir['baseurl']}/{$slug}"), '', '');
 
                     $var = $this->app->getGlobal('app/var-dir');
                     $this->app->addGlobal('app/var-path', "{$varsDirPath}/{$mid}");
@@ -204,11 +204,11 @@ class AppService
      *
      * @param string $path   Additional part of the path
      * @return string        Application URL
-     * @since 1.1.0
+     * @since 1.2.0
      */
     public function getURL(string $url = ''): string
     {
-        return esc_url($this->app->getGlobal('app/url') . $url);
+        return esc_url(wp_normalize_path($this->app->getGlobal('app/url') . $url), '', '');
     }
 
     /**
@@ -273,11 +273,11 @@ class AppService
      *
      * @param string $url   Additional part of the URL
      * @return string       Root directory URL
-     * @since 1.0.0
+     * @since 1.2.0
      */
     public function getRootURL(string $url = ''): string
     {
-        return esc_url(wp_normalize_path($this->app->getGlobal('app/root-url') . $url));
+        return esc_url(wp_normalize_path($this->app->getGlobal('app/root-url') . $url), '', '');
     }
 
     /**
@@ -285,12 +285,12 @@ class AppService
      *
      * @param string $url   Additional part of the URL
      * @return string       Root directory URL
-     * @since 1.1.0
+     * @since 1.2.0
      */
     public function getChildRootURL(string $url = ''): string
     {
         if (Tools::isChildTheme()) {
-            return esc_url(wp_normalize_path(get_stylesheet_directory_uri() . "/{$url}"));
+            return esc_url(wp_normalize_path(get_stylesheet_directory_uri() . "/{$url}"), '', '');
         }
 
         return '';
@@ -325,11 +325,11 @@ class AppService
      *
      * @param string $url   Additional part of the URL
      * @return string       Resource directory URL
-     * @since 1.1.0
+     * @since 1.2.0
      */
     public function getResourceURL(string $url = ''): string
     {
-        return esc_url(wp_normalize_path($this->app->getGlobal('app/resource-url') . $url));
+        return esc_url(wp_normalize_path($this->app->getGlobal('app/resource-url') . $url), '', '');
     }
 
     /**
@@ -361,11 +361,11 @@ class AppService
      *
      * @param string $url   Additional part of the URL
      * @return string       Var directory URL
-     * @since 1.1.0
+     * @since 1.2.0
      */
     public function getVarURL(string $url = ''): string
     {
-        return esc_url(wp_normalize_path($this->app->getGlobal('app/var-url') . $url));
+        return esc_url(wp_normalize_path($this->app->getGlobal('app/var-url') . $url), '', '');
     }
 
     /**
@@ -396,11 +396,11 @@ class AppService
      *
      * @param string $url   Additional part of the URL
      * @return string       Cache directory URL
-     * @since 1.1.0
+     * @since 1.2.0
      */
     public function getCacheURL(string $url = ''): string
     {
-        return esc_url(wp_normalize_path($this->app->getGlobal('app/cache-url') . $url));
+        return esc_url(wp_normalize_path($this->app->getGlobal('app/cache-url') . $url), '', '');
     }
 
     /**
@@ -436,11 +436,11 @@ class AppService
      *
      * @param string $url   Additional part of the URL
      * @return string       Temp directory URL
-     * @since 1.1.0
+     * @since 1.2.0
      */
     public function getTempURL(string $url = ''): string
     {
-        return esc_url(wp_normalize_path($this->app->getGlobal('app/temp-url') . $url));
+        return esc_url(wp_normalize_path($this->app->getGlobal('app/temp-url') . $url), '', '');
     }
 
     /**
@@ -471,11 +471,11 @@ class AppService
      *
      * @param string $url   Additional part of the URL
      * @return string       Log directory URL
-     * @since 1.1.0
+     * @since 1.2.0
      */
     public function getLogURL(string $url = ''): string
     {
-        return esc_url(wp_normalize_path($this->app->getGlobal('app/log-url') . $url));
+        return esc_url(wp_normalize_path($this->app->getGlobal('app/log-url') . $url), '', '');
     }
 
     /**
@@ -518,11 +518,11 @@ class AppService
      *
      * @param string $url   Additional part of the URL
      * @return string       Asset directory URL
-     * @since 1.1.0
+     * @since 1.2.0
      */
     public function getAssetURL(string $url = ''): string
     {
-        return esc_url(wp_normalize_path($this->app->getGlobal('app/asset-url') . $url));
+        return esc_url(wp_normalize_path($this->app->getGlobal('app/asset-url') . $url), '', '');
     }
 
     /**
@@ -566,11 +566,11 @@ class AppService
      *
      * @param string $url   Additional part of the URL
      * @return string       Config directory URL
-     * @since 1.1.0
+     * @since 1.2.0
      */
     public function getConfigURL(string $url = ''): string
     {
-        return esc_url(wp_normalize_path($this->app->getGlobal('app/config-url') . $url));
+        return esc_url(wp_normalize_path($this->app->getGlobal('app/config-url') . $url), '', '');
     }
 
     /**
@@ -614,11 +614,11 @@ class AppService
      *
      * @param string $url   Additional part of the URL
      * @return string       Model directory URL
-     * @since 1.1.0
+     * @since 1.2.0
      */
     public function getModelURL(string $url = ''): string
     {
-        return esc_url(wp_normalize_path($this->app->getGlobal('app/model-url') . $url));
+        return esc_url(wp_normalize_path($this->app->getGlobal('app/model-url') . $url), '', '');
     }
 
     /**
@@ -662,11 +662,11 @@ class AppService
      *
      * @param string $url   Additional part of the URL
      * @return string       View directory URL
-     * @since 1.1.0
+     * @since 1.2.0
      */
     public function getViewURL(string $url = ''): string
     {
-        return esc_url(wp_normalize_path($this->app->getGlobal('app/view-url') . $url));
+        return esc_url(wp_normalize_path($this->app->getGlobal('app/view-url') . $url), '', '');
     }
 
     /**

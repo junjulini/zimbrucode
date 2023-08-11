@@ -19,7 +19,7 @@ use ZimbruCode\Component\TemplateBridges\Helper\ShellKernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.2.0
  */
 class PostShell extends ShellKernel
 {
@@ -85,11 +85,11 @@ class PostShell extends ShellKernel
      *
      * @param int $postID   Post ID
      * @return mixed       The permalink URL or false if post does not exist
-     * @since 1.1.0
+     * @since 1.2.0
      */
     public function link(int $postID = 0)
     {
-        return get_permalink($postID);
+        return esc_url(get_permalink($postID), '', '');
     }
 
     /**
@@ -188,11 +188,11 @@ class PostShell extends ShellKernel
      * @param mixed $post   Post ID or WP_Post object. Default is global $post
      * @param mixed $size   Registered image size to retrieve the source for or a flat array of height and width dimensions
      * @return mixed        Post thumbnail URL or false if no image is available. If $size does not match any registered image size, the original image URL will be returned
-     * @since 1.1.0
+     * @since 1.2.0
      */
     public function imageURL($post = null, $size = 'post-thumbnail')
     {
-        return get_the_post_thumbnail_url($post, $size);
+        return esc_url(get_the_post_thumbnail_url($post, $size), '', '');
     }
 
     /**

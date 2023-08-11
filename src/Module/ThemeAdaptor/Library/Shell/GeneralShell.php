@@ -33,7 +33,7 @@ class GeneralShell extends ShellKernel
      */
     public function homeURL(int $blogID = null, string $path = '', string $scheme = null): string
     {
-        return esc_url(get_home_url($blogID, $path, $scheme));
+        return esc_url(get_home_url($blogID, $path, $scheme), '', '');
     }
 
     /**

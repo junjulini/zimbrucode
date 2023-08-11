@@ -60,7 +60,7 @@ class ModuleLoader
      * @param string $path      Additional part of the path
      * @param mixed  $default   Default value
      * @return string|mixed     Module path
-     * @since 1.0.0
+     * @since 1.2.0
      */
     public function getModulePath(string $module, string $path = '', $default = false)
     {
@@ -68,7 +68,7 @@ class ModuleLoader
         $filePath = Kernel::service('composer')->findFile($class);
         $dirPath  = dirname(wp_normalize_path(realpath($filePath)));
 
-        return ($dirPath) ? $dirPath . $path : $default;
+        return ($dirPath) ? wp_normalize_path($dirPath . $path) : $default;
     }
 
     /**
@@ -78,12 +78,12 @@ class ModuleLoader
      * @param string $url       Additional part of the URL
      * @param mixed  $default   Return value if not exist module
      * @return string|mixed     Module URL
-     * @since 1.0.0
+     * @since 1.2.0
      */
     public function getModuleURL(string $module, string $url = '', $default = false)
     {
         $dirPath = $this->getModulePath($module);
-        return ($dirPath) ? Tools::getURL($dirPath) . $url : $default;
+        return ($dirPath) ? esc_url(wp_normalize_path(Tools::getURL($dirPath) . $url), '', '') : $default;
     }
 
     /**
@@ -92,12 +92,12 @@ class ModuleLoader
      * @param string $module   Module name
      * @param string $path     Additional part of the path
      * @return string          Module resource path
-     * @since 1.1.0
+     * @since 1.2.0
      */
     public function getModuleResourcePath(string $module, string $path = ''): string
     {
         $dirPath = $this->getModulePath($module);
-        return ($dirPath) ? $dirPath . Kernel::getGlobal('core/component/core/module/resource-dir') . $path : '';
+        return ($dirPath) ? wp_normalize_path($dirPath . Kernel::getGlobal('core/component/core/module/resource-dir') . $path) : '';
     }
 
     /**
@@ -106,12 +106,12 @@ class ModuleLoader
      * @param string $module   Module name
      * @param string $url      Additional part of the URL
      * @return string          Module resource URL
-     * @since 1.1.0
+     * @since 1.2.0
      */
     public function getModuleResourceURL(string $module, string $url = '')
     {
         $urlPath = $this->getModuleURL($module);
-        return ($urlPath) ? $urlPath . Kernel::getGlobal('core/component/core/module/resource-dir') . $url : '';
+        return ($urlPath) ? esc_url(wp_normalize_path($urlPath . Kernel::getGlobal('core/component/core/module/resource-dir') . $url), '', '') : '';
     }
 
     /**

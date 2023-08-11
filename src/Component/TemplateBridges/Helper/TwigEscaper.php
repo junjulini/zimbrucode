@@ -19,7 +19,7 @@ use ZimbruCode\Component\TemplateBridges\TwigTemplateBridge;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.2.0
  */
 class TwigEscaper
 {
@@ -53,11 +53,11 @@ class TwigEscaper
      * @param Environment $env      Environment object
      * @param string|null $string   The URL to be cleaned
      * @return string|null          Action result
-     * @since 1.0.0
+     * @since 1.2.0
      */
     public function __callback_esc_url(Environment $env, ?string $string): ?string
     {
-        return esc_url($string);
+        return esc_url($string, '', '');
     }
 
     /**

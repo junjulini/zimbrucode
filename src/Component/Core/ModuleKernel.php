@@ -213,11 +213,11 @@ abstract class ModuleKernel extends Kernel
      *
      * @param string $path   Additional part of the path
      * @return string        Module path
-     * @since 1.0.0
+     * @since 1.2.0
      */
     final public function getModulePath(string $path = ''): string
     {
-        return $this->__DC->get('module-path') . $path;
+        return wp_normalize_path($this->__DC->get('module-path') . $path);
     }
 
     /**
@@ -225,7 +225,7 @@ abstract class ModuleKernel extends Kernel
      *
      * @param string $url   Additional part of the URL
      * @return string       Module URL
-     * @since 1.0.0
+     * @since 1.2.0
      */
     final public function getModuleURL(string $url = ''): string
     {
@@ -234,7 +234,7 @@ abstract class ModuleKernel extends Kernel
             $this->__DC->add('module-url', $moduleURL);
         }
 
-        return $moduleURL . $url;
+        return esc_url(wp_normalize_path($moduleURL . $url), '', '');
     }
 
     /**
@@ -242,11 +242,11 @@ abstract class ModuleKernel extends Kernel
      *
      * @param string $path   Additional part of the path
      * @return string        Resource path
-     * @since 1.0.0
+     * @since 1.2.0
      */
     public function getModuleResourcePath(string $path = ''): string
     {
-        return wp_normalize_path($this->getModulePath() . self::getGlobal('core/component/core/module/resource-dir') . $path);
+        return $this->getModulePath(self::getGlobal('core/component/core/module/resource-dir') . $path);
     }
 
     /**
@@ -254,11 +254,11 @@ abstract class ModuleKernel extends Kernel
      *
      * @param string $url   Additional part of the URL
      * @return string       Resource URL
-     * @since 1.0.0
+     * @since 1.2.0
      */
     public function getModuleResourceURL(string $url = ''): string
     {
-        return esc_url($this->getModuleURL() . self::getGlobal('core/component/core/module/resource-dir') . $url);
+        return $this->getModuleURL(self::getGlobal('core/component/core/module/resource-dir') . $url);
     }
 
     /**

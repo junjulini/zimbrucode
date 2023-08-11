@@ -18,7 +18,7 @@ use ZimbruCode\Component\TemplateBridges\Helper\ShellKernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.2.0
  */
 class AttachmentShell extends ShellKernel
 {
@@ -66,13 +66,13 @@ class AttachmentShell extends ShellKernel
      *
      * @param int|null $attachmentID   Attachment post ID. Defaults to global $post
      * @return mixed                   Attachment URL, otherwise false
-     * @since 1.1.0
+     * @since 1.2.0
      */
     public function url(?int $attachmentID = null)
     {
         $url = wp_get_attachment_url($attachmentID);
 
-        return ($url && !is_bool($url)) ? esc_url($url) : $url;
+        return ($url && !is_bool($url)) ? esc_url($url, '', '') : $url;
     }
 
     /**

@@ -18,7 +18,7 @@ use ZimbruCode\Component\TemplateBridges\Helper\ShellKernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.2.0
  */
 class AuthorShell extends ShellKernel
 {
@@ -37,12 +37,12 @@ class AuthorShell extends ShellKernel
      * Retrieve the URL to the author page for the user with the ID provided
      *
      * @return string   The URL to the author's page
-     * @since 1.1.0
+     * @since 1.2.0
      */
     public function pageURL(): string
     {
         if (isset($GLOBALS['authordata'])) {
-            return esc_url(get_author_posts_url($GLOBALS['authordata']->ID, $GLOBALS['authordata']->user_nicename));
+            return esc_url(get_author_posts_url($GLOBALS['authordata']->ID, $GLOBALS['authordata']->user_nicename), '', '');
         } else {
             return '';
         }

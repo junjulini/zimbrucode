@@ -633,7 +633,7 @@ class Tools
      *
      * @param string $path   Path value
      * @return string        Action result
-     * @since 1.1.0
+     * @since 1.2.0
      */
     public static function getURL(string $path): string
     {
@@ -653,7 +653,7 @@ class Tools
             }
         }
 
-        return esc_url($output);
+        return esc_url($output, '', '');
     }
 
     /**

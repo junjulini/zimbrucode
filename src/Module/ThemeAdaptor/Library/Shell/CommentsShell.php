@@ -19,7 +19,7 @@ use ZimbruCode\Component\TemplateBridges\Helper\ShellKernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.2.0
  */
 class CommentsShell extends ShellKernel
 {
@@ -92,9 +92,9 @@ class CommentsShell extends ShellKernel
      * @param mixed $args       Formatting options
      * @param mixed $comments   Array of WP_Comment objects
      * @return mixed            Void if 'echo' argument is true, or no comments to list. Otherwise, HTML list of comments
-     * @since 1.1.0
+     * @since 1.2.0
      */
-    function list($args = [], $comments = null) {
+    public function list($args = [], $comments = null) {
         return wp_list_comments($args, $comments);
     }
 

@@ -302,12 +302,12 @@ class AjaxHandler
      * @param string $action   Ajax action
      * @param array  $args     Additional URL arguments
      * @return string          Ajax URL
-     * @since 1.1.0
+     * @since 1.2.0
      */
     public static function getAjaxURL(string $action, array $args = []): string
     {
         $args['action'] = $action;
 
-        return add_query_arg($args, admin_url('admin-ajax.php'));
+        return esc_url(add_query_arg($args, admin_url('admin-ajax.php')), '', '');
     }
 }
