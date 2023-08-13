@@ -13,7 +13,7 @@
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.2.0
  #}
 
 {# Macro : HTML comments #}
@@ -37,10 +37,12 @@
 {% macro help(help) %}
     {% set type = help.type == 'tooltip' ? 'help-tooltip' : 'help' %}
 
-    {% if help.content %}
+    {% if help.content or help.url %}
         <div class="zc-panel-help">
             {% if help.type == 'tooltip' %}
                 <button class="zc-panel-help__starter zc-panel-help__starter_type_tooltip zc-icon-help" data-tooltip="{{ help.content }}"></button>
+            {% elseif help.type == 'link' %}
+                <a href="{{ help.url|e('_url') }}" target="_blank" rel="noopener noreferrer" class="zc-panel-help__starter zc-panel-help__starter_type_link zc-icon-help" data-tooltip="{{ help.title|default(__('Help', 'zc')) }}"></a>
             {% else %}
                 <button class="zc-panel-help__starter zc-panel-help__starter_type_simple zc-icon-help" data-tooltip="{{ help.title|default(__('Help', 'zc')) }}" data-settings="{{ help.settings|json_encode() }}"></button>
                 <div class="zc-panel-help__content">{{ help.content|raw }}</div>

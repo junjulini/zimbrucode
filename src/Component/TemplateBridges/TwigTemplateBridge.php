@@ -409,7 +409,7 @@ class TwigTemplateBridge
      *
      * @param string $template   Template name
      * @return string            Html content
-     * @since 1.0.0
+     * @since 1.2.0
      */
     public function render(string $template = ''): string
     {

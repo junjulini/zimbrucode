@@ -13,7 +13,7 @@
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.2.0
  */
 
 .zc-panel-help {
@@ -34,8 +34,15 @@
         width: 25px;
         height: 20px;
 
+        &_type_link {
+            color: $text-color__alt !important;
+            text-decoration: none !important;
+            outline: none !important;
+            box-shadow: none !important;
+        }
+
         &:hover {
-            color: $accent-color__2;
+            color: $accent-color__2 !important;
         }
     }
 
