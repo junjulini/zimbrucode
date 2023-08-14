@@ -4,7 +4,7 @@ const glob = require('glob');
 const generalFiles = glob.sync('./src/**/*.es6.js').reduce((obj, el) => {
     const key = path.normalize(path.dirname(el) + '/../' + path.basename(el)).replace(/\.es6\.js$/, '');
 
-    obj[key] = el;
+    obj[key] = './' + el;
 
     return obj
 }, {});
@@ -13,7 +13,7 @@ const controls = glob.sync('./src/**/control.js').reduce((obj, el) => {
     const key = path.normalize(el).replace(/\.js$/, '');
 
     if (!generalFiles[key]) {
-        obj[key] = el;
+        obj[key] = './' + el;
     }
 
     return obj
@@ -55,6 +55,6 @@ const devConfig = {
     },
 };
 
-module.exports = (env) => {
+module.exports = () => {
     return [prodConfig, devConfig];
 };
