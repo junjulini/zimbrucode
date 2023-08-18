@@ -33,7 +33,7 @@ use ZimbruCode\Module\ThemeAdaptor\Library\TwigFunctions;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.2.0
+ * @since   1.2.2
  */
 class Render
 {
@@ -77,7 +77,7 @@ class Render
      * Setup environment
      *
      * @return void
-     * @since 1.1.0
+     * @since 1.2.2
      */
     public function setupEnvironment()
     {
@@ -105,6 +105,9 @@ class Render
         // Default functions
         new TwigFunctions($this->ttb);
 
+        // Hook
+        do_action('zc/module/theme_adaptor/render', $this, $this->ttb);
+
         // Add functions
         foreach ($this->data['functions'] as $name => $method) {
             $this->ttb->addFunction($name, $method);
@@ -119,9 +122,6 @@ class Render
         foreach ($this->data['filters'] as $name => $method) {
             $this->ttb->addFilter($name, $method);
         }
-
-        // Hook
-        do_action('zc/module/theme_adaptor/render', $this, $this->ttb);
 
         // Run loader & environment
         $this->ttb->addLoader();
