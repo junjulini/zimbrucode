@@ -31,7 +31,7 @@ use ZimbruCode\Component\TemplateBridges\Helper\TwigFunctions;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.2.0
+ * @since   1.2.2
  */
 class TwigTemplateBridge
 {
@@ -346,7 +346,7 @@ class TwigTemplateBridge
      * Add Environment
      *
      * @return void
-     * @since 1.0.0
+     * @since 1.2.2
      */
     public function addEnvironment(): void
     {
@@ -355,6 +355,9 @@ class TwigTemplateBridge
             'cache'       => $cache,
             'auto_reload' => Kernel::getGlobal('core/twig-environment-auto-reload'),
         ]);
+
+        // Global twig hook
+        do_action('zc/component/twig', $this, $this->twig);
 
         // Functions
         if (!empty($this->data['functions'])) {
@@ -383,9 +386,6 @@ class TwigTemplateBridge
                 $this->twig->addExtension($extension);
             }
         }
-
-        // Global twig hook
-        do_action('zc/component/twig', $this->twig);
     }
 
     /**
