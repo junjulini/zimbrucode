@@ -19,8 +19,7 @@
 'use strict';
 
 zc.module.panel.addControl(($, panel) => {
-    const control  = {};
-    const interval = 1000;
+    const control = {};
 
     control.initWpEditor = (element) => {
         const editorID = element.attr('id');
@@ -44,23 +43,14 @@ zc.module.panel.addControl(($, panel) => {
                     resize: 'vertical',
                     id: editorID,
                     setup: (editor) => {
-                        let timer = 0;
-
                         if (typeof editor.on != 'undefined') {
                             editor.on('init', () => {
                                 window.wpActiveEditor = editorID;
                             });
 
                             editor.on('keyup change undo redo', () => {
-                                clearTimeout(timer);
-
-                                // Check after {interval}
-                                timer = setTimeout(() => {
-                                    clearTimeout(timer);
-
-                                    $('#' + editor.id).html(editor.getContent()).change();
-                                    $(window).trigger('zc/panel/if-changed');
-                                }, interval);
+                                $('#' + editor.id).html(editor.getContent()).change();
+                                $(window).trigger('zc/panel/if-changed');
                             });
                         } else {
                             editor.onInit.add(() => {
