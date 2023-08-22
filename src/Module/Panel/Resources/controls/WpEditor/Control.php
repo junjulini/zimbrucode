@@ -19,7 +19,7 @@ use ZimbruCode\Module\Panel\Library\ControlKernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.2.2
  */
 class Control extends ControlKernel
 {
@@ -27,7 +27,7 @@ class Control extends ControlKernel
      * Control setup
      *
      * @return void
-     * @since 1.1.0
+     * @since 1.2.2
      */
     public function setup(): void
     {
@@ -46,6 +46,12 @@ class Control extends ControlKernel
 
         $this->addAction('admin_enqueue_scripts', function (): void {
             wp_enqueue_media();
+        });
+
+        $this->addFilter('the_editor', function ($textarea) {
+            $textarea = str_replace('<textarea', '<textarea data-option', $textarea);
+
+            return $textarea;
         });
     }
 }
