@@ -27,7 +27,7 @@ use ZimbruCode\Component\Service\AppService;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.2.0
+ * @since   1.2.3
  */
 abstract class AppKernel extends Kernel
 {
@@ -44,7 +44,7 @@ abstract class AppKernel extends Kernel
      * @param string           $rootPath   Plugin file path ( Plugin mode only )
      * @param bool             $session    Status of "session_start()"
      * @param ClassLoader|null $composer   Instance of ClassLoader ( Composer )
-     * @since 1.2.0
+     * @since 1.2.3
      */
     final public function __construct(string $slug, string $mode = 'theme', bool $dev = false, string $rootPath = '', bool $session = false, ClassLoader $composer = null)
     {
@@ -69,6 +69,7 @@ abstract class AppKernel extends Kernel
         // Service initialization [mode : before]
         $this->__initServices('before', $composer, $rootPath, $slug);
 
+        // Child theme : Application initialization (If exist)
         $this->__initChildApplicationIfExist();
 
         // Application configs
