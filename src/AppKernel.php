@@ -13,7 +13,6 @@ namespace ZimbruCode;
 
 use Composer\Autoload\ClassLoader;
 use RuntimeException;
-use ZimbruCode\Component\Common\FastCache;
 use ZimbruCode\Component\Common\Tools;
 use ZimbruCode\Component\Core\GlobalConfig;
 use ZimbruCode\Component\Core\GlobalLibrary;
@@ -21,13 +20,14 @@ use ZimbruCode\Component\Core\Kernel;
 use ZimbruCode\Component\Core\Traits\AssetTrait;
 use ZimbruCode\Component\Handler\DBHandler;
 use ZimbruCode\Component\Service\AppService;
+use ZimbruCode\Component\Service\FastCacheService;
 
 /**
  * Class : Application kernel
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.2.3
+ * @since   1.3.0
  */
 abstract class AppKernel extends Kernel
 {
@@ -203,7 +203,7 @@ abstract class AppKernel extends Kernel
      * @param string|null      $rootPath   The path to the file where the application class was initialized
      * @param string           $slug       Application slug
      * @return void
-     * @since 1.2.0
+     * @since 1.3.0
      */
     private function __initServices(string $mode = 'before', ClassLoader $composer = null, string $rootPath = null, string $slug = ''): void
     {
@@ -220,7 +220,7 @@ abstract class AppKernel extends Kernel
         } elseif ($mode === 'after') {
             self::addService('app', new AppService($this, $rootPath, $slug));
             self::service('db', new DBHandler);
-            self::service('fast-cache', new FastCache);
+            self::service('fast-cache', new FastCacheService);
         }
     }
 

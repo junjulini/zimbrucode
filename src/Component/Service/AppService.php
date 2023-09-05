@@ -17,7 +17,7 @@ use ZimbruCode\AppKernel;
 use ZimbruCode\Component\Common\Tools;
 
 /**
- * Class : Component/Service : Application
+ * Class : Component/Service : Application service
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode

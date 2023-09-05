@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ZimbruCode\Component\Common;
+namespace ZimbruCode\Component\Service;
 
 use RuntimeException;
 use ZimbruCode\Component\Common\Tools;
@@ -17,13 +17,13 @@ use ZimbruCode\Component\Core\Kernel;
 use ZimbruCode\Component\Handler\CacheHandler;
 
 /**
- * Class : Component/Common : Fast cache
+ * Class : Component/Service : Fast cache service
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.2.0
+ * @since   1.3.0
  */
-class FastCache
+class FastCacheService
 {
     protected object $cache;
     protected string $cacheID;
@@ -32,7 +32,7 @@ class FastCache
     /**
      * Constructor
      *
-     * @since 1.1.0
+     * @since 1.3.0
      */
     public function __construct()
     {
@@ -59,7 +59,7 @@ class FastCache
      * @param  mixed  $default   Default value
      * @throws RuntimeException
      * @return mixed             Item data
-     * @since 1.1.0
+     * @since 1.3.0
      */
     public function get(string $key, $default = false)
     {
@@ -77,7 +77,7 @@ class FastCache
      * @param  mixed  $value   Item value
      * @throws RuntimeException
      * @return void
-     * @since 1.1.0
+     * @since 1.3.0
      */
     public function add(string $key, $value = ''): void
     {
@@ -94,7 +94,7 @@ class FastCache
      *
      * @param string $key   Item key
      * @return bool         Action result
-     * @since 1.1.0
+     * @since 1.3.0
      */
     public function has(string $key): bool
     {
@@ -106,7 +106,7 @@ class FastCache
      *
      * @param string $key   Item key
      * @return void
-     * @since 1.0.0
+     * @since 1.3.0
      */
     public function remove(string $key): void
     {
@@ -120,10 +120,11 @@ class FastCache
      * Remove all items
      *
      * @return void
-     * @since 1.0.0
+     * @since 1.3.0
      */
     public function flush(): void
     {
+        $this->data = [];
         $this->cache->delete($this->cacheID);
     }
 
@@ -131,7 +132,7 @@ class FastCache
      * Dump data
      *
      * @return void
-     * @since 1.0.0
+     * @since 1.3.0
      */
     public function dump(): void
     {
