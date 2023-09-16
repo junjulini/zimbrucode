@@ -24,7 +24,7 @@ use ZimbruCode\Component\Core\Kernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.2.0
+ * @since   1.3.0
  */
 class Combine extends Filter
 {
@@ -82,7 +82,7 @@ class Combine extends Filter
      * CSS asset preparation
      *
      * @return void
-     * @since 1.1.0
+     * @since 1.3.0
      */
     protected function prepCSSAssets(): void
     {
@@ -123,7 +123,7 @@ class Combine extends Filter
         if ($this->cache->check()) {
             $this->cache->build();
 
-            $outputContent = '';
+            $outputContent = "/*\n* Version : v{$asset->dynamicVersion()}\n*/\n\n";
 
             foreach ($this->data['assets']['css'] as $n => $asset) {
                 $content = file_get_contents($asset->getPath());
@@ -150,7 +150,7 @@ class Combine extends Filter
 
                 $data = [
                     'between' => (0 != $n ? "\n\n\n" : ''),
-                    'comment' => "/*\n* {$asset->name()} : v{$asset->dynamicVersion()}\n*/\n\n",
+                    'comment' => "/*\n* {$asset->name()}\n*/\n\n",
                     'content' => $content,
                 ];
 
@@ -171,7 +171,7 @@ class Combine extends Filter
      * Preparing JavaScript assets
      *
      * @return void
-     * @since 1.1.0
+     * @since 1.3.0
      */
     protected function prepJavaScriptAssets(): void
     {
@@ -211,7 +211,7 @@ class Combine extends Filter
         if ($this->cache->check()) {
             $this->cache->build();
 
-            $outputContent = '';
+            $outputContent = "/*\n* Version : v{$asset->dynamicVersion()}\n*/\n\n";
 
             foreach ($this->data['assets']['js'] as $n => $asset) {
                 $content = file_get_contents($asset->getPath());
@@ -228,7 +228,7 @@ class Combine extends Filter
 
                 $data = [
                     'between' => (0 != $n ? "\n\n\n" : ''),
-                    'comment' => "/*\n* {$asset->name()} : v{$asset->dynamicVersion()}\n*/\n\n",
+                    'comment' => "/*\n* {$asset->name()}\n*/\n\n",
                     'content' => $content,
                 ];
 
