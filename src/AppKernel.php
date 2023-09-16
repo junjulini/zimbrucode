@@ -44,7 +44,7 @@ abstract class AppKernel extends Kernel
      * @param string           $rootPath   Plugin file path ( Plugin mode only )
      * @param bool             $session    Status of "session_start()"
      * @param ClassLoader|null $composer   Instance of ClassLoader ( Composer )
-     * @since 1.2.3
+     * @since 1.3.0
      */
     final public function __construct(string $slug, string $mode = 'theme', bool $dev = false, string $rootPath = '', bool $session = false, ClassLoader $composer = null)
     {
