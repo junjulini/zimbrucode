@@ -115,6 +115,7 @@
         color: $panel_header__button-text-color;
         @include def-transition(all);
         @include center-flex;
+        column-gap: 10px;
 
         &:hover {
             background: $panel_header__button-hover-color;
@@ -138,7 +139,7 @@
 
     &__controller-button-title {
         font-size: 15px;
-        padding: 0 5px;
+        padding-right: 5px;
         font-weight: 500;
 
         .zc-panel[data-width|="mode-1"] & {
