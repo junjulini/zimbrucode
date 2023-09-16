@@ -13,7 +13,7 @@
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.3.0
  */
 
 .zc-panel-header {
@@ -27,6 +27,27 @@
     box-sizing: border-box;
     padding: 0 20px;
     display: flex;
+
+    .zc-panel[data-width|="mode-1"] &,
+    .zc-panel[data-width|="mode-2"] & {
+        position: sticky;
+    }
+
+    .zc-panel[data-width|="mode-2"] & {
+        body.admin-bar & {
+            top: 32px
+        }
+
+        @media screen and (max-width: 782px) {
+            body.admin-bar & {
+                top: 46px
+            }
+        }
+    }
+
+    .zc-panel[data-width|="mode-1"] & {
+        top: 0;
+    }
 
     .zc-panel[data-width|="mode-3"] & {
         position: absolute;
