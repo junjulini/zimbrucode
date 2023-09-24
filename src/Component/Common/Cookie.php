@@ -18,7 +18,7 @@ use ZimbruCode\Component\Common\Tools;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.3.0
  */
 class Cookie
 {
@@ -27,11 +27,11 @@ class Cookie
      *
      * @param string $name      Cookie name
      * @param mixed  $default   Default value
-     * @param string $filter    Format : simple '', serialize, json
+     * @param string $filter    Format : serialize, json
      * @return mixed
-     * @since 1.1.0
+     * @since 1.3.0
      */
-    public function get(string $name, $default = false, string $filter = 'serialize')
+    public function get(string $name, $default = false, string $filter = 'json')
     {
         if (empty($_COOKIE[$name])) {
             return $default;
@@ -57,11 +57,11 @@ class Cookie
      * @param string $name     Cookie name
      * @param mixed  $data     Cookie data
      * @param int    $time     Cookie time
-     * @param string $filter   Format : simple '', serialize, json
+     * @param string $filter   Format : serialize, json
      * @return void
-     * @since 1.1.0
+     * @since 1.3.0
      */
-    public function add(string $name, $data, int $time = 0, string $filter = 'serialize'): void
+    public function add(string $name, $data, int $time = 0, string $filter = 'json'): void
     {
         if ($name && defined('COOKIEPATH') && defined('SITECOOKIEPATH') && defined('COOKIE_DOMAIN')) {
             switch ($filter) {
