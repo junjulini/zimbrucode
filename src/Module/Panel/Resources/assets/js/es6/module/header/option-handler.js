@@ -13,7 +13,7 @@
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.3.0
  */
 
 'use strict';
@@ -30,7 +30,7 @@ export default class OptionHandler extends Kernel {
     /**
      * Constructor
      * 
-     * @since 1.0.0
+     * @since 1.3.0
      */
     constructor() {
         super();
@@ -38,8 +38,30 @@ export default class OptionHandler extends Kernel {
         this.dn  = new DirectNotification;
         this.tpl = TPL__reset_popup_notification;
 
+        this.setNotificationPosition();
         this.save();
         this.reset();
+    }
+
+    /**
+     * Set notification position
+     * 
+     * @since 1.3.0
+     */
+    setNotificationPosition() {
+        $(window).on('scroll zc/panel/size-changed zc/panel/save/success-end', () => {
+            if (('.zc-panel .zc-panel-direct-notification').length > 0) {
+                if ($('.zc-panel').width() <= this.getConfig('min-size/mode2')) {
+                    const position = $('.zc-panel .zc-panel-header').offset().top || 0;
+
+                    if (position > 0) {
+                        $('.zc-panel .zc-panel-direct-notification').css('top', position + 4);
+                    }
+                } else {
+                    $('.zc-panel .zc-panel-direct-notification').attr('style', '');
+                }
+            }
+        });
     }
 
     /**
