@@ -13,7 +13,7 @@
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.2.2
+ * @since   1.3.0
  */
 
 'use strict';
@@ -49,8 +49,7 @@ zc.module.panel.addControl(($, panel) => {
                             });
 
                             editor.on('keyup change undo redo', () => {
-                                $('#' + editor.id).html(editor.getContent()).change();
-                                $(window).trigger('zc/panel/if-changed');
+                                $('#' + editor.id).val(editor.getContent()).change();
                             });
                         } else {
                             editor.onInit.add(() => {
