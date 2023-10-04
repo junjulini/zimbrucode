@@ -13,7 +13,7 @@
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.3.0
  */
 
 'use strict';
@@ -32,7 +32,7 @@ zc.module.panel.addMode(($, panel) => {
     panel.scrollbar();           // Initialization of scroll bar
     panel.noMetaScaleIfMobile(); // Disable meta scale if mobile device
     panel.condition();           // Initialization of panel condition checker
-    panel.ifChanged();           // Check if some changes was made
+    //panel.ifChanged();           // Check if some changes was made
     panel.tooltip();             // Initialization of tooltip
     panel.menu();                // Panel menu
 
