@@ -1,0 +1,327 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.3.0\n"
+"Report-Msgid-Bugs-To: 1.3.0\n"
+"Last-Translator: Junjulini\n"
+"Language-Team: Junjulini\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2023-10-20T15:14:45+00:00\n"
+"PO-Revision-Date: 2023-10-20T15:14:45+00:00\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Domain: zc\n"
+
+#: junjulini/zimbrucode/src/Module/AdminPanel/Module.php:34
+msgid "Options"
+msgstr ""
+
+#: junjulini/zimbrucode/src/Module/Panel/Mode/PageMode.php:118
+#: junjulini/zimbrucode/src/Module/Panel/Mode/LiteMode.php:101
+msgid "Panel error"
+msgstr ""
+
+#: junjulini/zimbrucode/src/Module/Panel/Mode/PageMode.php:119
+#: junjulini/zimbrucode/src/Module/Panel/Mode/LiteMode.php:102
+#: junjulini/zimbrucode/src/Module/MetaboxPanel/Mode/MetaLiteMode.php:123
+#: junjulini/zimbrucode/src/Module/MetaboxPanel/Mode/MetaMode.php:140
+msgid "Your browser is out of date. Please upgrade your browser or download Chrome/Edge/Opera/Firefox"
+msgstr ""
+
+#: junjulini/zimbrucode/src/Module/Panel/Mode/PageMode.php:120
+#: junjulini/zimbrucode/src/Module/Panel/Mode/LiteMode.php:103
+#: junjulini/zimbrucode/src/Module/MetaboxPanel/Mode/MetaMode.php:142
+msgid "Exit"
+msgstr ""
+
+#: junjulini/zimbrucode/src/Module/Panel/Mode/PageMode.php:121
+#: junjulini/zimbrucode/src/Module/Panel/Mode/LiteMode.php:104
+#: junjulini/zimbrucode/src/Module/MetaboxPanel/Mode/MetaMode.php:143
+msgid "Confirm"
+msgstr ""
+
+#: junjulini/zimbrucode/src/Module/Panel/Mode/PageMode.php:122
+#: junjulini/zimbrucode/src/Module/Panel/Mode/LiteMode.php:105
+#: junjulini/zimbrucode/src/Module/MetaboxPanel/Mode/MetaMode.php:144
+msgid "The options will be deleted, okay ?"
+msgstr ""
+
+#: junjulini/zimbrucode/src/Module/Panel/Mode/PageMode.php:123
+#: junjulini/zimbrucode/src/Module/Panel/Mode/LiteMode.php:106
+#: junjulini/zimbrucode/src/Module/MetaboxPanel/Mode/MetaMode.php:145
+msgid "OK"
+msgstr ""
+
+#: junjulini/zimbrucode/src/Module/Panel/Mode/PageMode.php:124
+#: junjulini/zimbrucode/src/Module/Panel/Mode/LiteMode.php:107
+#: junjulini/zimbrucode/src/Module/MetaboxPanel/Mode/MetaMode.php:146
+msgid "Cancel"
+msgstr ""
+
+#: junjulini/zimbrucode/src/Module/Panel/Mode/PageMode.php:125
+#: junjulini/zimbrucode/src/Module/Panel/Mode/LiteMode.php:108
+msgid "Are you sure you want to leave ?"
+msgstr ""
+
+#: junjulini/zimbrucode/src/Module/Panel/Resources/controls/Section/Resources/views/control.twig:152
+msgid "Close / Open this section"
+msgstr ""
+
+#: junjulini/zimbrucode/src/Module/Panel/Resources/controls/Measurement/Control.php:34
+#: junjulini/zimbrucode/src/Module/Panel/Resources/controls/InputRange/Control.php:34
+msgid "Only number is allowed with the following intervals : min = {MIN}, max = {MAX}"
+msgstr ""
+
+#: junjulini/zimbrucode/src/Module/Panel/Resources/controls/Measurement/Resources/views/control.twig:29
+#: junjulini/zimbrucode/src/Module/Panel/Resources/controls/Measurement/Resources/views/control.twig:31
+msgid "Inherit"
+msgstr ""
+
+#: junjulini/zimbrucode/src/Module/Panel/Resources/controls/Measurement/Resources/views/control.twig:31
+msgid "Click on the flag icon to exit inherit mode."
+msgstr ""
+
+#: junjulini/zimbrucode/src/Module/Panel/Resources/controls/Gallery/Control.php:35
+msgid "Add images to gallery"
+msgstr ""
+
+#: junjulini/zimbrucode/src/Module/Panel/Resources/controls/Gallery/Control.php:36
+#: junjulini/zimbrucode/src/Module/Panel/Resources/controls/Gallery/Resources/views/control.twig:23
+msgid "Add images"
+msgstr ""
+
+#: junjulini/zimbrucode/src/Module/Panel/Resources/controls/Gallery/Control.php:37
+msgid "Change image in gallery"
+msgstr ""
+
+#: junjulini/zimbrucode/src/Module/Panel/Resources/controls/Gallery/Control.php:38
+#: junjulini/zimbrucode/src/Module/Panel/Resources/controls/Gallery/Control.php:39
+#: junjulini/zimbrucode/src/Module/Panel/Resources/controls/Gallery/Resources/views/control.twig:29
+msgid "Change image"
+msgstr ""
+
+#: junjulini/zimbrucode/src/Module/Panel/Resources/controls/Gallery/Control.php:40
+#: junjulini/zimbrucode/src/Module/Panel/Resources/controls/Gallery/Resources/views/control.twig:32
+msgid "Remove image"
+msgstr ""
+
+#: junjulini/zimbrucode/src/Module/Panel/Resources/controls/Toggle/Resources/views/control.twig:25
+msgid "Press to toggle"
+msgstr ""
+
+#: junjulini/zimbrucode/src/Module/Panel/Resources/controls/Upload/Control.php:34
+#: junjulini/zimbrucode/src/Module/Panel/Resources/controls/Upload/Resources/views/control.twig:36
+msgid "Remove"
+msgstr ""
+
+#: junjulini/zimbrucode/src/Module/Panel/Resources/controls/Upload/Resources/views/control.twig:24
+msgid "Upload"
+msgstr ""
+
+#: junjulini/zimbrucode/src/Module/Panel/Resources/views/blocks/panel.twig:55
+msgid "Menu"
+msgstr ""
+
+#: junjulini/zimbrucode/src/Module/Panel/Resources/views/blocks/panel.twig:66
+#: junjulini/zimbrucode/src/Module/Panel/Resources/views/mode/page-lite-mode.twig:42
+msgid "Section name"
+msgstr ""
+
+#: junjulini/zimbrucode/src/Module/Panel/Resources/views/blocks/panel.twig:159
+msgid "Designed and Developed by"
+msgstr ""
+
+#: junjulini/zimbrucode/src/Module/Panel/Resources/views/blocks/panel.twig:159
+msgid "Go to Junjulini"
+msgstr ""
+
+#: junjulini/zimbrucode/src/Module/Panel/Resources/views/blocks/menu.twig:86
+msgid "Go back"
+msgstr ""
+
+#: junjulini/zimbrucode/src/Module/Panel/Resources/views/mode/page-lite-mode.twig:52
+#: junjulini/zimbrucode/src/Module/Panel/Resources/views/mode/page-mode.twig:27
+msgid "Save options"
+msgstr ""
+
+#: junjulini/zimbrucode/src/Module/Panel/Resources/views/mode/page-lite-mode.twig:54
+#: junjulini/zimbrucode/src/Module/Panel/Resources/views/mode/page-mode.twig:29
+#: junjulini/zimbrucode/src/Module/MetaboxPanel/Resources/views/backup/content.twig:24
+msgid "Save"
+msgstr ""
+
+#: junjulini/zimbrucode/src/Module/Panel/Resources/views/mode/page-lite-mode.twig:56
+#: junjulini/zimbrucode/src/Module/Panel/Resources/views/mode/page-mode.twig:31
+msgid "In process ..."
+msgstr ""
+
+#: junjulini/zimbrucode/src/Module/Panel/Resources/views/mode/page-lite-mode.twig:67
+#: junjulini/zimbrucode/src/Module/Panel/Resources/views/mode/page-mode.twig:42
+msgid "Reset options"
+msgstr ""
+
+#: junjulini/zimbrucode/src/Module/Panel/Resources/views/mode/page-lite-mode.twig:72
+#: junjulini/zimbrucode/src/Module/Panel/Resources/views/mode/page-mode.twig:47
+msgid "Quick links"
+msgstr ""
+
+#: junjulini/zimbrucode/src/Module/Panel/Resources/views/macros/content.twig:45
+#: junjulini/zimbrucode/src/Module/Panel/Resources/views/macros/content.twig:47
+msgid "Help"
+msgstr ""
+
+#: junjulini/zimbrucode/src/Module/MetaboxPanel/Mode/MetaLiteMode.php:122
+#: junjulini/zimbrucode/src/Module/MetaboxPanel/Mode/MetaMode.php:139
+msgid "MetaboxPanel error"
+msgstr ""
+
+#: junjulini/zimbrucode/src/Module/MetaboxPanel/Mode/MetaMode.php:147
+#: junjulini/zimbrucode/src/Module/MetaboxPanel/Resources/views/meta-mode.twig:34
+#: junjulini/zimbrucode/src/Module/MetaboxPanel/Resources/views/meta-mode.twig:36
+msgid "Backup"
+msgstr ""
+
+#: junjulini/zimbrucode/src/Module/MetaboxPanel/Resources/views/meta-mode.twig:41
+msgid "Reset meta options"
+msgstr ""
+
+#: junjulini/zimbrucode/src/Module/MetaboxPanel/Resources/views/backup/item.twig:21
+msgid "Restore"
+msgstr ""
+
+#: junjulini/zimbrucode/src/Module/MetaboxPanel/Resources/views/backup/item.twig:22
+msgid "Delete"
+msgstr ""
+
+#: junjulini/zimbrucode/src/Module/MetaboxPanel/Resources/views/backup/content.twig:22
+msgid "Insert the backup name"
+msgstr ""
+
+#: junjulini/zimbrucode/src/Module/MetaboxPanel/Resources/views/backup/content.twig:23
+msgid "You can back up only the data already saved"
+msgstr ""
+
+#: junjulini/zimbrucode/src/Module/MetaboxPanel/Resources/views/backup/content.twig:27
+msgid "Backups"
+msgstr ""
+
+#: junjulini/zimbrucode/src/Module/MetaboxPanel/Resources/views/backup/content.twig:28
+msgid "Delete everything"
+msgstr ""
+
+#: junjulini/zimbrucode/src/Module/MetaboxPanel/Resources/views/backup/content.twig:32
+msgid "No backups"
+msgstr ""
+
+#: junjulini/zimbrucode/src/Module/ThemeAdaptor/Resources/views/test-layout.twig:49
+msgid "Welcome to"
+msgstr ""
+
+#: junjulini/zimbrucode/src/Resources/config/other/module/admin-panel.php:22
+msgid "Admin panel"
+msgstr ""
+
+#: junjulini/zimbrucode/src/Resources/config/other/module/admin-panel.php:24
+#: junjulini/zimbrucode/src/Resources/config/other/module/metabox-panel.php:29
+#: junjulini/zimbrucode/src/Resources/config/other/module/panel.php:57
+#: junjulini/zimbrucode/src/Resources/config/other/module/panel.php:139
+msgid "Dashboard"
+msgstr ""
+
+#: junjulini/zimbrucode/src/Resources/config/other/module/metabox-panel.php:25
+msgid "Page Options"
+msgstr ""
+
+#: junjulini/zimbrucode/src/Resources/config/other/module/metabox-panel.php:45
+#: junjulini/zimbrucode/src/Resources/config/other/module/metabox-panel.php:58
+#: junjulini/zimbrucode/src/Resources/config/other/module/panel.php:84
+#: junjulini/zimbrucode/src/Resources/config/other/module/panel.php:94
+#: junjulini/zimbrucode/src/Resources/config/other/module/panel.php:154
+#: junjulini/zimbrucode/src/Resources/config/other/module/panel.php:164
+msgid "Success"
+msgstr ""
+
+#: junjulini/zimbrucode/src/Resources/config/other/module/metabox-panel.php:46
+#: junjulini/zimbrucode/src/Resources/config/other/module/panel.php:95
+#: junjulini/zimbrucode/src/Resources/config/other/module/panel.php:165
+msgid "Options removed. The page will be reloaded ..."
+msgstr ""
+
+#: junjulini/zimbrucode/src/Resources/config/other/module/metabox-panel.php:50
+#: junjulini/zimbrucode/src/Resources/config/other/module/panel.php:99
+#: junjulini/zimbrucode/src/Resources/config/other/module/panel.php:109
+#: junjulini/zimbrucode/src/Resources/config/other/module/panel.php:169
+#: junjulini/zimbrucode/src/Resources/config/other/module/panel.php:179
+msgid "Info"
+msgstr ""
+
+#: junjulini/zimbrucode/src/Resources/config/other/module/metabox-panel.php:51
+#: junjulini/zimbrucode/src/Resources/config/other/module/panel.php:100
+#: junjulini/zimbrucode/src/Resources/config/other/module/panel.php:170
+msgid "There are no options to be removed."
+msgstr ""
+
+#: junjulini/zimbrucode/src/Resources/config/other/module/metabox-panel.php:59
+msgid "Options restored. The page will be reloaded ..."
+msgstr ""
+
+#: junjulini/zimbrucode/src/Resources/config/other/module/panel.php:55
+msgid "Test panel"
+msgstr ""
+
+#: junjulini/zimbrucode/src/Resources/config/other/module/panel.php:85
+#: junjulini/zimbrucode/src/Resources/config/other/module/panel.php:155
+msgid "Options saved."
+msgstr ""
+
+#: junjulini/zimbrucode/src/Resources/config/other/module/panel.php:89
+#: junjulini/zimbrucode/src/Resources/config/other/module/panel.php:114
+#: junjulini/zimbrucode/src/Resources/config/other/module/panel.php:120
+#: junjulini/zimbrucode/src/Resources/config/other/module/panel.php:159
+#: junjulini/zimbrucode/src/Resources/config/other/module/panel.php:184
+#: junjulini/zimbrucode/src/Resources/config/other/module/panel.php:190
+msgid "Warning"
+msgstr ""
+
+#: junjulini/zimbrucode/src/Resources/config/other/module/panel.php:90
+#: junjulini/zimbrucode/src/Resources/config/other/module/panel.php:160
+msgid "First you have to change something."
+msgstr ""
+
+#: junjulini/zimbrucode/src/Resources/config/other/module/panel.php:104
+#: junjulini/zimbrucode/src/Resources/config/other/module/panel.php:174
+msgid "Error"
+msgstr ""
+
+#: junjulini/zimbrucode/src/Resources/config/other/module/panel.php:105
+#: junjulini/zimbrucode/src/Resources/config/other/module/panel.php:175
+msgid "Can\\'t update options."
+msgstr ""
+
+#: junjulini/zimbrucode/src/Resources/config/other/module/panel.php:110
+#: junjulini/zimbrucode/src/Resources/config/other/module/panel.php:180
+msgid "There are no options to be saved."
+msgstr ""
+
+#: junjulini/zimbrucode/src/Resources/config/other/module/panel.php:115
+#: junjulini/zimbrucode/src/Resources/config/other/module/panel.php:185
+msgid "Unable to connect to AJAX module. The page will be reloaded ..."
+msgstr ""
+
+#: junjulini/zimbrucode/src/Resources/config/other/module/panel.php:121
+#: junjulini/zimbrucode/src/Resources/config/other/module/panel.php:191
+msgid "You are not logged. The page will be reloaded ..."
+msgstr ""
+
+#: junjulini/zimbrucode/src/Component/Common/Mail.php:36
+msgid "[%s] message from Administrator"
+msgstr ""
+
+#: junjulini/zimbrucode/src/Component/Common/Mail.php:38
+msgid "Administrator"
+msgstr ""
+
+#: junjulini/zimbrucode/src/Component/Debug/TracyLogger.php:121
+msgid "WordPress : There was an error on the server"
+msgstr ""
