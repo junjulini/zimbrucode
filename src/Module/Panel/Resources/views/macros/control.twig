@@ -13,7 +13,7 @@
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.3.0
  #}
 
 {# Macro : HTML Input #}
@@ -44,7 +44,7 @@
             {% if is_assoc(options) %}
                 {% for key, option in options %}
                     {% if option.disable %}
-                        <option disabled value="{{ option.disable }}">{{ option.disable }}</option>
+                        <option disabled value="{{ key }}">{{ option.disable }}</option>
                     {% else %}
                         {% set selected = key in value ? 'selected="selected"' %}
                         <option {{ selected }} value="{{ key }}">{{ option }}</option>
@@ -70,7 +70,7 @@
                     {% if is_assoc(group.options) %}
                         {% for key, option in group.options %}
                             {% if option.disable %}
-                                <option disabled value="{{ option.disable }}">{{ option.disable }}</option>
+                                <option disabled value="{{ key }}">{{ option.disable }}</option>
                             {% else %}
                                 {% set selected = to_string(key) == to_string(value) ? 'selected="selected"' %}
                                 <option {{ selected }} value="{{ key }}">{{ option }}</option>
@@ -98,7 +98,7 @@
                     {% if is_assoc(group.options) %}
                         {% for key, option in group.options %}
                             {% if option.disable %}
-                                <option disabled value="{{ option.disable }}">{{ option.disable }}</option>
+                                <option disabled value="{{ key }}">{{ option.disable }}</option>
                             {% else %}
                                 {% set selected = key in value ? 'selected="selected"' %}
                                 <option {{ selected }} value="{{ key }}">{{ option }}</option>
@@ -124,7 +124,7 @@
             {% if is_assoc(options) %}
                 {% for key, option in options %}
                     {% if option.disable %}
-                        <option disabled value="{{ option.disable }}">{{ option.disable }}</option>
+                        <option disabled value="{{ key }}">{{ option.disable }}</option>
                     {% else %}
                         {% set selected = to_string(key) == to_string(value) ? 'selected="selected"' %}
                         <option {{ selected }} value="{{ key }}">{{ option }}</option>
