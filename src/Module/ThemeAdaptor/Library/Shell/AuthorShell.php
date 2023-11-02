@@ -18,7 +18,7 @@ use ZimbruCode\Component\TemplateBridges\Helper\ShellKernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.2.0
+ * @since   1.3.0
  */
 class AuthorShell extends ShellKernel
 {
@@ -37,12 +37,14 @@ class AuthorShell extends ShellKernel
      * Retrieve the URL to the author page for the user with the ID provided
      *
      * @return string   The URL to the author's page
-     * @since 1.2.0
+     * @since 1.3.0
      */
     public function pageURL(): string
     {
-        if (isset($GLOBALS['authordata'])) {
-            return esc_url(get_author_posts_url($GLOBALS['authordata']->ID, $GLOBALS['authordata']->user_nicename), '', '');
+        if (isset($GLOBALS['post'])) {
+            $user = get_userdata($GLOBALS['post']->post_author);
+
+            return esc_url(get_author_posts_url($user->data->ID, $user->data->user_nicename), '', '');
         } else {
             return '';
         }
@@ -52,11 +54,16 @@ class AuthorShell extends ShellKernel
      * Displays an HTML link to the author page of the current post’s author
      *
      * @return void
-     * @since 1.1.0
+     * @since 1.3.0
      */
     public function pageLink(): void
     {
-        echo the_author_posts_link();
+        if (isset($GLOBALS['post'])) {
+            $user  = get_userdata($GLOBALS['post']->post_author);
+            $title = esc_attr(sprintf(__('Posts by %s'), $user->data->display_name));
+
+            echo "<a href=\"{$this->pageURL()}\" title=\"{$title}\" rel=\"author\">{$user->data->display_name}</a>";
+        }
     }
 
     /**
@@ -65,10 +72,14 @@ class AuthorShell extends ShellKernel
      * @param string   $field    The user field to retrieve
      * @param int|bool $userID   User ID
      * @return string             The author's field from the current author's DB object, otherwise an empty string
-     * @since 1.1.0
+     * @since 1.3.0
      */
     public function meta(string $field = '', $userID = false): string
     {
+        if (!$userID && isset($GLOBALS['post'])) {
+            $userID = $GLOBALS['post']->post_author;
+        }
+
         return get_the_author_meta($field, $userID);
     }
 
