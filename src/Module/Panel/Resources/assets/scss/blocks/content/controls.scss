@@ -117,8 +117,8 @@
         }
 
         &_accent-border {
-            border-bottom-width: 2px;
-            border-bottom-color: $accent-color__2;
+            border-bottom-width: 2px !important;
+            border-bottom-color: $accent-color__2 !important;
         }
 
         &_visual-alert {
