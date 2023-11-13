@@ -13,7 +13,7 @@
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.3.0
  */
 
 'use strict';
@@ -265,16 +265,13 @@ zc.module.panel.addControl(($, panel, global) => {
         }
     });
 
-    $('.zc-panel').on('input', '.zc-panel-control-range__input', function(event) {
-        event.preventDefault();
-        /* Act on the event */
+    panel.on('input', '.zc-panel-control-range__input', ($this) => {
+        control.inputRange($this, 'live');
 
-        control.inputRange($(this), 'live');
+        var manualRange = $this.parent().parent().find('.zc-panel-control-range__manual-range');
 
-        var manualRange = $(this).parent().parent().find('.zc-panel-control-range__manual-range');
-
-        manualRange.find('.zc-panel-control-range__manual-range_type_text').val($(this).val()).change();
+        manualRange.find('.zc-panel-control-range__manual-range_type_text').val($this.val()).change();
         manualRange.find('.zc-panel-control-range__manual-range_type_text').removeClass('zc-panel-control-range__manual-range_bad-value');
         panel.enableSaveButton();
-    });
+    }, true);
 });

@@ -13,17 +13,17 @@
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.3.0
  */
 
 'use strict';
 
 zc.module.panel.addControl(($, panel) => {
-    $('.zc-panel').on('click', '.zc-panel-control-toggle-button__checkbox', function(event) {
-        if ($(this).prop('checked')) {
-            $(this).parent().find('input[type=hidden]').val('on').change();
+    panel.click('.zc-panel-control-toggle-button__checkbox', ($this) => {
+        if ($this.prop('checked')) {
+            $this.parent().find('input[type=hidden]').val('on').change();
         } else {
-            $(this).parent().find('input[type=hidden]').val('off').change();
+            $this.parent().find('input[type=hidden]').val('off').change();
         }
-    });
+    }, false);
 });

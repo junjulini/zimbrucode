@@ -13,7 +13,7 @@
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.3.0
  */
 
 'use strict';
@@ -54,12 +54,7 @@ zc.module.panel.addControl(($, panel, global) => {
     control.makeSortable();
 
     // Add new images
-    $('.zc-panel').on('click', '.zc-panel-control-gallery-type__button', function(event) {
-        event.preventDefault();
-        /* Act on the event */
-
-        const $this = $(this);
-
+    panel.click('.zc-panel-control-gallery-type__button', ($this) => {
         if (control.frame) {
             control.frame.close();
         }
@@ -104,12 +99,8 @@ zc.module.panel.addControl(($, panel, global) => {
     });
 
     // Change image
-    $('.zc-panel').on('click', '.zc-panel-control-gallery-type__item-button_change-image', function(event) {
-        event.preventDefault();
-        /* Act on the event */
-
-        const $this = $(this);
-        const container = $(this).parent().parent().parent();
+    panel.click('.zc-panel-control-gallery-type__item-button_change-image', ($this) => {
+        const container = $this.parent().parent().parent();
 
         if (control.frame) {
             control.frame.close();
@@ -140,16 +131,13 @@ zc.module.panel.addControl(($, panel, global) => {
     });
 
     // Remove image
-    $('.zc-panel').on('click', '.zc-panel-control-gallery-type__item-button_remove-image', function(event) {
-        event.preventDefault();
-        /* Act on the event */
+    panel.click('.zc-panel-control-gallery-type__item-button_remove-image', ($this) => {
+        const container = $this.parent().parent().parent();
 
-        const container = $(this).parent().parent().parent();
-
-        $(this).parent().animate({
+        $this.parent().animate({
             opacity: 0
         }, 200, function() {
-            $(this).remove();
+            $this.remove();
             control.parseData(container);
         });
     });

@@ -13,19 +13,19 @@
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.3.0
  */
 
 'use strict';
 
 zc.module.panel.addControl(($, panel) => {
-    $('.zc-panel').on('click', '.zc-panel-control-checkbox__element', function(event) {
-        if ($(this).hasClass('zc-panel-control-checkbox__element_active')) {
-            $(this).removeClass('zc-panel-control-checkbox__element_active');
-            $(this).parent().find('input[type=hidden]').val('off').change();
+    panel.click('.zc-panel-control-checkbox__element', ($this) => {
+        if ($this.hasClass('zc-panel-control-checkbox__element_active')) {
+            $this.removeClass('zc-panel-control-checkbox__element_active');
+            $this.parent().find('input[type=hidden]').val('off').change();
         } else {
-            $(this).addClass('zc-panel-control-checkbox__element_active');
-            $(this).parent().find('input[type=hidden]').val('on').change();
+            $this.addClass('zc-panel-control-checkbox__element_active');
+            $this.parent().find('input[type=hidden]').val('on').change();
         }
-    });
+    }, false);
 });

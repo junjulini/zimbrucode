@@ -13,17 +13,13 @@
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.3.0
  */
 
 'use strict';
 
 zc.module.panel.addControl(($, panel, global) => {
-    $('.zc-panel').on('click', '.zc-panel-control-upload__button', function(event) {
-        event.preventDefault();
-        /* Act on the event */
-
-        const button = $(this);
+    panel.click('.zc-panel-control-upload__button', ($this) => {
         const l10n = _wpMediaViewsL10n;
 
         const frame = wp.media({
@@ -41,18 +37,18 @@ zc.module.panel.addControl(($, panel, global) => {
         frame.open();
 
         // When a file is selected, grab the URL and set it as the text field's value
-        frame.on('select', function(event) {
+        frame.on('select', () => {
             const attachment = frame.state().get('selection').first().toJSON();
 
             if (attachment.type == 'image') {
-                const id = button.attr('id');
+                const id    = $this.attr('id');
                 const image = attachment.sizes.large || attachment;
 
-                button.parent().find(`input[name=${id}]`).val(attachment.url).change();
-                button.parent().find(`input[name=${id}--large_image]`).val(image.url).change();
-                button.parent().find(`input[name=${id}--id]`).val(attachment.id).change();
-                button.parent().find('.zc-panel-control-upload__image-container').remove();
-                button.parent().append(`<div class="zc-panel-control-upload__image-container">\
+                $this.parent().find(`input[name=${id}]`).val(attachment.url).change();
+                $this.parent().find(`input[name=${id}--large_image]`).val(image.url).change();
+                $this.parent().find(`input[name=${id}--id]`).val(attachment.id).change();
+                $this.parent().find('.zc-panel-control-upload__image-container').remove();
+                $this.parent().append(`<div class="zc-panel-control-upload__image-container">\
                                             <i title="${global.remove}" class="zc-panel-control-upload__icon-close zc-icon-clear"></i>\
                                             <img src="${image.url}" alt="Image" class="zc-panel-control-upload__image" />\
                                         </div>`);
@@ -60,11 +56,8 @@ zc.module.panel.addControl(($, panel, global) => {
         });
     });
 
-    $('.zc-panel').on('click', '.zc-panel-control-upload__icon-close', function(event) {
-        event.preventDefault();
-        /* Act on the event */
-
-        $(this).parent().parent().find('input').val('').change();
-        $(this).parent().remove();
+    panel.click('.zc-panel-control-upload__icon-close', ($this) => {
+        $this.parent().parent().find('input').val('').change();
+        $this.parent().remove();
     });
 });
