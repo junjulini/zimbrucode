@@ -19,7 +19,7 @@ use ZimbruCode\Component\Asset\Library\Filter;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.3.0
  */
 class JavaScript extends Filter
 {
@@ -28,7 +28,7 @@ class JavaScript extends Filter
      *
      * @param AssetData $asset   Asset data
      * @return void
-     * @since 1.0.0
+     * @since 1.3.0
      */
     public function each(AssetData $asset): void
     {
@@ -36,6 +36,7 @@ class JavaScript extends Filter
             $asset->type('js', true)
                   ->name($asset->generateName(), true)
                   ->url($asset->getURL(), true)
+                  ->deps(['jquery'], true)
                   ->version($asset->dynamicVersion(), true)
                   ->footer(true, true);
 

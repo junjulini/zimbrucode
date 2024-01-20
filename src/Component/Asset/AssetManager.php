@@ -25,7 +25,7 @@ use ZimbruCode\Component\Core\Kernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.2.0
+ * @since   1.3.0
  */
 class AssetManager
 {
@@ -212,7 +212,7 @@ class AssetManager
      *
      * @param string $logTitle   Log title
      * @return AssetManager
-     * @since 1.1.0
+     * @since 1.3.0
      */
     public function enroll(string $logTitle = ''): self
     {
@@ -224,7 +224,7 @@ class AssetManager
             if ($asset->type() == 'css') {
                 wp_enqueue_style($asset->name(), $asset->url(), $asset->deps(), $asset->version(), $asset->media());
             } elseif ($asset->type() == 'js') {
-                wp_enqueue_script($asset->name(), $asset->url(), $asset->deps(), $asset->version(), $asset->footer());
+                wp_enqueue_script($asset->name(), $asset->url(), $asset->deps(), $asset->version(), ['in_footer' => $asset->footer()]);
             } elseif ($asset->type() == 'registered') {
                 wp_enqueue_script($asset->name());
             }

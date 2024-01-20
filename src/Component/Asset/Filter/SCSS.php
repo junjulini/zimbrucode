@@ -22,7 +22,7 @@ use ZimbruCode\Component\Core\Kernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.2.0
+ * @since   1.3.0
  */
 class SCSS extends Filter
 {
@@ -66,7 +66,7 @@ class SCSS extends Filter
      *
      * @param AssetData $asset   Asset data
      * @return void
-     * @since 1.1.0
+     * @since 1.3.0
      */
     protected function each(AssetData $asset): void
     {
@@ -146,7 +146,8 @@ class SCSS extends Filter
                      ->type('css', true)
                      ->name($newAsset->generateName(), true)
                      ->url(Tools::getURL($this->compiler->output), true)
-                     ->version($newAsset->dynamicVersion(), true);
+                     ->version($newAsset->dynamicVersion(), true)
+                     ->media('all', true);
 
             $this->callback('scss-3', $this->collector(), $newAsset);
             $this->collector()->remove($asset->raw());

@@ -19,7 +19,7 @@ use ZimbruCode\Component\Asset\Library\Filter;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.3.0
  */
 class CSS extends Filter
 {
@@ -28,7 +28,7 @@ class CSS extends Filter
      *
      * @param AssetData $asset   Asset data
      * @return void
-     * @since 1.0.0
+     * @since 1.3.0
      */
     public function each(AssetData $asset): void
     {
@@ -36,7 +36,8 @@ class CSS extends Filter
             $asset->type('css', true)
                   ->name($asset->generateName(), true)
                   ->url($asset->getURL(), true)
-                  ->version($asset->dynamicVersion(), true);
+                  ->version($asset->dynamicVersion(), true)
+                  ->media('all', true);
 
             $this->callback($this->collector(), $asset);
         }

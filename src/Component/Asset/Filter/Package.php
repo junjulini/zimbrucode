@@ -21,7 +21,7 @@ use ZimbruCode\Component\Handler\LibraryHandler;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.3.0
  */
 class Package extends Filter
 {
@@ -30,7 +30,7 @@ class Package extends Filter
      *
      * @param AssetData $asset   Asset data
      * @return void
-     * @since 1.0.0
+     * @since 1.3.0
      */
     protected function each(AssetData $asset): void
     {
@@ -45,7 +45,8 @@ class Package extends Filter
                         $newAsset->type('css')
                                  ->name($newAsset->generateName())
                                  ->url($newAsset->getURL())
-                                 ->version((!empty($packageData['version']) ? $packageData['version'] : $newAsset->dynamicVersion()));
+                                 ->version((!empty($packageData['version']) ? $packageData['version'] : $newAsset->dynamicVersion()))
+                                 ->media('all');
                     }
                 }
 

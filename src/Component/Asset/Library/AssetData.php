@@ -23,7 +23,7 @@ use ZimbruCode\Component\Core\Kernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.2.0
+ * @since   1.3.0
  */
 class AssetData
 {
@@ -234,12 +234,12 @@ class AssetData
     /**
      * Asset media status
      *
-     * @param bool|null $media   Asset media status
-     * @param bool      $check   Check if the value exists before setting the asset media
+     * @param string|null $media   Asset media status
+     * @param bool        $check   Check if the value exists before setting the asset media
      * @return mixed
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    public function media(bool $media = null, bool $check = false)
+    public function media(string $media = null, bool $check = false)
     {
         if ($media !== null) {
             if ($check === true) {
@@ -263,13 +263,13 @@ class AssetData
      * @param bool|null $footer   Asset footer status
      * @param bool      $check    Check if the value exists before setting the asset footer
      * @return mixed
-     * @since 1.0.0
+     * @since 1.3.0
      */
     public function footer(bool $footer = null, bool $check = false)
     {
         if ($footer !== null) {
             if ($check === true) {
-                if (empty($this->data['footer'])) {
+                if (isset($this->data['footer']) && $this->data['footer'] === '') {
                     $this->data['footer'] = $footer;
                 }
 
