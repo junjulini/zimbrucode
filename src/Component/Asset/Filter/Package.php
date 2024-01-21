@@ -59,6 +59,7 @@ class Package extends Filter
                         $newAsset->type('js')
                                  ->name($newAsset->generateName())
                                  ->url($newAsset->getURL())
+                                 ->deps(['jquery'])
                                  ->version((!empty($packageData['version']) ? $packageData['version'] : $newAsset->dynamicVersion()))
                                  ->footer(true);
                     }

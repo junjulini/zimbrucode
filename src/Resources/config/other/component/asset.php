@@ -24,8 +24,8 @@ return [
         'url'     => '',
         'deps'    => [],
         'version' => '',
-        'media'   => 'all',
-        'footer'  => false,
+        'media'   => '',
+        'footer'  => '',
     ],
 
     'default-javascript-deps'   => ['jquery'],

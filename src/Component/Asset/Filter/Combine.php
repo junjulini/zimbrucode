@@ -164,7 +164,8 @@ class Combine extends Filter
         $asset->type('css')
               ->name($asset->generateName())
               ->url($asset->getURL())
-              ->version($asset->dynamicVersion());
+              ->version($asset->dynamicVersion())
+              ->media('all');
     }
 
     /**
@@ -242,6 +243,7 @@ class Combine extends Filter
         $asset->type('js')
               ->name($asset->generateName())
               ->url($asset->getURL())
+              ->deps(['jquery'])
               ->version($asset->dynamicVersion())
               ->footer(true);
     }
