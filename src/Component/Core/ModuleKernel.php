@@ -24,7 +24,7 @@ use ZimbruCode\Component\Core\Traits\RenderTrait;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.2.0
+ * @since   1.3.0
  */
 abstract class ModuleKernel extends Kernel
 {
@@ -299,7 +299,7 @@ abstract class ModuleKernel extends Kernel
      * @param string $service   Name of module service
      * @throws InvalidArgumentException
      * @return ModuleKernel     Instance of a part of a module as a local service
-     * @since 1.1.0
+     * @since 1.3.0
      */
     final public function moduleService(string $service): ModuleKernel
     {
@@ -308,7 +308,7 @@ abstract class ModuleKernel extends Kernel
         if ($service && $moduleService instanceof ModuleKernel) {
             return $moduleService;
         } else {
-            throw new InvalidArgumentException('ZE0067');
+            throw new InvalidArgumentException("Service : {$service} - ZE0067");
         }
     }
 }
