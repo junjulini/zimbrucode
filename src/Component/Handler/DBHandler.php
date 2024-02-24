@@ -20,7 +20,7 @@ use ZimbruCode\Component\Core\Kernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.2.0
+ * @since   1.3.0
  */
 class DBHandler
 {
@@ -32,7 +32,7 @@ class DBHandler
      *
      * @param  string $tableName   DB table name
      * @throws RuntimeException
-     * @since 1.1.0
+     * @since 1.3.0
      */
     public function __construct(string $tableName = '')
     {
@@ -48,7 +48,7 @@ class DBHandler
 
         $this->tableName = esc_sql($this->tableName);
 
-        $check = strcasecmp(Kernel::service('wpdb')->get_var("SHOW TABLES LIKE '{$this->tableName}'"), $this->tableName);
+        $check = strcasecmp(Kernel::service('wpdb')->get_var("SHOW TABLES LIKE '{$this->tableName}'") ?? '', $this->tableName);
         $this->checkError();
 
         if (0 !== $check) {
