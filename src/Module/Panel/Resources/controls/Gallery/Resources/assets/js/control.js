@@ -137,7 +137,7 @@ zc.module.panel.addControl(($, panel, global) => {
         $this.parent().animate({
             opacity: 0
         }, 200, function() {
-            $this.remove();
+            $this.parent().remove();
             control.parseData(container);
         });
     });
