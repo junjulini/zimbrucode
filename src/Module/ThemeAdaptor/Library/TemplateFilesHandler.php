@@ -16,11 +16,12 @@ namespace ZimbruCode\Module\ThemeAdaptor\Library;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.2.0
+ * @since   1.3.0
  */
 class TemplateFilesHandler
 {
     public string $location = '';
+    public string $locationChild = '';
 
     /**
      * Retrieve path to a template
@@ -469,14 +470,22 @@ class TemplateFilesHandler
      *
      * @param string|array $templateNames Template file(s) to search for, in order.
      * @return string The template filename if one is located.
-     * @since 1.0.0
+     * @since 1.3.0
      */
     public function locateTemplate(array $templateNames)
     {
         $located = '';
+
         foreach ((array) $templateNames as $templateName) {
             if (!$templateName) {
                 continue;
+            }
+
+            if (!empty($this->locationChild)) {
+                if (file_exists($this->locationChild . '/' . $templateName)) {
+                    $located = $templateName;
+                    break;
+                }
             }
 
             if (file_exists($this->location . '/' . $templateName)) {

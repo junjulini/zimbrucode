@@ -25,7 +25,7 @@ use ZimbruCode\Component\Handler\Traits\SessionHandlerTrait;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.2.0
+ * @since   1.3.0
  */
 abstract class Kernel extends GlobalDataOperator
 {
@@ -74,9 +74,9 @@ abstract class Kernel extends GlobalDataOperator
      *
      * @param array $config   Module config
      * @return ModuleLoader
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    final public function module(array $config = []): ModuleLoader
+    final public static function module(array $config = []): ModuleLoader
     {
         if ($loader = self::getGlobalCache('module-instance')) {
             if (!($loader instanceof ModuleLoader)) {

@@ -24,7 +24,7 @@ use ZimbruCode\Module\ThemeAdaptor\Library\TemplateFilesHandler;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.2.0
+ * @since   1.3.0
  */
 class Module extends ModuleKernel
 {
@@ -179,12 +179,18 @@ class Module extends ModuleKernel
      *
      * @param string $wpTemplate WordPress template
      * @return string            WordPress template
-     * @since 1.1.0
+     * @since 1.3.0
      */
     public function __filter_template_include(string $wpTemplate): string
     {
         $tfh           = new TemplateFilesHandler;
         $tfh->location = self::service('app')->getViewPath();
+
+        if (Tools::isChildTheme()) {
+            if (file_exists($dir = self::service('app')->getChildViewPath())) {
+                $tfh->locationChild = $dir;
+            }
+        }
 
         $template     = false;
         $tagTemplates = [
