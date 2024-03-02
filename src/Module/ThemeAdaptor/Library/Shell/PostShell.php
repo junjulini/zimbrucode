@@ -19,7 +19,7 @@ use ZimbruCode\Component\TemplateBridges\Helper\ShellKernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.2.0
+ * @since   1.3.0
  */
 class PostShell extends ShellKernel
 {
@@ -32,6 +32,18 @@ class PostShell extends ShellKernel
     public function ID()
     {
         return get_the_ID();
+    }
+
+    /**
+     * Retrieves the post type of the current post or of a given post
+     * 
+     * @param mixed $post   Post ID or post object. Default is global $post
+     * @return mixed        Post type on success, false on failure
+     * @since 1.3.0
+     */
+    public function type($post = null)
+    {
+        return get_post_type($post);
     }
 
     /**
@@ -193,6 +205,17 @@ class PostShell extends ShellKernel
     public function imageURL($post = null, $size = 'post-thumbnail')
     {
         return esc_url(get_the_post_thumbnail_url($post, $size), '', '');
+    }
+
+    /**
+     * Retrieves the post thumbnail ID
+     * @param  mixed $post   Post ID or WP_Post object. Default is global $post
+     * @return mixed         Post thumbnail ID (which can be 0 if the thumbnail is not set), or false if the post does not exist
+     * @since 1.3.0
+     */
+    public function imageID($post = null)
+    {
+        return get_post_thumbnail_id();
     }
 
     /**
