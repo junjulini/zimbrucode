@@ -18,7 +18,7 @@ use ZimbruCode\Component\TemplateBridges\Helper\ShellKernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.3.0
  */
 class CategoryShell extends ShellKernel
 {
@@ -28,11 +28,11 @@ class CategoryShell extends ShellKernel
      * @param string $prefix    What to display before the title
      * @param bool   $display   Whether to display or retrieve title
      * @return mixed            Title when retrieving
-     * @since 1.1.0
+     * @since 1.3.0
      */
     public function singleTitle(string $prefix = '', bool $display = true)
     {
-        return single_cat_title($prefix, $display);
+        return apply_filters('zc/module/theme_adapter/category_shell/single_title', single_cat_title($prefix, $display));
     }
 
     /**
