@@ -13,7 +13,7 @@
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.3.0
  #}
 
 {% import "@macros/content.twig" as macros %}
@@ -80,7 +80,7 @@
                         {% block header_controllers_after %}{% endblock %}
                         {# END Header controllers after block #}
 
-                        {{ glob.do_action('zc/module/panel/header-content-right--after', panel.getModeInstance)|raw }}
+                        {{ action('zc/module/panel/header-content-right--after', panel.getModeInstance)|raw }}
 
                     </div>
 
@@ -188,7 +188,7 @@
             {% block content_after %}{% endblock %}
             {# END Content after block #}
 
-            {{ glob.do_action('zc/module/panel/content--after', panel.getModeInstance)|raw }}
+            {{ action('zc/module/panel/content--after', panel.getModeInstance)|raw }}
 
         </section>
 
