@@ -9,13 +9,13 @@
  * file that was distributed with this source code.
  */
 
-namespace ZimbruCode\Module\ThemeAdaptor\Library\Shell;
+namespace ZimbruCode\Module\ThemeAdapter\Library\Shell;
 
 use ZimbruCode\Component\Handler\OptionHandler;
 use ZimbruCode\Component\TemplateBridges\Helper\ShellKernel;
 
 /**
- * Class : Module/ThemeAdaptor/Library/Shell : Post shell
+ * Class : Module/ThemeAdapter/Library/Shell : Post shell
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode

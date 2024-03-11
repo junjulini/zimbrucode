@@ -9,13 +9,13 @@
  * file that was distributed with this source code.
  */
 
-namespace ZimbruCode\Module\ThemeAdaptor\Library\Shell;
+namespace ZimbruCode\Module\ThemeAdapter\Library\Shell;
 
 use WP_Post;
 use ZimbruCode\Component\TemplateBridges\Helper\ShellKernel;
 
 /**
- * Class : Module/ThemeAdaptor/Library/Shell : Comments shell
+ * Class : Module/ThemeAdapter/Library/Shell : Comments shell
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode

@@ -9,31 +9,31 @@
  * file that was distributed with this source code.
  */
 
-namespace ZimbruCode\Module\ThemeAdaptor\Library;
+namespace ZimbruCode\Module\ThemeAdapter\Library;
 
 use InvalidArgumentException;
 use ZimbruCode\Component\Core\Kernel;
 use ZimbruCode\Component\TemplateBridges\TwigTemplateBridge;
-use ZimbruCode\Module\ThemeAdaptor\Library\Shell\AttachmentShell;
-use ZimbruCode\Module\ThemeAdaptor\Library\Shell\AuthorShell;
-use ZimbruCode\Module\ThemeAdaptor\Library\Shell\BodyShell;
-use ZimbruCode\Module\ThemeAdaptor\Library\Shell\CategoryShell;
-use ZimbruCode\Module\ThemeAdaptor\Library\Shell\CommentsShell;
-use ZimbruCode\Module\ThemeAdaptor\Library\Shell\GeneralShell;
-use ZimbruCode\Module\ThemeAdaptor\Library\Shell\MenuShell;
-use ZimbruCode\Module\ThemeAdaptor\Library\Shell\PostShell;
-use ZimbruCode\Module\ThemeAdaptor\Library\Shell\QueryShell;
-use ZimbruCode\Module\ThemeAdaptor\Library\Shell\SearchShell;
-use ZimbruCode\Module\ThemeAdaptor\Library\Shell\SidebarShell;
-use ZimbruCode\Module\ThemeAdaptor\Library\TwigExtension\InitTwigExtensions;
-use ZimbruCode\Module\ThemeAdaptor\Library\TwigFunctions;
+use ZimbruCode\Module\ThemeAdapter\Library\Shell\AttachmentShell;
+use ZimbruCode\Module\ThemeAdapter\Library\Shell\AuthorShell;
+use ZimbruCode\Module\ThemeAdapter\Library\Shell\BodyShell;
+use ZimbruCode\Module\ThemeAdapter\Library\Shell\CategoryShell;
+use ZimbruCode\Module\ThemeAdapter\Library\Shell\CommentsShell;
+use ZimbruCode\Module\ThemeAdapter\Library\Shell\GeneralShell;
+use ZimbruCode\Module\ThemeAdapter\Library\Shell\MenuShell;
+use ZimbruCode\Module\ThemeAdapter\Library\Shell\PostShell;
+use ZimbruCode\Module\ThemeAdapter\Library\Shell\QueryShell;
+use ZimbruCode\Module\ThemeAdapter\Library\Shell\SearchShell;
+use ZimbruCode\Module\ThemeAdapter\Library\Shell\SidebarShell;
+use ZimbruCode\Module\ThemeAdapter\Library\TwigExtension\InitTwigExtensions;
+use ZimbruCode\Module\ThemeAdapter\Library\TwigFunctions;
 
 /**
- * Class : Module/ThemeAdaptor/Library : Render
+ * Class : Module/ThemeAdapter/Library : Render
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.2.2
+ * @since   1.3.0
  */
 class Render
 {
@@ -77,11 +77,11 @@ class Render
      * Setup environment
      *
      * @return void
-     * @since 1.2.2
+     * @since 1.3.0
      */
     public function setupEnvironment()
     {
-        if (Kernel::getGlobal('core/module/theme-adaptor/cache')) {
+        if (Kernel::getGlobal('core/module/theme-adapter/cache')) {
             $this->ttb->addCachePath(Kernel::service('app')->getCachePath('twig'));
         }
 
@@ -106,7 +106,7 @@ class Render
         new TwigFunctions($this->ttb);
 
         // Hook
-        do_action('zc/module/theme_adaptor/render', $this, $this->ttb);
+        do_action('zc/module/theme_adapter/render', $this, $this->ttb);
 
         // Add functions
         foreach ($this->data['functions'] as $name => $method) {

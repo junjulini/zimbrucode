@@ -9,14 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace ZimbruCode\Module\ThemeAdaptor\Library\TwigExtension\HavePostsExtension;
+namespace ZimbruCode\Module\ThemeAdapter\Library\TwigExtension\HavePostsExtension;
 
 use Twig\Error\SyntaxError;
 use Twig\Token;
 use Twig\TokenParser\AbstractTokenParser;
 
 /**
- * Class : Module/ThemeAdaptor/Library/TwigExtension/HavePostsExtension : Have posts - Token parser
+ * Class : Module/ThemeAdapter/Library/TwigExtension/HavePostsExtension : Have posts - Token parser
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode

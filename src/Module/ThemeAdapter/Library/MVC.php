@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ZimbruCode\Module\ThemeAdaptor\Library;
+namespace ZimbruCode\Module\ThemeAdapter\Library;
 
 use RuntimeException;
 use ZimbruCode\AppKernel;
@@ -23,7 +23,7 @@ use ZimbruCode\Component\Handler\Traits\RequestHandlerTrait;
 use ZimbruCode\Component\Handler\Traits\SessionHandlerTrait;
 
 /**
- * Class : Module/ThemeAdaptor/Library : MVC - The controller that handles the model and view layers to work together
+ * Class : Module/ThemeAdapter/Library : MVC - The controller that handles the model and view layers to work together
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode

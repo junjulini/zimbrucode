@@ -9,14 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace ZimbruCode\Module\ThemeAdaptor\Library\TwigExtension\PostsExtension;
+namespace ZimbruCode\Module\ThemeAdapter\Library\TwigExtension\PostsExtension;
 
 use Twig\Node\Node;
 use Twig\Token;
 use Twig\TokenParser\AbstractTokenParser;
 
 /**
- * Class : Module/ThemeAdaptor/Library/TwigExtension/PostsExtension : Posts - Token parser
+ * Class : Module/ThemeAdapter/Library/TwigExtension/PostsExtension : Posts - Token parser
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode

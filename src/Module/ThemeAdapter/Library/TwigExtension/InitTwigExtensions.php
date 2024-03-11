@@ -9,14 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace ZimbruCode\Module\ThemeAdaptor\Library\TwigExtension;
+namespace ZimbruCode\Module\ThemeAdapter\Library\TwigExtension;
 
 use Twig\Environment;
-use ZimbruCode\Module\ThemeAdaptor\Library\TwigExtension\HavePostsExtension\HavePostsTokenParser;
-use ZimbruCode\Module\ThemeAdaptor\Library\TwigExtension\PostsExtension\PostsTokenParser;
+use ZimbruCode\Module\ThemeAdapter\Library\TwigExtension\HavePostsExtension\HavePostsTokenParser;
+use ZimbruCode\Module\ThemeAdapter\Library\TwigExtension\PostsExtension\PostsTokenParser;
 
 /**
- * Class : Module/ThemeAdaptor/Library/TwigExtension : Initialization of twig extensions
+ * Class : Module/ThemeAdapter/Library/TwigExtension : Initialization of twig extensions
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode

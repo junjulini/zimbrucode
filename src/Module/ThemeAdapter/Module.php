@@ -9,18 +9,18 @@
  * file that was distributed with this source code.
  */
 
-namespace ZimbruCode\Module\ThemeAdaptor;
+namespace ZimbruCode\Module\ThemeAdapter;
 
 use SplFileInfo;
 use Symfony\Component\Finder\Finder;
 use ZimbruCode\Component\Common\Tools;
 use ZimbruCode\Component\Core\ModuleKernel;
-use ZimbruCode\Module\ThemeAdaptor\Library\MVC;
-use ZimbruCode\Module\ThemeAdaptor\Library\Render;
-use ZimbruCode\Module\ThemeAdaptor\Library\TemplateFilesHandler;
+use ZimbruCode\Module\ThemeAdapter\Library\MVC;
+use ZimbruCode\Module\ThemeAdapter\Library\Render;
+use ZimbruCode\Module\ThemeAdapter\Library\TemplateFilesHandler;
 
 /**
- * Module : Theme adaptor
+ * Module : Theme adapter
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
@@ -74,11 +74,11 @@ class Module extends ModuleKernel
      *
      * @param string $dir   Location of custom templates
      * @return void
-     * @since 1.1.0
+     * @since 1.3.0
      */
     protected function searchCustomTemplates(string $dir): void
     {
-        $prefix = self::getGlobal('core/module/theme-adaptor/custom-template-prefix', '__');
+        $prefix = self::getGlobal('core/module/theme-adapter/custom-template-prefix', '__');
 
         foreach ((new Finder)->files()->in($dir) as $file) {
             if (strpos($file->getBasename(), $prefix) !== false) {
@@ -243,7 +243,7 @@ class Module extends ModuleKernel
         }
 
         // Hook
-        $template = apply_filters('zc/module/theme_adaptor/template', $template);
+        $template = apply_filters('zc/module/theme_adapter/template', $template);
 
         if ($template) {
             $this->mvc($template);

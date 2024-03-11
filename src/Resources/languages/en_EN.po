@@ -214,7 +214,7 @@ msgstr ""
 msgid "No backups"
 msgstr ""
 
-#: junjulini/zimbrucode/src/Module/ThemeAdaptor/Resources/views/test-layout.twig:49
+#: junjulini/zimbrucode/src/Module/ThemeAdapter/Resources/views/test-layout.twig:49
 msgid "Welcome to"
 msgstr ""
 

@@ -20,6 +20,6 @@ return [
     // Module : MetaboxPanel
     'metabox-panel' => require __DIR__ . '/module/metabox-panel.php',
 
-    // Module : Theme adaptor
-    'theme-adaptor' => require __DIR__ . '/module/theme-adaptor.php',
+    // Module : Theme adapter
+    'theme-adapter' => require __DIR__ . '/module/theme-adapter.php',
 ];

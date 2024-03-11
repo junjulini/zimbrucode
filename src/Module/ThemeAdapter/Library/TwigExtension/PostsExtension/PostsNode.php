@@ -9,40 +9,35 @@
  * file that was distributed with this source code.
  */
 
-namespace ZimbruCode\Module\ThemeAdaptor\Library\TwigExtension\HavePostsExtension;
+namespace ZimbruCode\Module\ThemeAdapter\Library\TwigExtension\PostsExtension;
 
 use Twig\Compiler;
 use Twig\Node\Node;
 
 /**
- * Class : Module/ThemeAdaptor/Library/TwigExtension/HavePostsExtension : Have posts - Node
+ * Class : Module/ThemeAdapter/Library/TwigExtension/PostsExtension : Posts - Node
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
  * @since   1.0.0
  */
-class HavePostsNode extends Node
+class PostsNode extends Node
 {
     /**
      * Constructor
      *
      * @param Node        $body     "Body" node
      * @param Node|null   $values   "Values" node
-     * @param Node|null   $else     "Else" node
      * @param int         $lineno
      * @param string|null $tag
      * @since 1.0.0
      */
-    public function __construct(Node $body, ?Node $values, ?Node $else, int $lineno, string $tag = null)
+    public function __construct(Node $body, ?Node $values, int $lineno, string $tag = null)
     {
         $nodes = ['body' => $body];
 
         if ($values) {
             $nodes['values'] = $values;
-        }
-
-        if ($else !== null) {
-            $nodes['else'] = $else;
         }
 
         parent::__construct($nodes, [], $lineno, $tag);
@@ -74,20 +69,12 @@ class HavePostsNode extends Node
                 ->indent()
                 ->write('global $wp_query;' . "\n")
                 ->write('$query = $wp_query;' . "\n")
-                ->outdent()
+            ->outdent()
             ->write('}' . "\n")
-            ->write('if ($query->have_posts()) {' . "\n")
+            ->write('while ($query->have_posts()) : $query->the_post();' . "\n")
                 ->indent()
-                ->subcompile($this->getNode('body'));
-
-        if ($this->hasNode('else')) {
-            $compiler
-                ->outdent()
-                ->write('} else {' . "\n")
-                ->indent()
-                ->subcompile($this->getNode('else'));
-        }
-
-        $compiler->outdent()->write('}' . "\n");
+                ->subcompile($this->getNode('body'))
+            ->outdent()
+            ->write('endwhile;' . "\n");
     }
 }

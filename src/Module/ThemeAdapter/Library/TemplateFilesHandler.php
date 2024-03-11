@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace ZimbruCode\Module\ThemeAdaptor\Library;
+namespace ZimbruCode\Module\ThemeAdapter\Library;
 
 /**
- * Class : Module/ThemeAdaptor/Library : Template files handler
+ * Class : Module/ThemeAdapter/Library : Template files handler
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode

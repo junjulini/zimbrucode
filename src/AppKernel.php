@@ -98,7 +98,7 @@ abstract class AppKernel extends Kernel
         $this->__loadModules();
 
         // Launch theme adapter
-        $this->__initThemeAdaptor();
+        $this->__initThemeAdapter();
 
         // Callback after load all modules
         $this->__callbackAfter();
@@ -385,15 +385,15 @@ abstract class AppKernel extends Kernel
     }
 
     /**
-     * Initializing the "ThemeAdaptor" module
+     * Initializing the "ThemeAdapter" module
      *
      * @return void
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    private function __initThemeAdaptor(): void
+    private function __initThemeAdapter(): void
     {
         if (self::getGlobal('app/mode') === 'theme') {
-            self::module()->addAsService('theme')->ThemeAdaptor;
+            self::module()->addAsService('theme')->ThemeAdapter;
         }
     }
 

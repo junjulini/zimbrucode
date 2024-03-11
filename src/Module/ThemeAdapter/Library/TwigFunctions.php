@@ -9,13 +9,13 @@
  * file that was distributed with this source code.
  */
 
-namespace ZimbruCode\Module\ThemeAdaptor\Library;
+namespace ZimbruCode\Module\ThemeAdapter\Library;
 
 use ZimbruCode\Component\Handler\OptionHandler;
 use ZimbruCode\Component\TemplateBridges\TwigTemplateBridge;
 
 /**
- * Class : Module/ThemeAdaptor/Library : Twig functions
+ * Class : Module/ThemeAdapter/Library : Twig functions
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
