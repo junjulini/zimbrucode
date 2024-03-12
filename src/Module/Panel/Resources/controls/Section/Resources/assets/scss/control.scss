@@ -164,7 +164,8 @@
         background: $bg-color__2;
         margin-top: 10px;
 
-        .zc-panel-control-section_type_accent-group & {
+        .zc-panel-control-section_type_accent-group &,
+        .zc-panel-control-section_type_group & {
             border-color: $accent-color__2;
         }
 
@@ -184,6 +185,7 @@
             top: -11px;
             border-color: transparent transparent #379478 transparent;
 
+            .zc-panel-control-section_type_accent-group &,
             .zc-panel-control-section_type_accent-group & {
                 border-color: transparent transparent #0067ab transparent;
             }
