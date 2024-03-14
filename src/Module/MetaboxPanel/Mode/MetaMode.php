@@ -22,7 +22,7 @@ use ZimbruCode\Module\Panel\Library\Traits\ControlTrait;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.3.0
  */
 class MetaMode extends Mode
 {
@@ -54,11 +54,11 @@ class MetaMode extends Mode
      * @param string $path   Template path
      * @param array  $data   Additional data for rendering
      * @return string        Html content
-     * @since 1.0.0
+     * @since 1.3.0
      */
     public function altRender(string $path, array $data = []): string
     {
-        return $this->render("@meta/${path}", $data, true, function (TwigTemplateBridge $ttb): void {
+        return $this->render("@meta/{$path}", $data, true, function (TwigTemplateBridge $ttb): void {
             $ttb->addLocationPath("{$this->getModuleSetting('meta-module-resource')}/views", 'meta');
         });
     }
