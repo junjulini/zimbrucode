@@ -19,7 +19,7 @@ use ZimbruCode\Component\Common\Tools;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.2.0
+ * @since   1.3.0
  */
 class SettingsHandler
 {
@@ -58,7 +58,7 @@ class SettingsHandler
     }
 
     /**
-     * Get control settings
+     * Get control setting
      *
      * @param string $path      Array path
      * @param mixed  $default   Default value
@@ -81,15 +81,63 @@ class SettingsHandler
     }
 
     /**
+     * Add control setting
+     * 
+     * @param string $path   Array path
+     * @param mixed  $value  New control setting
+     * @return void
+     * @since 1.3.0
+     */
+    public function add(string $path, $value): void
+    {
+        Tools::addNode($this->control, $path, $value);
+    }
+
+    /**
+     * Remove control setting
+     * 
+     * @param string $path   Array path
+     * @return bool          Action result
+     * @since 1.3.0
+     */
+    public function remove(string $path): bool
+    {
+        return Tools::unsetNode($this->control, $path);
+    }
+
+    /**
+     * Add control settings
+     * 
+     * @param array $settings   New control settings
+     * @return void
+     * @since 1.3.0
+     */
+    public function addControlSettings(array $settings): void
+    {
+        $this->control = $settings;
+    }
+
+    /**
+     * Get control settings
+     * 
+     * @return array   Control settings
+     * @since 1.3.0
+     */
+    public function getControlSettings(): array
+    {
+        return $this->control;
+    }
+
+    /**
      * Add settings
      *
      * @param array $settings   Settings list
      * @return void
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    public function addSettings(array $settings): void
+    public function addSettings(array &$settings): void
     {
-        $this->settings = $settings;
+        $this->settings = &$settings;
     }
 
     /**
@@ -173,20 +221,19 @@ class SettingsHandler
      *
      * @param array $settings   List of settings
      * @return void
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    public function search(array $settings): void
+    public function search(array &$settings): void
     {
-        foreach ($settings as $controlSettings) {
+        foreach ($settings as &$controlSettings) {
             if (!is_array($controlSettings)) {
                 continue;
             }
 
-            $this->control = $controlSettings;
+            $this->control = &$controlSettings;
 
-            $id      = $this->get('id');
-            $type    = $this->get('type');
-            $content = $this->get('content');
+            $id   = $this->get('id');
+            $type = $this->get('type');
 
             if ($this->ignore === true) {
                 if (!$this->get('ignore')) {
@@ -196,8 +243,8 @@ class SettingsHandler
                 $this->check($id, $type, $controlSettings);
             }
 
-            if ($content && is_array($content)) {
-                $this->search($content);
+            if (isset($controlSettings['content']) && is_array($controlSettings['content'])) {
+                $this->search($controlSettings['content']);
             }
         }
     }
