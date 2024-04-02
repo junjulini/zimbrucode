@@ -13,7 +13,7 @@
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.3.0
  */
 
 'use strict';
@@ -112,15 +112,15 @@ export default class Base extends Kernel {
      * Panel scroll bar
      * 
      * @return {null}   None
-     * @since 1.0.0
+     * @since 1.3.0
      */
     scrollbar() {
         if (!zc.isMobile() && navigator.userAgent.indexOf('Firefox') == -1) {
             const priv = {};
 
             priv.checkIfActive = (parent, children) => {
-                const parentHeight   = parent.outerHeight(true);
-                const childrenHeight = children.outerHeight(true);
+                const parentHeight   = Math.round(parent.outerHeight(true));
+                const childrenHeight = Math.round(children.outerHeight(true));
 
                 if (parentHeight > 0) {
                     if (childrenHeight > parentHeight) {
