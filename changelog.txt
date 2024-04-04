@@ -58,8 +58,8 @@ Fix : Incorrect verification of the presence of the function in "RenderTrait"
 Version 1.0.1 - 12/08/2021
 -----------------------------------------------------------------------------------------
 
-Fix: Incorrectly generated app/slug for child theme
-Fix: New patterns in .gitignore
+Fix : Incorrectly generated app/slug for child theme
+Fix : New patterns in .gitignore
 
 -----------------------------------------------------------------------------------------
 Version 1.0.0 - 11/08/2021
