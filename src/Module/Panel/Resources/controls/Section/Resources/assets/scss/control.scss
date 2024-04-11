@@ -24,9 +24,9 @@
     width: 100%;
 
     &_separator {
-        border-bottom: 2px solid $accent-color__2 !important;
-        padding-bottom: 50px !important;
-        margin-bottom: 30px;
+        border-bottom: 2px dashed $accent-color__4 !important;
+        padding-bottom: 30px !important;
+        margin-bottom: 10px;
     }
 
     // Type : Simple
