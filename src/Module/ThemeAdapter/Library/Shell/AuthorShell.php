@@ -95,4 +95,16 @@ class AuthorShell extends ShellKernel
     {
         echo get_avatar($this->meta('ID'), $size, '', $alt);
     }
+
+    /**
+     * Determines whether the query is for an existing author archive page
+     * 
+     * @param mixed $author   User ID, nickname, nicename, or array of such to check against
+     * @return bool           Whether the query is for an existing author archive page
+     * @since 1.3.0
+     */
+    public function is($author = ''): bool
+    {
+        return is_author();
+    }
 }
