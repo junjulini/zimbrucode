@@ -96,6 +96,7 @@ class Render
         $this->search     = new SearchShell;
         $this->author     = new AuthorShell;
         $this->body       = new BodyShell;
+        $this->app        = Kernel::getGlobalCache('app-instance');
 
         $gs = new GeneralShell;
 

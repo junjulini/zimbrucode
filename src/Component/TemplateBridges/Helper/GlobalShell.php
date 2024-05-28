@@ -18,7 +18,7 @@ use ZimbruCode\Component\Core\Kernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.3.0
  */
 class GlobalShell
 {
@@ -86,11 +86,11 @@ class GlobalShell
      * @param string $key       Cache key
      * @param mixed  $default   Default value
      * @return mixed            Cache data
-     * @since 1.0.0
+     * @since 1.3.0
      */
     public function cache(string $key, $default = false)
     {
-        return Kernel::getGlobal("cache/$key", $default);
+        return Kernel::getGlobalCache($key, $default);
     }
 
     /**
