@@ -13,7 +13,7 @@
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.3.0
  #}
 
 {% import "@macros/content.twig" as macros %}
@@ -27,6 +27,10 @@
     {% set class = class ~ 'zc-panel-controls__item_show-border-line ' %}
 {% elseif control.borderLine == 'accent' %}
     {% set class = class ~ 'zc-panel-controls__item_accent-border ' %}
+{% elseif control.borderLine == 'previous-accent' %}
+    {% set class = class ~ 'zc-panel-controls__item_previous-accent-border ' %}
+{% elseif control.borderLine == 'previous-accent-and-hide' %}
+    {% set class = class ~ 'zc-panel-controls__item_previous-accent-border-and-hide ' %}
 {% endif %}
 
 {% set class = class ~ control.classes %}

@@ -116,7 +116,9 @@
             display: none;
         }
 
-        &_accent-border {
+        &_accent-border,
+        &:has(+ &_previous-accent-border),
+        &:has(+ &_previous-accent-border-and-hide) {
             border-bottom-width: 2px !important;
             border-bottom-color: $accent-color__2 !important;
         }
@@ -128,8 +130,13 @@
             animation: zc-panel-control-visual-alert 2s;
         }
 
-        &:last-child:not(.zc-panel-controls__item_show-border-line),
-        &_hide-border-line {
+        &_hide-border-line,
+        &:last-child:not(.zc-panel-controls__item_show-border-line) {
+            border-bottom: none !important;
+            padding-bottom: 0 !important;
+        }
+
+        &:has(+ &_previous-accent-border-and-hide) + &_previous-accent-border-and-hide {
             border-bottom: none !important;
             padding-bottom: 0 !important;
         }
