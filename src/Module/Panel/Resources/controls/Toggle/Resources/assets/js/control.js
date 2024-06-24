@@ -13,13 +13,13 @@
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.3.0
  */
 
 'use strict';
 
 zc.module.panel.addControl(($, panel) => {
-    $('.zc-panel-control-toggle').on('click', '.zc-panel-control-toggle__header, .zc-panel-control-toggle__title-container', function(event) {
+    $(document).on('click', '.zc-panel-control-toggle__header, .zc-panel-control-toggle__title-container', function(event) {
         event.preventDefault();
         /* Act on the event */
 
