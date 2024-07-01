@@ -18,7 +18,7 @@ use ZimbruCode\Component\Common\Tools;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.3.0
  */
 trait ContentUtilityTrait
 {
@@ -42,19 +42,28 @@ trait ContentUtilityTrait
      * Get "build settings"
      *
      * @return array   Build settings
-     * @since 1.1.0
+     * @since 1.3.0
      */
     public function getBuildSettings(): array
     {
-        if ($this->getModuleData('build-settings')) {
-            return apply_filters('zc/module/panel/build_settings', $this->getModuleData('build-settings', []), $this);
-        } else {
+        if (!$this->getModuleData('build-settings')) {
             if (file_exists($this->getModuleData('build-settings-file'))) {
-                return apply_filters('zc/module/panel/build_settings', require $this->getModuleData('build-settings-file'), $this);
-            } else {
-                return [];
+                $settings = require $this->getModuleData('build-settings-file');
+
+                if (is_array($settings)) {
+                    $this->addModuleData('build-settings-hash', md5(json_encode($settings)));
+                    $this->addModuleData('build-settings', $settings);
+                }
+            }
+        } else {
+            $settings = $this->getModuleData('build-settings');
+
+            if (is_array($settings)) {
+                $this->addModuleData('build-settings-hash', md5(json_encode($settings)));
             }
         }
+
+        return apply_filters('zc/module/panel/build_settings', $this->getModuleData('build-settings', []), $this);
     }
 
     /**

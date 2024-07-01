@@ -105,19 +105,19 @@
                         {# Controls list block #}
                         {% block controls_list %}
                             <ul class="zc-panel-controls__sections">
-                                {% for manu in panel.getBuildSettings %}
+                                {% for menu in panel.getBuildSettings %}
 
                                     {# If it's a panel section #}
-                                    {% if manu.type == 'menuTab' and manu.id %}
-                                        <li class="zc-panel-controls__section" data-section="section_{{ manu.id }}">
+                                    {% if menu.type == 'menuTab' and menu.id %}
+                                        <li class="zc-panel-controls__section" data-section="section_{{ menu.id }}">
                                             <ul class="zc-panel-controls__list">
-                                                {{ render(manu.content) }}
+                                                {{ render(menu.content) }}
                                             </ul>
                                         </li>
 
                                     {# If it's a panel parent section #}
-                                    {% elseif manu.type == 'menuParentTab' %}
-                                        {% for sub_menu in manu.content %}
+                                    {% elseif menu.type == 'menuParentTab' %}
+                                        {% for sub_menu in menu.content %}
                                             {% if sub_menu.type == 'menuTab' and sub_menu.id %}
                                                 <li class="zc-panel-controls__section" data-section="section_{{ sub_menu.id }}">
                                                     <ul class="zc-panel-controls__list">
