@@ -13,7 +13,7 @@
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.3.0
  */
 
 'use strict';
@@ -73,7 +73,7 @@ zc.module.panel.addControl(($, panel) => {
                 }
             },
             changeColor: (item, color) => {
-                $(item).parent().find('.zc-panel-control-colorpicker__live-color').css('background', color);
+                $(item).parent().find('.zc-panel-control-colorpicker__live-color > span').css('background-color', color);
                 $(item).val(color).change();
             }
         };

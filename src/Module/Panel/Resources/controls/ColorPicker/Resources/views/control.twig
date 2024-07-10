@@ -13,17 +13,19 @@
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.3.0
  #}
  
 {% extends '@blocks/content/control.twig' %}
 
 {% set value      = control.option %}
-{% set background = value ? 'style="background: ' ~ value ~ '"' %}
+{% set background = value ? 'style="background-color: ' ~ value ~ '"' %}
 
 {% block content %}
     <div class="zc-panel-control-colorpicker">
         <input type="text" name="{{ control.ID }}" placeholder="{{ control.settings.placeholder }}" value="{{ value }}" id="{{ control.ID }}" class="zc-panel-control-colorpicker__input" {{ control.ignore }} data-option data-settings="{{ control.settings|json_encode() }}" autocomplete="off" readonly="true">
-        <div class="zc-panel-control-colorpicker__live-color" {{ background|raw }}></div>
+        <div class="zc-panel-control-colorpicker__live-color">
+            <span {{ background|raw }}></span>
+        </div>
     </div>
 {% endblock %}
