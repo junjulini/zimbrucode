@@ -52,10 +52,10 @@ export default class OptionHandler extends Kernel {
         $(window).on('scroll zc/panel/size-changed zc/panel/save/success-end', () => {
             if (('.zc-panel .zc-panel-direct-notification').length > 0) {
                 if ($('.zc-panel').width() <= this.getConfig('min-size/mode2')) {
-                    const position = $('.zc-panel .zc-panel-header').offset().top || 0;
+                    const position = $('.zc-panel .zc-panel-header').position().top || 0;
 
                     if (position > 0) {
-                        $('.zc-panel .zc-panel-direct-notification').css('top', position + 4);
+                        $('.zc-panel .zc-panel-direct-notification').css('top', position + 56);
                     }
                 } else {
                     $('.zc-panel .zc-panel-direct-notification').attr('style', '');

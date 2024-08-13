@@ -142,9 +142,9 @@
         font-size: 15px;
         padding-right: 5px;
         font-weight: 500;
+    }
 
-        .zc-panel[data-width|="mode-1"] & {
-            display: none;
-        }
+    .zc-panel[data-width|="mode-1"] &__controller-button:not(.zc-panel-save-starter-button) &__controller-button-title {
+        display: none;
     }
 }

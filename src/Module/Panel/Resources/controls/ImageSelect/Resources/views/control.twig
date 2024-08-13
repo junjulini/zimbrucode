@@ -13,9 +13,9 @@
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.3.0
  #}
- 
+
 {% extends '@blocks/content/control.twig' %}
 
 {% set value = control.option %}
@@ -28,7 +28,7 @@
 
                 <li class="zc-panel-control-image-select__item {{ active }}" data-value="{{ option.value }}">
                     <div class="zc-panel-control-image-select__item-image-container">
-                        <img src="{{ option.src }}" alt="{{ option.title }}" title="{{ option.title }}" class="zc-panel-control-image-select__item-image">
+                        <img src="{{ option.src }}" alt="{{ option.title }}" loading="lazy" title="{{ option.title }}" class="zc-panel-control-image-select__item-image">
                     </div>
                     <span class="zc-panel-control-image-select__item-title">{{ option.title }}</span>
                 </li>
