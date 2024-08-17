@@ -13,7 +13,7 @@
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.3.0
  */
 
 @import '@zc/icons-list.scss';
@@ -49,7 +49,7 @@
 }
 
 // Default transition
-@mixin def-transition($property) {
+@mixin def-transition($property: all) {
     transition: $property $transition-duration;
 }
 

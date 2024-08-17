@@ -13,7 +13,7 @@
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.3.0
  */
 
 .zc-panel-control-button {
@@ -30,7 +30,7 @@
     font-weight: 500;
     cursor: pointer;
     text-transform: uppercase;
-    @include def-transition(all);
+    @include def-transition;
 
     &:hover {
         background: #FFFFFF;
