@@ -19,7 +19,7 @@ use ZimbruCode\Component\TemplateBridges\TwigTemplateBridge;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.3.0
  */
 class TwigFilters
 {
@@ -57,9 +57,9 @@ class TwigFilters
      *
      * @param callable $function   Callback
      * @return mixed               Action result
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    public function __callback_fn(callable $function)
+    public function __callback_fn(callable $function): mixed
     {
         return call_user_func_array($function, []);
     }

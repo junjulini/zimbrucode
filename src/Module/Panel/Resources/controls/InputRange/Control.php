@@ -18,7 +18,7 @@ use ZimbruCode\Module\Panel\Library\ControlKernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.3.0
  */
 class Control extends ControlKernel
 {
@@ -45,9 +45,9 @@ class Control extends ControlKernel
      * @param float  $value       Position
      * @param string $step        Current step
      * @return float|int|string   Grid mark
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    public function __callback_grid_mark(float $value, string $step)
+    public function __callback_grid_mark(float $value, string $step): float|int|string
     {
         if ($value && $step) {
             $nod = strlen(substr(strrchr($step, '.'), 1));
@@ -60,13 +60,13 @@ class Control extends ControlKernel
     /**
      * Callback : Track percent
      *
-     * @param string $value   Position
-     * @param mixed  $min     Minimum range
-     * @param mixed  $max     Maximum range
-     * @return int            Track percent
-     * @since 1.0.0
+     * @param string    $value   Position
+     * @param float|int $min     Minimum range
+     * @param float|int $max     Maximum range
+     * @return float|int         Track percent
+     * @since 1.3.0
      */
-    public function __callback_track_percent(string $value, $min, $max)
+    public function __callback_track_percent(string $value, float|int $min, float|int $max): float|int
     {
         $value = str_replace(['px', '%'], '', $value);
         return (($value - $min) * 100) / ($max - $min);

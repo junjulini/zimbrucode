@@ -18,7 +18,7 @@ use RuntimeException;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.2.0
+ * @since   1.3.0
  */
 class Callback
 {
@@ -51,9 +51,9 @@ class Callback
      * @param  mixed  ...$args
      * @throws RuntimeException
      * @return array|bool     Callbacks results
-     * @since 1.1.0
+     * @since 1.3.0
      */
-    public function run(string $name, ...$args)
+    public function run(string $name, ...$args): array|bool
     {
         if (!$name) {
             throw new RuntimeException('ZE0037');

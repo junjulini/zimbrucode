@@ -29,13 +29,15 @@ trait ContentUtilityTrait
      * @param string $option    Option name
      * @param mixed  $default   Default value
      * @return mixed            Action result
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    public function getOIE(array $options = [], string $option = '', $default = '')
+    public function getOIE(array $options = [], string $option = '', mixed $default = ''): mixed
     {
         if ($options && $option) {
             return (!empty($options[$option])) ? $options[$option] : $default;
         }
+
+        return null;
     }
 
     /**
@@ -82,9 +84,9 @@ trait ContentUtilityTrait
      *
      * @param array $options   Options list
      * @return mixed
-     * @since 1.1.0
+     * @since 1.3.0
      */
-    public function addOptions(array $options)
+    public function addOptions(array $options): mixed
     {
         $dbName = self::getGlobal('core/module/panel/db-name');
         return self::service('db')->add("{$dbName}.{$this->getModuleSetting('slug')}", $options, true);
@@ -119,9 +121,9 @@ trait ContentUtilityTrait
      *
      * @param mixed $default   Default value
      * @return array           Options list
-     * @since 1.1.0
+     * @since 1.3.0
      */
-    public function getOptions($default = ''): array
+    public function getOptions(mixed $default = ''): array
     {
         $dbName = self::getGlobal('core/module/panel/db-name');
         return self::service('db')->get("{$dbName}.{$this->getModuleSetting('slug')}", $default);
@@ -133,9 +135,9 @@ trait ContentUtilityTrait
      * @param string $option    Name of option
      * @param mixed  $default   Default value
      * @return mixed            Option value
-     * @since 1.1.0
+     * @since 1.3.0
      */
-    public function getOption(string $option, $default = '')
+    public function getOption(string $option, mixed $default = ''): mixed
     {
         if ($option) {
             $prefix = self::getGlobal('core/module/panel/prefix-slug');
@@ -148,5 +150,7 @@ trait ContentUtilityTrait
 
             return self::service('db')->get("{$dbName}.{$this->getModuleSetting('slug')}/{$option}", $default);
         }
+
+        return null;
     }
 }

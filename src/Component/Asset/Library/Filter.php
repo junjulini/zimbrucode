@@ -18,11 +18,11 @@ use ZimbruCode\Component\Asset\Library\AssetDataCollector;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.2.0
+ * @since   1.3.0
  */
 abstract class Filter
 {
-    private AssetDataCollector $collector;
+    private readonly AssetDataCollector $collector;
     private $callback;
 
     /**
@@ -32,9 +32,9 @@ abstract class Filter
      * @param string|null        $assetName   Asset name
      * @param callable|null      $callback    Callback function
      * @return void
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    final public function __init(AssetDataCollector $collector, string $assetName = null, callable $callback = null)
+    final public function __init(AssetDataCollector $collector, string $assetName = null, callable $callback = null): void
     {
         $this->collector = $collector;
         $this->callback  = $callback;
@@ -72,12 +72,14 @@ abstract class Filter
      *
      * @param mixed ...$args
      * @return mixed
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    final protected function callback(...$args)
+    final protected function callback(...$args): mixed
     {
         if (is_callable($this->callback)) {
             return call_user_func_array($this->callback, $args);
         }
+
+        return null;
     }
 }

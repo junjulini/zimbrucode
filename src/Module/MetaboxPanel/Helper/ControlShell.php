@@ -20,7 +20,7 @@ use ZimbruCode\Module\Panel\Library\Shell\ControlShell as PanelControlShell;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.3.0
  */
 class ControlShell extends PanelControlShell
 {
@@ -30,9 +30,9 @@ class ControlShell extends PanelControlShell
      * @param string|null $option    Option name
      * @param mixed       $default   Default value
      * @return mixed                 Control option
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    public function option(string $option = null, $default = null)
+    public function option(string $option = null, mixed $default = null): mixed
     {
         $option  = $option ?? $this->ID();
         $option  = str_replace(Kernel::getGlobal('core/module/panel/prefix-slug'), '', $option);

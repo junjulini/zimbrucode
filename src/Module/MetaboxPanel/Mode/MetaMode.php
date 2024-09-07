@@ -174,9 +174,9 @@ class MetaMode extends Mode
      *
      * @param int $postID   Post ID
      * @return int|null
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    public function __action_save_options(int $postID)
+    public function __action_save_options(int $postID): ?int
     {
         // Verify nonce
         if (!AjaxHandler::checkNonce(self::rPost('zc-panel-meta-mode-nonce'), $this->getModuleSetting('nonce'))) {
@@ -222,10 +222,10 @@ class MetaMode extends Mode
     /**
      * Ajax : Reset options
      *
-     * @return void
-     * @since 1.1.0
+     * @return never
+     * @since 1.3.0
      */
-    public function __ajax_options_reset(): void
+    public function __ajax_options_reset(): never
     {
         $ajax = new AjaxHandler($this->getModuleSetting('nonce'), 'edit_pages');
 

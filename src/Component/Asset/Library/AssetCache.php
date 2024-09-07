@@ -24,7 +24,7 @@ use ZimbruCode\Component\Handler\CacheHandler;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.2.0
+ * @since   1.3.0
  */
 class AssetCache
 {
@@ -75,11 +75,11 @@ class AssetCache
     /**
      * Get setting
      *
-     * @param string $setting      Setting key
-     * @return bool|mixed|string   Setting value
-     * @since 1.0.0
+     * @param string $setting   Setting key
+     * @return mixed            Setting value
+     * @since 1.3.0
      */
-    public function getSetting(string $setting)
+    public function getSetting(string $setting): mixed
     {
         return $this->settings[$setting] ?? false;
     }
@@ -373,21 +373,12 @@ class AssetCache
      * @param array  $cacheData   Cache data
      * @param string $type        Type of checking
      * @return bool               Result of checking
-     * @since 1.1.0
+     * @since 1.3.0
      */
     protected function callAdditionalFunctions(array $cacheData, string $type = 'additional'): bool
     {
-        switch ($type) {
-            case 'asset':
-                $type = 'asset';
-                break;
-            case 'additional':
-                $type = 'additional';
-                break;
-
-            default:
-                $type = 'additional';
-                break;
+        if (!in_array($type, ['asset', 'additional'])) {
+            $type = 'additional';
         }
 
         $output = $this->object['callback']->run($type, $cacheData);

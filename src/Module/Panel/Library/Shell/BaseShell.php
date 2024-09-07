@@ -19,11 +19,11 @@ use ZimbruCode\Component\TemplateBridges\Helper\ShellKernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.2.0
+ * @since   1.3.0
  */
 class BaseShell extends ShellKernel
 {
-    protected ModuleKernel $panel;
+    protected readonly ModuleKernel $panel;
 
     /**
      * Constructor
@@ -86,9 +86,9 @@ class BaseShell extends ShellKernel
      * @param string $setting   Setting name
      * @param mixed  $default   Default value
      * @return mixed            Action result
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    public function getModuleSetting(...$args)
+    public function getModuleSetting(...$args): mixed
     {
         return $this->panel->getModuleSetting(...$args);
     }

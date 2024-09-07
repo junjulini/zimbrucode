@@ -27,24 +27,22 @@ use ZimbruCode\Component\Common\Tools;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.2.0
+ * @since   1.3.0
  */
 class AssetDataCollector
 {
     protected array $data   = [];
     protected array $global = [];
-    protected LocationDetector $location;
 
     /**
      * Constructor
      *
      * @param LocationDetector $location   Location detector object
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    public function __construct(LocationDetector $location)
-    {
-        $this->location = $location;
-    }
+    public function __construct(
+        protected readonly LocationDetector $location,
+    ) {}
 
     /**
      * Location
@@ -123,12 +121,12 @@ class AssetDataCollector
     /**
      * Get asset
      *
-     * @param  string|null $asset           Asset name
+     * @param  string|null $asset         Asset name
      * @throws InvalidArgumentException
-     * @return AssetData|array<AssetData>   Asset data / Assets
-     * @since 1.1.0
+     * @return array|AssetData            Asset data / Assets
+     * @since 1.3.0
      */
-    public function get(string $asset = null)
+    public function get(string $asset = null): array|AssetData
     {
         if ($asset === null) {
             return $this->data;
@@ -193,9 +191,9 @@ class AssetDataCollector
      * @param string $path    Array path
      * @param mixed  $value   Global value
      * @return AssetDataCollector
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    public function addGlobal(string $path, $value = ''): self
+    public function addGlobal(string $path, mixed $value = ''): self
     {
         if ($path) {
             Tools::addNode($this->global, $path, $value);
@@ -210,9 +208,9 @@ class AssetDataCollector
      * @param string $path      Array path
      * @param mixed  $default   Default value
      * @return mixed            Global value
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    public function getGlobal(string $path, $default = false)
+    public function getGlobal(string $path, mixed $default = false): mixed
     {
         if ($path) {
             return Tools::getNode($this->global, $path, $default);

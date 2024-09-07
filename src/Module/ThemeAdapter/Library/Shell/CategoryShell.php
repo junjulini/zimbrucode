@@ -30,7 +30,7 @@ class CategoryShell extends ShellKernel
      * @return mixed            Title when retrieving
      * @since 1.3.0
      */
-    public function singleTitle(string $prefix = '', bool $display = true)
+    public function singleTitle(string $prefix = '', bool $display = true): mixed
     {
         return apply_filters('zc/module/theme_adapter/category_shell/single_title', single_cat_title($prefix, $display));
     }
@@ -62,13 +62,13 @@ class CategoryShell extends ShellKernel
     /**
      * Retrieves the terms associated with the given object(s), in the supplied taxonomies
      *
-     * @param mixed $objectIDs    The ID(s) of the object(s) to retrieve
-     * @param mixed $taxonomies   The taxonomy names to retrieve terms from
-     * @param mixed $args         See WP_Term_Query::__construct() for supported arguments
-     * @return mixed              Array of terms or empty array if no terms found. WP_Error if any of the taxonomies don't exist
-     * @since 1.1.0
+     * @param int|array    $objectIDs    The ID(s) of the object(s) to retrieve
+     * @param string|array $taxonomies   The taxonomy names to retrieve terms from
+     * @param array|string $args         See WP_Term_Query::__construct() for supported arguments
+     * @return mixed                     Array of terms or empty array if no terms found. WP_Error if any of the taxonomies don't exist
+     * @since 1.3.0
      */
-    public function objectTerms($objectIDs = null, $taxonomies = null, $args = [])
+    public function objectTerms(int|array $objectIDs = null, string|array $taxonomies = null, array|string $args = []): mixed
     {
         return wp_get_object_terms($objectIDs, $taxonomies, $args);
     }

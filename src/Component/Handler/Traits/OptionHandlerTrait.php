@@ -18,7 +18,7 @@ use ZimbruCode\Component\Core\Kernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.3.0
  */
 trait OptionHandlerTrait
 {
@@ -46,9 +46,9 @@ trait OptionHandlerTrait
      * @param mixed  $default   Default value
      * @param bool   $ao        Alternative option
      * @return mixed            Action result
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    public static function getOption(string $option, $default = '', bool $ao = false)
+    public static function getOption(string $option, mixed $default = '', bool $ao = false): mixed
     {
         if (!$ao) {
             $value = Kernel::service('db')->get(self::__prepOption($option), null);
@@ -65,9 +65,9 @@ trait OptionHandlerTrait
      * @param  mixed  $type     Type of action
      * @param  bool   $ao       Alternative option
      * @return bool             Result of checking
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    public static function hasOption(string $option, $type = false, bool $ao = false): bool
+    public static function hasOption(string $option, mixed $type = false, bool $ao = false): bool
     {
         if ($option) {
             if (!$type) {
@@ -91,9 +91,9 @@ trait OptionHandlerTrait
      * @param mixed    $default   Default value
      * @param int|null $id        Post ID
      * @return mixed              Action result
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    public static function getMeta(string $meta = null, $default = '', int $id = null)
+    public static function getMeta(string $meta = null, mixed $default = '', int $id = null): mixed
     {
         $id   = $id ?: get_the_ID();
         $data = Kernel::getGlobalCache("meta-data/{$id}");

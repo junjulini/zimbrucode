@@ -25,10 +25,10 @@ class AuthorShell extends ShellKernel
     /**
      * Retrieve the author of the current post
      *
-     * @return mixed   The author's display name
-     * @since 1.1.0
+     * @return string   The author's display name
+     * @since 1.3.0
      */
-    public function name()
+    public function name(): string
     {
         return get_the_author();
     }
@@ -71,10 +71,10 @@ class AuthorShell extends ShellKernel
      *
      * @param string   $field    The user field to retrieve
      * @param int|bool $userID   User ID
-     * @return string             The author's field from the current author's DB object, otherwise an empty string
+     * @return string            The author's field from the current author's DB object, otherwise an empty string
      * @since 1.3.0
      */
-    public function meta(string $field = '', $userID = false): string
+    public function meta(string $field = '', int|bool $userID = false): string
     {
         if (!$userID && isset($GLOBALS['post'])) {
             $userID = $GLOBALS['post']->post_author;
@@ -99,12 +99,12 @@ class AuthorShell extends ShellKernel
     /**
      * Determines whether the query is for an existing author archive page
      * 
-     * @param mixed $author   User ID, nickname, nicename, or array of such to check against
-     * @return bool           Whether the query is for an existing author archive page
+     * @param int|string|array $author   User ID, nickname, nicename, or array of such to check against
+     * @return bool                      Whether the query is for an existing author archive page
      * @since 1.3.0
      */
-    public function is($author = ''): bool
+    public function is(int|string|array $author = ''): bool
     {
-        return is_author();
+        return is_author($author);
     }
 }

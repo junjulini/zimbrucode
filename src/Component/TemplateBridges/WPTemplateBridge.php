@@ -19,21 +19,21 @@ use ZimbruCode\Component\Handler\Traits\HooksHandlerTrait;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.2.0
+ * @since   1.3.0
  */
 class WPTemplateBridge
 {
     use HooksHandlerTrait;
 
     protected array $templates = [];
-    protected string $location = '';
+    protected readonly string $location;
 
     /**
      * Add location for custom templates files
      *
      * @param string $location   Directory patch
      * @return void
-     * @since 1.0.0
+     * @since 1.3.0
      */
     public function addLocation(string $location): void
     {
@@ -79,9 +79,9 @@ class WPTemplateBridge
      *
      * @param mixed $atts
      * @return mixed
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    public function __filter_register_templates($atts)
+    public function __filter_register_templates(mixed $atts): mixed
     {
         // Create the key used for the themes cache
         $cacheKey = 'page_templates-' . md5(get_theme_root() . '/' . get_stylesheet());

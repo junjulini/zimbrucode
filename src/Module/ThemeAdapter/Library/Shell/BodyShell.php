@@ -18,7 +18,7 @@ use ZimbruCode\Component\TemplateBridges\Helper\ShellKernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.3.0
  */
 class BodyShell extends ShellKernel
 {
@@ -85,9 +85,9 @@ class BodyShell extends ShellKernel
      * @param string $sep           How to separate the various items within the page title. Default '»'
      * @param string $sepLocation   Location of the separator ('left' or 'right')
      * @return mixed                Action result
-     * @since 1.1.0
+     * @since 1.3.0
      */
-    public function title(string $sep = '&raquo;', string $sepLocation = '')
+    public function title(string $sep = '&raquo;', string $sepLocation = ''): mixed
     {
         return wp_title($sep, true, $sepLocation);
     }

@@ -73,9 +73,9 @@ class GlobalShell
      * @param string $path      Array path
      * @param mixed  $default   Default value
      * @return mixed            Global data
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    public function get(...$args)
+    public function get(...$args): mixed
     {
         return Kernel::getGlobal(...$args);
     }
@@ -88,7 +88,7 @@ class GlobalShell
      * @return mixed            Cache data
      * @since 1.3.0
      */
-    public function cache(string $key, $default = false)
+    public function cache(string $key, mixed $default = false): mixed
     {
         return Kernel::getGlobalCache($key, $default);
     }
@@ -110,9 +110,9 @@ class GlobalShell
      * @param string $key       Global var
      * @param mixed  $default   Default value
      * @return mixed            Global data
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    public function externVar(string $key, $default = false)
+    public function externVar(string $key, mixed $default = false): mixed
     {
         return $GLOBALS[$key] ?? $default;
     }

@@ -18,7 +18,7 @@ use ZimbruCode\Component\Common\Tools;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.2.0
+ * @since   1.3.0
  */
 class DataCollector
 {
@@ -30,9 +30,9 @@ class DataCollector
      * @param string  $path      Array path
      * @param mixed   $default   Default value
      * @return mixed             Item data
-     * @since 1.1.0
+     * @since 1.3.0
      */
-    public function get(string $path, $default = false)
+    public function get(string $path, mixed $default = false): mixed
     {
         return Tools::getNode($this->data, $path, $default);
     }
@@ -43,9 +43,9 @@ class DataCollector
      * @param string $path    Array path
      * @param mixed  $value   Value
      * @return DataCollector
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    public function add(string $path, $value = ''): self
+    public function add(string $path, mixed $value = ''): self
     {
         Tools::addNode($this->data, $path, $value);
         return $this;

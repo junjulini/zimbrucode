@@ -30,8 +30,8 @@ abstract class ModuleKernel extends Kernel
 {
     use RenderTrait, AssetTrait;
 
-    private DataCollector $__DC;
-    private ModuleKernel $__MP;
+    private readonly DataCollector $__DC;
+    private readonly ModuleKernel $__MP;
 
     protected bool $__multiUse = false;
 
@@ -79,9 +79,9 @@ abstract class ModuleKernel extends Kernel
      * @param string $path    Array path
      * @param mixed  $value   Value
      * @return ModuleKernel
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    final public function addModuleData(string $path, $value): self
+    final public function addModuleData(string $path, mixed $value): self
     {
         if ($path) {
             $this->__DC->add("additional-data/{$path}", $value);
@@ -96,9 +96,9 @@ abstract class ModuleKernel extends Kernel
      * @param string $path      Array value
      * @param mixed  $default   Default value
      * @return mixed            Item data
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    final public function getModuleData(string $path = '', $default = false)
+    final public function getModuleData(string $path = '', mixed $default = false): mixed
     {
         if ($path) {
             return $this->__DC->get("additional-data/{$path}", $default);
@@ -129,9 +129,9 @@ abstract class ModuleKernel extends Kernel
      * @param string $path      Array path
      * @param mixed  $default   Default value
      * @return mixed            Setting value
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    final public function getModuleSetting(string $path = '', $default = '')
+    final public function getModuleSetting(string $path = '', mixed $default = ''): mixed
     {
         if ($path) {
             return $this->__DC->get("settings/{$path}", $default);
@@ -146,9 +146,9 @@ abstract class ModuleKernel extends Kernel
      * @param string $path    Array path
      * @param mixed  $value   Value
      * @return ModuleKernel
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    final public function addModuleSetting(string $path, $value): self
+    final public function addModuleSetting(string $path, mixed $value): self
     {
         if ($path) {
             $this->__DC->add("settings/{$path}", $value);
@@ -270,9 +270,9 @@ abstract class ModuleKernel extends Kernel
      * @throws InvalidArgumentException
      * @throws RuntimeException
      * @return ModuleKernel      Instance of module part
-     * @since 1.1.0
+     * @since 1.3.0
      */
-    final public function loadModulePart(string $part, string $service = '', $data = null): ModuleKernel
+    final public function loadModulePart(string $part, string $service = '', mixed $data = null): ModuleKernel
     {
         if (!$part) {
             throw new InvalidArgumentException('ZE0065');

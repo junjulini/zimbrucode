@@ -11,6 +11,7 @@
 
 namespace ZimbruCode\Module\ThemeAdapter\Library\Shell;
 
+use WP_Error;
 use ZimbruCode\Component\TemplateBridges\Helper\ShellKernel;
 
 /**
@@ -18,7 +19,7 @@ use ZimbruCode\Component\TemplateBridges\Helper\ShellKernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.2.0
+ * @since   1.3.0
  */
 class GeneralShell extends ShellKernel
 {
@@ -55,10 +56,10 @@ class GeneralShell extends ShellKernel
      * @param string      $before            String to use before the terms
      * @param string      $sep               String to use between the terms
      * @param string      $after             String to use after the terms
-     * @return mixed                         A list of terms on success, false if there are no terms, WP_Error on failure
-     * @since 1.1.0
+     * @return string|bool|WP_Error          A list of terms on success, false if there are no terms, WP_Error on failure
+     * @since 1.3.0
      */
-    public function getTermList(int $postID = null, string $taxonomy = null, string $before = '', string $sep = '', string $after = '')
+    public function getTermList(int $postID = null, string $taxonomy = null, string $before = '', string $sep = '', string $after = ''): string|bool|WP_Error
     {
         return get_the_term_list($postID, $taxonomy, $before, $sep, $after);
     }

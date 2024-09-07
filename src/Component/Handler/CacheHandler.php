@@ -26,48 +26,40 @@ use ZimbruCode\Component\Core\Kernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.2.0
+ * @since   1.3.0
  */
 class CacheHandler
 {
-    protected string $fileCacheDir;
-    protected string $fileCacheExtension;
-
     /**
      * Constructor
      *
      * @param string $fileCacheDir         Cache file directory
      * @param string $fileCacheExtension   Cache file extension
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    public function __construct(string $fileCacheDir, string $fileCacheExtension = '.cache')
-    {
-        $this->fileCacheDir       = $fileCacheDir;
-        $this->fileCacheExtension = $fileCacheExtension;
-    }
+    public function __construct(
+        protected readonly string $fileCacheDir,
+        protected readonly string $fileCacheExtension = '.cache',
+    ) {}
 
     /**
      * Get cache drive
      *
      * @return object   Cache drive
-     * @since 1.1.0
+     * @since 1.3.0
      */
     public function getCacheDriver(): object
     {
         $mode = Kernel::getGlobal('core/component/cache/mode', 'auto');
 
         if ($mode == 'auto') {
-            if (extension_loaded('apc') && ini_get('apc.enabled')) {
-                return $this->apc();
-            } elseif (class_exists('Memcache')) {
-                return $this->memcache();
-            } elseif (class_exists('Memcached')) {
-                return $this->memcached();
-            } elseif (class_exists('Redis')) {
-                return $this->redis();
-            }
-
-            return $this->filesystem();
+            return match (true) {
+                extension_loaded('apc') && ini_get('apc.enabled') => $this->apc(),
+                class_exists('Memcache')                          => $this->memcache(),
+                class_exists('Memcached')                         => $this->memcached(),
+                class_exists('Redis')                             => $this->redis(),
+                default                                           => $this->filesystem(),
+            };
         } else {
             switch ($mode) {
                 case 'apc':
@@ -119,9 +111,9 @@ class CacheHandler
      * Memcache
      *
      * @return MemcacheCache
-     * @since 1.1.0
+     * @since 1.3.0
      */
-    protected function memcache(): MemcacheCache
+    protected function memcache(): ?MemcacheCache
     {
         $host = Kernel::getGlobal('core/component/cache/settings/memcache/host');
         $port = Kernel::getGlobal('core/component/cache/settings/memcache/port');
@@ -134,15 +126,17 @@ class CacheHandler
 
             return $cacheDriver;
         }
+
+        return null;
     }
 
     /**
      * Memcached
      *
      * @return MemcachedCache
-     * @since 1.1.0
+     * @since 1.3.0
      */
-    protected function memcached(): MemcachedCache
+    protected function memcached(): ?MemcachedCache
     {
         $host = Kernel::getGlobal('core/component/cache/settings/memcached/host');
         $port = Kernel::getGlobal('core/component/cache/settings/memcached/port');
@@ -155,15 +149,17 @@ class CacheHandler
 
             return $cacheDriver;
         }
+
+        return null;
     }
 
     /**
      * Redis
      *
      * @return object  Redis drive
-     * @since 1.1.0
+     * @since 1.3.0
      */
-    protected function redis(): RedisCache
+    protected function redis(): ?RedisCache
     {
         $host = Kernel::getGlobal('core/component/cache/settings/redis/host');
         $port = Kernel::getGlobal('core/component/cache/settings/redis/port');
@@ -176,6 +172,8 @@ class CacheHandler
 
             return $cacheDriver;
         }
+
+        return null;
     }
 
     /**

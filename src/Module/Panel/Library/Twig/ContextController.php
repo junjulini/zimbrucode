@@ -18,7 +18,7 @@ use InvalidArgumentException;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.2.0
+ * @since   1.3.0
  */
 class ContextController
 {
@@ -41,9 +41,9 @@ class ContextController
      * @param string $key     Item key
      * @param mixed  $value   Item value
      * @return void
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    public function add(string $key, $value = ''): void
+    public function add(string $key, mixed $value = ''): void
     {
         if ($key) {
             $this->context[$key] = $value;
@@ -56,9 +56,9 @@ class ContextController
      * @param  string  $key   Item key
      * @throws InvalidArgumentException
      * @return mixed          Item data
-     * @since 1.1.0
+     * @since 1.3.0
      */
-    public function get(string $key = '')
+    public function get(string $key = ''): mixed
     {
         if (!$key) {
             throw new InvalidArgumentException('ZE0135');

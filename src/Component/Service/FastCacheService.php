@@ -25,8 +25,8 @@ use ZimbruCode\Component\Handler\CacheHandler;
  */
 class FastCacheService
 {
-    protected object $cache;
-    protected string $cacheID;
+    protected readonly object $cache;
+    protected readonly string $cacheID;
     protected array $data = [];
 
     /**
@@ -61,7 +61,7 @@ class FastCacheService
      * @return mixed             Item data
      * @since 1.3.0
      */
-    public function get(string $key, $default = false)
+    public function get(string $key, mixed $default = false): mixed
     {
         if (!$key) {
             throw new RuntimeException('ZE0039');
@@ -79,7 +79,7 @@ class FastCacheService
      * @return void
      * @since 1.3.0
      */
-    public function add(string $key, $value = ''): void
+    public function add(string $key, mixed $value = ''): void
     {
         if (!$key) {
             throw new RuntimeException('ZE0038');

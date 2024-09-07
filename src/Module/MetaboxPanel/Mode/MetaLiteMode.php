@@ -21,7 +21,7 @@ use ZimbruCode\Module\Panel\Library\Traits\ControlTrait;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.3.0
  */
 class MetaLiteMode extends Mode
 {
@@ -154,9 +154,9 @@ class MetaLiteMode extends Mode
      *
      * @param int $postID   Post ID
      * @return int|null
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    public function __action_save_options(int $postID)
+    public function __action_save_options(int $postID): ?int
     {
         // Verify nonce
         if (!AjaxHandler::checkNonce(self::rPost('zc-panel-meta-mode-nonce'), $this->getModuleSetting('nonce'))) {

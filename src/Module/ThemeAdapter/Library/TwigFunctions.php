@@ -19,7 +19,7 @@ use ZimbruCode\Component\TemplateBridges\TwigTemplateBridge;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.3.0
  */
 class TwigFunctions
 {
@@ -41,9 +41,9 @@ class TwigFunctions
      * @param  mixed  $default   Default value
      * @param  bool   $ao        Alternative option
      * @return mixed             Action result
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    public function __callback_option(...$args)
+    public function __callback_option(...$args): mixed
     {
         return OptionHandler::getOption(...$args);
     }

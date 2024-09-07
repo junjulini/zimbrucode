@@ -36,8 +36,8 @@ class Combine extends Filter
         'settings' => [],
     ];
 
-    protected string $varPath;
-    protected string $cacheExt;
+    protected readonly string $varPath;
+    protected readonly string $cacheExt;
     protected AssetCache $cache;
 
     /**

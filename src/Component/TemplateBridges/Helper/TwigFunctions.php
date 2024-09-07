@@ -21,7 +21,7 @@ use ZimbruCode\Component\TemplateBridges\TwigTemplateBridge;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.3.0
  */
 class TwigFunctions
 {
@@ -61,10 +61,10 @@ class TwigFunctions
      * Callback : Convert value to string
      *
      * @param mixed $value   Value
-     * @return string       Converted value
-     * @since 1.0.0
+     * @return string        Converted value
+     * @since 1.3.0
      */
-    public function __callback_to_string($value): string
+    public function __callback_to_string(mixed $value): string
     {
         return (string) $value;
     }
@@ -85,10 +85,10 @@ class TwigFunctions
      * Callback : apply_filters
      *
      * @param mixed ...$args   Function arguments
-     * @return void            Action result
-     * @since 1.0.0
+     * @return mixed           Action result
+     * @since 1.3.0
      */
-    public function __callback_filter(...$args)
+    public function __callback_filter(...$args): mixed
     {
         return call_user_func_array('apply_filters', $args);
     }
@@ -99,9 +99,9 @@ class TwigFunctions
      * @param callable $function   Callback
      * @param mixed    ...$args    Function arguments
      * @return mixed               Action result
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    public function __callback_fn(callable $function, ...$args)
+    public function __callback_fn(callable $function, ...$args): mixed
     {
         return call_user_func_array($function, $args);
     }
@@ -111,9 +111,9 @@ class TwigFunctions
      *
      * @param string $param   Param value
      * @return mixed          Action result
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    public function __callback_r_post(...$args)
+    public function __callback_r_post(...$args): mixed
     {
         return Kernel::rPost(...$args);
     }
@@ -123,9 +123,9 @@ class TwigFunctions
      *
      * @param string $param   Param value
      * @return mixed          Action result
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    public function __callback_r_get(...$args)
+    public function __callback_r_get(...$args): mixed
     {
         return Kernel::rGet(...$args);
     }
@@ -147,9 +147,9 @@ class TwigFunctions
      * @param string $path      Array path
      * @param string $default   Default value
      * @return mixed            Session data
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    public function __callback_get_session(...$args)
+    public function __callback_get_session(...$args): mixed
     {
         return Kernel::getSession(...$args);
     }

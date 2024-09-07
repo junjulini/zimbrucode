@@ -22,7 +22,7 @@ use ZimbruCode\Component\Core\ModuleKernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.2.0
+ * @since   1.3.0
  */
 class AssetHandler
 {
@@ -34,8 +34,8 @@ class AssetHandler
         'vars'  => [],
     ];
 
-    protected $module;
-    protected $assetManager;
+    protected readonly ModuleKernel $module;
+    protected readonly AssetManager $assetManager;
 
     /**
      * Constructor
@@ -59,9 +59,9 @@ class AssetHandler
      *
      * @param mixed $assets   List of assets
      * @return AssetHandler
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    public function add($assets): self
+    public function add(mixed $assets): self
     {
         if ($assets && is_array($assets)) {
             foreach ($assets as $asset) {
@@ -128,9 +128,9 @@ class AssetHandler
      * @param string $name    Variable name
      * @param mixed  $value   Variable value
      * @return AssetHandler
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    public function addScssVar(string $name, $value = ''): self
+    public function addScssVar(string $name, mixed $value = ''): self
     {
         if ($name) {
             $this->scssData['vars'][$name] = $value;

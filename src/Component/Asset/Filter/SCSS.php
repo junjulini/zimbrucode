@@ -26,17 +26,17 @@ use ZimbruCode\Component\Core\Kernel;
  */
 class SCSS extends Filter
 {
-    protected ScssCompiler $compiler;
+    protected readonly ScssCompiler $compiler;
 
-    protected string $appPath;
-    protected string $rootPath;
-    protected string $varPath;
+    protected readonly string $appPath;
+    protected readonly string $rootPath;
+    protected readonly string $varPath;
 
-    protected string $searchPoint;
-    protected string $externalPoint;
+    protected readonly string $searchPoint;
+    protected readonly string $externalPoint;
 
-    protected string $fwSP;
-    protected string $cacheExt;
+    protected readonly string $fwSP;
+    protected readonly string $cacheExt;
 
     /**
      * Setup

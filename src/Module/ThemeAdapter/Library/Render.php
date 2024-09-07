@@ -37,7 +37,7 @@ use ZimbruCode\Module\ThemeAdapter\Library\TwigFunctions;
  */
 class Render
 {
-    protected TwigTemplateBridge $ttb;
+    protected readonly TwigTemplateBridge $ttb;
     protected bool $flush;
 
     protected array $data = [
@@ -79,7 +79,7 @@ class Render
      * @return void
      * @since 1.3.0
      */
-    public function setupEnvironment()
+    public function setupEnvironment(): void
     {
         if (Kernel::getGlobal('core/module/theme-adapter/cache')) {
             $this->ttb->addCachePath(Kernel::service('app')->getCachePath('twig'));
@@ -162,9 +162,9 @@ class Render
      *
      * @param string $name   Variable name
      * @return mixed         Variable value
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    public function getVar(string $name)
+    public function getVar(string $name): mixed
     {
         return $this->ttb->getVar($name);
     }

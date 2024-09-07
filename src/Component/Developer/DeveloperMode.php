@@ -20,7 +20,7 @@ use ZimbruCode\Component\Debug\DebugController;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.2.0
+ * @since   1.3.0
  */
 class DeveloperMode
 {
@@ -128,9 +128,9 @@ class DeveloperMode
      * @param string $title   The headline of the message
      * @param mixed  $msg     Message data
      * @return void
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    public function addLogMessage(string $title = '', $msg = ''): void
+    public function addLogMessage(string $title = '', mixed $msg = ''): void
     {
         if (!$this->isDev || !$this->config['dev-log']) {
             return;
@@ -151,9 +151,9 @@ class DeveloperMode
      * @param string $title   The headline of the message
      * @param mixed  $msg     Message data
      * @return void
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    public function addWarningMessage(string $title = '', $msg = ''): void
+    public function addWarningMessage(string $title = '', mixed $msg = ''): void
     {
         if (!$this->isDev || !$this->config['dev-log']) {
             return;
@@ -174,9 +174,9 @@ class DeveloperMode
      * @param string $title   The headline of the message
      * @param mixed  $msg     Message data
      * @return void
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    public function addErrorMessage(string $title = '', $msg = ''): void
+    public function addErrorMessage(string $title = '', mixed $msg = ''): void
     {
         if (!$this->isDev || !$this->config['dev-log']) {
             return;
@@ -197,9 +197,9 @@ class DeveloperMode
      * @param string $title   The headline of the message
      * @param mixed  $msg     Message data
      * @return void
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    public function addInfoMessage(string $title = '', $msg = ''): void
+    public function addInfoMessage(string $title = '', mixed $msg = ''): void
     {
         if (!$this->isDev || !$this->config['dev-log']) {
             return;

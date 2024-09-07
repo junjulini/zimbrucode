@@ -13,13 +13,14 @@ namespace ZimbruCode\Module\Panel\Controls\WpEditor;
 
 use RuntimeException;
 use ZimbruCode\Module\Panel\Library\ControlKernel;
+use _WP_Editors;
 
 /**
  * Panel control : WP editor
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.2.2
+ * @since   1.3.0
  */
 class Control extends ControlKernel
 {
@@ -27,7 +28,7 @@ class Control extends ControlKernel
      * Control setup
      *
      * @return void
-     * @since 1.2.2
+     * @since 1.3.0
      */
     public function setup(): void
     {
@@ -40,15 +41,15 @@ class Control extends ControlKernel
         }
 
         $id  = 'zc_module_panel_control_wp_editor_init_' . sha1(time());
-        $set = \_WP_Editors::parse_settings($id, []);
+        $set = _WP_Editors::parse_settings($id, []);
 
-        \_WP_Editors::editor_settings($id, $set);
+        _WP_Editors::editor_settings($id, $set);
 
         $this->addAction('admin_enqueue_scripts', function (): void {
             wp_enqueue_media();
         });
 
-        $this->addFilter('the_editor', function ($textarea) {
+        $this->addFilter('the_editor', function (string $textarea): string {
             $textarea = str_replace('<textarea', '<textarea data-option', $textarea);
 
             return $textarea;

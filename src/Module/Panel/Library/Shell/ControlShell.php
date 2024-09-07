@@ -20,11 +20,11 @@ use ZimbruCode\Module\Panel\Library\ControlManager;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.2.0
+ * @since   1.3.0
  */
 class ControlShell extends ShellKernel
 {
-    protected ControlManager $panel;
+    protected readonly ControlManager $panel;
     protected array $controlData = [];
 
     /**
@@ -46,9 +46,9 @@ class ControlShell extends ShellKernel
      * @param string $setting   Setting name
      * @param mixed  $default   Default value
      * @return mixed            Control data
-     * @since 1.1.0
+     * @since 1.3.0
      */
-    protected function getControlData(string $setting, $default = null)
+    protected function getControlData(string $setting, mixed $default = null): mixed
     {
         return $this->controlData[$setting] ?? $default;
     }
@@ -59,11 +59,11 @@ class ControlShell extends ShellKernel
      * @param string|null $option    Option name
      * @param mixed       $default   Default value
      * @return mixed                 Option value
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    public function option(string $option = null, $default = null)
+    public function option(string $option = null, mixed $default = null): mixed
     {
-        $option  = $option ?? $this->ID();
+        $option  = $option  ?? $this->ID();
         $default = $default ?? $this->defaultValue();
 
         return $this->panel->getOption($option, $default);
@@ -100,9 +100,9 @@ class ControlShell extends ShellKernel
      *
      * @param mixed $default   Default value
      * @return mixed           Type
-     * @since 1.1.0
+     * @since 1.3.0
      */
-    public function type($default = null)
+    public function type(mixed $default = null): mixed
     {
         return $this->getControlData(__FUNCTION__, $default);
     }
@@ -111,10 +111,10 @@ class ControlShell extends ShellKernel
      * Control : ID
      *
      * @param mixed $default   Default value
-     * @return string|mixed    ID
-     * @since 1.1.0
+     * @return mixed           ID
+     * @since 1.3.0
      */
-    public function ID($default = '')
+    public function ID(mixed $default = ''): mixed
     {
         $value = $this->getControlData('id', $default);
         return ($value) ? Kernel::getGlobal('core/module/panel/prefix-slug') . $value : $default;
@@ -125,9 +125,9 @@ class ControlShell extends ShellKernel
      *
      * @param mixed $default   Default value
      * @return mixed           Title
-     * @since 1.1.0
+     * @since 1.3.0
      */
-    public function title($default = null)
+    public function title(mixed $default = null): mixed
     {
         return $this->getControlData(__FUNCTION__, $default);
     }
@@ -137,9 +137,9 @@ class ControlShell extends ShellKernel
      *
      * @param mixed $default   Default value
      * @return mixed           Description
-     * @since 1.1.0
+     * @since 1.3.0
      */
-    public function desc($default = null)
+    public function desc(mixed $default = null): mixed
     {
         return $this->getControlData(__FUNCTION__, $default);
     }
@@ -149,9 +149,9 @@ class ControlShell extends ShellKernel
      *
      * @param mixed $default   Default value
      * @return mixed           Styles
-     * @since 1.1.0
+     * @since 1.3.0
      */
-    public function style($default = null)
+    public function style(mixed $default = null): mixed
     {
         return $this->getControlData(__FUNCTION__, $default);
     }
@@ -161,9 +161,9 @@ class ControlShell extends ShellKernel
      *
      * @param mixed $default   Default value
      * @return mixed           Classes
-     * @since 1.1.0
+     * @since 1.3.0
      */
-    public function classes($default = null)
+    public function classes(mixed $default = null): mixed
     {
         return $this->getControlData(__FUNCTION__, $default);
     }
@@ -173,9 +173,9 @@ class ControlShell extends ShellKernel
      *
      * @param mixed $default   Default value
      * @return mixed           Full width status
-     * @since 1.1.0
+     * @since 1.3.0
      */
-    public function fullWidth($default = false)
+    public function fullWidth(mixed $default = false): mixed
     {
         return $this->getControlData('full-width', $default);
     }
@@ -185,9 +185,9 @@ class ControlShell extends ShellKernel
      *
      * @param mixed $default   Default value
      * @return mixed           Border line
-     * @since 1.1.0
+     * @since 1.3.0
      */
-    public function borderLine($default = false)
+    public function borderLine(mixed $default = false): mixed
     {
         return $this->getControlData('border-line', $default);
     }
@@ -197,9 +197,9 @@ class ControlShell extends ShellKernel
      *
      * @param mixed $default   Default value
      * @return mixed           Ratio
-     * @since 1.1.0
+     * @since 1.3.0
      */
-    public function ratio($default = null)
+    public function ratio(mixed $default = null): mixed
     {
         return $this->getControlData(__FUNCTION__, $default);
     }
@@ -209,9 +209,9 @@ class ControlShell extends ShellKernel
      *
      * @param mixed $default   Default value
      * @return mixed           Help content
-     * @since 1.1.0
+     * @since 1.3.0
      */
-    public function help($default = null)
+    public function help(mixed $default = null): mixed
     {
         return $this->getControlData(__FUNCTION__, $default);
     }
@@ -222,9 +222,9 @@ class ControlShell extends ShellKernel
      * @param mixed $default   Default value
      * @param bool  $return    Return or echo
      * @return string|null     Ignore status
-     * @since 1.1.0
+     * @since 1.3.0
      */
-    public function ignore($default = null, bool $return = false)
+    public function ignore($default = null, bool $return = false): mixed
     {
         $value = ($this->getControlData(__FUNCTION__, $default)) ? 'data-i="i"' : '';
 
@@ -232,6 +232,7 @@ class ControlShell extends ShellKernel
             return $value;
         } else {
             echo $value;
+            return null;
         }
     }
 
@@ -240,9 +241,9 @@ class ControlShell extends ShellKernel
      *
      * @param mixed $default   Default value
      * @return mixed           Control default value
-     * @since 1.1.0
+     * @since 1.3.0
      */
-    public function defaultValue($default = null)
+    public function defaultValue(mixed $default = null): mixed
     {
         return $this->getControlData('default', $default);
     }
@@ -252,9 +253,9 @@ class ControlShell extends ShellKernel
      *
      * @param mixed $default   Default value
      * @return mixed           Condition
-     * @since 1.1.0
+     * @since 1.3.0
      */
-    public function condition($default = null)
+    public function condition(mixed $default = null): mixed
     {
         return $this->getControlData(__FUNCTION__, $default);
     }
@@ -264,9 +265,9 @@ class ControlShell extends ShellKernel
      *
      * @param mixed $default   Default value
      * @return mixed           Operator
-     * @since 1.1.0
+     * @since 1.3.0
      */
-    public function operator($default = null)
+    public function operator(mixed $default = null): mixed
     {
         return $this->getControlData(__FUNCTION__, $default);
     }
@@ -276,9 +277,9 @@ class ControlShell extends ShellKernel
      *
      * @param mixed $default   Default value
      * @return mixed           Internal content
-     * @since 1.1.0
+     * @since 1.3.0
      */
-    public function content($default = null)
+    public function content(mixed $default = null): mixed
     {
         return $this->getControlData(__FUNCTION__, $default);
     }
@@ -288,9 +289,9 @@ class ControlShell extends ShellKernel
      *
      * @param mixed $default   Default value
      * @return mixed           Additional settings
-     * @since 1.1.0
+     * @since 1.3.0
      */
-    public function settings($default = null)
+    public function settings(mixed $default = null): mixed
     {
         return $this->getControlData(__FUNCTION__, $default);
     }

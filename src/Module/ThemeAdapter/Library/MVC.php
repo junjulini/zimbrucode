@@ -27,13 +27,13 @@ use ZimbruCode\Component\Handler\Traits\SessionHandlerTrait;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.2.0
+ * @since   1.3.0
  */
 class MVC
 {
     use OptionHandlerTrait, GlobalCacheHandlerTrait, RequestHandlerTrait, SessionHandlerTrait, HooksHandlerTrait;
 
-    protected Render $__render;
+    protected readonly Render $__render;
 
     /**
      * Constructor
@@ -128,9 +128,9 @@ class MVC
      *
      * @param string $name    Variable name
      * @return mixed          Variable value
-     * @since 1.1.0
+     * @since 1.3.0
      */
-    public function getTwigVar(string $name)
+    public function getTwigVar(string $name): mixed
     {
         return $this->__render->getVar($name);
     }
@@ -253,9 +253,9 @@ class MVC
      * @param string      $service   Service name
      * @param object|null $handler   Service object
      * @return object|null           Service object or null
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    public function service(...$args)
+    public function service(...$args): ?object
     {
         return Kernel::service(...$args);
     }
@@ -266,9 +266,9 @@ class MVC
      * @param mixed $value1   First value
      * @param mixed $value2   Last value
      * @return mixed          Action result
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    public function dop(...$args)
+    public function dop(...$args): mixed
     {
         return Kernel::dop(...$args);
     }
@@ -279,9 +279,9 @@ class MVC
      * @param string $path      Array path
      * @param mixed  $default   Default value
      * @return mixed            Global data
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    public function getGlobal(...$args)
+    public function getGlobal(...$args): mixed
     {
         return Kernel::getGlobal(...$args);
     }
@@ -293,9 +293,9 @@ class MVC
      * @param mixed   $value1   Value 1
      * @param mixed   $value2   Value 2
      * @return mixed            Action result
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    public function ifG(...$args)
+    public function ifG(...$args): mixed
     {
         return Kernel::ifG(...$args);
     }

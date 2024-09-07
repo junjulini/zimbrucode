@@ -18,7 +18,7 @@ use ZimbruCode\Component\Asset\AssetManager;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.3.0
  */
 trait AssetTrait
 {
@@ -26,10 +26,10 @@ trait AssetTrait
      * Asset
      *
      * @param mixed ...$assets
-     * @return AssetManager
-     * @since 1.0.0
+     * @return object
+     * @since 1.3.0
      */
-    protected function asset(...$assets)
+    protected function asset(...$assets): object
     {
         $path = '';
 

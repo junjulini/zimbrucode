@@ -21,7 +21,7 @@ use ZimbruCode\Component\Core\Kernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.2.0
+ * @since   1.3.0
  */
 class DebugController
 {
@@ -84,14 +84,15 @@ class DebugController
      * @param string $tabTitle   Error title, If you use a WP_Error object, the title will be by default the one you added in $data['title']
      * @param array  $args       Optional arguments to control behavior
      * @return void
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    public static function addErrorMessage(string $message, string $title = 'Error', string $tabTitle = 'Error', array $args = []): void
+    public static function addErrorMessage(string $message, string $title = 'Error', string $tabTitle = 'Error', array $args = []): never
     {
         $html = "<h2>{$title}</h2>";
         $html .= "<p>{$message}</p>";
 
         wp_die($html, $tabTitle, $args);
+        exit;
     }
 
     /**
@@ -101,9 +102,9 @@ class DebugController
      * @param string $titleColor   Optional title color
      * @param array  $options      Dumper options
      * @return mixed               Variable itself
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    public static function addBarLogMessage($var, string $title, string $titleColor = '#3484d2', array $options = [])
+    public static function addBarLogMessage($var, string $title, string $titleColor = '#3484d2', array $options = []): mixed
     {
         if (Kernel::dev() && Kernel::getGlobal('core/dev-config/dev-log')) {
             static $panel;

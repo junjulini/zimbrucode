@@ -18,7 +18,7 @@ use ZimbruCode\Component\TemplateBridges\Helper\ShellKernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.2.0
+ * @since   1.3.0
  */
 class AttachmentShell extends ShellKernel
 {
@@ -27,9 +27,9 @@ class AttachmentShell extends ShellKernel
      *
      * @param mixed $attachmentID   Attachment ID, title, slug, or array of such to check against
      * @return bool                 Whether the query is for an existing attachment page
-     * @since 1.1.0
+     * @since 1.3.0
      */
-    public function is($attachmentID = null): bool
+    public function is(mixed $attachmentID = null): bool
     {
         return is_attachment($attachmentID);
     }
@@ -37,14 +37,14 @@ class AttachmentShell extends ShellKernel
     /**
      * Get an HTML img element representing an image attachment
      *
-     * @param int|null $attachmentID   Image attachment ID
-     * @param mixed    $size           Image size. Accepts any registered image size name, or an array of width and height values in pixels (in that order)
-     * @param bool     $icon           Whether the image should be treated as an icon
-     * @param mixed    $attr           Attributes for the image markup
+     * @param int|null     $attachmentID   Image attachment ID
+     * @param string|array $size           Image size. Accepts any registered image size name, or an array of width and height values in pixels (in that order)
+     * @param bool         $icon           Whether the image should be treated as an icon
+     * @param string|array $attr           Attributes for the image markup
      * @return void
-     * @since 1.1.0
+     * @since 1.3.0
      */
-    public function image(?int $attachmentID = null, $size = 'thumbnail', bool $icon = false, $attr = ''): void
+    public function image(?int $attachmentID = null, string|array $size = 'thumbnail', bool $icon = false, string|array $attr = ''): void
     {
         echo wp_get_attachment_image($attachmentID, $size, $icon, $attr);
     }
@@ -53,10 +53,10 @@ class AttachmentShell extends ShellKernel
      * Retrieves the caption for an attachment
      *
      * @param int|null $postID   Attachment ID. Default is the ID of the global $post
-     * @return mixed             Attachment caption on success, false on failure
-     * @since 1.1.0
+     * @return string|bool       Attachment caption on success, false on failure
+     * @since 1.3.0
      */
-    public function caption(?int $postID = null)
+    public function caption(?int $postID = null): string|bool
     {
         return wp_get_attachment_caption($postID);
     }
@@ -65,10 +65,10 @@ class AttachmentShell extends ShellKernel
      * Retrieves the URL for an attachment
      *
      * @param int|null $attachmentID   Attachment post ID. Defaults to global $post
-     * @return mixed                   Attachment URL, otherwise false
-     * @since 1.2.0
+     * @return string|bool             Attachment URL, otherwise false
+     * @since 1.3.0
      */
-    public function url(?int $attachmentID = null)
+    public function url(?int $attachmentID = null): string|bool
     {
         $url = wp_get_attachment_url($attachmentID);
 
@@ -80,10 +80,10 @@ class AttachmentShell extends ShellKernel
      *
      * @param int|null $attachmentID   Attachment ID
      * @param bool     $unfiltered     Whether to apply filters
-     * @return mixed                   The file path to where the attached file should be, false otherwise
-     * @since 1.1.0
+     * @return string|bool             The file path to where the attached file should be, false otherwise
+     * @since 1.3.0
      */
-    public function file(?int $attachmentID = null, bool $unfiltered = false)
+    public function file(?int $attachmentID = null, bool $unfiltered = false): string|bool
     {
         return get_attached_file($attachmentID, $unfiltered);
     }
@@ -91,13 +91,13 @@ class AttachmentShell extends ShellKernel
     /**
      * Retrieves an image to represent an attachment
      *
-     * @param int|null $attachmentID   Image attachment ID
-     * @param mixed    $size           Image size. Accepts any registered image size name, or an array of width and height values in pixels (in that order)
-     * @param bool     $icon           Whether the image should fall back to a mime type icon
-     * @return mixed                   Array of image data, or boolean false if no image is available
-     * @since 1.1.0
+     * @param int|null     $attachmentID   Image attachment ID
+     * @param string|array $size           Image size. Accepts any registered image size name, or an array of width and height values in pixels (in that order)
+     * @param bool         $icon           Whether the image should fall back to a mime type icon
+     * @return array|bool                  Array of image data, or boolean false if no image is available
+     * @since 1.3.0
      */
-    public function data(?int $attachmentID = null, $size = 'thumbnail', bool $icon = false)
+    public function data(?int $attachmentID = null, string|array $size = 'thumbnail', bool $icon = false): array|bool
     {
         $data = wp_get_attachment_image_src($attachmentID, $size, $icon);
 

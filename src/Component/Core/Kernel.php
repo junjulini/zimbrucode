@@ -62,9 +62,9 @@ abstract class Kernel extends GlobalDataOperator
      * @param mixed $value1   First value
      * @param mixed $value2   Last value
      * @return mixed          Action result
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    final public static function dop($value1, $value2)
+    final public static function dop(mixed $value1, mixed $value2): mixed
     {
         return (self::dev()) ? $value1 : $value2;
     }

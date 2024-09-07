@@ -22,7 +22,7 @@ use ZimbruCode\Component\Core\Kernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.2.0
+ * @since   1.3.0
  */
 class Tools
 {
@@ -122,9 +122,9 @@ class Tools
      * @param mixed $array1   First array
      * @param mixed $array2   Last array
      * @return bool           Result of checking
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    public static function arrayDiff($array1, $array2): bool
+    public static function arrayDiff(mixed $array1, mixed $array2): bool
     {
         if (is_array($array1) && is_array($array2)) {
             ksort($array1);
@@ -145,9 +145,9 @@ class Tools
      * @param  string $delimiter   Path separator
      * @throws InvalidArgumentException
      * @return void
-     * @since 1.1.0
+     * @since 1.3.0
      */
-    public static function addNode(array &$array, string $path, &$value, string $delimiter = '/'): void
+    public static function addNode(array &$array, string $path, mixed &$value, string $delimiter = '/'): void
     {
         if (!$path) {
             throw new InvalidArgumentException('ZE0042');
@@ -175,9 +175,9 @@ class Tools
      * @param  string $delimiter
      * @throws InvalidArgumentException
      * @return mixed             Action result
-     * @since 1.1.0
+     * @since 1.3.0
      */
-    public static function getNode(array $array, string $path, $default = null, string $delimiter = '/')
+    public static function getNode(array $array, string $path, mixed $default = null, string $delimiter = '/'): mixed
     {
         if (!$path) {
             throw new InvalidArgumentException('ZE0043');
@@ -251,9 +251,9 @@ class Tools
      * @param mixed  $value     Value to insert
      * @param bool   $after
      * @return array|null       Return a new modificated array
-     * @since 1.1.0
+     * @since 1.3.0
      */
-    public static function appendNode(array $array, string $node, string $newNode, $value, bool $after = true): ?array
+    public static function appendNode(array $array, string $node, string $newNode, mixed $value, bool $after = true): ?array
     {
         if (array_key_exists($node, $array)) {
             $output = [];
@@ -593,9 +593,9 @@ class Tools
      * @param  string $delimiter   Delimiter for ID
      * @param  mixed  $default     Default value
      * @return string              Multi site ID
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    public static function getMultiSiteID(string $delimiter = '', $default = false): string
+    public static function getMultiSiteID(string $delimiter = '', mixed $default = false): string
     {
         $delimiter = $delimiter ?: Kernel::getGlobal('app/network-site-delimiter');
         return (is_multisite()) ? $delimiter . get_current_blog_id() : $default;
@@ -915,9 +915,9 @@ class Tools
      *
      * @param mixed $data   Data for dumping
      * @return void
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    public static function dump($data): void
+    public static function dump(mixed $data): void
     {
         if (class_exists('\\Tracy\\Debugger')) {
             Debugger::dump($data);
@@ -955,9 +955,9 @@ class Tools
      * @param mixed    $method     Class method
      * @param int|null $priority   The exact priority used when adding the original action callback
      * @return mixed
-     * @since 1.1.0
+     * @since 1.3.0
      */
-    public static function remClassAction(string $hookName, string $class = '', $method = null, int $priority = null)
+    public static function remClassAction(string $hookName, string $class = '', mixed $method = null, int $priority = null): mixed
     {
         global $wp_filter;
 

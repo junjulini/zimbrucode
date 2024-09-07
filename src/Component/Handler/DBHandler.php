@@ -90,9 +90,9 @@ class DBHandler
      * @param string $path      Array path
      * @param mixed  $default   Default value
      * @return mixed            Item value
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    protected function getData(string $path, $default = false)
+    protected function getData(string $path, mixed $default = false): mixed
     {
         return Tools::getNode($this->data, $path, $default);
     }
@@ -103,9 +103,9 @@ class DBHandler
      * @param string $path    Array path
      * @param mixed  $value   Item value
      * @return void
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    protected function addData(string $path, $value): void
+    protected function addData(string $path, mixed $value): void
     {
         Tools::addNode($this->data, $path, $value);
     }
@@ -173,9 +173,9 @@ class DBHandler
      * @param string $path      Array path
      * @param mixed  $default   Default value
      * @return mixed            Database item value
-     * @since 1.1.0
+     * @since 1.3.0
      */
-    public function get(string $path = '', $default = false)
+    public function get(string $path = '', mixed $default = false): mixed
     {
         if ($path) {
             if (strpos($path, '/') !== false) {
@@ -214,9 +214,9 @@ class DBHandler
      * @param bool   $autoUpdate   Auto-update of data in the database
      * @param bool   $autoload     Autoload data from the database
      * @return bool                Action result
-     * @since 1.1.0
+     * @since 1.3.0
      */
-    public function add(string $path = '', $value = '', bool $autoUpdate = false, bool $autoload = true): bool
+    public function add(string $path = '', mixed $value = '', bool $autoUpdate = false, bool $autoload = true): bool
     {
         if ($path) {
             if ($this->getData($path) === $value) {

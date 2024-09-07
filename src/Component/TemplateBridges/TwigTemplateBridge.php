@@ -31,7 +31,7 @@ use ZimbruCode\Component\TemplateBridges\Helper\TwigFunctions;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.2.2
+ * @since   1.3.0
  */
 class TwigTemplateBridge
 {
@@ -130,9 +130,9 @@ class TwigTemplateBridge
      * @param  mixed  $value   Var value
      * @throws RuntimeException
      * @return void
-     * @since 1.1.0
+     * @since 1.3.0
      */
-    public function __set(string $name, $value)
+    public function __set(string $name, mixed $value)
     {
         if ($name) {
             $this->data['vars'][$name] = $value;
@@ -147,9 +147,9 @@ class TwigTemplateBridge
      * @param  string $name   Var name
      * @throws RuntimeException
      * @return mixed
-     * @since 1.1.0
+     * @since 1.3.0
      */
-    public function getVar(string $name)
+    public function getVar(string $name): mixed
     {
         if ($name) {
             if (!isset($this->data['vars'][$name])) {
@@ -158,6 +158,8 @@ class TwigTemplateBridge
 
             return $this->data['vars'][$name];
         }
+
+        return null;
     }
 
     /**
@@ -177,9 +179,9 @@ class TwigTemplateBridge
      * @param string $name    Var name
      * @param mixed  $value   Var value
      * @return void
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    public function addVar(string $name, $value): void
+    public function addVar(string $name, mixed $value): void
     {
         if ($name) {
             $this->data['vars'][$name] = $value;

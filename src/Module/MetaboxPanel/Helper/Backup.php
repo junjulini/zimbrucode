@@ -22,12 +22,12 @@ use ZimbruCode\Module\Panel\Library\Mode;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.2.0
+ * @since   1.3.0
  */
 class Backup extends Kernel
 {
-    protected Mode $mode;
-    protected string $backupDbName;
+    protected readonly Mode $mode;
+    protected readonly string $backupDbName;
 
     /**
      * Constructor
@@ -65,10 +65,10 @@ class Backup extends Kernel
      *
      * @param AjaxHandler $ajax       AjaxHandler object
      * @param string      $pageType   Page type [post, page, portfolio ...]
-     * @return void
-     * @since 1.1.0
+     * @return never
+     * @since 1.3.0
      */
-    protected function getContent(AjaxHandler $ajax, string $pageType): void
+    protected function getContent(AjaxHandler $ajax, string $pageType): never
     {
         $list  = '';
         $count = 0;
@@ -98,10 +98,10 @@ class Backup extends Kernel
      * @param  AjaxHandler $ajax       AjaxHandler object
      * @param  string      $pageType   Page type [post, page, portfolio ...]
      * @throws RuntimeException
-     * @return void
-     * @since 1.1.0
+     * @return never
+     * @since 1.3.0
      */
-    protected function save(AjaxHandler $ajax, string $pageType): void
+    protected function save(AjaxHandler $ajax, string $pageType): never
     {
         try {
             if ($metaData = get_post_meta($ajax->get('id'), "_{$this->getGlobal('core/module/metabox-panel/meta-container-slug')}", true)) {
@@ -180,10 +180,10 @@ class Backup extends Kernel
      * @param  AjaxHandler $ajax       AjaxHandler object
      * @param  string      $pageType   Page type [post, page, portfolio ...]
      * @throws RuntimeException
-     * @return void
-     * @since 1.1.0
+     * @return never
+     * @since 1.3.0
      */
-    protected function delete(AjaxHandler $ajax, string $pageType): void
+    protected function delete(AjaxHandler $ajax, string $pageType): never
     {
         try {
             if ($data = self::service('db')->get($this->backupDbName)) {
@@ -213,10 +213,10 @@ class Backup extends Kernel
      * @param  AjaxHandler $ajax       AjaxHandler object
      * @param  string      $pageType   Page type [post, page, portfolio ...]
      * @throws RuntimeException
-     * @return void
-     * @since 1.1.0
+     * @return never
+     * @since 1.3.0
      */
-    protected function deleteItem(AjaxHandler $ajax, string $pageType): void
+    protected function deleteItem(AjaxHandler $ajax, string $pageType): never
     {
         try {
             if ($data = self::service('db')->get($this->backupDbName)) {
@@ -249,10 +249,10 @@ class Backup extends Kernel
      * @param  AjaxHandler $ajax       AjaxHandler object
      * @param  string      $pageType   Page type [post, page, portfolio ...]
      * @throws RuntimeException
-     * @return void
-     * @since 1.1.0
+     * @return never
+     * @since 1.3.0
      */
-    protected function restore(AjaxHandler $ajax, string $pageType): void
+    protected function restore(AjaxHandler $ajax, string $pageType): never
     {
         try {
             if ($data = self::service('db')->get($this->backupDbName)) {
@@ -287,10 +287,10 @@ class Backup extends Kernel
     /**
      * Ajax : Backup action
      *
-     * @return void
-     * @since 1.1.0
+     * @return never
+     * @since 1.3.0
      */
-    public function __ajax_backup(): void
+    public function __ajax_backup(): never
     {
         $ajax     = new AjaxHandler($this->mode->getModuleSetting('nonce'), 'edit_pages');
         $pageType = implode('_', $this->mode->getModuleSetting('screen'));

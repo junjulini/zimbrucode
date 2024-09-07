@@ -13,7 +13,6 @@ namespace ZimbruCode\Module\Panel\Library\Traits;
 
 use ZimbruCode\Component\TemplateBridges\Helper\ShellKernel;
 use ZimbruCode\Component\TemplateBridges\TwigTemplateBridge;
-use ZimbruCode\Module\Panel\Library\AssetHandler;
 use ZimbruCode\Module\Panel\Library\Shell\BaseShell;
 
 /**
@@ -21,7 +20,7 @@ use ZimbruCode\Module\Panel\Library\Shell\BaseShell;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.2.0
+ * @since   1.3.0
  */
 trait UtilityTrait
 {
@@ -102,10 +101,10 @@ trait UtilityTrait
      * Asset
      *
      * @param mixed $assets
-     * @return AssetHandler
-     * @since 1.0.0
+     * @return object
+     * @since 1.3.0
      */
-    public function asset(...$assets): AssetHandler
+    public function asset(...$assets): object
     {
         if ($assets) {
             $this->getModuleData('asset')->add($assets);

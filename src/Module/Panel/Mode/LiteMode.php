@@ -20,7 +20,7 @@ use ZimbruCode\Module\Panel\Library\Traits\ControlTrait;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.3.0
  */
 class LiteMode extends Mode
 {
@@ -160,10 +160,10 @@ class LiteMode extends Mode
     /**
      * Ajax : Save options
      *
-     * @return void
-     * @since 1.1.0
+     * @return never
+     * @since 1.3.0
      */
-    public function __ajax_save_options(): void
+    public function __ajax_save_options(): never
     {
         $ajax    = new AjaxHandler($this->getModuleSetting('nonce'), 'edit_theme_options');
         $options = $ajax->get('options');
@@ -195,10 +195,10 @@ class LiteMode extends Mode
     /**
      * Ajax : Reset options
      *
-     * @return void
-     * @since 1.1.0
+     * @return never
+     * @since 1.3.0
      */
-    public function __ajax_reset_options(): void
+    public function __ajax_reset_options(): never
     {
         $ajax = new AjaxHandler($this->getModuleSetting('nonce'), 'edit_theme_options');
 

@@ -20,12 +20,12 @@ use ZimbruCode\Component\Core\Kernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.2.0
+ * @since   1.3.0
  */
 class AjaxHandler
 {
-    protected string $requestType  = '';
-    protected bool $inputJsonType  = true;
+    protected readonly string $requestType;
+    protected readonly bool $inputJsonType;
     protected array $inputJsonData = [];
     protected array $data          = [];
 
@@ -91,9 +91,9 @@ class AjaxHandler
      * @param string $capability  Role or capability
      * @param mixed  $args        (Optional) further parameters, typically starting with an object ID
      * @return bool               Current user has capability
-     * @since 1.1.0
+     * @since 1.3.0
      */
-    public function checkUser(string $capability, $args = null): bool
+    public function checkUser(string $capability, mixed $args = null): bool
     {
         return current_user_can($capability, $args);
     }
@@ -105,9 +105,9 @@ class AjaxHandler
      * @param mixed  $default       Default value
      * @param string $requestType   Request type
      * @return mixed                Request data
-     * @since 1.1.0
+     * @since 1.3.0
      */
-    public function get(string $param, $default = '', string $requestType = '')
+    public function get(string $param, mixed $default = '', string $requestType = ''): mixed
     {
         if ($this->inputJsonType === true) {
             return $this->inputJsonData[$param] ?? $default;
@@ -116,13 +116,11 @@ class AjaxHandler
                 $requestType = $this->requestType;
             }
 
-            if ($requestType === 'post') {
-                return Kernel::rPost($param, $default);
-            } elseif ($requestType === 'get') {
-                return Kernel::rGet($param, $default);
-            } else {
-                return Kernel::rGet($param, $default);
-            }
+            return match ($requestType) {
+                'post'  => Kernel::rPost($param, $default),
+                'get'   => Kernel::rGet($param, $default),
+                default => Kernel::rGet($param, $default),
+            };
         }
     }
 
@@ -132,13 +130,13 @@ class AjaxHandler
      * @param string|array $name    Item name
      * @param mixed        $value   Item value
      * @return AjaxHandler
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    public function add($name, $value = ''): AjaxHandler
+    public function add(string|array $name, mixed $value = ''): AjaxHandler
     {
-        if ($name && is_string($name)) {
+        if (is_string($name)) {
             $this->data[$name] = $value;
-        } elseif ($name && is_array($name)) {
+        } elseif (is_array($name)) {
             $this->data = $name;
         }
 
@@ -150,11 +148,11 @@ class AjaxHandler
      *
      * @param string $name   Item name
      * @return bool          Action result
-     * @since 1.1.0
+     * @since 1.3.0
      */
     public function has(string $name): bool
     {
-        return (!empty($this->get($name)));
+        return !empty($this->get($name));
     }
 
     /**
@@ -204,10 +202,10 @@ class AjaxHandler
      *
      * @param string|array $data    Response data
      * @param mixed        $value   Single response data
-     * @return void
-     * @since 1.1.0
+     * @return never
+     * @since 1.3.0
      */
-    public function send($data = '', $value = false): void
+    public function send(string|array $data = '', mixed $value = false): never
     {
         if ($data) {
             if (is_string($data) && $value) {
@@ -222,6 +220,8 @@ class AjaxHandler
         if ($this->data) {
             wp_send_json($this->data);
         }
+
+        exit;
     }
 
     /**
@@ -231,16 +231,18 @@ class AjaxHandler
      * @param string $title     Error title, If you use a WP_Error object, the title will be by default the one you added in $data['title'] (ignored when DOING_AJAX is true)
      * @param array  $args      Optional arguments to control behavior (ignored when DOING_AJAX is true)
      * @param bool   $force
-     * @return void             This function does not return a value
-     * @since 1.1.0
+     * @return never
+     * @since 1.3.0
      */
-    public function off(string $message = '', string $title = '', array $args = [], bool $force = false): void
+    public function off(string $message = '', string $title = '', array $args = [], bool $force = false): never
     {
         if ($this->inputJsonType === true && $force === false) {
             $this->send([]);
         } else {
             wp_die($message, $title, $args);
         }
+
+        exit;
     }
 
     /**

@@ -22,13 +22,13 @@ use ZimbruCode\Component\Core\Kernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.2.0
+ * @since   1.3.0
  */
 class LocationDetector
 {
-    protected string $location;
-    protected string $root;
-    protected array $defaultLocation = [];
+    protected readonly string $location;
+    protected readonly string $root;
+    protected readonly array $defaultLocation;
 
     /**
      * Constructor
@@ -59,7 +59,7 @@ class LocationDetector
      * @param  string $path   Part of path
      * @throws InvalidArgumentException
      * @return string         Asset path
-     * @since 1.1.0
+     * @since 1.3.0
      */
     public function get(string $path): string
     {
@@ -67,13 +67,11 @@ class LocationDetector
             throw new InvalidArgumentException('ZE0029');
         }
 
-        if (Tools::isPath($path)) {
-            return $this->definedAsPath($path);
-        } elseif (Tools::isURL($path)) {
-            return $this->definedAsURL($path);
-        } else {
-            return $this->definedAsString($path);
-        }
+        return match (true) {
+            Tools::isPath($path) => $this->definedAsPath($path),
+            Tools::isURL($path)  => $this->definedAsURL($path),
+            default              => $this->definedAsString($path),
+        };
     }
 
     /**

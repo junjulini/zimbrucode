@@ -19,7 +19,7 @@ use ZimbruCode\Component\Core\Kernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.3.0
  */
 trait GlobalCacheHandlerTrait
 {
@@ -29,15 +29,16 @@ trait GlobalCacheHandlerTrait
      * @param string $key     Cache key
      * @param mixed  $value   Cache value
      * @throws InvalidArgumentException
-     * @since 1.1.0
+     * @return void
+     * @since 1.3.0
      */
-    public static function addGlobalCache(string $key, $value = '')
+    public static function addGlobalCache(string $key, mixed $value = ''): void
     {
         if (!$key) {
             throw new InvalidArgumentException('ZE0078');
         }
 
-        return Kernel::addGlobal("cache/$key", $value);
+        Kernel::addGlobal("cache/$key", $value);
     }
 
     /**
@@ -47,9 +48,9 @@ trait GlobalCacheHandlerTrait
      * @param mixed  $default   Default value if key does not exist
      * @throws InvalidArgumentException
      * @return mixed
-     * @since 1.1.0
+     * @since 1.3.0
      */
-    public static function getGlobalCache(string $key, $default = false)
+    public static function getGlobalCache(string $key, mixed $default = false): mixed
     {
         if (!$key) {
             throw new InvalidArgumentException('ZE0079');

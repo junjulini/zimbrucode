@@ -24,11 +24,11 @@ use ZimbruCode\Module\Panel\Library\Shell\ControlShell;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.2.0
+ * @since   1.3.0
  */
 class ControlsRenderTwigExtension extends AbstractExtension
 {
-    protected ControlManager $__panel;
+    protected readonly ControlManager $__panel;
 
     /**
      * Constructor

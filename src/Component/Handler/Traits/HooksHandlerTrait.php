@@ -18,22 +18,22 @@ use InvalidArgumentException;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.3.0
  */
 trait HooksHandlerTrait
 {
     /**
      * Add action
      *
-     * @param  string $hook           The name of the action to which $method is hooked
-     * @param  mixed  $method         The name of the function you wish to be hooked
-     * @param  int    $priority       Used to specify the order in which the functions associated with a particular action are executed
-     * @param  int    $acceptedArgs   The number of arguments the hooked function accepts
+     * @param  string          $hook           The name of the action to which $method is hooked
+     * @param  callable|string $method         The name of the function you wish to be hooked
+     * @param  int             $priority       Used to specify the order in which the functions associated with a particular action are executed
+     * @param  int             $acceptedArgs   The number of arguments the hooked function accepts
      * @throws InvalidArgumentException
      * @return void
-     * @since 1.1.0
+     * @since 1.3.0
      */
-    protected function addAction(string $hook, $method, int $priority = 10, int $acceptedArgs = 1): void
+    protected function addAction(string $hook, callable|string $method, int $priority = 10, int $acceptedArgs = 1): void
     {
         if (!$hook) {
             throw new InvalidArgumentException('ZE0081');
@@ -47,22 +47,20 @@ trait HooksHandlerTrait
             add_action($hook, $method, $priority, $acceptedArgs);
         } elseif (is_string($method)) {
             add_action($hook, [$this, $method], $priority, $acceptedArgs);
-        } else {
-            throw new InvalidArgumentException('ZE0083');
         }
     }
 
     /**
      * Remove action : This function removes a function attached to a specified action hook
      *
-     * @param  string $hook       The name of the action to which $method is hooked
-     * @param  mixed  $method     The name of the function which should be removed
-     * @param  int    $priority   Used to specify the order in which the functions associated with a particular action are executed
+     * @param  string          $hook       The name of the action to which $method is hooked
+     * @param  callable|string $method     The name of the function which should be removed
+     * @param  int             $priority   Used to specify the order in which the functions associated with a particular action are executed
      * @throws InvalidArgumentException
      * @return void
-     * @since 1.1.0
+     * @since 1.3.0
      */
-    protected function remAction(string $hook, $method, int $priority = 10): void
+    protected function remAction(string $hook, callable|string $method, int $priority = 10): void
     {
         if (!$hook) {
             throw new InvalidArgumentException('ZE0084');
@@ -76,22 +74,20 @@ trait HooksHandlerTrait
             remove_action($hook, $method, $priority);
         } elseif (is_string($method)) {
             remove_action($hook, [$this, $method], $priority);
-        } else {
-            throw new InvalidArgumentException('ZE0086');
         }
     }
 
     /**
      * Add AJAX
      *
-     * @param  string $hook     The name of the action to which $method is hooked
-     * @param  mixed  $method   The name of the function you wish to be hooked
-     * @param  bool   $nopriv   For non unauthenticated users
+     * @param  string          $hook     The name of the action to which $method is hooked
+     * @param  callable|string $method   The name of the function you wish to be hooked
+     * @param  bool            $nopriv   For non unauthenticated users
      * @throws InvalidArgumentException
      * @return void
-     * @since 1.1.0
+     * @since 1.3.0
      */
-    protected function addAjax(string $hook, $method, bool $nopriv = false): void
+    protected function addAjax(string $hook, callable|string $method, bool $nopriv = false): void
     {
         if (!$hook) {
             throw new InvalidArgumentException('ZE0087');
@@ -111,15 +107,15 @@ trait HooksHandlerTrait
     /**
      * Add filter
      *
-     * @param  string $tag            The name of the existing Filter to Hook the $method argument to
-     * @param  mixed  $method         The name of the function to be called when the custom Filter is applied
-     * @param  int    $priority       Used to specify the order in which the functions associated with a particular action are executed
-     * @param  int    $acceptedArgs   The number of arguments the function(s) accept(s)
+     * @param  string          $tag            The name of the existing Filter to Hook the $method argument to
+     * @param  callable|string $method         The name of the function to be called when the custom Filter is applied
+     * @param  int             $priority       Used to specify the order in which the functions associated with a particular action are executed
+     * @param  int             $acceptedArgs   The number of arguments the function(s) accept(s)
      * @throws InvalidArgumentException
      * @return void
-     * @since 1.1.0
+     * @since 1.3.0
      */
-    protected function addFilter(string $tag, $method, int $priority = 10, int $acceptedArgs = 1): void
+    protected function addFilter(string $tag, callable|string $method, int $priority = 10, int $acceptedArgs = 1): void
     {
         if (!$tag) {
             throw new InvalidArgumentException('ZE0089');
@@ -133,22 +129,20 @@ trait HooksHandlerTrait
             add_filter($tag, $method, $priority, $acceptedArgs);
         } elseif (is_string($method)) {
             add_filter($tag, [$this, $method], $priority, $acceptedArgs);
-        } else {
-            throw new InvalidArgumentException('ZE0091');
         }
     }
 
     /**
      * Add filter
      *
-     * @param  string $tag        The action hook to which the function to be removed is hooked
-     * @param  mixed  $method     The callback for the function which should be removed
-     * @param  int    $priority   The priority of the function (as defined when the function was originally hooked)
+     * @param  string          $tag        The action hook to which the function to be removed is hooked
+     * @param  callable|string $method     The callback for the function which should be removed
+     * @param  int             $priority   The priority of the function (as defined when the function was originally hooked)
      * @throws InvalidArgumentException
      * @return void
-     * @since 1.1.0
+     * @since 1.3.0
      */
-    protected function remFilter(string $tag, $method, int $priority = 10): void
+    protected function remFilter(string $tag, callable|string $method, int $priority = 10): void
     {
         if (!$tag) {
             throw new InvalidArgumentException('ZE0092');
@@ -162,21 +156,19 @@ trait HooksHandlerTrait
             remove_filter($tag, $method, $priority);
         } elseif (is_string($method)) {
             remove_filter($tag, [$this, $method], $priority);
-        } else {
-            throw new InvalidArgumentException('ZE0094');
         }
     }
 
     /**
      * Add shortcode
      *
-     * @param  string $tag      ShortCode tag
-     * @param  mixed  $method   Callback
+     * @param  string          $tag      ShortCode tag
+     * @param  callable|string $method   Callback
      * @throws InvalidArgumentException
      * @return void
-     * @since 1.1.0
+     * @since 1.3.0
      */
-    protected function addShortCode(string $tag, $method): void
+    protected function addShortCode(string $tag, callable|string $method): void
     {
         if (!$tag) {
             throw new InvalidArgumentException('ZE0095');
@@ -190,8 +182,6 @@ trait HooksHandlerTrait
             add_shortcode($tag, $method);
         } elseif (is_string($method)) {
             add_shortcode($tag, [$this, $method]);
-        } else {
-            throw new InvalidArgumentException('ZE0097');
         }
     }
 
@@ -202,9 +192,9 @@ trait HooksHandlerTrait
      * @param  bool   $return   Return or echo
      * @throws InvalidArgumentException
      * @return mixed
-     * @since 1.1.0
+     * @since 1.3.0
      */
-    protected function doShortCode(string $tag, bool $return = false)
+    protected function doShortCode(string $tag, bool $return = false): mixed
     {
         if (!$tag) {
             throw new InvalidArgumentException('ZE0098');
@@ -214,6 +204,7 @@ trait HooksHandlerTrait
             return do_shortcode($tag);
         } else {
             echo do_shortcode($tag);
+            return null;
         }
     }
 

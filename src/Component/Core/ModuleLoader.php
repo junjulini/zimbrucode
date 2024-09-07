@@ -23,7 +23,7 @@ use ZimbruCode\Component\Core\Kernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.2.0
+ * @since   1.3.0
  */
 class ModuleLoader
 {
@@ -59,10 +59,10 @@ class ModuleLoader
      * @param string $module    Module name
      * @param string $path      Additional part of the path
      * @param mixed  $default   Default value
-     * @return string|mixed     Module path
-     * @since 1.2.0
+     * @return mixed            Module path
+     * @since 1.3.0
      */
-    public function getModulePath(string $module, string $path = '', $default = false)
+    public function getModulePath(string $module, string $path = '', mixed $default = false): mixed
     {
         $class    = $this->getModuleClass($module);
         $filePath = Kernel::service('composer')->findFile($class);
@@ -77,10 +77,10 @@ class ModuleLoader
      * @param string $module    Module name
      * @param string $url       Additional part of the URL
      * @param mixed  $default   Return value if not exist module
-     * @return string|mixed     Module URL
-     * @since 1.2.0
+     * @return mixed            Module URL
+     * @since 1.3.0
      */
-    public function getModuleURL(string $module, string $url = '', $default = false)
+    public function getModuleURL(string $module, string $url = '', mixed $default = false): mixed
     {
         $dirPath = $this->getModulePath($module);
         return ($dirPath) ? esc_url(wp_normalize_path(Tools::getURL($dirPath) . $url), '', '') : $default;
@@ -106,9 +106,9 @@ class ModuleLoader
      * @param string $module   Module name
      * @param string $url      Additional part of the URL
      * @return string          Module resource URL
-     * @since 1.2.0
+     * @since 1.3.0
      */
-    public function getModuleResourceURL(string $module, string $url = '')
+    public function getModuleResourceURL(string $module, string $url = ''): string
     {
         $urlPath = $this->getModuleURL($module);
         return ($urlPath) ? esc_url(wp_normalize_path($urlPath . Kernel::getGlobal('core/component/core/module/resource-dir') . $url), '', '') : '';
@@ -230,9 +230,9 @@ class ModuleLoader
      * @param array|string $config   Module config
      * @throws RuntimeException
      * @return ModuleLoader
-     * @since 1.2.0
+     * @since 1.3.0
      */
-    public function addConfig($config): self
+    public function addConfig(array|string $config): self
     {
         if ($config) {
             $config = apply_filters('zc/component/core/module_loader/before_load_config', $config);
@@ -327,9 +327,9 @@ class ModuleLoader
      * @param string $setting   Setting name
      * @param mixed  $value     Setting value 
      * @return ModuleLoader
-     * @since 1.2.0
+     * @since 1.3.0
      */
-    public function addSetting(string $setting, $value): self
+    public function addSetting(string $setting, mixed $value): self
     {
         $this->config['settings'][$setting] = $value;
         return $this;

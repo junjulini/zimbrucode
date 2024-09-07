@@ -27,25 +27,25 @@ use ZimbruCode\Component\Core\Kernel;
  */
 class AssetData
 {
-    protected string $raw;
-    protected SplFileInfo $info;
     protected array $data;
-    protected LocationDetector $location;
+    protected readonly string $raw;
+    protected readonly SplFileInfo $info;
+    protected readonly LocationDetector $location;
 
     /**
      * Constructor
      *
-     * @since 1.1.0
+     * @since 1.3.0
      */
     public function __construct($asset, LocationDetector $location)
     {
         if ($asset) {
+            $this->data = Kernel::getGlobal('core/component/asset/default-data');
+
             if (is_string($asset)) {
-                $this->raw  = $asset;
-                $this->data = Kernel::getGlobal('core/component/asset/default-data');
+                $this->raw = $asset;
             } elseif (is_array($asset) && !empty($asset['raw']) && is_string($asset['raw'])) {
-                $this->raw  = $asset['raw'];
-                $this->data = Kernel::getGlobal('core/component/asset/default-data');
+                $this->raw = $asset['raw'];
 
                 if (isset($asset['type'])) {
                     $this->type($asset['type']);
@@ -79,7 +79,7 @@ class AssetData
             }
         }
 
-        $this->info     = new SplFileInfo($this->raw);
+        $this->info     = new SplFileInfo($this->raw());
         $this->location = $location;
     }
 
@@ -89,9 +89,9 @@ class AssetData
      * @param string $type    Asset type
      * @param bool   $check   Check if the value exists before setting the asset type
      * @return mixed
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    public function type(string $type = '', bool $check = false)
+    public function type(string $type = '', bool $check = false): mixed
     {
         if ($type) {
             if ($check === true) {
@@ -115,9 +115,9 @@ class AssetData
      * @param string $name    Asset name
      * @param bool   $check   Check if the value exists before setting the asset name
      * @return mixed
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    public function name(string $name = '', bool $check = false)
+    public function name(string $name = '', bool $check = false): mixed
     {
         if ($name) {
             if ($check === true) {
@@ -141,9 +141,9 @@ class AssetData
      * @param string $url     Asset URL
      * @param bool   $check   Check if the value exists before setting the asset name
      * @return mixed
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    public function url(string $url = '', bool $check = false)
+    public function url(string $url = '', bool $check = false): mixed
     {
         if ($url) {
             if ($check === true) {
@@ -167,9 +167,9 @@ class AssetData
      * @param array $deps    Asset deps
      * @param bool  $check   Check if the value exists before setting the asset deps
      * @return mixed
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    public function deps(array $deps = [], bool $check = false)
+    public function deps(array $deps = [], bool $check = false): mixed
     {
         if ($deps) {
             if ($check === true) {
@@ -193,9 +193,9 @@ class AssetData
      * @param string  $version   Asset version
      * @param bool    $check     Check if the value exists before setting the asset version
      * @return mixed
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    public function version(string $version = '', bool $check = false)
+    public function version(string $version = '', bool $check = false): mixed
     {
         if ($version) {
             if ($check === true) {
@@ -239,7 +239,7 @@ class AssetData
      * @return mixed
      * @since 1.3.0
      */
-    public function media(string $media = null, bool $check = false)
+    public function media(string $media = null, bool $check = false): mixed
     {
         if ($media !== null) {
             if ($check === true) {
@@ -265,7 +265,7 @@ class AssetData
      * @return mixed
      * @since 1.3.0
      */
-    public function footer(bool $footer = null, bool $check = false)
+    public function footer(bool $footer = null, bool $check = false): mixed
     {
         if ($footer !== null) {
             if ($check === true) {
@@ -344,14 +344,14 @@ class AssetData
      *
      * @throws RuntimeException
      * @return string   Asset path
-     * @since 1.1.0
+     * @since 1.3.0
      */
     public function getPath(): string
     {
         if ($this->isFile()) {
-            return $this->location->get($this->raw);
+            return $this->location->get($this->raw());
         } else {
-            throw new RuntimeException("ZE0019 - The asset is not file : {$this->raw}");
+            throw new RuntimeException("ZE0019 - The asset is not file : {$this->raw()}");
         }
     }
 

@@ -20,7 +20,7 @@ use ZimbruCode\Component\Common\Tools;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.3.0
  */
 abstract class GlobalDataOperator
 {
@@ -28,17 +28,17 @@ abstract class GlobalDataOperator
      * GNS ( Global nodes slug )
      *
      * @var string
-     * @since 1.1.0
+     * @since 1.3.0
      */
-    private static $__GNS;
+    private static string $__GNS;
 
     /**
      * GN ( Global nodes )
      *
      * @var array
-     * @since 1.1.0
+     * @since 1.3.0
      */
-    private static $__GN = [
+    private static array $__GN = [
         // Root nodes
         '@' => [],
     ];
@@ -47,9 +47,9 @@ abstract class GlobalDataOperator
      * SGN ( Standard global nodes )
      *
      * @var array
-     * @since 1.1.0
+     * @since 1.3.0
      */
-    private static $__SGN = [
+    private static array $__SGN = [
         'core'  => [],
         'app'   => [],
         'cache' => [],
@@ -59,33 +59,33 @@ abstract class GlobalDataOperator
      * RN : Root node
      *
      * @var string
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    private static $__RN = '@';
+    private static string $__RN = '@';
 
     /**
      * CGN ( Condition global nodes )
      *
      * @var array
-     * @since 1.1.0
+     * @since 1.3.0
      */
-    private static $__CGN = ['@', 'core', 'app', 'cache'];
+    private static array $__CGN = ['@', 'core', 'app', 'cache'];
 
     /**
      * OEM ( Operator exception message )
      *
      * @var string
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    private static $__OEM = '{PATH} - conditions are not met. Only the following nodes are allowed in the first position : {NODES}.';
+    private static string $__OEM = '{PATH} - conditions are not met. Only the following nodes are allowed in the first position : {NODES}.';
 
     /**
      * Nodes cache
      *
      * @var string
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    private static $__NODES_CACHE = [];
+    private static array $__NODES_CACHE = [];
 
     ####################################################################################################################
 
@@ -125,13 +125,13 @@ abstract class GlobalDataOperator
      * @param string $path        Array path
      * @param string $delimiter   Path delimiter
      * @return bool               Result of checking
-     * @since 1.0.0
+     * @since 1.3.0
      */
     private static function __isRootNode(string $path, string $delimiter = '/'): bool
     {
         if ($path) {
             $element = explode($delimiter, $path);
-            return (in_array($element[0], [self::$__RN]));
+            return in_array($element[0], [self::$__RN]);
         }
 
         return false;
@@ -192,9 +192,9 @@ abstract class GlobalDataOperator
      * Get global slug variable
      *
      * @return string   Slug name
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    final public static function getGlobalVarSlug()
+    final public static function getGlobalVarSlug(): string
     {
         return self::$__GNS;
     }
@@ -205,9 +205,9 @@ abstract class GlobalDataOperator
      * @param string $path      Array path
      * @param mixed  $default   Default value
      * @return mixed            Global data
-     * @since 1.1.0
+     * @since 1.3.0
      */
-    final public static function getGlobal(string $path, $default = false)
+    final public static function getGlobal(string $path, mixed $default = false): mixed
     {
         if ($path) {
             if (self::__isOnCondition($path)) {
@@ -242,13 +242,15 @@ abstract class GlobalDataOperator
      * @param mixed  $value1   Value 1
      * @param mixed  $value2   Value 2
      * @return mixed           Action result
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    final public static function ifG(string $path, $value1, $value2)
+    final public static function ifG(string $path, mixed $value1, mixed $value2): mixed
     {
         if ($path) {
             return (self::getGlobal($path)) ? $value1 : $value2;
         }
+
+        return null;
     }
 
     /**
@@ -258,9 +260,9 @@ abstract class GlobalDataOperator
      * @param  mixed  $value   Value
      * @throws InvalidArgumentException
      * @return void
-     * @since 1.1.0
+     * @since 1.3.0
      */
-    final public static function addGlobal(string $path, $value): void
+    final public static function addGlobal(string $path, mixed $value): void
     {
         if ($path) {
             if (!self::__isOnCondition($path)) {

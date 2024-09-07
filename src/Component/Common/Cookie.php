@@ -31,7 +31,7 @@ class Cookie
      * @return mixed
      * @since 1.3.0
      */
-    public function get(string $name, $default = false, string $filter = 'json')
+    public function get(string $name, mixed $default = false, string $filter = 'json'): mixed
     {
         if (empty($_COOKIE[$name])) {
             return $default;
@@ -61,7 +61,7 @@ class Cookie
      * @return void
      * @since 1.3.0
      */
-    public function add(string $name, $data, int $time = 0, string $filter = 'json'): void
+    public function add(string $name, mixed $data, int $time = 0, string $filter = 'json'): void
     {
         if ($name && defined('COOKIEPATH') && defined('SITECOOKIEPATH') && defined('COOKIE_DOMAIN')) {
             switch ($filter) {

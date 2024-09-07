@@ -26,7 +26,6 @@ class SettingsHandler
     protected array $data     = [];
     protected array $control  = [];
     protected array $settings = [];
-    protected Callback $callback;
 
     protected array $exclude = [
         'menuTab',
@@ -34,6 +33,8 @@ class SettingsHandler
     ];
 
     protected bool $ignore = false;
+
+    protected readonly Callback $callback;
 
     /**
      * Constructor
@@ -63,9 +64,9 @@ class SettingsHandler
      * @param string $path      Array path
      * @param mixed  $default   Default value
      * @return mixed            Setting value
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    public function get(string $path, $default = '')
+    public function get(string $path, mixed $default = ''): mixed
     {
         if ($path) {
             $output = Tools::getNode($this->control, $path, $default);
@@ -88,7 +89,7 @@ class SettingsHandler
      * @return void
      * @since 1.3.0
      */
-    public function add(string $path, $value): void
+    public function add(string $path, mixed $value): void
     {
         Tools::addNode($this->control, $path, $value);
     }

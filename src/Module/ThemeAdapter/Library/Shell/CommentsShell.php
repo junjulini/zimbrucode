@@ -19,7 +19,7 @@ use ZimbruCode\Component\TemplateBridges\Helper\ShellKernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.2.0
+ * @since   1.3.0
  */
 class CommentsShell extends ShellKernel
 {
@@ -38,14 +38,14 @@ class CommentsShell extends ShellKernel
     /**
      * Displays the language string for the number of comments the current post has
      *
-     * @param mixed $zero     Text for no comments
-     * @param mixed $one      Text for one comment
-     * @param mixed $more     Text for more than one comment
-     * @param mixed $postID   Post ID or WP_Post object. Default is the global $post
+     * @param string|bool $zero     Text for no comments
+     * @param string|bool $one      Text for one comment
+     * @param string|bool $more     Text for more than one comment
+     * @param int|WP_Post $postID   Post ID or WP_Post object. Default is the global $post
      * @return void
-     * @since 1.1.0
+     * @since 1.3.0
      */
-    public function number($zero = false, $one = false, $more = false, $postID = null): void
+    public function number(string|bool $zero = false, string|bool $one = false, string|bool $more = false, int|WP_Post $postID = null): void
     {
         comments_number($zero, $one, $more, $postID);
     }
@@ -53,11 +53,11 @@ class CommentsShell extends ShellKernel
     /**
      * Get number
      *
-     * @param mixed $postID   Post ID or WP_Post object. Default is the global $post
-     * @return mixed
-     * @since 1.1.0
+     * @param int|WP_Post $postID   Post ID or WP_Post object. Default is the global $post
+     * @return string|int
+     * @since 1.3.0
      */
-    public function getNumber($postID = null)
+    public function getNumber(int|WP_Post $postID = null): string|int
     {
         return get_comments_number($postID);
     }
@@ -89,23 +89,24 @@ class CommentsShell extends ShellKernel
     /**
      * Displays a list of comments
      *
-     * @param mixed $args       Formatting options
-     * @param mixed $comments   Array of WP_Comment objects
-     * @return mixed            Void if 'echo' argument is true, or no comments to list. Otherwise, HTML list of comments
-     * @since 1.2.0
+     * @param string|array $args       Formatting options
+     * @param array        $comments   Array of WP_Comment objects
+     * @return mixed                   Void if 'echo' argument is true, or no comments to list. Otherwise, HTML list of comments
+     * @since 1.3.0
      */
-    public function list($args = [], $comments = null) {
+    public function list(string|array $args = [], array $comments = null): mixed
+    {
         return wp_list_comments($args, $comments);
     }
 
     /**
      * Displays or retrieves pagination links for the comments on the current post
      *
-     * @param mixed $args   Default arguments
-     * @return mixed        Action result
-     * @since 1.1.0
+     * @param string|array $args   Default arguments
+     * @return mixed               Action result
+     * @since 1.3.0
      */
-    public function pagination($args = [])
+    public function pagination(string|array $args = []): mixed
     {
         return paginate_comments_links($args);
     }

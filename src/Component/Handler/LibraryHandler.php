@@ -19,7 +19,7 @@ use ZimbruCode\Component\Core\Kernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.3.0
  */
 class LibraryHandler
 {
@@ -29,9 +29,9 @@ class LibraryHandler
      * @param string $packageName   Package name
      * @param array  $package       Package data
      * @return void
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    public static function addPackage(string $packageName, array $package)
+    public static function addPackage(string $packageName, array $package): void
     {
         if ($packageName) {
             Kernel::addGlobalCache("library/package/{$packageName}", $package);
@@ -60,16 +60,16 @@ class LibraryHandler
      * Get package
      *
      * @param string $packageName   Package name
-     * @return array|bool           Package data
-     * @since 1.0.0
+     * @return mixed                Package data
+     * @since 1.3.0
      */
-    public static function getPackage(string $packageName)
+    public static function getPackage(string $packageName): mixed
     {
         if ($packageName) {
             return Kernel::getGlobalCache("library/package/{$packageName}");
         }
 
-        return false;
+        return null;
     }
 
     /**
@@ -101,9 +101,9 @@ class LibraryHandler
      * Remove packages
      *
      * @return void
-     * @since 1.0.0
+     * @since 1.3.0
      */
-    public static function remPackages()
+    public static function remPackages(): void
     {
         Kernel::remGlobalCache('library/package');
     }
@@ -126,16 +126,17 @@ class LibraryHandler
     /**
      * Get element
      *
-     * @param string $name  Element name
-     * @return array|bool   Source of element
+     * @param string $name   Element name
+     * @return mixed         Source of element
+     * @since 1.3.0
      */
-    public static function getElement(string $name)
+    public static function getElement(string $name): mixed
     {
         if ($name) {
             return Kernel::getGlobalCache("library/other/{$name}");
         }
 
-        return false;
+        return null;
     }
 
     /**
