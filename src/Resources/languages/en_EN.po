@@ -7,8 +7,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-10-20T15:14:45+00:00\n"
-"PO-Revision-Date: 2023-10-20T15:14:45+00:00\n"
+"POT-Creation-Date: 2024-09-07T23:54:45+00:00\n"
+"PO-Revision-Date: 2024-09-07T23:54:45+00:00\n"
 "Language: en\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Domain: zc\n"
@@ -64,7 +64,7 @@ msgstr ""
 msgid "Are you sure you want to leave ?"
 msgstr ""
 
-#: junjulini/zimbrucode/src/Module/Panel/Resources/controls/Section/Resources/views/control.twig:152
+#: junjulini/zimbrucode/src/Module/Panel/Resources/controls/Section/Resources/views/control.twig:156
 msgid "Close / Open this section"
 msgstr ""
 
@@ -141,28 +141,28 @@ msgid "Go back"
 msgstr ""
 
 #: junjulini/zimbrucode/src/Module/Panel/Resources/views/mode/page-lite-mode.twig:52
-#: junjulini/zimbrucode/src/Module/Panel/Resources/views/mode/page-mode.twig:27
+#: junjulini/zimbrucode/src/Module/Panel/Resources/views/mode/page-mode.twig:25
 msgid "Save options"
 msgstr ""
 
 #: junjulini/zimbrucode/src/Module/Panel/Resources/views/mode/page-lite-mode.twig:54
-#: junjulini/zimbrucode/src/Module/Panel/Resources/views/mode/page-mode.twig:29
+#: junjulini/zimbrucode/src/Module/Panel/Resources/views/mode/page-mode.twig:27
 #: junjulini/zimbrucode/src/Module/MetaboxPanel/Resources/views/backup/content.twig:24
 msgid "Save"
 msgstr ""
 
 #: junjulini/zimbrucode/src/Module/Panel/Resources/views/mode/page-lite-mode.twig:56
-#: junjulini/zimbrucode/src/Module/Panel/Resources/views/mode/page-mode.twig:31
+#: junjulini/zimbrucode/src/Module/Panel/Resources/views/mode/page-mode.twig:29
 msgid "In process ..."
 msgstr ""
 
 #: junjulini/zimbrucode/src/Module/Panel/Resources/views/mode/page-lite-mode.twig:67
-#: junjulini/zimbrucode/src/Module/Panel/Resources/views/mode/page-mode.twig:42
+#: junjulini/zimbrucode/src/Module/Panel/Resources/views/mode/page-mode.twig:40
 msgid "Reset options"
 msgstr ""
 
 #: junjulini/zimbrucode/src/Module/Panel/Resources/views/mode/page-lite-mode.twig:72
-#: junjulini/zimbrucode/src/Module/Panel/Resources/views/mode/page-mode.twig:47
+#: junjulini/zimbrucode/src/Module/Panel/Resources/views/mode/page-mode.twig:45
 msgid "Quick links"
 msgstr ""
 
