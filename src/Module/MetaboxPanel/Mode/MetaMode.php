@@ -217,6 +217,8 @@ class MetaMode extends Mode
                 }
             }
         }
+
+        return null;
     }
 
     /**

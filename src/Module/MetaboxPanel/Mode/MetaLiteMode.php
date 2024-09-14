@@ -197,5 +197,7 @@ class MetaLiteMode extends Mode
                 }
             }
         }
+
+        return null;
     }
 }
