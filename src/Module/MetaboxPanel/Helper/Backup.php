@@ -323,6 +323,6 @@ class Backup extends Kernel
                 break;
         }
 
-        $ajax->off();
+        $ajax->send('status', 'no-type');
     }
 }
