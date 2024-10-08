@@ -13,7 +13,7 @@
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.1.0
+ * @since   1.3.0
  */
 
 .zc-panel-control-toggle {
@@ -27,12 +27,6 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-
-    &_white {
-        .zc-panel-control-toggle {
-           background: #FFFFFF !important; 
-        }
-    }
 
     &__header {
         width: 37px;
@@ -90,6 +84,11 @@
     &__container {
         margin: 20px;
         position: relative;
+
+        .zc-panel-control-toggle {
+            border-color: $accent-color__1;
+            background-color: #FFFFFF;
+        }
     }
 
     &_closed &__container {
