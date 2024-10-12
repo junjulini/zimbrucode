@@ -27,7 +27,7 @@ use ZimbruCode\Component\Service\FastCacheService;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.3.0
+ * @since   1.3.1
  */
 abstract class AppKernel extends Kernel
 {
@@ -203,7 +203,7 @@ abstract class AppKernel extends Kernel
      * @param string|null      $rootPath   The path to the file where the application class was initialized
      * @param string           $slug       Application slug
      * @return void
-     * @since 1.3.0
+     * @since 1.3.1
      */
     private function __initServices(string $mode = 'before', ClassLoader $composer = null, string $rootPath = null, string $slug = ''): void
     {
@@ -211,12 +211,20 @@ abstract class AppKernel extends Kernel
             self::service('composer', $composer);
             self::service('app', new AppService($this, $rootPath, $slug));
 
+            // Theme details
             $td = wp_get_theme();
             if ($td->parent()) {
                 $td = $td->parent();
             }
 
             self::service('theme-details', $td);
+
+            // WordPress DataBase
+            if (isset($GLOBALS['wpdb'])) {
+                self::service('wpdb', $GLOBALS['wpdb']);
+            } else {
+                throw new RuntimeException('ZE0062');
+            }
         } elseif ($mode === 'after') {
             self::addService('app', new AppService($this, $rootPath, $slug));
             self::service('db', new DBHandler);

@@ -25,7 +25,7 @@ use ZimbruCode\Component\Handler\Traits\SessionHandlerTrait;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.3.0
+ * @since   1.3.1
  */
 abstract class Kernel extends GlobalDataOperator
 {
@@ -100,7 +100,7 @@ abstract class Kernel extends GlobalDataOperator
      * @param  object|null $handler   Service object
      * @throws RuntimeException
      * @return object|null            Service object or null
-     * @since 1.2.0
+     * @since 1.3.1
      */
     final public static function service(string $service, object $handler = null): ?object
     {
@@ -113,17 +113,6 @@ abstract class Kernel extends GlobalDataOperator
                 throw new RuntimeException("ZE0061 - This service exist : {$service}");
             }
         } else {
-
-            // WP Services
-            if ($service == 'wpdb') {
-                if (isset($GLOBALS['wpdb'])) {
-                    return $GLOBALS['wpdb'];
-                } else {
-                    throw new RuntimeException('ZE0062');
-                }
-            }
-
-            // Local services
             if ($object = self::getGlobalCache("services/{$service}")) {
                 return $object;
             } else {
