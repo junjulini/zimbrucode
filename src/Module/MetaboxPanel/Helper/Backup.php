@@ -22,7 +22,7 @@ use ZimbruCode\Module\Panel\Library\Mode;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.3.0
+ * @since   1.3.1
  */
 class Backup extends Kernel
 {
@@ -288,7 +288,7 @@ class Backup extends Kernel
      * Ajax : Backup action
      *
      * @return never
-     * @since 1.3.0
+     * @since 1.3.1
      */
     public function __ajax_backup(): never
     {

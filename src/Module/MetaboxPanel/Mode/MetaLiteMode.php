@@ -21,7 +21,7 @@ use ZimbruCode\Module\Panel\Library\Traits\ControlTrait;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.3.0
+ * @since   1.3.1
  */
 class MetaLiteMode extends Mode
 {
@@ -154,7 +154,7 @@ class MetaLiteMode extends Mode
      *
      * @param int $postID   Post ID
      * @return int|null
-     * @since 1.3.0
+     * @since 1.3.1
      */
     public function __action_save_options(int $postID): ?int
     {
