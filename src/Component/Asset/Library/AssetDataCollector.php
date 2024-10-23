@@ -27,7 +27,7 @@ use ZimbruCode\Component\Common\Tools;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.3.0
+ * @since   1.3.2
  */
 class AssetDataCollector
 {
@@ -72,14 +72,14 @@ class AssetDataCollector
     /**
      * Add asset
      *
-     * @param  mixed         $asset        Asset name / Assets
+     * @param  string|array  $asset        Asset name / Asset data
      * @param  bool          $autoFilter   Preparing assets through filters
      * @param  callable|null $callback     Callback for additional asset manipulation
      * @throws InvalidArgumentException
      * @return AssetDataCollector
-     * @since 1.1.0
+     * @since 1.3.2
      */
-    public function add($asset, bool $autoFilter = false, callable $callback = null): self
+    public function add(string|array $asset, bool $autoFilter = false, callable $callback = null): self
     {
         if (is_string($asset) || is_array($asset)) {
             $assetData = new AssetData($asset, $this->location);

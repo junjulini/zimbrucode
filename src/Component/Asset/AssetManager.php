@@ -25,7 +25,7 @@ use ZimbruCode\Component\Core\Kernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.3.0
+ * @since   1.3.2
  */
 class AssetManager
 {
@@ -84,12 +84,12 @@ class AssetManager
     /**
      * Registers an asset
      * 
-     * @param mixed         $asset      Asset
+     * @param string|array  $asset      Asset name / Asset data
      * @param callable|null $callback   Callback function
      * @return AssetManager
-     * @since 1.0.0
+     * @since 1.3.2
      */
-    public function add($asset, callable $callback = null): self
+    public function add(string|array $asset, callable $callback = null): self
     {
         if ($asset) {
             $this->collector->add($asset, $this->autoFilter(), $callback);

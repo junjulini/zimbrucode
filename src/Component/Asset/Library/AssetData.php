@@ -23,7 +23,7 @@ use ZimbruCode\Component\Core\Kernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.3.0
+ * @since   1.3.2
  */
 class AssetData
 {
@@ -34,10 +34,13 @@ class AssetData
 
     /**
      * Constructor
-     *
-     * @since 1.3.0
+     * 
+     * @param string|array     $asset      Asset name / Asset data
+     * @param LocationDetector $location
+     * @throws InvalidArgumentException
+     * @since 1.3.2
      */
-    public function __construct($asset, LocationDetector $location)
+    public function __construct(string|array $asset, LocationDetector $location)
     {
         if ($asset) {
             $this->data = Kernel::getGlobal('core/component/asset/default-data');
