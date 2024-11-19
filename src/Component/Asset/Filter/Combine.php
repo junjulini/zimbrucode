@@ -24,7 +24,7 @@ use ZimbruCode\Component\Core\Kernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.3.0
+ * @since   1.3.3
  */
 class Combine extends Filter
 {
@@ -82,7 +82,7 @@ class Combine extends Filter
      * CSS asset preparation
      *
      * @return void
-     * @since 1.3.0
+     * @since 1.3.3
      */
     protected function prepCSSAssets(): void
     {
@@ -109,6 +109,18 @@ class Combine extends Filter
             return false;
         });
 
+        // Callback : Check if the list of assets in the cache matches
+        $this->cache->addCheckFunction(function (array $args): bool {
+            $cache = $this->cache->get();
+
+            if (md5(json_encode($cache['assets'])) != md5(json_encode($this->data['assets']['css']))) {
+                return true;
+            }
+
+            return false;
+        });
+
+        // Add assets
         foreach ($this->data['assets']['css'] as $asset) {
             $this->cache->addAsset($asset->getPath());
         }
@@ -172,7 +184,7 @@ class Combine extends Filter
      * Preparing JavaScript assets
      *
      * @return void
-     * @since 1.3.0
+     * @since 1.3.3
      */
     protected function prepJavaScriptAssets(): void
     {
@@ -198,6 +210,18 @@ class Combine extends Filter
             return false;
         });
 
+        // Callback : Check if the list of assets in the cache matches
+        $this->cache->addCheckFunction(function (array $args): bool {
+            $cache = $this->cache->get();
+
+            if (md5(json_encode($cache['assets'])) != md5(json_encode($this->data['assets']['js']))) {
+                return true;
+            }
+
+            return false;
+        });
+
+        // Add assets
         foreach ($this->data['assets']['js'] as $asset) {
             $this->cache->addAsset($asset->getPath());
         }
