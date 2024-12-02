@@ -13,7 +13,7 @@
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.3.0
+ * @since   1.3.3
  */
 
 'use strict';
@@ -89,7 +89,7 @@ export default class OptionHandler extends Kernel {
     /**
      * Save options
      * 
-     * @since 1.1.0
+     * @since 1.3.3
      */
     save() {
         this.click('.zc-panel-save-starter-button', ($this) => {
@@ -128,7 +128,7 @@ export default class OptionHandler extends Kernel {
             zc.jsonRequest(`zc/module/panel/save_${this.getVar('slug')}`, this.getVar('nonce'), {
                 options: priv.procOptions(),
             }).then((response) => {
-                $(window).trigger('zc/panel/save/success-start');
+                $(window).trigger('zc/panel/save/success-start', [response]);
 
                 const reload = typeof response.reload === 'undefined' ? undefined : () => {
                     location.reload();
@@ -139,10 +139,10 @@ export default class OptionHandler extends Kernel {
 
                 if (response.type === 'success') {
                     this.addCache('changed', false);
-                    $(window).trigger('zc/panel/save/success-response');
+                    $(window).trigger('zc/panel/save/success-response', [response]);
                 }
 
-                $(window).trigger('zc/panel/save/success-end');
+                $(window).trigger('zc/panel/save/success-end', [response]);
             }).catch((errorMsg) => {
                 $(window).trigger('zc/panel/save/error');
                 this.errorCheck('Panel : Save options', errorMsg);
@@ -155,7 +155,7 @@ export default class OptionHandler extends Kernel {
     /**
      * Reset options
      * 
-     * @since 1.1.0
+     * @since 1.3.3
      */
     reset() {
         this.click('.zc-panel-reset-starter-button', () => {
@@ -171,7 +171,7 @@ export default class OptionHandler extends Kernel {
                     $(window).trigger('zc/panel/reset/before');
 
                     zc.jsonRequest(`zc/module/panel/reset_${this.getVar('slug')}`, this.getVar('nonce')).then((response) => {
-                        $(window).trigger('zc/panel/reset/success-start');
+                        $(window).trigger('zc/panel/reset/success-start', [response]);
 
                         if (response.type === 'success') {
                             popup.remContent();
@@ -188,7 +188,7 @@ export default class OptionHandler extends Kernel {
 
                             this.addCache('changed', false);
 
-                            $(window).trigger('zc/panel/reset/success-success');
+                            $(window).trigger('zc/panel/reset/success-success', [response]);
                         } else if (response.type === 'info') {
                             popup.remContent();
                             popup.appendContent(zc.tpl(this.tpl, {
@@ -199,7 +199,7 @@ export default class OptionHandler extends Kernel {
                             }));
                             popup.showContent();
 
-                            $(window).trigger('zc/panel/reset/success-info');
+                            $(window).trigger('zc/panel/reset/success-info', [response]);
                         } else {
                             popup.remContent();
                             popup.appendContent(zc.tpl(this.tpl, {
@@ -210,7 +210,7 @@ export default class OptionHandler extends Kernel {
                             }));
                             popup.showContent();
 
-                            $(window).trigger('zc/panel/reset/success-error');
+                            $(window).trigger('zc/panel/reset/success-error', [response]);
                         }
 
                         $('.zc-popup').on('click', '.zc-panel-popup-notification__close-button', (event) => {
@@ -220,7 +220,7 @@ export default class OptionHandler extends Kernel {
                             popup.close();
                         });
 
-                        $(window).trigger('zc/panel/reset/success-end');
+                        $(window).trigger('zc/panel/reset/success-end', [response]);
                     }).catch((errorMsg) => {
                         $(window).trigger('zc/panel/reset/error');
                         this.errorCheck('Panel : Reset options', errorMsg);

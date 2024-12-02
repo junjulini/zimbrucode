@@ -20,7 +20,7 @@ use ZimbruCode\Module\Panel\Library\Traits\ControlTrait;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.3.0
+ * @since   1.3.3
  */
 class LiteMode extends Mode
 {
@@ -161,7 +161,7 @@ class LiteMode extends Mode
      * Ajax : Save options
      *
      * @return never
-     * @since 1.3.0
+     * @since 1.3.3
      */
     public function __ajax_save_options(): never
     {
@@ -175,28 +175,29 @@ class LiteMode extends Mode
         if ($options) {
             if ($this->isOptionsDifferent($options)) {
                 if ($this->addOptions($options)) {
+                    $ajax->add(self::getGlobal('core/module/panel/settings/page/events/event-1'));
 
                     // Hook : Options save - Success
                     do_action('zc/module/panel/mode/lite/options_save--success', $options, $ajax, $this);
                     do_action("zc/module/panel/{$this->getModuleSetting('slug')}/mode/lite/options_save--success", $options, $ajax, $this);
-
-                    $ajax->send(self::getGlobal('core/module/panel/settings/page/events/event-1'));
                 } else {
-                    $ajax->send(self::getGlobal('core/module/panel/settings/page/events/event-5'));
+                    $ajax->add(self::getGlobal('core/module/panel/settings/page/events/event-5'));
                 }
             } else {
-                $ajax->send(self::getGlobal('core/module/panel/settings/page/events/event-2'));
+                $ajax->add(self::getGlobal('core/module/panel/settings/page/events/event-2'));
             }
         } else {
-            $ajax->send(self::getGlobal('core/module/panel/settings/page/events/event-6'));
+            $ajax->add(self::getGlobal('core/module/panel/settings/page/events/event-6'));
         }
+
+        $ajax->send();
     }
 
     /**
      * Ajax : Reset options
      *
      * @return never
-     * @since 1.3.0
+     * @since 1.3.3
      */
     public function __ajax_reset_options(): never
     {
@@ -207,14 +208,15 @@ class LiteMode extends Mode
         do_action("zc/module/panel/{$this->getModuleSetting('slug')}/mode/lite/options_reset--before", $this, $ajax);
 
         if ($this->remOptions()) {
+            $ajax->add(self::getGlobal('core/module/panel/settings/page/events/event-3'));
 
             // Hook : Options reset - Success
             do_action('zc/module/panel/mode/lite/options_reset--success', $this, $ajax);
             do_action("zc/module/panel/{$this->getModuleSetting('slug')}/mode/lite/options_reset--success", $this, $ajax);
-
-            $ajax->send(self::getGlobal('core/module/panel/settings/page/events/event-3'));
         } else {
-            $ajax->send(self::getGlobal('core/module/panel/settings/page/events/event-4'));
+            $ajax->add(self::getGlobal('core/module/panel/settings/page/events/event-4'));
         }
+
+        $ajax->send();
     }
 }

@@ -13,7 +13,7 @@
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.3.0
+ * @since   1.3.3
  */
 
 'use strict';
@@ -74,9 +74,17 @@ zc.module.panel.addControl(($, panel) => {
 
     setTimeout(() => {
         if (window.location.href.indexOf('post.php') == -1) {
-            $('.zc-panel .wp-editor-area').each(function () {
+            const listObj = $('.zc-panel .wp-editor-area');
+
+            listObj.each(function (index) {
                 if (tinyMCEPreInit.mceInit.content === undefined) {
                     control.initWpEditor($(this));
+
+                    if (index == (listObj.length - 1)) {
+                        setTimeout(() => {
+                            panel.addCache('mce-loaded', true);
+                        }, 3000);
+                    }
                 }
             });
         }

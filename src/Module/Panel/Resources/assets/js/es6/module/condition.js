@@ -13,7 +13,7 @@
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.0.0
+ * @since   1.3.3
  */
 
 'use strict';
@@ -60,7 +60,7 @@ export default class Condition extends Kernel {
      * Check if any item has changed
      * 
      * @return {null}   None
-     * @since 1.0.0
+     * @since 1.3.3
      */
     onChange() {
         $('.zc-panel .zc-panel-controls').on('change', '[data-option]', (event) => {
@@ -80,8 +80,15 @@ export default class Condition extends Kernel {
             }
 
             if ($this.data('i') === undefined) {
-                this.addCache('changed', true);
-                $(window).trigger('zc/panel/if-changed');
+                if (!$this.hasClass('wp-editor-area')) {
+                    this.addCache('changed', true);
+                    $(window).trigger('zc/panel/if-changed');
+                } else {
+                    if (this.getCache('mce-loaded') === true) {
+                        this.addCache('changed', true);
+                        $(window).trigger('zc/panel/if-changed');
+                    }
+                }
             }
 
             return false;
