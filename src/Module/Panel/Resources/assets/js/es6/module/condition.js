@@ -13,7 +13,7 @@
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.3.3
+ * @since   1.3.4
  */
 
 'use strict';
@@ -27,32 +27,68 @@ export default class Condition extends Kernel {
     /**
      * Constructor
      * 
-     * @since 1.0.0
+     * @since 1.3.4
      */
     constructor() {
         super();
 
-        this.cache = {};
         this.regex = /(.+?):(notEmpty|empty|is|not|contains|<|<=|>|>=)\((.*?)\),?/g;
 
-        this.firstStart();
+        this.controlsNodes = new Map;
+        this.cache         = new Map;
+
         this.dataCaching();
+        this.firstStart();
         this.onChange();
+    }
+
+    /**
+     * Data caching
+     * 
+     * @return {null}   None
+     * @since 1.3.4
+     */
+    dataCaching() {
+        document.querySelectorAll('.zc-panel .zc-panel-controls [data-option]').forEach((item) => {
+            let key = item.getAttribute('name');
+
+            if (key === null) {
+                key = item.getAttribute('id');
+            }
+
+            if (key !== null) {
+                this.controlsNodes.set(key, item);
+            }
+        });
+
+        document.querySelectorAll('.zc-panel .zc-panel-controls [data-condition]').forEach((item) => {
+            let match;
+
+            while (match = this.regex.exec(item.dataset.condition)) {
+                let key = this.getVar('prefix-slug') + match[1];
+
+                if (key) {
+                    if (this.cache.has(key) === false) {
+                        this.cache.set(key, new Map);
+                    }
+
+                    this.cache.get(key).set(item, item);
+                }
+            }
+        });
     }
 
     /**
      * Find items
      * 
      * @return {null}   None
-     * @since 1.0.0
+     * @since 1.3.4
      */
     firstStart() {
-        $(window).on('zc/panel/menu/item-change-ICP', (event, section) => {
-            if (section) {
-                section.find('[data-condition]').each((index, el) => {
-                    this.parse($(el), true);
-                });
-            }
+        this.cache.forEach((el) => {
+            el.forEach((childNode) => {
+                this.parse($(childNode), true);
+            });
         });
     }
 
@@ -60,7 +96,7 @@ export default class Condition extends Kernel {
      * Check if any item has changed
      * 
      * @return {null}   None
-     * @since 1.3.3
+     * @since 1.3.4
      */
     onChange() {
         $('.zc-panel .zc-panel-controls').on('change', '[data-option]', (event) => {
@@ -69,13 +105,13 @@ export default class Condition extends Kernel {
             /* Act on the event */
 
             const $this = $(event.currentTarget);
-            let name  = $this.attr('name') || '';
+            let key     = $this.attr('name') || '';
 
-            name = name.replace('[]', '');
+            key = key.replace('[]', '');
 
-            if (this.cache[name] !== undefined) {
-                $.each(this.cache[name], (index, el) => {
-                    this.parse(el);
+            if (this.cache.has(key)) {
+                this.cache.get(key).forEach((childNode) => {
+                    this.parse($(childNode));
                 });
             }
 
@@ -96,58 +132,26 @@ export default class Condition extends Kernel {
     }
 
     /**
-     * Cache data
-     * 
-     * @return {null}   None
-     * @since 1.0.0
-     */
-    dataCaching() {
-        $('.zc-panel .zc-panel-controls [data-condition]').each((index, el) => {
-            let match;
-
-            while (match = this.regex.exec($(el).data('condition'))) {
-                let key = this.getVar('prefix-slug') + match[1];
-
-                if (this.cache[key] === undefined) {
-                    this.cache[key] = [];
-                }
-
-                this.cache[key].push($(el));
-            }
-        });
-    }
-
-    /**
      * Parse by conditions
      * 
      * @param {object}  control      Control object
      * @param {boolean} firstStart   First start
      * @return {null}                None
-     * @since 1.0.0
+     * @since 1.3.4
      */
     parse(control, firstStart) {
         let passed,
             conditions = this.prepConditions(control.data('condition')),
-            operator   = (control.data('condition-operator') || 'and').toLowerCase();
+            operator = (control.data('condition-operator') || 'and').toLowerCase();
 
         $.each(conditions, (index, condition) => {
-            let status = false;
-            let target = $(`.zc-panel .zc-panel-controls [name=${this.getVar('prefix-slug')}${condition.check}]`);
+            const key = this.getVar('prefix-slug') + condition.check;
 
-            if (target.length > 0 && target.is('[data-option]')) {
-                status = true;
-            } else {
-                target = $(`.zc-panel .zc-panel-controls [id=${this.getVar('prefix-slug')}${condition.check}]`);
-
-                if (target.length > 0 && target.is('[data-option]')) {
-                    status = true;
-                }
-            }
-
-            if (status === true) {
-                const v1 = target.val() !== null ? target.val().toString() : '';
-                const v2 = condition.value.toString();
+            if (this.controlsNodes.has(key)) {
                 let result;
+                const target = $(this.controlsNodes.get(key));
+                const v1     = target.val() !== null ? target.val().toString() : '';
+                const v2     = condition.value.toString();
 
                 switch (condition.rule) {
                     case '<':
@@ -218,15 +222,13 @@ export default class Condition extends Kernel {
                 }
             }
         }
-
-        passed = undefined;
     }
 
     /**
      * Preparing conditions
      * 
      * @return {null}   None
-     * @since 1.0.0
+     * @since 1.3.4
      */
     prepConditions(condition) {
         let match,
@@ -241,5 +243,16 @@ export default class Condition extends Kernel {
         }
 
         return conditions;
+    }
+
+    /**
+     * 
+     * @param {object} element   Node
+     * @param {string} selector  Search
+     * @returns {bool}           Return true if found
+     * @since 1.3.4
+     */
+    is(element, selector) {
+        return (element.matches || element.matchesSelector || element.msMatchesSelector || element.mozMatchesSelector || element.webkitMatchesSelector || element.oMatchesSelector).call(element, selector);
     }
 }
