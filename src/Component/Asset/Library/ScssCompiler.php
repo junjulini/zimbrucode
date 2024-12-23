@@ -25,7 +25,7 @@ use ZimbruCode\Component\Core\Kernel;
  *
  * @author  C.R <cr@junjulini.com>
  * @package zimbrucode
- * @since   1.2.0
+ * @since   1.3.6
  */
 class ScssCompiler
 {
@@ -112,7 +112,7 @@ class ScssCompiler
      *
      * @throws RuntimeException
      * @return void
-     * @since 1.1.0
+     * @since 1.3.6
      */
     public function compile(): void
     {
@@ -287,7 +287,7 @@ class ScssCompiler
                 }
 
                 // Additional file
-                preg_match_all('/\[(.*)\]/m', $path, $matches, PREG_SET_ORDER, 0);
+                preg_match_all('/\[(.*)\]/m', urldecode($path), $matches, PREG_SET_ORDER, 0);
 
                 if (!empty($matches[0][1]) && isset($this->data['additional-files'][$matches[0][1]])) {
                     return $this->data['additional-files'][$matches[0][1]];
