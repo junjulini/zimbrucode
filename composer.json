@@ -26,7 +26,7 @@
         "twig/twig": "^3.13",
         "tracy/tracy": "^2.10",
         "doctrine/cache": "^1.10",
-        "scssphp/scssphp": "^1.13",
+        "scssphp/scssphp": "^2.0",
         "symfony/finder": "^6.4",
         "symfony/filesystem": "^6.4",
         "matthiasmullie/minify": "^1.3"
